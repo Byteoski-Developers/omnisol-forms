@@ -1,4 +1,5 @@
 import { VisaForm } from '@/types/form';
+import { COUNTRIES } from './constants/countries';
 
 export const INDONESIA: VisaForm = {
     id: 'tourist-visa',
@@ -30,10 +31,7 @@ export const INDONESIA: VisaForm = {
         type: 'select',
         label: 'Nationality',
         required: true,
-        options: [
-          { label: 'India', value: 'IN' },
-          // Add more nationalities
-        ]
+        options: COUNTRIES
       },
       {
         id: 'visaType',

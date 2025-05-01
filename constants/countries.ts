@@ -25,5 +25,10 @@ export const SAMPLE_COUNTRIES: Country[] = [
     code: 'CN',
     name: 'China',
     flag: 'https://images.unsplash.com/photo-1546975554-31053113e977?q=80&w=50',
+  },
+  {
+    code: 'SG',
+    name: 'Singapore',
+    flag: 'https://images.unsplash.com/photo-1546975554-31053113e977?q=80&w=50',
   }
 ];

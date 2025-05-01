@@ -4,6 +4,7 @@ import { INDONESIA } from './countries/indonesia';
 import { MALAYSIA } from './countries/malasiya';
 import { TURKEY } from './countries/turkey';
 import { CHINA } from './countries/china';
+import { SINGAPORE } from './countries/singapore';
 
 class FormRegistry {
   private forms: Map<string, VisaForm> = new Map();
@@ -30,3 +31,4 @@ formRegistry.register(INDONESIA);
 formRegistry.register(MALAYSIA);
 formRegistry.register(TURKEY);
 formRegistry.register(CHINA);
+formRegistry.register(SINGAPORE);

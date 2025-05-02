@@ -44,6 +44,9 @@ export interface FormField {
   placeholder?: string;
   required?: boolean;
   group: FormGroup;
+  autoExtracted?: boolean;
+  description?: string;
+  showInForm?: boolean; // Controls whether the field is displayed in the form UI
   options?: { label: string; value: string }[];
   dependencies?: Array<{
     fieldId: string;

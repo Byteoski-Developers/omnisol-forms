@@ -5,6 +5,13 @@ import { MALAYSIA } from './countries/malasiya';
 import { TURKEY } from './countries/turkey';
 import { CHINA } from './countries/china';
 import { SINGAPORE } from './countries/singapore';
+import { NEWZEALAND } from './countries/newzealand';
+import { AZERBAIJAN } from './countries/Azerbaijan';
+import { GEORGIA } from './countries/Georgia';
+import { JAPAN } from './countries/Japan';
+import { KAZAKHSTAN } from './countries/Kazakhstan';
+import { UNITED_ARAB_EMIRATES } from './countries/UnitedArabEmirates';
+import { VIETNAM } from './countries/Vietnam';
 
 class FormRegistry {
   private forms: Map<string, VisaForm> = new Map();
@@ -32,3 +39,11 @@ formRegistry.register(MALAYSIA);
 formRegistry.register(TURKEY);
 formRegistry.register(CHINA);
 formRegistry.register(SINGAPORE);
+formRegistry.register(NEWZEALAND);
+formRegistry.register(AZERBAIJAN);
+formRegistry.register(GEORGIA);
+formRegistry.register(JAPAN);
+formRegistry.register(KAZAKHSTAN);
+formRegistry.register(UNITED_ARAB_EMIRATES);
+formRegistry.register(VIETNAM);
+

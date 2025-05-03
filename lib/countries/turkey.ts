@@ -7,13 +7,23 @@ export const TURKEY: VisaForm = {
   description: 'Application for Turkish tourist visa',
   steps: [
     {
-      title: 'Upload Documents',
+      title: 'Personal Information',
+      group: 'personal',
+      showDocuments: false
+    },
+    {
+      title: 'Travel Document Information',
       group: 'documents',
-      showDocuments: true
+      showDocuments: false
     },
     {
       title: 'Previous Travel History',
       group: 'history',
+      showDocuments: false
+    },
+    {
+      title: 'Visa Type',
+      group: 'visa',
       showDocuments: false
     },
     {
@@ -30,9 +40,96 @@ export const TURKEY: VisaForm = {
       title: 'Family Information',
       group: 'family',
       showDocuments: false
+    },
+    {
+      title: 'Upload Documents',
+      group: 'documents',
+      showDocuments: true
     }
   ],
   fields: [
+    // Personal Information
+    {
+      id: 'Name',
+      group: 'personal',
+      type: 'text',
+      label: 'Name',
+      required: false
+    },
+    {
+      id: 'idNumber',
+      group: 'personal',
+      type: 'text',
+      label: 'ID-number (optional)',
+      required: false
+    },
+    {
+      id: 'placeOfBirth',
+      group: 'personal',
+      type: 'text',
+      label: 'Place of birth',
+      required: true
+    },
+    {
+      id: 'countryOfBirth',
+      group: 'personal',
+      type: 'text',
+      label: 'Country of birth',
+      required: true
+    },
+    {
+      id: 'citizenshipAtBirth',
+      group: 'personal',
+      type: 'text',
+      label: 'Citizenship at birth',
+      required: true
+    },
+    {
+      id: 'fatherName',
+      group: 'personal',
+      type: 'text',
+      label: "Father's full name",
+      required: true
+    },
+    {
+      id: 'motherName',
+      group: 'personal',
+      type: 'text',
+      label: "Mother's full name",
+      required: true
+    },
+    {
+      id: 'maritalStatus',
+      group: 'personal',
+      type: 'select',
+      label: 'Marital status',
+      required: true,
+      options: [
+        { label: 'Single', value: 'single' },
+        { label: 'Married', value: 'married' },
+        { label: 'Separated', value: 'separated' },
+        { label: 'Divorced', value: 'divorced' },
+        { label: 'Widowed', value: 'widowed' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    // Travel Document Information
+    {
+      id: 'passportType',
+      group: 'documents',
+      type: 'select',
+      label: 'Type of Passport',
+      required: true,
+      options: [
+        { label: 'Ordinary Passport', value: 'ordinary' },
+        { label: 'Diplomatic Passport', value: 'diplomatic' },
+        { label: 'Service Passport', value: 'service' },
+        { label: 'Travel Document (1951 Convention)', value: 'travel_document' },
+        { label: "Alien's Passport", value: 'alien' },
+        { label: "Seaman's Passport", value: 'seaman' },
+        { label: 'Other (please specify)', value: 'other' }
+      ]
+    },
     // Previous Travel History
     {
       id: 'hasVisaRefusal',
@@ -43,6 +140,32 @@ export const TURKEY: VisaForm = {
       options: [
         { label: 'No', value: 'no' },
         { label: 'Yes', value: 'yes' }
+      ]
+    },
+    {
+      id: 'refusalWhen',
+      group: 'history',
+      type: 'text',
+      label: 'When',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'hasVisaRefusal',
+          value: 'yes'
+        }
+      ]
+    },
+    {
+      id: 'refusalWhere',
+      group: 'history',
+      type: 'text',
+      label: 'Where',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'hasVisaRefusal',
+          value: 'yes'
+        }
       ]
     },
     {
@@ -83,6 +206,32 @@ export const TURKEY: VisaForm = {
       ]
     },
     {
+      id: 'deportationWhen',
+      group: 'history',
+      type: 'text',
+      label: 'When',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'hasDeportation',
+          value: 'yes'
+        }
+      ]
+    },
+    {
+      id: 'deportationWhere',
+      group: 'history',
+      type: 'text',
+      label: 'Where',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'hasDeportation',
+          value: 'yes'
+        }
+      ]
+    },
+    {
       id: 'deportationDate',
       group: 'history',
       type: 'date',
@@ -108,12 +257,87 @@ export const TURKEY: VisaForm = {
         }
       ]
     },
+    // Visa Type
+    {
+      id: 'visaType',
+      group: 'visa',
+      type: 'select',
+      label: 'Type of Visa',
+      required: true,
+      options: [
+        { label: 'Transit', value: 'transit' },
+        { label: 'Double Transit', value: 'double_transit' },
+        { label: 'Tourist', value: 'tourist' },
+        { label: 'Business', value: 'business' },
+        { label: 'Work', value: 'work' },
+        { label: 'Education', value: 'education' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    {
+      id: 'entryType',
+      group: 'visa',
+      type: 'select',
+      label: 'Number of entries requested',
+      required: true,
+      options: [
+        { label: 'Single Entry', value: 'single' },
+        { label: 'Multiple Entry', value: 'multiple' }
+      ]
+    },
+    {
+      id: 'transitDetails',
+      group: 'visa',
+      type: 'select',
+      label: 'In the case of transit, have you an entry permit for the final country of destination?',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'visaType',
+          value: 'transit'
+        },
+        {
+          fieldId: 'visaType',
+          value: 'double_transit'
+        }
+      ],
+      options: [
+        { label: 'No', value: 'no' },
+        { label: 'Yes, valid until', value: 'yes' }
+      ]
+    },
+    {
+      id: 'transitValidUntil',
+      group: 'visa',
+      type: 'text',
+      label: 'Valid until',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'transitDetails',
+          value: 'yes'
+        }
+      ]
+    },
+    {
+      id: 'transitIssuingAuthority',
+      group: 'visa',
+      type: 'text',
+      label: 'Issuing authority',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'transitDetails',
+          value: 'yes'
+        }
+      ]
+    },
     // Trip Details
     {
       id: 'purposeOfTrip',
       group: 'travel',
       type: 'select',
-      label: 'Purpose of Trip',
+      label: 'Purpose of trip',
       required: true,
       options: [
         { label: 'Official', value: 'official' },
@@ -122,41 +346,76 @@ export const TURKEY: VisaForm = {
         { label: 'Cultural/Sports', value: 'cultural_sports' },
         { label: 'Private Visit (family or friends)', value: 'private_visit' },
         { label: 'Medical Reasons', value: 'medical' },
-        { label: 'Other', value: 'other' }
+        { label: 'Other (please specify)', value: 'other' }
+      ]
+    },
+    {
+      id: 'purposeOfTripOther',
+      group: 'travel',
+      type: 'text',
+      label: 'Please specify other purpose',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'purposeOfTrip',
+          value: 'other'
+        }
       ]
     },
     {
       id: 'arrivalDate',
       group: 'travel',
       type: 'date',
-      label: 'Date of Arrival',
+      label: 'Date of arrival',
       required: true
     },
     {
       id: 'departureDate',
       group: 'travel',
       type: 'date',
-      label: 'Date of Departure',
+      label: 'Date of departure',
       required: true
     },
     {
       id: 'portOfEntry',
       group: 'travel',
       type: 'text',
-      label: 'Port of First Entry or Transit Route',
+      label: 'Port of first entry or transit route',
       required: true
     },
     {
       id: 'meansOfTransport',
       group: 'travel',
       type: 'select',
-      label: 'Means of Transport',
+      label: 'Means of transport',
       required: true,
       options: [
         { label: 'Air', value: 'air' },
         { label: 'Sea', value: 'sea' },
         { label: 'Land', value: 'land' }
       ]
+    },
+    {
+      id: 'validFrom',
+      group: 'travel',
+      type: 'date',
+      label: 'Valid from',
+      required: true
+    },
+    {
+      id: 'validTo',
+      group: 'travel',
+      type: 'date',
+      label: 'To',
+      required: true
+    },
+    {
+      id: 'durationOfStay',
+      group: 'travel',
+      type: 'text',
+      label: 'Duration of stay - Visa is requested for:',
+      placeholder: 'Number of days',
+      required: true
     },
     {
       id: 'transitPermit',
@@ -229,10 +488,10 @@ export const TURKEY: VisaForm = {
       ]
     },
     {
-      id: 'hasInsurance',
+      id: 'travelInsurance',
       group: 'travel',
       type: 'select',
-      label: 'Do you have travel and/or health insurance?',
+      label: 'Travel and/or health insurance',
       required: true,
       options: [
         { label: 'No', value: 'no' },
@@ -242,62 +501,153 @@ export const TURKEY: VisaForm = {
     {
       id: 'insuranceValidUntil',
       group: 'travel',
-      type: 'date',
-      label: 'Insurance Valid Until',
+      type: 'text',
+      label: 'Valid until',
       required: false,
       dependencies: [
         {
-          fieldId: 'hasInsurance',
+          fieldId: 'travelInsurance',
           value: 'yes'
         }
       ]
     },
-    // Host Information
-    {
-      id: 'hostName',
-      group: 'host',
-      type: 'text',
-      label: 'Name of Host or Company in Turkey',
-      required: true
-    },
-    {
-      id: 'hostAddress',
-      group: 'host',
-      type: 'text',
-      label: 'Address in Turkey',
-      required: true
-    },
-    {
-      id: 'hostPhone',
-      group: 'host',
-      type: 'text',
-      label: 'Telephone/Fax Number',
-      required: true,
-      validations: {
-        pattern: '^[0-9+\\-\\s]*$'
+  // Family Information
+  {
+    id: 'hasSpouse',
+    group: 'family',
+    type: 'select',
+    label: 'Do you have a spouse?',
+    required: true,
+    options: [
+      { label: 'No', value: 'no' },
+      { label: 'Yes', value: 'yes' }
+    ]
+  },
+  {
+    id: 'spouseFamilyName',
+    group: 'family',
+    type: 'text',
+    label: "Spouse's Family Name",
+    required: false,
+    dependencies: [
+      {
+        fieldId: 'hasSpouse',
+        value: 'yes'
       }
-    },
-    {
-      id: 'hostEmail',
-      group: 'host',
-      type: 'text',
-      label: 'E-mail Address',
-      required: true,
-      validations: {
-        pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+    ]
+  },
+  {
+    id: 'spouseMaidenName',
+    group: 'family',
+    type: 'text',
+    label: "Spouse's Maiden Name",
+    required: false,
+    dependencies: [
+      {
+        fieldId: 'hasSpouse',
+        value: 'yes'
       }
-    },
-    // Family Information
-    {
-      id: 'hasSpouse',
-      group: 'family',
-      type: 'select',
-      label: 'Do you have a spouse?',
-      required: true,
-      options: [
-        { label: 'No', value: 'no' },
-        { label: 'Yes', value: 'yes' }
-      ]
+    ]
+  },
+  {
+    id: 'spouseFirstName',
+    group: 'family',
+    type: 'text',
+    label: "Spouse's First Name",
+    required: false,
+    dependencies: [
+      {
+        fieldId: 'hasSpouse',
+        value: 'yes'
+      }
+    ]
+  },
+  {
+    id: 'spouseNationality',
+    group: 'family',
+    type: 'text',
+    label: "Spouse's Nationality",
+    required: false,
+    dependencies: [
+      {
+        fieldId: 'hasSpouse',
+        value: 'yes'
+      }
+    ]
+  },
+  {
+    id: 'spouseDateOfBirth',
+    group: 'family',
+    type: 'date',
+    label: "Spouse's Date of Birth",
+    required: false,
+    dependencies: [
+      {
+        fieldId: 'hasSpouse',
+        value: 'yes'
+      }
+    ]
+  },
+  {
+    id: 'spousePlaceOfBirth',
+    group: 'family',
+    type: 'text',
+    label: "Spouse's Place of Birth",
+    required: false,
+    dependencies: [
+      {
+        fieldId: 'hasSpouse',
+        value: 'yes'
+      }
+    ]
+  },
+  {
+    id: 'hasChildren',
+    group: 'family',
+    type: 'select',
+    label: 'Are you traveling with children?',
+    required: true,
+    options: [
+      { label: 'No', value: 'no' },
+      { label: 'Yes', value: 'yes' }
+    ]
+  },
+  {
+    id: 'children',
+    group: 'family',
+    type: 'text',
+    label: 'Children Information',
+    required: false,
+    dependencies: [
+        { fieldId: 'hasChildren', value: 'yes' }
+      ],
+    validations: {
+      customValidation: (value) => {
+        try {
+          const children = value;
+          if (!Array.isArray(children)) {
+            return false;
+          }
+          
+          const errors = [];
+          children.forEach((child, index) => {
+            if (!child.surname) {
+              errors.push(`Child #${index + 1}: Family name is required`);
+            }
+            if (!child.givenNames) {
+              errors.push(`Child #${index + 1}: First name is required`);
+            }
+            if (!child.dateOfBirth) {
+              errors.push(`Child #${index + 1}: Date of birth is required`);
+            }
+          });
+          
+          return errors.length === 0;
+        } catch (e) {
+          return false;
+        }
+      }
+    }
     },
     {
       id: 'spouseFamilyName',
@@ -449,8 +799,8 @@ export const TURKEY: VisaForm = {
         { fieldId: 'givenNames', source: 'passport' },
         { fieldId: 'dateOfBirth', source: 'passport' },
         { fieldId: 'gender', source: 'passport' },
-        { fieldId: 'birthCity', source: 'passport' },
-        { fieldId: 'birthCountry', source: 'passport' },
+        { fieldId: 'placeOfBirth', source: 'passport' },
+        { fieldId: 'countryOfBirth', source: 'passport' },
         { fieldId: 'currentCitizenship', source: 'passport' },
         { fieldId: 'passportNumber', source: 'passport' },
         { fieldId: 'passportIssueDate', source: 'passport' },
@@ -494,7 +844,7 @@ export const TURKEY: VisaForm = {
       required: true,
       conditions: [
         {
-          questionId: 'hasInsurance',
+          questionId: 'travelInsurance',
           value: 'yes'
         }
       ]

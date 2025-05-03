@@ -1,5 +1,4 @@
 import { VisaForm } from '@/types/form';
-
 export const SINGAPORE: VisaForm = {
   id: 'entry-visa',
   countryCode: 'SG',
@@ -17,13 +16,8 @@ export const SINGAPORE: VisaForm = {
       showDocuments: false
     },
     {
-      title: 'Contact Information',
+      title: 'Contact & Employment Information',
       group: 'contact',
-      showDocuments: false
-    },
-    {
-      title: 'Education & Occupation',
-      group: 'education',
       showDocuments: false
     },
     {
@@ -32,13 +26,13 @@ export const SINGAPORE: VisaForm = {
       showDocuments: false
     },
     {
-      title: 'Previous Travel History',
-      group: 'history',
+      title: 'Accommodation in Singapore',
+      group: 'accommodation',
       showDocuments: false
     },
     {
-      title: 'Accommodation in Singapore',
-      group: 'accommodation',
+      title: 'Previous Residence History',
+      group: 'history',
       showDocuments: false
     },
     {
@@ -50,16 +44,37 @@ export const SINGAPORE: VisaForm = {
       title: 'Host Information',
       group: 'host',
       showDocuments: false
+    },
+    {
+      title: 'Declaration',
+      group: 'travel',
+      showDocuments: false
     }
   ],
   fields: [
     // Personal Information
     {
+      id: 'name',
+      group: 'personal',
+      type: 'text',
+      label: 'Name',
+      placeholder: 'Full name as shown in travel document',
+      required: true
+    },
+    {
       id: 'alias',
       group: 'personal',
       type: 'text',
-      label: 'Alias (if any)',
+      label: 'Alias',
       required: false
+    },
+    {
+      id: 'dateOfBirth',
+      group: 'personal',
+      type: 'date',
+      label: 'Date of Birth',
+      placeholder: 'DD/MM/YYYY',
+      required: true
     },
     {
       id: 'gender',
@@ -107,19 +122,45 @@ export const SINGAPORE: VisaForm = {
       options: [
         { label: 'Singapore Citizen', value: 'singapore_citizen' },
         { label: 'Singapore Permanent Resident', value: 'singapore_pr' },
-        { label: 'Other', value: 'other' }
+        { label: 'Others (Please Specify)', value: 'other' }
       ]
     },
     {
       id: 'spouseNationalityOther',
       group: 'personal',
       type: 'text',
-      label: 'Please Specify Other Nationality',
+      label: 'Others (Please Specify)',
       required: false,
       dependencies: [
         {
           fieldId: 'spouseNationality',
           value: 'other'
+        }
+      ]
+    },
+    {
+      id: 'spouseNricSg',
+      group: 'personal',
+      type: 'text',
+      label: 'NRIC No.',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'spouseNationality',
+          value: 'singapore_citizen'
+        }
+      ]
+    },
+    {
+      id: 'spouseNricPr',
+      group: 'personal',
+      type: 'text',
+      label: 'NRIC No.',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'spouseNationality',
+          value: 'singapore_pr'
         }
       ]
     },
@@ -141,7 +182,8 @@ export const SINGAPORE: VisaForm = {
       id: 'race',
       group: 'personal',
       type: 'text',
-      label: 'Race (e.g. Malay, Indian, Chinese, Caucasian, etc)',
+      label: 'Race',
+      placeholder: 'e.g. Malay, Indian, Chinese, Caucasian, etc',
       required: true
     },
     {
@@ -164,14 +206,14 @@ export const SINGAPORE: VisaForm = {
         { label: 'Service Passport', value: 'service_passport' },
         { label: 'Document of Identity', value: 'document_of_identity' },
         { label: 'Certificate of Identity', value: 'certificate_of_identity' },
-        { label: 'Other', value: 'other' }
+        { label: 'Others (please specify)', value: 'other' }
       ]
     },
     {
       id: 'travelDocumentTypeOther',
       group: 'personal',
       type: 'text',
-      label: 'Please Specify Other Document Type',
+      label: 'Others (please specify)',
       required: false,
       dependencies: [
         {
@@ -181,13 +223,51 @@ export const SINGAPORE: VisaForm = {
       ]
     },
     {
+      id: 'travelDocumentNumber',
+      group: 'personal',
+      type: 'text',
+      label: 'Travel Document No.',
+      required: true
+    },
+    {
+      id: 'travelDocumentIssueDate',
+      group: 'personal',
+      type: 'date',
+      label: 'Travel Document Issued Date',
+      placeholder: 'DD/MM/YYYY',
+      required: true
+    },
+    {
+      id: 'travelDocumentExpiryDate',
+      group: 'personal',
+      type: 'date',
+      label: 'Expiry Date',
+      placeholder: 'DD/MM/YYYY',
+      required: true
+    },
+    {
       id: 'countryOfIssue',
       group: 'personal',
       type: 'text',
       label: 'Country/Place of Issue',
       required: true
     },
+    {
+      id: 'prcIdNumber',
+      group: 'personal',
+      type: 'text',
+      label: 'PRC ID Number',
+      placeholder: 'For Chinese Nationals Only',
+      required: false
+    },
     // Address Information
+    {
+      id: 'addressHeading',
+      group: 'address',
+      type: 'text',
+      label: 'Address in Country/Place of Origin/Residence',
+      required: false
+    },
     {
       id: 'countryOfOrigin',
       group: 'address',
@@ -217,16 +297,18 @@ export const SINGAPORE: VisaForm = {
       required: false
     },
     {
-      id: 'addressInOrigin',
+      id: 'address',
       group: 'address',
       type: 'text',
       label: 'Address',
       required: true
     },
+
+
     
-    // Contact Information
+    // Contact & Employment Information
     {
-      id: 'emailAddress',
+      id: 'email',
       group: 'contact',
       type: 'text',
       label: 'Email Address',
@@ -236,7 +318,7 @@ export const SINGAPORE: VisaForm = {
       }
     },
     {
-      id: 'contactNumber',
+      id: 'phone',
       group: 'contact',
       type: 'text',
       label: 'Contact Number',
@@ -247,14 +329,28 @@ export const SINGAPORE: VisaForm = {
     },
     {
       id: 'occupation',
-      group: 'education',
+      group: 'contact',
       type: 'text',
       label: 'Occupation',
       required: true
     },
     {
+      id: 'employerName',
+      group: 'contact',
+      type: 'text',
+      label: 'Name of Employer/Business',
+      required: true
+    },
+    {
+      id: 'employerAddress',
+      group: 'contact',
+      type: 'text',
+      label: 'Address of Employer/Business',
+      required: true
+    },
+    {
       id: 'highestQualification',
-      group: 'education',
+      group: 'contact',
       type: 'select',
       label: 'Highest Academic/Professional Qualifications Attained',
       required: true,
@@ -270,7 +366,7 @@ export const SINGAPORE: VisaForm = {
     },
     {
       id: 'annualIncome',
-      group: 'education',
+      group: 'contact',
       type: 'text',
       label: 'Annual Income in Singapore dollars (SGD)',
       required: true,
@@ -291,18 +387,19 @@ export const SINGAPORE: VisaForm = {
       id: 'purposeOfTrip',
       group: 'travel',
       type: 'select',
-      label: 'Purpose of Visit',
+      label: 'Purpose of visit',
       required: true,
       options: [
-        { label: 'Tourism', value: 'tourism' },
-        { label: 'Business', value: 'business' },
-        { label: 'Social Visit', value: 'social_visit' },
-        { label: 'Medical Treatment', value: 'medical' },
-        { label: 'Education', value: 'education' },
-        { label: 'Employment', value: 'employment' },
-        { label: 'Transit', value: 'transit' },
-        { label: 'Other', value: 'other' }
+        { label: 'Social', value: 'social' },
+        { label: 'Business', value: 'business' }
       ]
+    },
+    {
+      id: 'purposeDetails',
+      group: 'travel',
+      type: 'text',
+      label: 'Details of purpose',
+      required: false
     },
     {
       id: 'purposeOfTripOther',
@@ -322,7 +419,21 @@ export const SINGAPORE: VisaForm = {
       group: 'travel',
       type: 'date',
       label: 'Expected Date of Arrival in Singapore',
+      placeholder: 'DD/MM/YYYY',
       required: true
+    },
+    {
+      id: 'visaType',
+      group: 'travel',
+      type: 'select',
+      label: 'Type of Visa',
+      required: true,
+      options: [
+        { label: 'Single Journey', value: 'single_journey' },
+        { label: 'Double Journey', value: 'double_journey' },
+        { label: 'Triple Journey', value: 'triple_journey' },
+        { label: 'Multiple Journey', value: 'multiple_journey' }
+      ]
     },
     {
       id: 'stayDuration',
@@ -411,20 +522,14 @@ export const SINGAPORE: VisaForm = {
         { label: 'Other', value: 'other' }
       ]
     },
-    {
-      id: 'tripSponsorOther',
-      group: 'travel',
-      type: 'text',
-      label: 'Please Specify Other Sponsor',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'tripSponsor',
-          value: 'other'
-        }
-      ]
-    },
     // Accommodation in Singapore
+    {
+      id: 'accommodationHeading',
+      group: 'accommodation',
+      type: 'text',
+      label: 'Address in Singapore',
+      required: false
+    },
     {
       id: 'accommodationType',
       group: 'accommodation',
@@ -436,7 +541,7 @@ export const SINGAPORE: VisaForm = {
         { label: "Relative's Place", value: 'relative' },
         { label: "Friend's Place", value: 'friend' },
         { label: 'Hotel', value: 'hotel' },
-        { label: 'Others', value: 'others' }
+        { label: 'Others (Please specify)', value: 'others' }
       ]
     },
     {
@@ -508,7 +613,83 @@ export const SINGAPORE: VisaForm = {
       }
     },
     
-    // Previous Travel History
+    // Antecedent of Applicant
+    {
+      id: 'hasResidedElsewhere',
+      group: 'history',
+      type: 'select',
+      label: 'Did you reside in other countries/places, other than your country/place of origin, for one year or more during the last 5 years?',
+      required: true,
+      options: [
+        { label: 'No', value: 'no' },
+        { label: 'Yes', value: 'yes' }
+      ]
+    },
+    {
+      id: 'previousResidenceDetails',
+      group: 'history',
+      type: 'text',
+      label: 'If yes, please furnish details',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'hasResidedElsewhere',
+          value: 'yes'
+        }
+      ]
+    },
+    {
+      id: 'previousResidenceCountry',
+      group: 'history',
+      type: 'text',
+      label: 'Country/Place',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'hasResidedElsewhere',
+          value: 'yes'
+        }
+      ]
+    },
+    {
+      id: 'previousResidenceAddress',
+      group: 'history',
+      type: 'text',
+      label: 'Address',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'hasResidedElsewhere',
+          value: 'yes'
+        }
+      ]
+    },
+    {
+      id: 'previousResidenceFrom',
+      group: 'history',
+      type: 'date',
+      label: 'Period of Stay (From)',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'hasResidedElsewhere',
+          value: 'yes'
+        }
+      ]
+    },
+    {
+      id: 'previousResidenceTo',
+      group: 'history',
+      type: 'date',
+      label: 'Period of Stay (To)',
+      required: false,
+      dependencies: [
+        {
+          fieldId: 'hasResidedElsewhere',
+          value: 'yes'
+        }
+      ]
+    },
     {
       id: 'hasVisitedSingapore',
       group: 'history',
@@ -537,79 +718,40 @@ export const SINGAPORE: VisaForm = {
       id: 'hasRefusalOrDeportation',
       group: 'history',
       type: 'select',
-      label: 'Have you ever been refused entry into or deported from any country/place, including Singapore?',
+      label: '(a) Have you ever been refused entry into or deported from any country/place, including Singapore?',
       required: true,
       options: [
         { label: 'No', value: 'no' },
         { label: 'Yes', value: 'yes' }
-      ]
-    },
-    {
-      id: 'refusalOrDeportationDetails',
-      group: 'history',
-      type: 'text',
-      label: 'Please provide details of the refusal or deportation',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'hasRefusalOrDeportation',
-          value: 'yes'
-        }
       ]
     },
     {
       id: 'hasCriminalRecord',
       group: 'history',
       type: 'select',
-      label: 'Have you ever been convicted in a court of law in any country/place, including Singapore?',
+      label: '(b) Have you ever been convicted in a court of law in any country/place, including Singapore?',
       required: true,
       options: [
         { label: 'No', value: 'no' },
         { label: 'Yes', value: 'yes' }
-      ]
-    },
-    {
-      id: 'criminalDetails',
-      group: 'history',
-      type: 'text',
-      label: 'Please provide details of the conviction',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'hasCriminalRecord',
-          value: 'yes'
-        }
       ]
     },
     {
       id: 'hasEntryProhibition',
       group: 'history',
       type: 'select',
-      label: 'Have you ever been prohibited from entering Singapore?',
+      label: '(c) Have you ever been prohibited from entering Singapore?',
       required: true,
       options: [
         { label: 'No', value: 'no' },
         { label: 'Yes', value: 'yes' }
-      ]
-    },
-    {
-      id: 'entryProhibitionDetails',
-      group: 'history',
-      type: 'text',
-      label: 'Please provide details of the entry prohibition',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'hasEntryProhibition',
-          value: 'yes'
-        }
       ]
     },
     {
       id: 'hasDifferentPassport',
       group: 'history',
       type: 'select',
-      label: 'Have you ever entered Singapore using a different passport or name?',
+      label: '(d) Have you ever entered Singapore using a different passport or name?',
       required: true,
       options: [
         { label: 'No', value: 'no' },
@@ -617,39 +759,14 @@ export const SINGAPORE: VisaForm = {
       ]
     },
     {
-      id: 'differentPassportDetails',
-      group: 'history',
-      type: 'text',
-      label: 'Please provide details of entry with different passport or name',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'hasDifferentPassport',
-          value: 'yes'
-        }
-      ]
-    },
-    {
       id: 'antecedentDetails',
       group: 'history',
       type: 'text',
-      label: 'If any of the antecedent answers is "YES", please furnish details',
+      label: 'If any of the answer is "YES", please furnish details below',
       required: false,
       dependencies: [
         {
           fieldId: 'hasRefusalOrDeportation',
-          value: 'yes'
-        },
-        {
-          fieldId: 'hasCriminalRecord',
-          value: 'yes'
-        },
-        {
-          fieldId: 'hasEntryProhibition',
-          value: 'yes'
-        },
-        {
-          fieldId: 'hasDifferentPassport',
           value: 'yes'
         }
       ]
@@ -665,26 +782,21 @@ export const SINGAPORE: VisaForm = {
         { label: 'Yes', value: 'yes' }
       ]
     },
-    {
-      id: 'residenceHistory',
-      group: 'history',
-      type: 'text',
-      label: 'Previous residence history',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'hasResidedOtherCountries',
-          value: 'yes'
-        }
-      ]
-    },
+
     
     // Travel Companion
+    {
+      id: 'travelCompanionHeading',
+      group: 'family',
+      type: 'text',
+      label: 'Details of Travelling Companion (Only for applicant who is 12 years old or less)',
+      required: false
+    },
     {
       id: 'hasTravelCompanion',
       group: 'family',
       type: 'select',
-      label: 'Are you accompanied by a child 12 years old or less?',
+      label: 'Are you travelling with someone?',
       required: true,
       options: [
         { label: 'No', value: 'no' },
@@ -692,7 +804,7 @@ export const SINGAPORE: VisaForm = {
       ]
     },
     {
-      id: 'companionRelationship',
+      id: 'travelCompanionRelationship',
       group: 'family',
       type: 'text',
       label: 'Relationship of Travelling Companion to Applicant',
@@ -776,6 +888,13 @@ export const SINGAPORE: VisaForm = {
     
     // Host Information
     {
+      id: 'hostHeading',
+      group: 'host',
+      type: 'text',
+      label: 'Details of Local Contact or Company/Hotel in Singapore',
+      required: false
+    },
+    {
       id: 'hostName',
       group: 'host',
       type: 'text',
@@ -821,9 +940,13 @@ export const SINGAPORE: VisaForm = {
     {
       id: 'declaration',
       group: 'travel',
-      type: 'checkbox',
-      label: 'I declare that all information provided in this application is true and correct. I understand that any false or misleading statement may result in permanent disqualification of my application and/or prosecution in court.',
-      required: true
+      type: 'select',
+      label: 'I declare that all information submitted is true and accurate. I will comply with Singapore laws and immigration regulations.',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
     }
   ],
   documents: [

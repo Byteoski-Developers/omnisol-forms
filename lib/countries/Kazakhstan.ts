@@ -40,43 +40,51 @@ export const KAZAKHSTAN: VisaForm = {
   fields: [
     // Personal Information
     {
-      id: 'fullName',
+      id: 'name',
       group: 'personal',
       type: 'text',
-      label: 'Full Name',
-      required: true
+      label: 'Name',
+      placeholder: 'Full name as shown in passport',
+      required: false
     },
     {
       id: 'dateOfBirth',
       group: 'personal',
       type: 'date',
       label: 'Date of Birth',
-      required: true
+      placeholder: 'DD/MM/YYYY',
+      required: false
+    },
+    {
+      id: 'placeOfBirth',
+      group: 'personal',
+      type: 'text',
+      label: 'Place of Birth',
+      required: false
     },
     {
       id: 'gender',
       group: 'personal',
       type: 'select',
-      label: 'Gender',
-      required: true,
+      label: 'Sex',
+      required: false,
       options: [
         { label: 'Male', value: 'male' },
         { label: 'Female', value: 'female' }
       ]
     },
     {
-      id: 'nationality',
+      id: 'maritalStatus',
       group: 'personal',
-      type: 'text',
-      label: 'Nationality',
-      required: true
-    },
-    {
-      id: 'passportNumber',
-      group: 'personal',
-      type: 'text',
-      label: 'Passport Number',
-      required: true
+      type: 'select',
+      label: 'Marital status',
+      required: true,
+      options: [
+        { label: 'Single', value: 'single' },
+        { label: 'Married', value: 'married' },
+        { label: 'Widowed', value: 'widowed' },
+        { label: 'Divorced', value: 'divorced' }
+      ]
     },
     {
       id: 'passportExpiryDate',

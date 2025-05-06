@@ -75,14 +75,9 @@ import { Country } from "@/types/form";
 
 export const SAMPLE_COUNTRIES: Country[] = [
   {
-    code: 'ID',
-    name: 'Indonesia',
-    flag: 'https://flagcdn.com/w80/id.png',
-  },
-  {
-    code: 'MY',
-    name: 'Malaysia',
-    flag: 'https://flagcdn.com/w80/my.png',
+    code: 'SG',
+    name: 'Singapore',
+    flag: 'https://flagcdn.com/w80/sg.png',
   },
   {
     code: 'TR',
@@ -90,24 +85,9 @@ export const SAMPLE_COUNTRIES: Country[] = [
     flag: 'https://flagcdn.com/w80/tr.png',
   },
   {
-    code: 'LK',
-    name: 'Sri Lanka',
-    flag: 'https://flagcdn.com/w80/lk.png',
-  },
-  {
-    code: 'CN',
-    name: 'China',
-    flag: 'https://flagcdn.com/w80/cn.png',
-  },
-  {
-    code: 'SG',
-    name: 'Singapore',
-    flag: 'https://flagcdn.com/w80/sg.png',
-  },
-  {
-    code: 'NZ',
-    name: 'New Zealand',
-    flag: 'https://flagcdn.com/w80/nz.png',
+    code: 'JP',
+    name: 'Japan',
+    flag: 'https://flagcdn.com/w80/jp.png',
   },
   {
     code: 'AZ',
@@ -115,14 +95,15 @@ export const SAMPLE_COUNTRIES: Country[] = [
     flag: 'https://flagcdn.com/w80/az.png',
   },
   {
+    code: 'NZ',
+    name: 'New Zealand',
+    flag: 'https://flagcdn.com/w80/nz.png',
+  },
+  
+  {
     code: 'GE',
     name: 'Georgia',
     flag: 'https://flagcdn.com/w80/ge.png',
-  },
-  {
-    code: 'JP',
-    name: 'Japan',
-    flag: 'https://flagcdn.com/w80/jp.png',
   },
   {
     code: 'KZ',
@@ -135,8 +116,38 @@ export const SAMPLE_COUNTRIES: Country[] = [
     flag: 'https://flagcdn.com/w80/ae.png',
   },
   {
+    code: 'ID',
+    name: 'Indonesia',
+    flag: 'https://flagcdn.com/w80/id.png',
+  },
+  {
+    code: 'CN',
+    name: 'China',
+    flag: 'https://flagcdn.com/w80/cn.png',
+  },
+  {
     code: 'VN',
     name: 'Vietnam',
     flag: 'https://flagcdn.com/w80/vn.png',
+  },
+  {
+    code: 'MY',
+    name: 'Malaysia',
+    flag: 'https://flagcdn.com/w80/my.png',
+  },
+  {
+    code: 'LK',
+    name: 'Sri Lanka',
+    flag: 'https://flagcdn.com/w80/lk.png',
+  },
+  {
+    code: 'CA',
+    name: 'Canada',
+    flag: 'https://flagcdn.com/w80/ca.png',
+  },
+  {
+    code: 'AU',
+    name: 'Australia',
+    flag: 'https://flagcdn.com/w80/au.png',
   },
 ];

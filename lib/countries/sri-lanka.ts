@@ -1,44 +1,44 @@
 import { VisaForm } from '@/types/form';
 
 
-export const SRI_LANKA:VisaForm =      {
-    id: 'tourist-visa',
-    countryCode: 'LK',
-    name: 'Sri Lanka Tourist ETA Application',
-    description: 'Application for Sri Lankan Electronic Travel Authorization (ETA)',
-    steps: [
-      {
-        title: 'Personal Information',
-        group: 'personal',
-        showDocuments: false
-      },
-      {
-        title: 'Travel Information',
-        group: 'travel',
-        showDocuments: false
-      },
-      {
-        title: 'Family Information',
-        group: 'family',
-        showDocuments: false
-      },
-      {
-        title: 'Contact Details',
-        group: 'contact',
-        showDocuments: false
-      },
-      {
-        title: 'Declaration',
-        group: 'eligibility',
-        showDocuments: false
-      },
-      {
-        title: 'Required Documents',
-        group: 'documents',
-        showDocuments: true
-      }
-    ],
-    fields: [
+export const SRI_LANKA: VisaForm = {
+  id: 'tourist-visa',
+  countryCode: 'LK',
+  name: 'Sri Lanka Tourist ETA Application',
+  description: 'Application for Sri Lankan Electronic Travel Authorization (ETA)',
+  steps: [
+    {
+      title: 'Personal Information',
+      group: 'personal',
+      showDocuments: false
+    },
+    {
+      title: 'Travel Information',
+      group: 'travel',
+      showDocuments: false
+    },
+    {
+      title: 'Family Information',
+      group: 'family',
+      showDocuments: false
+    },
+    {
+      title: 'Contact Details',
+      group: 'contact',
+      showDocuments: false
+    },
+    {
+      title: 'Declaration',
+      group: 'eligibility',
+      showDocuments: false
+    },
+    {
+      title: 'Required Documents',
+      group: 'documents',
+      showDocuments: true
+    }
+  ],
+  fields: [
       {
         id: 'surname',
         group: 'personal',
@@ -47,42 +47,42 @@ export const SRI_LANKA:VisaForm =      {
         required: true
       },
       {
-        id: 'givenNames',
-        group: 'personal',
-        type: 'text',
-        label: 'Other/Given Names',
-        required: true
-      },
-      {
-        id: 'title',
-        group: 'personal',
-        type: 'select',
-        label: 'Title',
-        required: true,
-        options: [
-          { label: 'Mr', value: 'mr' },
-          { label: 'Mrs', value: 'mrs' },
-          { label: 'Miss', value: 'miss' },
-          { label: 'Ms', value: 'ms' },
-          { label: 'Dr', value: 'dr' }
-        ]
-      },
-      {
         id: 'dateOfBirth',
         group: 'personal',
         type: 'date',
         label: 'Date of Birth',
-        required: true
+        placeholder: 'DD/MM/YYYY',
+        required: false
+      },
+      {
+        id: 'placeOfBirth',
+        group: 'personal',
+        type: 'text',
+        label: 'Place of Birth',
+        required: false
       },
       {
         id: 'gender',
         group: 'personal',
         type: 'select',
-        label: 'Gender',
-        required: true,
+        label: 'Sex',
+        required: false,
         options: [
           { label: 'Male', value: 'male' },
           { label: 'Female', value: 'female' }
+        ]
+      },
+      {
+        id: 'maritalStatus',
+        group: 'personal',
+        type: 'select',
+        label: 'Marital status',
+        required: true,
+        options: [
+          { label: 'Single', value: 'single' },
+          { label: 'Married', value: 'married' },
+          { label: 'Widowed', value: 'widowed' },
+          { label: 'Divorced', value: 'divorced' }
         ]
       },
       {
@@ -382,7 +382,7 @@ export const SRI_LANKA:VisaForm =      {
         id: 'passport',
         name: 'Passport',
         description: 'Scanned copy of passport (bio page)',
-        type: 'default',
+        type: 'default' as const,
         required: true,
         extractableFields: [
           { fieldId: 'surname', source: 'passport' },
@@ -398,21 +398,21 @@ export const SRI_LANKA:VisaForm =      {
         id: 'photo',
         name: 'Recent Photograph',
         description: 'Recent passport size photograph (35mm x 45mm) with white background',
-        type: 'default',
+        type: 'default' as const,
         required: true
       },
       {
         id: 'hotelBooking',
         name: 'Hotel Booking',
         description: 'Hotel booking confirmation in Sri Lanka',
-        type: 'default',
+        type: 'default' as const,
         required: true
       },
       {
         id: 'flightTicket',
         name: 'Flight Tickets',
         description: 'Return flight tickets',
-        type: 'default',
+        type: 'default' as const,
         required: true,
         extractableFields: [
           { fieldId: 'arrivalDate', source: 'travel_document' },
@@ -423,7 +423,7 @@ export const SRI_LANKA:VisaForm =      {
         id: 'childrenPassports',
         name: 'Children\'s Passports',
         description: 'Scanned copies of passports for all accompanying children (if applicable)',
-        type: 'conditional',
+        type: 'conditional' as const,
         required: true,
         conditions: [
           {

@@ -50,53 +50,38 @@ export const TURKEY: VisaForm = {
   fields: [
     // Personal Information
     {
-      id: 'Name',
+      id: 'name',
       group: 'personal',
       type: 'text',
       label: 'Name',
+      placeholder: 'Full name as shown in passport',
       required: false
     },
     {
-      id: 'idNumber',
+      id: 'dateOfBirth',
       group: 'personal',
-      type: 'text',
-      label: 'ID-number (optional)',
+      type: 'date',
+      label: 'Date of Birth',
+      placeholder: 'DD/MM/YYYY',
       required: false
     },
     {
       id: 'placeOfBirth',
       group: 'personal',
       type: 'text',
-      label: 'Place of birth',
-      required: true
+      label: 'Place of Birth',
+      required: false
     },
     {
-      id: 'countryOfBirth',
+      id: 'gender',
       group: 'personal',
-      type: 'text',
-      label: 'Country of birth',
-      required: true
-    },
-    {
-      id: 'citizenshipAtBirth',
-      group: 'personal',
-      type: 'text',
-      label: 'Citizenship at birth',
-      required: true
-    },
-    {
-      id: 'fatherName',
-      group: 'personal',
-      type: 'text',
-      label: "Father's full name",
-      required: true
-    },
-    {
-      id: 'motherName',
-      group: 'personal',
-      type: 'text',
-      label: "Mother's full name",
-      required: true
+      type: 'select',
+      label: 'Sex',
+      required: false,
+      options: [
+        { label: 'Male', value: 'male' },
+        { label: 'Female', value: 'female' }
+      ]
     },
     {
       id: 'maritalStatus',
@@ -782,9 +767,13 @@ export const TURKEY: VisaForm = {
     {
       id: 'declaration',
       group: 'travel',
-      type: 'checkbox',
+      type: 'select',
       label: 'I certify that I have read and understood all the questions set forth in this application form and the answers I have furnished on this form are true and correct to the best of my knowledge and belief. I understand that possession of a visa does not automatically entitle me to enter the Republic of Turkey upon arrival at a port of entry.',
-      required: true
+      required: true,
+      options: [
+        { label: 'No', value: 'no' },
+        { label: 'Yes', value: 'yes' }
+      ]
     }
   ],
   documents: [

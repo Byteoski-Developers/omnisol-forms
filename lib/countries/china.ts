@@ -238,18 +238,36 @@ export const CHINA: VisaForm = {
       }
     },
     {
-      id: 'otherNames',
+      id: 'fullName',
       group: 'personal',
       type: 'text',
-      label: 'Other name(s) or Former name(s)',
-      required: false
+      label: 'Full Name',
+      required: true
     },
     {
-      id: 'chineseName',
+      id: 'dateOfBirth',
+      group: 'personal',
+      type: 'date',
+      label: 'Date of Birth',
+      required: true
+    },
+    {
+      id: 'placeOfBirth',
       group: 'personal',
       type: 'text',
-      label: 'Chinese name (if applicable, in Chinese)',
-      required: false
+      label: 'Place of Birth',
+      required: true
+    },
+    {
+      id: 'gender',
+      group: 'personal',
+      type: 'select',
+      label: 'Gender',
+      required: true,
+      options: [
+        { label: 'Male', value: 'male' },
+        { label: 'Female', value: 'female' }
+      ]
     },
     {
       id: 'maritalStatus',
@@ -260,13 +278,12 @@ export const CHINA: VisaForm = {
       options: [
         { label: 'Single', value: 'single' },
         { label: 'Married', value: 'married' },
-        { label: 'Divorced', value: 'divorced' },
         { label: 'Widowed', value: 'widowed' },
-        { label: 'Other', value: 'other' }
+        { label: 'Divorced', value: 'divorced' }
       ]
     },
     {
-      id: 'birthCountry',
+      id: 'countryOfBirth',
       group: 'personal',
       type: 'select',
       label: 'Country/Region of Birth',

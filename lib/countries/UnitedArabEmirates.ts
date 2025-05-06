@@ -31,11 +31,7 @@ export const UNITED_ARAB_EMIRATES: VisaForm = {
       group: 'history',
       showDocuments: false
     },
-    {
-      title: 'Supporting Documents',
-      group: 'documents',
-      showDocuments: true
-    }
+   
   ],
   fields: [
     // Personal Information

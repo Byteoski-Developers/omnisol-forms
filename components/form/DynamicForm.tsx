@@ -43,16 +43,67 @@ export function DynamicForm({
 
   useEffect(() => {
     const visible = new Set<string>();
+    console.log('Form data:', formData);
     form.fields.forEach((field) => {
-      if (!field.dependencies) {
-        visible.add(field.id);
-      } else {
-        const allDependenciesMet = field.dependencies.every(
-          (dep) => formData[dep.fieldId] === dep.value
-        );
-        if (allDependenciesMet) {
-          visible.add(field.id);
+      // Check dependencies first
+      const dependenciesMet = !field.dependencies || field.dependencies.every(
+        (dep) => formData[dep.fieldId] === dep.value
+      );
+
+      // Check showIf condition if it exists
+      let showIfConditionMet = true;
+      if (field.showIf) {
+        console.log('Checking showIf for field:', field.id, 'showIf:', field.showIf);
+        
+        if ('operator' in field.showIf) {
+          // Handle the operator/conditions case
+          const { operator, conditions } = field.showIf;
+          console.log('Complex condition - operator:', operator, 'conditions:', conditions);
+          
+          const conditionResults = conditions.map(condition => {
+            const fieldValue = formData[condition.field];
+            console.log(`Condition check - field: ${condition.field}, value: ${fieldValue}, condition:`, condition);
+            
+            if (condition.value !== undefined) {
+              const result = fieldValue === condition.value;
+              console.log(`Value check: ${fieldValue} === ${condition.value} -> ${result}`);
+              return result;
+            } else if (condition.not !== undefined) {
+              const result = fieldValue !== condition.not;
+              console.log(`Not check: ${fieldValue} !== ${condition.not} -> ${result}`);
+              return result;
+            }
+            return true;
+          });
+          
+          showIfConditionMet = operator === 'and' 
+            ? conditionResults.every(Boolean)
+            : conditionResults.some(Boolean);
+            
+          console.log('Final complex condition result:', showIfConditionMet);
+        } else {
+          // Handle the simple field/value case
+          const fieldValue = formData[field.showIf.field];
+          console.log(`Simple condition - field: ${field.showIf.field}, value: ${fieldValue}, condition:`, field.showIf);
+          
+          if (field.showIf.value !== undefined) {
+            showIfConditionMet = fieldValue === field.showIf.value;
+            console.log(`Value check: ${fieldValue} === ${field.showIf.value} -> ${showIfConditionMet}`);
+          } else if (field.showIf.not !== undefined) {
+            // If the field has a 'not' condition, it should be hidden when the value matches
+            showIfConditionMet = fieldValue !== field.showIf.not;
+            console.log(`Not check: ${fieldValue} !== ${field.showIf.not} -> ${showIfConditionMet}`);
+          } else {
+            // If no specific condition is met, default to showing the field
+            showIfConditionMet = true;
+            console.log('No specific condition, defaulting to show');
+          }
         }
+      }
+
+      // Field is visible if both dependencies and showIf conditions are met
+      if (dependenciesMet && showIfConditionMet) {
+        visible.add(field.id);
       }
     });
     setVisibleFields(visible);
@@ -162,7 +213,10 @@ export function DynamicForm({
   };
 
   const renderField = (field: FormField) => {
-    if (!visibleFields.has(field.id)) return null;
+    // Skip rendering if field is not in visibleFields
+    if (!visibleFields.has(field.id)) {
+      return null;
+    }
 
     const error = errors[field.id];
     const commonProps = {
@@ -228,6 +282,29 @@ export function DynamicForm({
     }
 
     switch (field.type) {
+      case 'info':
+        return (
+          <div className="space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-200" key={field.id}>
+            <h3 className="text-lg font-medium text-blue-900">{field.label}</h3>
+            <div className="space-y-2 text-sm text-blue-800">
+              {field.content?.map((line, index) => (
+                <p key={index} className={line.startsWith('✓') ? 'flex items-start' : 'pl-6'}>
+                  {line.startsWith('✓') && (
+                    <span className="mr-2 text-green-600">✓</span>
+                  )}
+                  {line.startsWith('•') ? (
+                    <span className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>{line.substring(1).trim()}</span>
+                    </span>
+                  ) : (
+                    line
+                  )}
+                </p>
+              ))}
+            </div>
+          </div>
+        );
       case 'text':
         return (
           <div className="space-y-2" key={field.id}>

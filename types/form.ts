@@ -13,7 +13,17 @@ export type FormGroup =
   | 'host'
   | 'work'
   | 'education'
-  | 'history';
+  | 'history'
+  | 'declaration'
+  | 'guarantor'
+  | 'inviter'
+  | 'criminal'
+  | 'travel_document'
+  | 'description_section'
+  | 'citizenship'
+  | 'national_id'
+  | 'past_names'
+  ;
 
 export interface FormStep {
   title: string;
@@ -39,7 +49,8 @@ export interface Document {
 
 export interface FormField {
   id: string;
-  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file';
+  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info';
+  content?: string[];
   label: string;
   placeholder?: string;
   required?: boolean;
@@ -47,6 +58,18 @@ export interface FormField {
   autoExtracted?: boolean;
   description?: string;
   showInForm?: boolean; // Controls whether the field is displayed in the form UI
+  showIf?: {
+    field: string;
+    value?: string | boolean | number;
+    not?: string | boolean | number;
+  } | {
+    operator: 'or' | 'and';
+    conditions: Array<{
+      field: string;
+      value?: string | boolean | number;
+      not?: string | boolean | number;
+    }>;
+  };
   options?: { label: string; value: string }[];
   dependencies?: Array<{
     fieldId: string;

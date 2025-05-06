@@ -12,15 +12,16 @@ export const AZERBAIJAN: VisaForm = {
       showDocuments: false
     },
     {
+      title: 'Nationality & Travel Document',
+      group: 'travel_document',
+      showDocuments: false
+    },
+    {
       title: 'Contact Information',
       group: 'contact',
       showDocuments: false
     },
-    {
-      title: 'Employment & Business Information',
-      group: 'work',
-      showDocuments: false
-    },
+
     {
       title: 'Travel Details',
       group: 'travel',
@@ -31,59 +32,100 @@ export const AZERBAIJAN: VisaForm = {
       group: 'history',
       showDocuments: false
     },
-    {
-      title: 'Supporting Documents',
-      group: 'documents',
-      showDocuments: true
-    }
+    
   ],
   fields: [
     // Personal Information
     {
-      id: 'fullName',
+      id: 'name',
       group: 'personal',
       type: 'text',
-      label: 'Full Name',
-      required: true
+      label: 'Name',
+      placeholder: 'Full name as shown in passport',
+      required: false
     },
     {
       id: 'dateOfBirth',
       group: 'personal',
       type: 'date',
       label: 'Date of Birth',
-      required: true
+      placeholder: 'DD/MM/YYYY',
+      required: false
+    },
+    {
+      id: 'placeOfBirth',
+      group: 'personal',
+      type: 'text',
+      label: 'Place of Birth',
+      required: false
     },
     {
       id: 'gender',
       group: 'personal',
       type: 'select',
-      label: 'Gender',
-      required: true,
+      label: 'Sex',
+      required: false,
       options: [
         { label: 'Male', value: 'male' },
         { label: 'Female', value: 'female' }
       ]
     },
+
     {
-      id: 'nationality',
+      id: 'maritalStatus',
       group: 'personal',
+      type: 'select',
+      label: 'Marital status',
+      required: true,
+      options: [
+        { label: 'Single', value: 'single' },
+        { label: 'Married', value: 'married' },
+        { label: 'Widowed', value: 'widowed' },
+        { label: 'Divorced', value: 'divorced' }
+      ]
+    },
+    
+    // Nationality & Travel Document
+    {
+      id: 'nationalityCitizenship',
+      group: 'travel_document',
       type: 'text',
-      label: 'Nationality',
+      label: 'Nationality / Citizenship',
+      required: false,
+      placeholder: 'Enter your nationality/citizenship'
+    },
+    {
+      id: 'travelDocument',
+      group: 'travel_document',
+      type: 'select',
+      label: 'Travel Document',
+      required: false,
+      placeholder: 'Choose an option',
+      options: [
+        { label: 'Ordinary Passport', value: 'ordinary_passport' },
+        { label: 'Diplomatic Passport', value: 'diplomatic_passport' },
+        { label: 'Service Passport', value: 'service_passport' },
+        { label: 'For stateless person', value: 'stateless_person' },
+        { label: 'Special passport', value: 'special_passport' },
+        { label: 'Official passport', value: 'official_passport' }
+      ]
+    },
+    
+    // Travel Details
+    {
+      id: 'purposeOfVisit',
+      group: 'travel',
+      type: 'text',
+      label: 'Purpose of visit *',
       required: true
     },
     {
-      id: 'passportNumber',
-      group: 'personal',
-      type: 'text',
-      label: 'Passport Number',
-      required: true
-    },
-    {
-      id: 'passportExpiryDate',
-      group: 'personal',
+      id: 'dateOfArrival',
+      group: 'travel',
       type: 'date',
-      label: 'Passport Expiry Date',
-      required: true
+      label: 'Date of arrival in country *',
+      required: true,
+      placeholder: 'dd-mm-yyyy'
     },
 
     // Contact Information
@@ -109,56 +151,6 @@ export const AZERBAIJAN: VisaForm = {
       required: true
     },
 
-    // Employment & Business Information
-    {
-      id: 'occupation',
-      group: 'work',
-      type: 'text',
-      label: 'Occupation',
-      required: true
-    },
-    {
-      id: 'employerName',
-      group: 'work',
-      type: 'text',
-      label: 'Employer Name',
-      required: true
-    },
-    {
-      id: 'employerAddress',
-      group: 'work',
-      type: 'text',
-      label: 'Employer Address',
-      required: true
-    },
-    {
-      id: 'businessPurpose',
-      group: 'work',
-      type: 'select',
-      label: 'Purpose of Business Visit',
-      required: true,
-      options: [
-        { label: 'Business Meetings', value: 'meetings' },
-        { label: 'Trade Fair/Exhibition', value: 'exhibition' },
-        { label: 'Training', value: 'training' },
-        { label: 'Technical Support', value: 'support' },
-        { label: 'Other', value: 'other' }
-      ]
-    },
-    {
-      id: 'businessPurposeOther',
-      group: 'work',
-      type: 'text',
-      label: 'Please specify other purpose',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'businessPurpose',
-          value: 'other'
-        }
-      ]
-    },
-
     // Travel Details
     {
       id: 'intendedArrivalDate',
@@ -174,21 +166,7 @@ export const AZERBAIJAN: VisaForm = {
       label: 'Intended Departure Date',
       required: true
     },
-    {
-      id: 'accommodationDetails',
-      group: 'travel',
-      type: 'text',
-      label: 'Accommodation Details',
-      required: true
-    },
-    {
-      id: 'travelItinerary',
-      group: 'travel',
-      type: 'text',
-      label: 'Travel Itinerary',
-      required: true
-    },
-
+    
     // Previous Travel History
     {
       id: 'previousVisit',

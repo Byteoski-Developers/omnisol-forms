@@ -44,11 +44,6 @@ export const SINGAPORE: VisaForm = {
       title: 'Host Information',
       group: 'host',
       showDocuments: false
-    },
-    {
-      title: 'Declaration',
-      group: 'travel',
-      showDocuments: false
     }
   ],
   fields: [
@@ -58,14 +53,7 @@ export const SINGAPORE: VisaForm = {
       group: 'personal',
       type: 'text',
       label: 'Name',
-      placeholder: 'Full name as shown in travel document',
-      required: true
-    },
-    {
-      id: 'alias',
-      group: 'personal',
-      type: 'text',
-      label: 'Alias',
+      placeholder: 'Full name as shown in passport',
       required: false
     },
     {
@@ -74,14 +62,21 @@ export const SINGAPORE: VisaForm = {
       type: 'date',
       label: 'Date of Birth',
       placeholder: 'DD/MM/YYYY',
-      required: true
+      required: false
+    },
+    {
+      id: 'placeOfBirth',
+      group: 'personal',
+      type: 'text',
+      label: 'Place of Birth',
+      required: false
     },
     {
       id: 'gender',
       group: 'personal',
       type: 'select',
       label: 'Sex',
-      required: true,
+      required: false,
       options: [
         { label: 'Male', value: 'male' },
         { label: 'Female', value: 'female' }
@@ -91,174 +86,14 @@ export const SINGAPORE: VisaForm = {
       id: 'maritalStatus',
       group: 'personal',
       type: 'select',
-      label: 'Marital Status',
+      label: 'Marital status',
       required: true,
       options: [
         { label: 'Single', value: 'single' },
         { label: 'Married', value: 'married' },
-        { label: 'Separated', value: 'separated' },
-        { label: 'Divorced', value: 'divorced' },
         { label: 'Widowed', value: 'widowed' },
-        { label: 'Cohabited', value: 'cohabited' },
-        { label: 'Customary', value: 'customary' }
+        { label: 'Divorced', value: 'divorced' }
       ]
-    },
-    {
-      id: 'spouseNationality',
-      group: 'personal',
-      type: 'select',
-      label: 'Nationality/Citizenship of Spouse',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'maritalStatus',
-          value: 'married'
-        },
-        {
-          fieldId: 'maritalStatus',
-          value: 'separated'
-        }
-      ],
-      options: [
-        { label: 'Singapore Citizen', value: 'singapore_citizen' },
-        { label: 'Singapore Permanent Resident', value: 'singapore_pr' },
-        { label: 'Others (Please Specify)', value: 'other' }
-      ]
-    },
-    {
-      id: 'spouseNationalityOther',
-      group: 'personal',
-      type: 'text',
-      label: 'Others (Please Specify)',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'spouseNationality',
-          value: 'other'
-        }
-      ]
-    },
-    {
-      id: 'spouseNricSg',
-      group: 'personal',
-      type: 'text',
-      label: 'NRIC No.',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'spouseNationality',
-          value: 'singapore_citizen'
-        }
-      ]
-    },
-    {
-      id: 'spouseNricPr',
-      group: 'personal',
-      type: 'text',
-      label: 'NRIC No.',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'spouseNationality',
-          value: 'singapore_pr'
-        }
-      ]
-    },
-    {
-      id: 'countryOfBirth',
-      group: 'personal',
-      type: 'text',
-      label: 'Country/Place of Birth',
-      required: true
-    },
-    {
-      id: 'stateOfBirth',
-      group: 'personal',
-      type: 'text',
-      label: 'State/Province of Birth',
-      required: true
-    },
-    {
-      id: 'race',
-      group: 'personal',
-      type: 'text',
-      label: 'Race',
-      placeholder: 'e.g. Malay, Indian, Chinese, Caucasian, etc',
-      required: true
-    },
-    {
-      id: 'nationality',
-      group: 'personal',
-      type: 'text',
-      label: 'Nationality/Citizenship',
-      required: true
-    },
-    {
-      id: 'travelDocumentType',
-      group: 'personal',
-      type: 'select',
-      label: 'Type of Travel Document Held',
-      required: true,
-      options: [
-        { label: 'International Passport', value: 'international_passport' },
-        { label: 'Diplomatic Passport', value: 'diplomatic_passport' },
-        { label: 'Official Passport', value: 'official_passport' },
-        { label: 'Service Passport', value: 'service_passport' },
-        { label: 'Document of Identity', value: 'document_of_identity' },
-        { label: 'Certificate of Identity', value: 'certificate_of_identity' },
-        { label: 'Others (please specify)', value: 'other' }
-      ]
-    },
-    {
-      id: 'travelDocumentTypeOther',
-      group: 'personal',
-      type: 'text',
-      label: 'Others (please specify)',
-      required: false,
-      dependencies: [
-        {
-          fieldId: 'travelDocumentType',
-          value: 'other'
-        }
-      ]
-    },
-    {
-      id: 'travelDocumentNumber',
-      group: 'personal',
-      type: 'text',
-      label: 'Travel Document No.',
-      required: true
-    },
-    {
-      id: 'travelDocumentIssueDate',
-      group: 'personal',
-      type: 'date',
-      label: 'Travel Document Issued Date',
-      placeholder: 'DD/MM/YYYY',
-      required: true
-    },
-    {
-      id: 'travelDocumentExpiryDate',
-      group: 'personal',
-      type: 'date',
-      label: 'Expiry Date',
-      placeholder: 'DD/MM/YYYY',
-      required: true
-    },
-    {
-      id: 'countryOfIssue',
-      group: 'personal',
-      type: 'text',
-      label: 'Country/Place of Issue',
-      required: true
-    },
-    {
-      id: 'prcIdNumber',
-      group: 'personal',
-      type: 'text',
-      label: 'PRC ID Number',
-      placeholder: 'For Chinese Nationals Only',
-      required: false
     },
     // Address Information
     {
@@ -939,15 +774,15 @@ export const SINGAPORE: VisaForm = {
     // Declaration
     {
       id: 'declaration',
-      group: 'travel',
+      group: 'declaration',
       type: 'select',
-      label: 'I declare that all information submitted is true and accurate. I will comply with Singapore laws and immigration regulations.',
+      label: 'I declare that all information submitted in this application is true, accurate and complete to the best of my knowledge and belief. I understand that, if I have concealed relevant information or provided false, inaccurate or misleading information, I may be prosecuted and any facilities, rights or privileges granted under this application may be withdrawn.\n\nI undertake not to misuse controlled drugs or to take part in any political or other activities during my stay in Singapore which would make me an undesirable or prohibited immigrant under the Immigration Act 1959.\n\nI undertake to comply with the provisions of the Immigration Act 1959 and any regulations made thereunder or any statutory modification or re-enactment thereof for the time being in force in Singapore.\n\nI undertake not to involve in any criminal offences in Singapore.\n\nI undertake not to indulge in any activities which are inconsistent with the purpose for which the immigration passes have been issued.\n\nI further undertake not to be engaged in any form of employment, business or occupation whilst in Singapore without a valid work pass issued under the Employment of Foreign Manpower Act 1990.\n\nI am aware that overstaying or working illegally in Singapore is a serious offence and on conviction, the penalties may include mandatory imprisonment and caning.\n\nI understand that if the Controller of Immigration is satisfied that I or any member of my family breaches this undertaking or becomes an undesirable or prohibited immigrant, he will cancel my immigration pass and the passes of the members of my family, and we may be required to leave Singapore within 24 hours of such cancellation.\n\nI understand that this application for and possession of a visa does not guarantee entry into Singapore and permission to entry is entirely discretionary at the point of entry.\n\nI give my consent for your department to obtain and verify information from or with any source as you deem appropriate for the assessment of my application for immigration facilities.',
       required: true,
       options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
+        { label: 'No', value: 'no' },
+        { label: 'Yes', value: 'yes' }
       ]
-    }
+    },
   ],
   documents: [
     {
@@ -955,15 +790,7 @@ export const SINGAPORE: VisaForm = {
       name: 'Passport',
       description: 'Scanned copy of passport (all pages with stamps)',
       type: 'default',
-      required: true,
-      extractableFields: [
-        { fieldId: 'familyName', source: 'passport' },
-        { fieldId: 'givenNames', source: 'passport' },
-        { fieldId: 'dateOfBirth', source: 'passport' },
-        { fieldId: 'gender', source: 'passport' },
-        { fieldId: 'countryOfBirth', source: 'passport' },
-        { fieldId: 'nationality', source: 'passport' }
-      ]
+      required: true
     },
     {
       id: 'photo',

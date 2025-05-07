@@ -561,12 +561,12 @@ export const CANADA: VisaForm = {
       type: 'header',
       label: 'Contact information of the applicant'
     },
-    {
-      id: 'residenceHeader',
-      group: 'contact',
-      type: 'header',
-      label: 'Countries or territories of residence'
-    },
+    // {
+    //   id: 'residenceHeader',
+    //   group: 'contact',
+    //   type: 'header',
+    //   label: 'Countries or territories of residence'
+    // },
     {
       id: 'residentialAddressInfo',
       group: 'contact',
@@ -1187,61 +1187,61 @@ export const CANADA: VisaForm = {
     // },
     
     // Contact Information
-    {
-      id: 'currentAddress',
-      group: 'contact',
-      type: 'text',
-      label: 'Current Mailing Address',
-      required: true
-    },
-    {
-      id: 'city',
-      group: 'contact',
-      type: 'text',
-      label: 'City/Town',
-      required: true
-    },
-    {
-      id: 'country',
-      group: 'contact',
-      type: 'text',
-      label: 'Country',
-      required: true
-    },
-    {
-      id: 'postalCode',
-      group: 'contact',
-      type: 'text',
-      label: 'Postal/Zip Code',
-      required: true
-    },
-    {
-      id: 'phoneNumber',
-      group: 'contact',
-      type: 'text',
-      label: 'Telephone Number',
-      required: true
-    },
-    {
-      id: 'email',
-      group: 'contact',
-      type: 'text',
-      label: 'Email Address',
-      required: true
-    },
-    {
-      id: 'countriesOfResidenceHeader',
-      group: 'contact',
-      type: 'header',
-      label: 'Countries or territories of residence'
-    },
-    {
-      id: 'countriesOfResidenceInfo',
-      group: 'contact',
-      type: 'info',
-      label: '',
-      content: ['List all countries or territories of residence, then add all other countries or territories where you\'ve lived for the past five years, for more than 6 months.']
-    },
+    // {
+    //   id: 'currentAddress',
+    //   group: 'contact',
+    //   type: 'text',
+    //   label: 'Current Mailing Address',
+    //   required: true
+    // },
+    // {
+    //   id: 'city',
+    //   group: 'contact',
+    //   type: 'text',
+    //   label: 'City/Town',
+    //   required: true
+    // },
+    // {
+    //   id: 'country',
+    //   group: 'contact',
+    //   type: 'text',
+    //   label: 'Country',
+    //   required: true
+    // },
+    // {
+    //   id: 'postalCode',
+    //   group: 'contact',
+    //   type: 'text',
+    //   label: 'Postal/Zip Code',
+    //   required: true
+    // },
+    // {
+    //   id: 'phoneNumber',
+    //   group: 'contact',
+    //   type: 'text',
+    //   label: 'Telephone Number',
+    //   required: true
+    // },
+    // {
+    //   id: 'email',
+    //   group: 'contact',
+    //   type: 'text',
+    //   label: 'Email Address',
+    //   required: true
+    // },
+    // {
+    //   id: 'countriesOfResidenceHeader',
+    //   group: 'contact',
+    //   type: 'header',
+    //   label: 'Countries or territories of residence'
+    // },
+    // {
+    //   id: 'countriesOfResidenceInfo',
+    //   group: 'contact',
+    //   type: 'info',
+    //   label: '',
+    //   content: ['List all countries or territories of residence, then add all other countries or territories where you\'ve lived for the past five years, for more than 6 months.']
+    // },
     {
       id: 'countryOfResidence',
       group: 'contact',
@@ -1365,13 +1365,13 @@ export const CANADA: VisaForm = {
       description: 'If you don\'t see your address in the list, select Manually input address to enter your details in the address fields.',
       placeholder: 'search'
     },
-    {
-      id: 'manuallyInputAddress',
-      group: 'application',
-      type: 'checkbox',
-      label: 'Manually input address',
-      required: false
-    },
+    // {
+    //   id: 'manuallyInputAddress',
+    //   group: 'application',
+    //   type: 'checkbox',
+    //   label: 'Manually input address',
+    //   required: false
+    // },
     {
       id: 'inviterStreetNumber',
       group: 'application',
@@ -1612,14 +1612,14 @@ export const CANADA: VisaForm = {
       required: true,
       showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
     },
-    {
-      id: 'educationOngoing',
-      group: 'education',
-      type: 'checkbox',
-      label: 'Ongoing',
-      required: false,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
-    },
+    // {
+    //   id: 'educationOngoing',
+    //   group: 'education',
+    //   type: 'checkbox',
+    //   label: 'Ongoing',
+    //   required: false,
+    //   showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
+    // },
     {
       id: 'educationToDate',
       group: 'education',
@@ -1912,7 +1912,7 @@ export const CANADA: VisaForm = {
       },
       description: 'Select the date of your marriage or start of common-law relationship'
     },
-    // Additional fields for Separated and Widowed
+    // Additional fields for previous relationships
     {
       id: 'previousRelationshipHeader',
       group: 'family',
@@ -1921,6 +1921,8 @@ export const CANADA: VisaForm = {
       showIf: { 
         operator: 'or',
         conditions: [
+          { field: 'maritalStatus', value: 'annulled' },
+          { field: 'maritalStatus', value: 'divorced' },
           { field: 'maritalStatus', value: 'separated' },
           { field: 'maritalStatus', value: 'widowed' }
         ]
@@ -1935,10 +1937,13 @@ export const CANADA: VisaForm = {
       showIf: { 
         operator: 'or',
         conditions: [
+          { field: 'maritalStatus', value: 'annulled' },
+          { field: 'maritalStatus', value: 'divorced' },
           { field: 'maritalStatus', value: 'separated' },
           { field: 'maritalStatus', value: 'widowed' }
         ]
-      }
+      },
+      placeholder: 'Enter surname'
     },
     {
       id: 'previousSpouseFirstName',
@@ -1949,11 +1954,14 @@ export const CANADA: VisaForm = {
       showIf: { 
         operator: 'or',
         conditions: [
+          { field: 'maritalStatus', value: 'annulled' },
+          { field: 'maritalStatus', value: 'divorced' },
           { field: 'maritalStatus', value: 'separated' },
           { field: 'maritalStatus', value: 'widowed' }
         ]
       },
-      description: 'Write the given name. If none, leave this field blank.'
+      description: 'Write the given name. If none, leave this field blank.',
+      placeholder: 'Enter given name'
     },
     {
       id: 'previousSpouseDob',
@@ -1964,6 +1972,8 @@ export const CANADA: VisaForm = {
       showIf: { 
         operator: 'or',
         conditions: [
+          { field: 'maritalStatus', value: 'annulled' },
+          { field: 'maritalStatus', value: 'divorced' },
           { field: 'maritalStatus', value: 'separated' },
           { field: 'maritalStatus', value: 'widowed' }
         ]
@@ -1978,6 +1988,8 @@ export const CANADA: VisaForm = {
       showIf: { 
         operator: 'or',
         conditions: [
+          { field: 'maritalStatus', value: 'annulled' },
+          { field: 'maritalStatus', value: 'divorced' },
           { field: 'maritalStatus', value: 'separated' },
           { field: 'maritalStatus', value: 'widowed' }
         ]
@@ -2000,6 +2012,8 @@ export const CANADA: VisaForm = {
       showIf: { 
         operator: 'or',
         conditions: [
+          { field: 'maritalStatus', value: 'annulled' },
+          { field: 'maritalStatus', value: 'divorced' },
           { field: 'maritalStatus', value: 'separated' },
           { field: 'maritalStatus', value: 'widowed' }
         ]
@@ -2302,100 +2316,7 @@ export const CANADA: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
-    {
-      id: 'previousRelationshipHeader',
-      group: 'family',
-      type: 'header',
-      label: 'Additional details of your previous relationship',
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' }
-        ]
-      }
-    },
-    {
-      id: 'previousSpouseLastName',
-      group: 'family',
-      type: 'text',
-      label: 'Surname or last name',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' }
-        ]
-      },
-      placeholder: 'Enter surname'
-    },
-    {
-      id: 'previousSpouseFirstName',
-      group: 'family',
-      type: 'text',
-      label: 'Given name or first name',
-      required: false,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' }
-        ]
-      },
-      description: 'Write the given name. If none, leave this field blank.',
-      placeholder: 'Enter given name'
-    },
-    {
-      id: 'previousSpouseBirthDate',
-      group: 'family',
-      type: 'date',
-      label: 'Date of birth',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' }
-        ]
-      }
-    },
-    {
-      id: 'previousSpouseBirthCountry',
-      group: 'family',
-      type: 'select',
-      label: 'Country or territory of birth',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' }
-        ]
-      },
-      options: [
-        { label: 'Canada', value: 'canada' },
-        { label: 'United States', value: 'usa' },
-        { label: 'United Kingdom', value: 'uk' },
-        { label: 'Australia', value: 'australia' },
-        { label: 'India', value: 'india' },
-        { label: 'Other', value: 'other' }
-      ]
-    },
-    {
-      id: 'relationshipEndDate',
-      group: 'family',
-      type: 'date',
-      label: 'When did the relationship with your spouse or common-law partner end?',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' }
-        ]
-      }
-    },
+
 
     // Travel Information
 

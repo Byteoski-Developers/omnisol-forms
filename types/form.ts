@@ -23,6 +23,9 @@ export type FormGroup =
   | 'citizenship'
   | 'national_id'
   | 'past_names'
+  | 'application'
+  | 'medical'
+  | 'education'
   ;
 
 export interface FormStep {
@@ -68,6 +71,13 @@ export interface FormField {
       field: string;
       value?: string | boolean | number;
       not?: string | boolean | number;
+    } | {
+      operator: 'or' | 'and';
+      conditions: Array<{
+        field: string;
+        value?: string | boolean | number;
+        not?: string | boolean | number;
+      }>;
     }>;
   };
   options?: { label: string; value: string }[];

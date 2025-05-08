@@ -55,9 +55,15 @@ export function DynamicForm({
       if (field.showIf) {
         console.log('Checking showIf for field:', field.id, 'showIf:', field.showIf);
         
+        // Type guard for complex conditions with operator and conditions array
+        type ComplexCondition = { operator: "or" | "and"; conditions: Array<{ field: string; value?: string | number | boolean; not?: string | number | boolean; }>; };
+        // Type guard for simple condition with direct field property
+        type SimpleCondition = { field: string; value?: string | number | boolean; not?: string | number | boolean; };
+        
+        // Check if it's a complex condition with operator
         if ('operator' in field.showIf) {
           // Handle the operator/conditions case
-          const { operator, conditions } = field.showIf;
+          const { operator, conditions } = field.showIf as ComplexCondition;
           console.log('Complex condition - operator:', operator, 'conditions:', conditions);
           
           const conditionResults = conditions.map(condition => {
@@ -83,16 +89,17 @@ export function DynamicForm({
           console.log('Final complex condition result:', showIfConditionMet);
         } else {
           // Handle the simple field/value case
-          const fieldValue = formData[field.showIf.field];
-          console.log(`Simple condition - field: ${field.showIf.field}, value: ${fieldValue}, condition:`, field.showIf);
+          const simpleCondition = field.showIf as SimpleCondition;
+          const fieldValue = formData[simpleCondition.field];
+          console.log(`Simple condition - field: ${simpleCondition.field}, value: ${fieldValue}, condition:`, field.showIf);
           
-          if (field.showIf.value !== undefined) {
-            showIfConditionMet = fieldValue === field.showIf.value;
-            console.log(`Value check: ${fieldValue} === ${field.showIf.value} -> ${showIfConditionMet}`);
-          } else if (field.showIf.not !== undefined) {
+          if (simpleCondition.value !== undefined) {
+            showIfConditionMet = fieldValue === simpleCondition.value;
+            console.log(`Value check: ${fieldValue} === ${simpleCondition.value} -> ${showIfConditionMet}`);
+          } else if (simpleCondition.not !== undefined) {
             // If the field has a 'not' condition, it should be hidden when the value matches
-            showIfConditionMet = fieldValue !== field.showIf.not;
-            console.log(`Not check: ${fieldValue} !== ${field.showIf.not} -> ${showIfConditionMet}`);
+            showIfConditionMet = fieldValue !== simpleCondition.not;
+            console.log(`Not check: ${fieldValue} !== ${simpleCondition.not} -> ${showIfConditionMet}`);
           } else {
             // If no specific condition is met, default to showing the field
             showIfConditionMet = true;

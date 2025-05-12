@@ -250,13 +250,8 @@ export const GENERIC_COUNTRY: VisaForm = {
       showDocuments: false
     },
     {
-      title: 'Education History',
-      group: 'education_history' as FormGroup,
-      showDocuments: false
-    },
-    {
-      title: 'Work History',
-      group: 'work_history' as FormGroup,
+      title: 'Parents Information',
+      group: 'parents' as FormGroup,
       showDocuments: false
     },
     {
@@ -270,11 +265,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       showDocuments: false
     },
     {
-      title: 'Social Media',
-      group: 'social_media' as FormGroup,
-      showDocuments: false
-    },
-    {
       title: 'Additional Information',
       group: 'additional' as FormGroup,
       showDocuments: false
@@ -282,8 +272,8 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       title: 'Contact Preferences',
       group: 'contact' as FormGroup,
-      showDocuments: true
-    }
+      showDocuments: false
+    },
   ],
   fields: [
     // -------------------- DESTINATION SELECTION --------------------
@@ -2395,6 +2385,542 @@ export const GENERIC_COUNTRY: VisaForm = {
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
       ]
+    },
+
+    // -------------------- FAMILY INFORMATION --------------------
+    {
+      id: 'familyHeader',
+      group: 'family' as FormGroup,
+      type: 'header',
+      label: 'Family Information'
+    },
+    {
+      id: 'hasSiblings',
+      group: 'family' as FormGroup,
+      type: 'select',
+      label: `Do you have any siblings (brothers and sisters)? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'siblingsDescription',
+      group: 'family' as FormGroup,
+      type: 'info',
+      label: 'Description',
+      content: [
+        'Include all brother and sister including half brother sisters.'
+      ],
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingsDetailsHeader',
+      group: 'family' as FormGroup,
+      type: 'header',
+      label: 'Give details of you all siblings',
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingName1',
+      group: 'family' as FormGroup,
+      type: 'text',
+      label: 'Name of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingDateOfBirth1',
+      group: 'family' as FormGroup,
+      type: 'date',
+      label: 'Date of Birth of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingDeceased1',
+      group: 'family' as FormGroup,
+      type: 'select',
+      label: 'Is sibling 1 deceased?',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'siblingDeathDetails1',
+      group: 'family' as FormGroup,
+      type: 'text',
+      label: 'Date and place of death of sibling 1',
+      required: true,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasSiblings', value: 'yes' },
+          { field: 'siblingDeceased1', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'siblingMaritalStatus1',
+      group: 'family' as FormGroup,
+      type: 'select',
+      label: 'Marital Status of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' },
+      options: MARITAL_STATUS_OPTIONS
+    },
+    {
+      id: 'siblingOccupation1',
+      group: 'family' as FormGroup,
+      type: 'text',
+      label: 'Occupation of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingAddress1',
+      group: 'family' as FormGroup,
+      type: 'text',
+      label: 'Address of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingCountryOfBirth1',
+      group: 'family' as FormGroup,
+      type: 'select',
+      label: 'Country of Birth of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' },
+      options: COUNTRIES
+    },
+    {
+      id: 'hasMoreSiblings',
+      group: 'family' as FormGroup,
+      type: 'select',
+      label: 'Do you have more siblings to add?',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+// -------------------- parent INFORMATION --------------------
+    {
+      id: 'parentsHeader',
+      group: 'parents' as FormGroup,
+      type: 'header',
+      label: 'Parents Information'
+    },
+    {
+      id: 'parentsDescription',
+      group: 'parents' as FormGroup,
+      type: 'info',
+      label: 'Description',
+      content: [
+        'Family information, parents detail.'
+      ]
+    },
+    {
+      id: 'parentName1',
+      group: 'parents' as FormGroup,
+      type: 'text',
+      label: `Give details of your parents? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true
+    },
+    {
+      id: 'parentDateOfBirth1',
+      group: 'parents' as FormGroup,
+      type: 'date',
+      label: 'Date of Birth',
+      required: true
+    },
+    {
+      id: 'parentDeceased1',
+      group: 'parents' as FormGroup,
+      type: 'select',
+      label: 'Is this parent deceased?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'parentDeathDetails1',
+      group: 'parents' as FormGroup,
+      type: 'text',
+      label: 'Date and place of death',
+      required: true,
+      showIf: { field: 'parentDeceased1', value: 'yes' }
+    },
+    {
+      id: 'parentMaritalStatus1',
+      group: 'parents' as FormGroup,
+      type: 'select',
+      label: 'Marital Status',
+      required: true,
+      options: MARITAL_STATUS_OPTIONS
+    },
+    {
+      id: 'parentOccupation1',
+      group: 'parents' as FormGroup,
+      type: 'text',
+      label: 'Occupation',
+      required: true
+    },
+    {
+      id: 'parentAddress1',
+      group: 'parents' as FormGroup,
+      type: 'text',
+      label: 'Address',
+      required: true
+    },
+    {
+      id: 'parentCountryOfBirth1',
+      group: 'parents' as FormGroup,
+      type: 'select',
+      label: 'Country of Birth',
+      required: true,
+      options: COUNTRIES
+    },
+    {
+      id: 'hasSecondParent',
+      group: 'parents' as FormGroup,
+      type: 'select',
+      label: 'Do you want to add second parent?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'parentName2',
+      group: 'parents' as FormGroup,
+      type: 'text',
+      label: 'Name of second parent',
+      required: true,
+      showIf: { field: 'hasSecondParent', value: 'yes' }
+    },
+    {
+      id: 'parentDateOfBirth2',
+      group: 'parents' as FormGroup,
+      type: 'date',
+      label: 'Date of Birth of second parent',
+      required: true,
+      showIf: { field: 'hasSecondParent', value: 'yes' }
+    },
+    {
+      id: 'parentDeceased2',
+      group: 'parents' as FormGroup,
+      type: 'select',
+      label: 'Is second parent deceased?',
+      required: true,
+      showIf: { field: 'hasSecondParent', value: 'yes' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'parentDeathDetails2',
+      group: 'parents' as FormGroup,
+      type: 'text',
+      label: 'Date and place of death of second parent',
+      required: true,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasSecondParent', value: 'yes' },
+          { field: 'parentDeceased2', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'parentMaritalStatus2',
+      group: 'parents' as FormGroup,
+      type: 'select',
+      label: 'Marital Status of second parent',
+      required: true,
+      showIf: { field: 'hasSecondParent', value: 'yes' },
+      options: MARITAL_STATUS_OPTIONS
+    },
+    {
+      id: 'parentOccupation2',
+      group: 'parents' as FormGroup,
+      type: 'text',
+      label: 'Occupation of second parent',
+      required: true,
+      showIf: { field: 'hasSecondParent', value: 'yes' }
+    },
+    {
+      id: 'parentAddress2',
+      group: 'parents' as FormGroup,
+      type: 'text',
+      label: 'Address of second parent',
+      required: true,
+      showIf: { field: 'hasSecondParent', value: 'yes' }
+    },
+    {
+      id: 'parentCountryOfBirth2',
+      group: 'parents' as FormGroup,
+      type: 'select',
+      label: 'Country of Birth of second parent',
+      required: true,
+      showIf: { field: 'hasSecondParent', value: 'yes' },
+      options: COUNTRIES
+    },
+
+  // },
+  // {
+  //   id: 'parentCountryOfBirth2',
+  //   group: 'parents' as FormGroup,
+  //   type: 'select',
+  //   label: 'Country of Birth of second parent',
+  //   required: true,
+  //   showIf: { field: 'hasSecondParent', value: 'yes' },
+  //   options: COUNTRIES
+  // },
+
+  // -------------------- VISA HISTORY --------------------
+  {
+    id: 'visaHistoryHeader',
+    group: 'visa_history' as FormGroup,
+    type: 'header',
+    label: 'Visa History'
+  },
+  {
+    id: 'visaHistoryDescription',
+    group: 'visa_history' as FormGroup,
+    type: 'info',
+    label: 'Previous Visa Applications',
+    content: [
+      'Any previous refusal of USA, refused a visa or permit denied entry, figure print collected previously for the purpose of applying for Schengen visa, has the applicant ever had a visa for Australia or any other country refused or cancelled, have you ever been refused visa / permit, work, study for another country excluding New Zealand.'
+    ]
+  },
+  {
+    id: 'hasAppliedForVisa',
+    group: 'visa_history' as FormGroup,
+    type: 'select',
+    label: `Did you ever file visa application for any country? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    required: true,
+    options: [
+      { label: 'Yes', value: 'yes' },
+      { label: 'No', value: 'no' }
+    ]
+  },
+  {
+    id: 'hasVisaRefusal',
+    group: 'visa_history' as FormGroup,
+    type: 'select',
+    label: 'Was any of your visa application refused?',
+    required: true,
+    showIf: { field: 'hasAppliedForVisa', value: 'yes' },
+    options: [
+      { label: 'Yes', value: 'yes' },
+      { label: 'No', value: 'no' }
+    ]
+  },
+  {
+    id: 'refusalCountry',
+    group: 'visa_history' as FormGroup,
+    type: 'select',
+    label: 'Which country refused your visa?',
+    required: true,
+    showIf: { 
+      operator: 'and',
+      conditions: [
+        { field: 'hasAppliedForVisa', value: 'yes' },
+        { field: 'hasVisaRefusal', value: 'yes' }
+      ]
+    },
+    options: COUNTRIES
+  },
+  {
+    id: 'visaRefusalType',
+    group: 'visa_history' as FormGroup,
+    type: 'select',
+    label: 'What for you applied?',
+    required: true,
+    showIf: { 
+      operator: 'and',
+      conditions: [
+        { field: 'hasAppliedForVisa', value: 'yes' },
+        { field: 'hasVisaRefusal', value: 'yes' }
+      ]
+    },
+    options: [
+      { label: 'Temporary short visit', value: 'temporary' },
+      { label: 'Permanent settlement', value: 'permanent' }
+    ]
+  },
+  {
+    id: 'refusalDate',
+    group: 'visa_history' as FormGroup,
+    type: 'date',
+    label: 'When did this problem occur?',
+    required: false,
+    showIf: { 
+      operator: 'and',
+      conditions: [
+        { field: 'hasAppliedForVisa', value: 'yes' },
+        { field: 'hasVisaRefusal', value: 'yes' }
+      ]
     }
+  },
+  {
+    id: 'hasRefusalLetter',
+    group: 'visa_history' as FormGroup,
+    type: 'select',
+    label: 'Do you have any letter of refusal?',
+    required: false,
+    showIf: { 
+      operator: 'and',
+      conditions: [
+        { field: 'hasAppliedForVisa', value: 'yes' },
+        { field: 'hasVisaRefusal', value: 'yes' }
+      ]
+    },
+    options: [
+      { label: 'Yes', value: 'yes' },
+      { label: 'No', value: 'no' }
+    ]
+  },
+
+  // -------------------- TRAVEL PLANS --------------------
+{
+  id: 'travelPlansHeader',
+  group: 'travel_plans' as FormGroup,
+  type: 'header',
+  label: 'Travel Plans'
+},
+{
+  id: 'travelPlansDescription',
+  group: 'travel_plans' as FormGroup,
+  type: 'info',
+  label: 'Travel Dates',
+  content: [
+    'Date you will arrive and leave, intended date of arrival, planned arrival date, planned final departure date, indicate how long you plan to stay from – to, intended date of arrival of first intend stay in the Schengen area, intended date of departure.'
+  ]
+},
+{
+  id: 'hasConfirmedTravelPlans',
+  group: 'travel_plans' as FormGroup,
+  type: 'select',
+  label: 'Do you have confirmed travel plans?',
+  required: false,
+  options: [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' }
+  ]
+},
+{
+  id: 'plannedArrivalDate',
+  group: 'travel_plans' as FormGroup,
+  type: 'date',
+  label: 'Planned arrival date',
+  required: false,
+  showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
+},
+{
+  id: 'plannedDepartureDate',
+  group: 'travel_plans' as FormGroup,
+  type: 'date',
+  label: 'Planned departure date',
+  required: false,
+  showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
+},
+
+
+
+// -------------------- ADDITIONAL INFORMATION --------------------
+{
+  id: 'additionalInfoHeader',
+  group: 'additional' as FormGroup,
+  type: 'header',
+  label: 'Additional Information and Services'
+},
+{
+  id: 'needExplanations',
+  group: 'additional' as FormGroup,
+  type: 'select',
+  label: 'Do you want to add any explanations?',
+  required: false,
+  options: [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' }
+  ]
+},
+{
+  id: 'explanationText',
+  group: 'additional' as FormGroup,
+  type: 'text',
+  label: 'Please provide your explanation',
+  required: false,
+  showIf: { field: 'needExplanations', value: 'yes' },
+  placeholder: 'Enter your explanation here'
+},
+{
+  id: 'needTravelServices',
+  group: 'additional' as FormGroup,
+  type: 'select',
+  label: 'Do you need any pre departure or post arrival service (such as air tickets, travel insurances, forex cards, mobile SIM, booking of accommodation, package tours)?',
+  required: false,
+  options: [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' }
+  ]
+},
+
+// -------------------- CONTACT PREFERENCES --------------------
+{
+  id: 'contactPreferencesHeader',
+  group: 'contact' as FormGroup,
+  type: 'header',
+  label: 'Contact Preferences'
+},
+{
+  id: 'preferredContactMethod',
+  group: 'contact' as FormGroup,
+  type: 'select',
+  label: 'What is the best method to contact you regarding your application?',
+  required: false,
+  options: CONTACT_METHOD_OPTIONS
+},
+{
+  id: 'needAdditionalContact',
+  group: 'contact' as FormGroup,
+  type: 'select',
+  label: 'Do you like to provide additional email or phone number than that you used for creating your application?',
+  required: false,
+  options: [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' }
+  ]
+},
+{
+  id: 'additionalEmail',
+  group: 'contact' as FormGroup,
+  type: 'text',
+  label: 'Additional Email',
+  required: false,
+  showIf: { field: 'needAdditionalContact', value: 'yes' },
+  placeholder: 'Enter your additional email address'
+},
+{
+  id: 'additionalPhone',
+  group: 'contact' as FormGroup,
+  type: 'text',
+  label: 'Additional Phone',
+  required: false,
+  showIf: { field: 'needAdditionalContact', value: 'yes' },
+  placeholder: 'Enter your additional phone number'
+},   
   ]
 };

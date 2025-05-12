@@ -25,6 +25,7 @@ export type FormGroup =
   | 'past_names'
   | 'application'
   | 'medical'
+<<<<<<< Updated upstream
   | 'education'
   // Additional form groups for generic country form
   | 'destination'
@@ -42,6 +43,9 @@ export type FormGroup =
   | 'travel_plans'
   | 'social_media'
   | 'additional'
+=======
+  | 'employment'
+>>>>>>> Stashed changes
   ;
 
 export interface FormStep {
@@ -68,7 +72,7 @@ export interface Document {
 
 export interface FormField {
   id: string;
-  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info';
+  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary';
   content?: string[];
   label: string;
   placeholder?: string;

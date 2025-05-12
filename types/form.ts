@@ -26,6 +26,22 @@ export type FormGroup =
   | 'application'
   | 'medical'
   | 'education'
+  // Additional form groups for generic country form
+  | 'destination'
+  | 'citizenship'
+  | 'personal'
+  | 'purpose'
+  | 'finances'
+  | 'residence'
+  | 'passport'
+  | 'siblings'
+  | 'parents'
+  | 'education_history'
+  | 'work_history'
+  | 'visa_history'
+  | 'travel_plans'
+  | 'social_media'
+  | 'additional'
   ;
 
 export interface FormStep {

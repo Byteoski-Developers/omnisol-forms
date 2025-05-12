@@ -150,4 +150,9 @@ export const SAMPLE_COUNTRIES: Country[] = [
     name: 'Australia',
     flag: 'https://flagcdn.com/w80/au.png',
   },
+  {
+    code: 'generic',
+    name: 'generic',
+    flag: 'https://flagcdn.com/w80/au.png',
+  }
 ];

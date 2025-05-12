@@ -55,57 +55,62 @@ export function DynamicForm({
       if (field.showIf) {
         console.log('Checking showIf for field:', field.id, 'showIf:', field.showIf);
         
-        // Type guard for complex conditions with operator and conditions array
-        type ComplexCondition = { operator: "or" | "and"; conditions: Array<{ field: string; value?: string | number | boolean; not?: string | number | boolean; }>; };
-        // Type guard for simple condition with direct field property
+        // Type definitions for conditions
         type SimpleCondition = { field: string; value?: string | number | boolean; not?: string | number | boolean; };
+        type ComplexCondition = { 
+          operator: "or" | "and"; 
+          conditions: Array<SimpleCondition | ComplexCondition>; 
+        };
         
-        // Check if it's a complex condition with operator
-        if ('operator' in field.showIf) {
-          // Handle the operator/conditions case
-          const { operator, conditions } = field.showIf as ComplexCondition;
-          console.log('Complex condition - operator:', operator, 'conditions:', conditions);
-          
-          const conditionResults = conditions.map(condition => {
-            const fieldValue = formData[condition.field];
-            console.log(`Condition check - field: ${condition.field}, value: ${fieldValue}, condition:`, condition);
+        // Recursive function to evaluate complex nested conditions
+        const evaluateCondition = (condition: any): boolean => {
+          // Handle complex condition with operator
+          if ('operator' in condition) {
+            const { operator, conditions } = condition as ComplexCondition;
+            console.log('Evaluating complex condition - operator:', operator, 'conditions:', conditions);
             
-            if (condition.value !== undefined) {
-              const result = fieldValue === condition.value;
-              console.log(`Value check: ${fieldValue} === ${condition.value} -> ${result}`);
-              return result;
-            } else if (condition.not !== undefined) {
-              const result = fieldValue !== condition.not;
-              console.log(`Not check: ${fieldValue} !== ${condition.not} -> ${result}`);
-              return result;
+            // Map and evaluate each condition recursively
+            const results = conditions.map(subCondition => evaluateCondition(subCondition));
+            
+            // Apply the appropriate logical operator
+            if (operator === 'and') {
+              return results.every(Boolean);
+            } else if (operator === 'or') {
+              return results.some(Boolean);
             }
-            return true;
-          });
-          
-          showIfConditionMet = operator === 'and' 
-            ? conditionResults.every(Boolean)
-            : conditionResults.some(Boolean);
+            return false; // Default case (should not happen)
+          } 
+          // Handle simple condition
+          else if ('field' in condition) {
+            const simpleCondition = condition as SimpleCondition;
+            const fieldValue = formData[simpleCondition.field];
+            console.log(`Evaluating simple condition - field: ${simpleCondition.field}, value: ${fieldValue}, condition:`, condition);
             
-          console.log('Final complex condition result:', showIfConditionMet);
-        } else {
-          // Handle the simple field/value case
-          const simpleCondition = field.showIf as SimpleCondition;
-          const fieldValue = formData[simpleCondition.field];
-          console.log(`Simple condition - field: ${simpleCondition.field}, value: ${fieldValue}, condition:`, field.showIf);
-          
-          if (simpleCondition.value !== undefined) {
-            showIfConditionMet = fieldValue === simpleCondition.value;
-            console.log(`Value check: ${fieldValue} === ${simpleCondition.value} -> ${showIfConditionMet}`);
-          } else if (simpleCondition.not !== undefined) {
-            // If the field has a 'not' condition, it should be hidden when the value matches
-            showIfConditionMet = fieldValue !== simpleCondition.not;
-            console.log(`Not check: ${fieldValue} !== ${simpleCondition.not} -> ${showIfConditionMet}`);
-          } else {
-            // If no specific condition is met, default to showing the field
-            showIfConditionMet = true;
-            console.log('No specific condition, defaulting to show');
+            // Handle both value and not conditions
+            let result = true;
+            
+            // If value is defined, check equality
+            if (simpleCondition.value !== undefined) {
+              result = result && (fieldValue === simpleCondition.value);
+              console.log(`Value check: ${fieldValue} === ${simpleCondition.value} -> ${result}`);
+            }
+            
+            // If not is defined, check inequality (this works even if value is also defined)
+            if (simpleCondition.not !== undefined) {
+              result = result && (fieldValue !== simpleCondition.not);
+              console.log(`Not check: ${fieldValue} !== ${simpleCondition.not} -> ${result}`);
+            }
+            
+            return result;
           }
-        }
+          
+          // Default to true if no condition matched
+          return true;
+        };
+        
+        // Evaluate the entire condition tree
+        showIfConditionMet = evaluateCondition(field.showIf);
+        console.log('Final condition result for field', field.id, ':', showIfConditionMet);
       }
 
       // Field is visible if both dependencies and showIf conditions are met
@@ -115,11 +120,15 @@ export function DynamicForm({
     });
     setVisibleFields(visible);
 
+    // Update required documents based on form field values
     const documents = new Set<string>();
     form.documents.forEach((doc) => {
-      if (doc.type === 'default') {
+      // If document is required and has no conditions, always include it
+      if (doc.required && !doc.conditions) {
         documents.add(doc.id);
-      } else if (doc.conditions) {
+      } 
+      // If document has conditions, check if all conditions are met
+      else if (doc.conditions && doc.required) {
         const allConditionsMet = doc.conditions.every(
           (condition) => formData[condition.questionId] === condition.value
         );
@@ -129,6 +138,7 @@ export function DynamicForm({
       }
     });
     setRequiredDocuments(documents);
+    console.log('Required documents updated:', Array.from(documents));
   }, [form.fields, form.documents, formData]);
 
   const validateField = (field: FormField, value: any): string | null => {
@@ -450,6 +460,44 @@ export function DynamicForm({
     }
   };
   
+  // Debug panel to show which documents are required based on form responses
+  const renderDebugPanel = () => {
+    if (process.env.NODE_ENV === 'production') return null;
+    
+    return (
+      <div className="mt-6 p-4 border-2 border-dashed border-gray-300 rounded-md bg-gray-50">
+        <h3 className="text-sm font-medium mb-2">Required Documents (Debug):</h3>
+        {requiredDocuments.size === 0 ? (
+          <p className="text-xs text-gray-500">No documents required based on current form state</p>
+        ) : (
+          <ul className="text-xs space-y-1">
+            {Array.from(requiredDocuments).map(docId => {
+              const doc = form.documents.find(d => d.id === docId);
+              return (
+                <li key={docId} className="flex items-start">
+                  <span className="mr-2 text-green-600">✓</span>
+                  <div>
+                    <span className="font-medium">{doc?.name}</span> (ID: {docId})
+                    {doc?.conditions && (
+                      <div className="text-gray-500 ml-4 mt-1">
+                        <span className="text-xs">Conditions: </span>
+                        {doc.conditions.map((c, i) => (
+                          <span key={i} className="text-xs">
+                            {c.questionId}={c.value}{i < doc.conditions!.length - 1 ? ' AND ' : ''}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+    );
+  };
+  
   // This function is kept for compatibility but doesn't render anything
   const renderDocuments = () => {
     // We don't render document upload fields anymore
@@ -491,6 +539,10 @@ export function DynamicForm({
         {form.fields.map(renderField)}
       </div>
       {renderDocuments()}
+      
+      {/* Show debug panel in development mode when documents are available */}
+      {process.env.NODE_ENV !== 'production' && form.documents && form.documents.length > 0 && renderDebugPanel()}
+      
       <Button 
         type="submit" 
         className="w-full"

@@ -69,7 +69,7 @@ export interface Document {
 
 export interface FormField {
   id: string;
-  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary';
+  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary' | 'siblingsInput' | 'parentsInput' | 'countriesInput';
   content?: string[];
   label: string;
   placeholder?: string;

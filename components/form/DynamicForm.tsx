@@ -57,7 +57,6 @@ export function DynamicForm({
       if (field.showIf) {
         console.log('Checking showIf for field:', field.id, 'showIf:', field.showIf);
         
-<<<<<<< Updated upstream
         // Type definitions for conditions
         type SimpleCondition = { field: string; value?: string | number | boolean; not?: string | number | boolean; };
         type ComplexCondition = { 
@@ -105,70 +104,6 @@ export function DynamicForm({
             }
             
             return result;
-=======
-        if ('operator' in field.showIf) {
-          // Handle the operator/conditions case
-          const { operator, conditions } = field.showIf;
-          console.log('Complex condition - operator:', operator, 'conditions:', conditions);
-          
-          const conditionResults = conditions.map(condition => {
-            // Check if this is a nested condition with its own operator
-            if ('operator' in condition) {
-              // Recursively evaluate the nested condition
-              const nestedConditionResults = condition.conditions.map(nestedCond => {
-                const nestedFieldValue = formData[nestedCond.field];
-                
-                if (nestedCond.value !== undefined) {
-                  return nestedFieldValue === nestedCond.value;
-                } else if (nestedCond.not !== undefined) {
-                  return nestedFieldValue !== nestedCond.not;
-                }
-                return true;
-              });
-              
-              // Apply the nested operator
-              return condition.operator === 'and'
-                ? nestedConditionResults.every(Boolean)
-                : nestedConditionResults.some(Boolean);
-            } else {
-              // This is a simple condition
-              const fieldValue = formData[condition.field];
-              console.log(`Condition check - field: ${condition.field}, value: ${fieldValue}, condition:`, condition);
-              
-              if (condition.value !== undefined) {
-                const result = fieldValue === condition.value;
-                console.log(`Value check: ${fieldValue} === ${condition.value} -> ${result}`);
-                return result;
-              } else if (condition.not !== undefined) {
-                const result = fieldValue !== condition.not;
-                console.log(`Not check: ${fieldValue} !== ${condition.not} -> ${result}`);
-                return result;
-              }
-              return true;
-            }
-          });
-          
-          showIfConditionMet = operator === 'and' 
-            ? conditionResults.every(Boolean)
-            : conditionResults.some(Boolean);
-            
-          console.log('Final complex condition result:', showIfConditionMet);
-        } else {
-          // Handle the simple field/value case
-          const fieldValue = formData[field.showIf.field];
-          console.log(`Simple condition - field: ${field.showIf.field}, value: ${fieldValue}, condition:`, field.showIf);
-          
-          if (field.showIf.value !== undefined) {
-            showIfConditionMet = fieldValue === field.showIf.value;
-            console.log(`Simple value check: ${fieldValue} === ${field.showIf.value} -> ${showIfConditionMet}`);
-          } else if (field.showIf.not !== undefined) {
-            showIfConditionMet = fieldValue !== field.showIf.not;
-            console.log(`Simple not check: ${fieldValue} !== ${field.showIf.not} -> ${showIfConditionMet}`);
-          } else {
-            // If no specific condition is met, default to showing the field
-            showIfConditionMet = true;
-            console.log('No specific condition, defaulting to show');
->>>>>>> Stashed changes
           }
           
           // Default to true if no condition matched
@@ -742,8 +677,7 @@ export function DynamicForm({
       console.error('Error requesting documents:', error);
     }
   };
-<<<<<<< Updated upstream
-  
+
   // Debug panel to show which documents are required based on form responses
   const renderDebugPanel = () => {
     if (process.env.NODE_ENV === 'production') return null;
@@ -781,12 +715,8 @@ export function DynamicForm({
       </div>
     );
   };
-  
-  // This function is kept for compatibility but doesn't render anything
-=======
 
   // Render document upload component when showDocuments is true
->>>>>>> Stashed changes
   const renderDocuments = () => {
     if (!form.showDocuments) return null;
     

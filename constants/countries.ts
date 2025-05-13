@@ -150,7 +150,6 @@ export const SAMPLE_COUNTRIES: Country[] = [
     name: 'Sri Lanka',
     flag: 'https://flagcdn.com/w80/lk.png',
   },
-<<<<<<< Updated upstream
   {
     code: 'CA',
     name: 'Canada',
@@ -166,6 +165,4 @@ export const SAMPLE_COUNTRIES: Country[] = [
     name: 'generic',
     flag: 'https://flagcdn.com/w80/au.png',
   }
-=======
->>>>>>> Stashed changes
-];
+  ];

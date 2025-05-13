@@ -27,9 +27,9 @@ export const CANADA: VisaForm = {
       group: 'national_id',
       showDocuments: false
     },
-    { 
-      title: 'Family Information',
-      group: 'family',
+    {
+      title: 'National Identity Document',
+      group: 'national_id',
       showDocuments: false
     },
     {
@@ -38,8 +38,8 @@ export const CANADA: VisaForm = {
       showDocuments: false
     },
     {
-      title: 'Names Used in the Past',
-      group: 'past_names',
+      title: 'Contact Information',
+      group: 'contact',
       showDocuments: false
     },
     {
@@ -47,28 +47,32 @@ export const CANADA: VisaForm = {
       group: 'employment',
       showDocuments: false
     },
+
     {
       title: 'Education',
       group: 'education',
       showDocuments: false
     },
     {
-      title: 'Application',
-      group: 'application',
+      title: 'Medical Background',
+      group: 'medical',
       showDocuments: false
     },
-
-    // {
-    //   title: 'Medical Background',
-    //   group: 'medical',
-    //   showDocuments: false
-    // },
-    // Document upload is integrated into relevant sections
+    {
+      title: 'Family Information',
+      group: 'family',
+      showDocuments: false
+    },
     // {
     //   title: 'Previous Travel History',
     //   group: 'history',
     //   showDocuments: false
     // },
+    {
+      title: 'Additional Information',
+      group: 'additional',
+      showDocuments: false
+    },
     // {
     //   title: 'Upload Documents',
     //   group: 'documents',
@@ -226,42 +230,6 @@ export const CANADA: VisaForm = {
       label: 'Travel Document Information',
       description: 'Enter your travel document details'
     },
-    // {
-    //   id: 'surname',
-    //   group: 'travel_document',
-    //   type: 'text',
-    //   label: 'Surname or last name',
-    //   description: 'Write your name exactly as it appears on your passport or identity document.',
-    //   required: true
-    // },
-    // {
-    //   id: 'givenName',
-    //   group: 'travel_document',
-    //   type: 'text',
-    //   label: 'Given name or first name',
-    //   description: 'Write your given name. If none, leave this field blank.',
-    //   required: false
-    // },
-    // {
-    //   id: 'dateOfBirth',
-    //   group: 'travel_document',
-    //   type: 'date',
-    //   label: 'Date of birth',
-    //   required: true
-    // },
-    // {
-    //   id: 'gender',
-    //   group: 'travel_document',
-    //   type: 'select',
-    //   label: 'Gender',
-    //   required: true,
-    //   options: [
-    //     { label: 'Male', value: 'male' },
-    //     { label: 'Female', value: 'female' },
-    //     { label: 'Unknown', value: 'unknown' },
-    //     { label: 'Another gender', value: 'other' }
-    //   ]
-    // },
     {
       id: 'documentsInfoTourism',
       group: 'description_section',
@@ -389,24 +357,7 @@ export const CANADA: VisaForm = {
         '6. Medical background',
         '7. Family information'
       ]
-    },
-    // {
-    //   id: 'documentSubType',
-    //   group: 'travel_document',
-    //   type: 'select',
-    //   label: 'What kind of document?',
-    //   required: true,
-    //   options: [
-    //     { label: 'Passport', value: 'passport' },
-    //     { label: 'Certificate of Identity', value: 'certificate_identity' },
-    //     { label: 'Refugee Travel Document', value: 'refugee' },
-    //     { label: 'Red Cross Travel Document', value: 'red_cross' },
-    //     { label: 'Laissez-Passer', value: 'laissez_passer' },
-    //     { label: 'Organization of American States (OAS) Travel Document', value: 'oas' },
-    //     { label: 'Other travel document', value: 'other' }
-    //   ]
-    // },
-   
+    },   
     {
       id: 'issuingCountry',
       group: 'travel_document',
@@ -578,17 +529,6 @@ export const CANADA: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
-    // {
-    //   id: 'previousCanadianVisa',
-    //   group: 'travel_document',
-    //   type: 'select',
-    //   label: 'Do you currently hold a valid U.S. nonimmigrant visa?  (required)',
-    //   required: true,
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
     {
       id: 'traveldocument',
       group: 'travel',
@@ -836,203 +776,129 @@ export const CANADA: VisaForm = {
       showIf: {
         field: 'multipleCitizenship',
         value: 'yes'
-      },
-        options: [
-        { label: 'Afghanistan', value: 'afghanistan' },
-        { label: 'Albania', value: 'albania' },
-        { label: 'Algeria', value: 'algeria' },
-        { label: 'Andorra', value: 'andorra' },
-        { label: 'Angola', value: 'angola' },
-        { label: 'Antigua and Barbuda', value: 'antigua_and_barbuda' },
-        { label: 'Argentina', value: 'argentina' },
-        { label: 'Armenia', value: 'armenia' },
-        { label: 'Australia', value: 'australia' },
-        { label: 'Austria', value: 'austria' },
-        { label: 'Azerbaijan', value: 'azerbaijan' },
-        { label: 'Bahamas', value: 'bahamas' },
-        { label: 'Bahrain', value: 'bahrain' },
-        { label: 'Bangladesh', value: 'bangladesh' },
-        { label: 'Barbados', value: 'barbados' },
-        { label: 'Belarus', value: 'belarus' },
-        { label: 'Belgium', value: 'belgium' },
-        { label: 'Belize', value: 'belize' },
-        { label: 'Benin', value: 'benin' },
-        { label: 'Bhutan', value: 'bhutan' },
-        { label: 'Bolivia', value: 'bolivia' },
-        { label: 'Bosnia and Herzegovina', value: 'bosnia_and_herzegovina' },
-        { label: 'Botswana', value: 'botswana' },
-        { label: 'Brazil', value: 'brazil' },
-        { label: 'Brunei', value: 'brunei' },
-        { label: 'Bulgaria', value: 'bulgaria' },
-        { label: 'Burkina Faso', value: 'burkina_faso' },
-        { label: 'Burundi', value: 'burundi' },
-        { label: 'Cambodia', value: 'cambodia' },
-        { label: 'Cameroon', value: 'cameroon' },
-        { label: 'Canada', value: 'canada' },
-        { label: 'Cape Verde', value: 'cape_verde' },
-        { label: 'Central African Republic', value: 'central_african_republic' },
-        { label: 'Chad', value: 'chad' },
-        { label: 'Chile', value: 'chile' },
-        { label: 'China', value: 'china' },
-        { label: 'Colombia', value: 'colombia' },
-        { label: 'Comoros', value: 'comoros' },
-        { label: 'Congo', value: 'congo' },
-        { label: 'Costa Rica', value: 'costa_rica' },
-        { label: 'Croatia', value: 'croatia' },
-        { label: 'Cuba', value: 'cuba' },
-        { label: 'Cyprus', value: 'cyprus' },
-        { label: 'Czech Republic', value: 'czech_republic' },
-        { label: 'Denmark', value: 'denmark' },
-        { label: 'Djibouti', value: 'djibouti' },
-        { label: 'Dominica', value: 'dominica' },
-        { label: 'Dominican Republic', value: 'dominican_republic' },
-        { label: 'East Timor', value: 'east_timor' },
-        { label: 'Ecuador', value: 'ecuador' },
-        { label: 'Egypt', value: 'egypt' },
-        { label: 'El Salvador', value: 'el_salvador' },
-        { label: 'Equatorial Guinea', value: 'equatorial_guinea' },
-        { label: 'Eritrea', value: 'eritrea' },
-        { label: 'Estonia', value: 'estonia' },
-        { label: 'Ethiopia', value: 'ethiopia' },
-        { label: 'Fiji', value: 'fiji' },
-        { label: 'Finland', value: 'finland' },
-        { label: 'France', value: 'france' },
-        { label: 'Gabon', value: 'gabon' },
-        { label: 'Gambia', value: 'gambia' },
-        { label: 'Georgia', value: 'georgia' },
-        { label: 'Germany', value: 'germany' },
-        { label: 'Ghana', value: 'ghana' },
-        { label: 'Greece', value: 'greece' },
-        { label: 'Grenada', value: 'grenada' },
-        { label: 'Guatemala', value: 'guatemala' },
-        { label: 'Guinea', value: 'guinea' },
-        { label: 'Guinea-Bissau', value: 'guinea_bissau' },
-        { label: 'Guyana', value: 'guyana' },
-        { label: 'Haiti', value: 'haiti' },
-        { label: 'Honduras', value: 'honduras' },
-        { label: 'Hungary', value: 'hungary' },
-        { label: 'Iceland', value: 'iceland' },
-        { label: 'India', value: 'india' },
-        { label: 'Indonesia', value: 'indonesia' },
-        { label: 'Iran', value: 'iran' },
-        { label: 'Iraq', value: 'iraq' },
-        { label: 'Ireland', value: 'ireland' },
-        { label: 'Israel', value: 'israel' },
-        { label: 'Italy', value: 'italy' },
-        { label: 'Ivory Coast', value: 'ivory_coast' },
-        { label: 'Jamaica', value: 'jamaica' },
-        { label: 'Japan', value: 'japan' },
-        { label: 'Jordan', value: 'jordan' },
-        { label: 'Kazakhstan', value: 'kazakhstan' },
-        { label: 'Kenya', value: 'kenya' },
-        { label: 'Kiribati', value: 'kiribati' },
-        { label: 'North Korea', value: 'north_korea' },
-        { label: 'South Korea', value: 'south_korea' },
-        { label: 'Kuwait', value: 'kuwait' },
-        { label: 'Kyrgyzstan', value: 'kyrgyzstan' },
-        { label: 'Laos', value: 'laos' },
-        { label: 'Latvia', value: 'latvia' },
-        { label: 'Lebanon', value: 'lebanon' },
-        { label: 'Lesotho', value: 'lesotho' },
-        { label: 'Liberia', value: 'liberia' },
-        { label: 'Libya', value: 'libya' },
-        { label: 'Liechtenstein', value: 'liechtenstein' },
-        { label: 'Lithuania', value: 'lithuania' },
-        { label: 'Luxembourg', value: 'luxembourg' },
-        { label: 'Macedonia', value: 'macedonia' },
-        { label: 'Madagascar', value: 'madagascar' },
-        { label: 'Malawi', value: 'malawi' },
-        { label: 'Malaysia', value: 'malaysia' },
-        { label: 'Maldives', value: 'maldives' },
-        { label: 'Mali', value: 'mali' },
-        { label: 'Malta', value: 'malta' },
-        { label: 'Marshall Islands', value: 'marshall_islands' },
-        { label: 'Mauritania', value: 'mauritania' },
-        { label: 'Mauritius', value: 'mauritius' },
-        { label: 'Mexico', value: 'mexico' },
-        { label: 'Micronesia', value: 'micronesia' },
-        { label: 'Moldova', value: 'moldova' },
-        { label: 'Monaco', value: 'monaco' },
-        { label: 'Mongolia', value: 'mongolia' },
-        { label: 'Montenegro', value: 'montenegro' },
-        { label: 'Morocco', value: 'morocco' },
-        { label: 'Mozambique', value: 'mozambique' },
-        { label: 'Myanmar', value: 'myanmar' },
-        { label: 'Namibia', value: 'namibia' },
-        { label: 'Nauru', value: 'nauru' },
-        { label: 'Nepal', value: 'nepal' },
-        { label: 'Netherlands', value: 'netherlands' },
-        { label: 'New Zealand', value: 'new_zealand' },
-        { label: 'Nicaragua', value: 'nicaragua' },
-        { label: 'Niger', value: 'niger' },
-        { label: 'Nigeria', value: 'nigeria' },
-        { label: 'Norway', value: 'norway' },
-        { label: 'Oman', value: 'oman' },
-        { label: 'Pakistan', value: 'pakistan' },
-        { label: 'Palau', value: 'palau' },
-        { label: 'Panama', value: 'panama' },
-        { label: 'Papua New Guinea', value: 'papua_new_guinea' },
-        { label: 'Paraguay', value: 'paraguay' },
-        { label: 'Peru', value: 'peru' },
-        { label: 'Philippines', value: 'philippines' },
-        { label: 'Poland', value: 'poland' },
-        { label: 'Portugal', value: 'portugal' },
-        { label: 'Qatar', value: 'qatar' },
-        { label: 'Romania', value: 'romania' },
-        { label: 'Russia', value: 'russia' },
-        { label: 'Rwanda', value: 'rwanda' },
-        { label: 'Saint Kitts and Nevis', value: 'saint_kitts_and_nevis' },
-        { label: 'Saint Lucia', value: 'saint_lucia' },
-        { label: 'Saint Vincent and the Grenadines', value: 'saint_vincent_and_the_grenadines' },
-        { label: 'Samoa', value: 'samoa' },
-        { label: 'San Marino', value: 'san_marino' },
-        { label: 'Sao Tome and Principe', value: 'sao_tome_and_principe' },
-        { label: 'Saudi Arabia', value: 'saudi_arabia' },
-        { label: 'Senegal', value: 'senegal' },
-        { label: 'Serbia', value: 'serbia' },
-        { label: 'Seychelles', value: 'seychelles' },
-        { label: 'Sierra Leone', value: 'sierra_leone' },
-        { label: 'Singapore', value: 'singapore' },
-        { label: 'Slovakia', value: 'slovakia' },
-        { label: 'Slovenia', value: 'slovenia' },
-        { label: 'Solomon Islands', value: 'solomon_islands' },
-        { label: 'Somalia', value: 'somalia' },
-        { label: 'South Africa', value: 'south_africa' },
-        { label: 'South Sudan', value: 'south_sudan' },
-        { label: 'Spain', value: 'spain' },
-        { label: 'Sri Lanka', value: 'sri_lanka' },
-        { label: 'Sudan', value: 'sudan' },
-        { label: 'Suriname', value: 'suriname' },
-        { label: 'Swaziland', value: 'swaziland' },
-        { label: 'Sweden', value: 'sweden' },
-        { label: 'Switzerland', value: 'switzerland' },
-        { label: 'Syria', value: 'syria' },
-        { label: 'Taiwan', value: 'taiwan' },
-        { label: 'Tajikistan', value: 'tajikistan' },
-        { label: 'Tanzania', value: 'tanzania' },
-        { label: 'Thailand', value: 'thailand' },
-        { label: 'Togo', value: 'togo' },
-        { label: 'Tonga', value: 'tonga' },
-        { label: 'Trinidad and Tobago', value: 'trinidad_and_tobago' },
-        { label: 'Tunisia', value: 'tunisia' },
-        { label: 'Turkey', value: 'turkey' },
-        { label: 'Turkmenistan', value: 'turkmenistan' },
-        { label: 'Tuvalu', value: 'tuvalu' },
-        { label: 'Uganda', value: 'uganda' },
-        { label: 'Ukraine', value: 'ukraine' },
-        { label: 'United Arab Emirates', value: 'united_arab_emirates' },
-        { label: 'United Kingdom', value: 'united_kingdom' },
-        { label: 'United States', value: 'united_states' },
-        { label: 'Uruguay', value: 'uruguay' },
-        { label: 'Uzbekistan', value: 'uzbekistan' },
-        { label: 'Vanuatu', value: 'vanuatu' },
-        { label: 'Vatican City', value: 'vatican_city' },
-        { label: 'Venezuela', value: 'venezuela' },
-        { label: 'Vietnam', value: 'vietnam' },
-        { label: 'Yemen', value: 'yemen' },
-        { label: 'Zambia', value: 'zambia' },
-        { label: 'Zimbabwe', value: 'zimbabwe' }
+      }
+    },
+    {
+      id: 'countriesLived',
+      group: 'citizenship',
+      type: 'text',
+      label: 'List all countries or territories where you have lived for more than 6 months',
+      required: true,
+      placeholder: 'List countries separated by commas'
+    },
+
+    {
+      id: 'nationalIdHeader',
+      group: 'citizenship',
+      type: 'header',
+      label: 'National identity document of the applicant'
+    },
+    {
+      id: 'hasNationalId',
+      group: 'national_id',
+      type: 'select',
+      label: 'Do you have a valid national identity document?',
+      description: 'Not all countries issue a national identity document. If you have one, provide your information.',
+      required: true,
+      placeholder: 'Select an option',
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
       ]
+    },
+    {
+      id: 'nationalIdNumber',
+      group: 'national_id',
+      type: 'text',
+      label: 'Document number',
+      required: true,
+      showIf: { field: 'hasNationalId', value: 'yes' },
+      placeholder: 'Enter your document number',
+      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
+    },
+    {
+      id: 'confirmNationalIdNumber',
+      group: 'national_id',
+      type: 'text',
+      label: 'Confirm your document number',
+      required: true,
+      showIf: { field: 'hasNationalId', value: 'yes' },
+      placeholder: 'Re-enter your document number',
+      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
+    },
+    {
+      id: 'nationalIdIssueDate',
+      group: 'national_id',
+      type: 'date',
+      label: 'Date of issue',
+      required: true,
+      showIf: { field: 'hasNationalId', value: 'yes' },
+      description: 'Select the date when the document was issued',
+      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
+    },
+    {
+      id: 'nationalIdIssuingCountry',
+      group: 'national_id',
+      type: 'text',
+      label: 'Write the country or territory that issued this document',
+      required: true,
+      showIf: { field: 'hasNationalId', value: 'yes' },
+      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }],
+      placeholder: 'Select a country',
+    },
+    
+    // Names used in the past section
+    {
+      id: 'pastNamesHeader',
+      group: 'past_names',
+      type: 'header',
+      label: 'Names used in the past'
+    },
+    {
+      id: 'hasUsedOtherNames',
+      group: 'past_names',
+      type: 'select',
+      label: 'Have you used another name in the past?',
+      required: true,
+      placeholder: 'Select an option',
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'pastNames',
+      group: 'past_names',
+      type: 'text',
+      label: 'Names used in the past',
+      required: true,
+      showIf: { field: 'hasUsedOtherNames', value: 'yes' },
+      dependencies: [{ fieldId: 'hasUsedOtherNames', value: 'yes' }],
+      placeholder: 'Enter all previous names (including maiden name if applicable)'
+    },
+    
+
+    {
+      id: 'contactInfoHeader',
+      group: 'contact',
+      type: 'header',
+      label: 'Contact information of the applicant'
+    },
+    {
+      id: 'residentialAddressInfo',
+      group: 'contact',
+      type: 'info',
+      label: 'What\'s your residential address?',
+      content: ['This is the address where you currently live.']
+    },
+    {
+      id: 'residentialCountry',
+      group: 'contact',
+      type: 'select',
+      label: 'Select a country or territory',
+      required: true,
+      placeholder: 'Select a country',
+      options:COUNTRIES
     },
     // //{
     //   id: 'countryOfResidence',
@@ -1426,7 +1292,6 @@ export const CANADA: VisaForm = {
       group: 'personal',
       type: 'text',
       label: 'Given name or first name',
-      description: 'Write the given name. If none, leave this field blank.',
       required: false,
       showIf: { field: 'applyingOnBehalf', value: 'yes' }
     },
@@ -1578,47 +1443,55 @@ export const CANADA: VisaForm = {
       required: true,
       showIf: { field: 'passportNameMatch', value: 'no' }
     },
-    // {
-    //   id: 'inviterAddressSearch',
-    //   group: 'inviter',
-    //   type: 'text',
-    //   label: 'Start typing to find your address in the list',
-    //   required: true,
-    //   // placeholder: "If you don't see your address in the list, select Manually input address to enter your details in the address fields."
-    // },
     {
-      id: 'passportValidityWarning',
-      group: 'documents',
-      type: 'info',
-      label: 'Passport Validity Warning',
-      showIf: { field: 'passportValiditySixMonths', value: 'no' },
-      content: [
-        'Your passport must be valid for at least 6 months beyond your planned departure date from Canada.',
-        'Please renew your passport before continuing with your visa application.'
-      ]
-    },
-    {
-      id: 'hasPreviousTravel',
-      group: 'documents',
-      type: 'select',
-      label: 'Have you traveled to Canada or other countries in the last 10 years?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'previousTravelDetails',
-      group: 'documents',
+      id: 'inviterStreetNumber',
+      group: 'inviter',
       type: 'text',
-      label: 'List the countries visited and dates of travel',
-      required: false,
-      showIf: { field: 'hasPreviousTravel', value: 'yes' },
-      placeholder: 'Example: USA (Jan 2022-Feb 2022), UK (May 2019-June 2019)'
+      label: 'Street number',
+      required: true
     },
-    
-    // 2. Financial Documents Follow-up
+    {
+      id: 'inviterStreetName',
+      group: 'inviter',
+      type: 'text',
+      label: 'Street name',
+      required: true
+    },
+    {
+      id: 'inviterApartmentNumber',
+      group: 'inviter',
+      type: 'text',
+      label: 'Apartment or unit number',
+      required: false
+    },
+    {
+      id: 'inviterPoBox',
+      group: 'inviter',
+      type: 'text',
+      label: 'PO box',
+      required: false
+    },
+    {
+      id: 'inviterCity',
+      group: 'inviter',
+      type: 'text',
+      label: 'City or town',
+      required: true
+    },
+    {
+      id: 'inviterProvince',
+      group: 'inviter',
+      type: 'text',
+      label: 'Province',
+      required: true
+    },
+    {
+      id: 'inviterPostalCode',
+      group: 'inviter',
+      type: 'text',
+      label: 'Postal code',
+      required: true
+    },
     {
       id: 'fundingSource',
       group: 'documents',
@@ -1664,7 +1537,7 @@ export const CANADA: VisaForm = {
       type: 'text',
       label: 'Telephone number',
       required: true,
-      placeholder: 'Enter telephone number'
+      placeholder: 'phone'
     },
     {
       id: 'averageAccountBalance',
@@ -1672,7 +1545,7 @@ export const CANADA: VisaForm = {
       type: 'number',
       label: 'What is the average balance in your account (in your local currency)?',
       required: false,
-      placeholder: 'Enter extension if applicable'
+      placeholder: 'phone'
     },
     {
       id: 'inviterEmail',
@@ -1680,278 +1553,15 @@ export const CANADA: VisaForm = {
       type: 'text',
       label: 'Email address',
       required: true,
-      placeholder: 'Enter email address'
+      placeholder: 'email'
     },
-    // {
-    //   id: 'hasOtherInviter',
-    //   group: 'inviter',
-    //   type: 'select',
-    //   label: 'Has someone else also invited you?',
-    //   required: true,
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-    
-    // Contact Information
-    // {
-    //   id: 'currentAddress',
-    //   group: 'contact',
-    //   type: 'text',
-    //   label: 'Current Mailing Address',
-    //   required: true
-    // },
-    // {
-    //   id: 'city',
-    //   group: 'contact',
-    //   type: 'text',
-    //   label: 'City/Town',
-    //   required: true
-    // },
-    // {
-    //   id: 'country',
-    //   group: 'contact',
-    //   type: 'text',
-    //   label: 'Country',
-    //   required: true
-    // },
-    // {
-    //   id: 'postalCode',
-    //   group: 'contact',
-    //   type: 'text',
-    //   label: 'Postal/Zip Code',
-    //   required: true
-    // },
-    // {
-    //   id: 'phoneNumber',
-    //   group: 'contact',
-    //   type: 'text',
-    //   label: 'Telephone Number',
-    //   required: true
-    // },
-    // {
-    //   id: 'email',
-    //   group: 'contact',
-    //   type: 'text',
-    //   label: 'Email Address',
-    //   required: true
-    // },
-    // {
-    //   id: 'countriesOfResidenceHeader',
-    //   group: 'contact',
-    //   type: 'header',
-    //   label: 'Countries or territories of residence'
-    // },
-    // {
-    //   id: 'countriesOfResidenceInfo',
-    //   group: 'contact',
-    //   type: 'info',
-    //   label: '',
-    //   content: ['List all countries or territories of residence, then add all other countries or territories where you\'ve lived for the past five years, for more than 6 months.']
-    // },
     {
       id: 'countryOfResidence',
       group: 'contact',
       type: 'select',
       label: 'Are you currently employed?',
       required: true,
-      options: [
-        { label: 'Afghanistan', value: 'afghanistan' },
-        { label: 'Albania', value: 'albania' },
-        { label: 'Algeria', value: 'algeria' },
-        { label: 'Andorra', value: 'andorra' },
-        { label: 'Angola', value: 'angola' },
-        { label: 'Antigua and Barbuda', value: 'antigua_and_barbuda' },
-        { label: 'Argentina', value: 'argentina' },
-        { label: 'Armenia', value: 'armenia' },
-        { label: 'Australia', value: 'australia' },
-        { label: 'Austria', value: 'austria' },
-        { label: 'Azerbaijan', value: 'azerbaijan' },
-        { label: 'Bahamas', value: 'bahamas' },
-        { label: 'Bahrain', value: 'bahrain' },
-        { label: 'Bangladesh', value: 'bangladesh' },
-        { label: 'Barbados', value: 'barbados' },
-        { label: 'Belarus', value: 'belarus' },
-        { label: 'Belgium', value: 'belgium' },
-        { label: 'Belize', value: 'belize' },
-        { label: 'Benin', value: 'benin' },
-        { label: 'Bhutan', value: 'bhutan' },
-        { label: 'Bolivia', value: 'bolivia' },
-        { label: 'Bosnia and Herzegovina', value: 'bosnia_and_herzegovina' },
-        { label: 'Botswana', value: 'botswana' },
-        { label: 'Brazil', value: 'brazil' },
-        { label: 'Brunei', value: 'brunei' },
-        { label: 'Bulgaria', value: 'bulgaria' },
-        { label: 'Burkina Faso', value: 'burkina_faso' },
-        { label: 'Burundi', value: 'burundi' },
-        { label: 'Cambodia', value: 'cambodia' },
-        { label: 'Cameroon', value: 'cameroon' },
-        { label: 'Canada', value: 'canada' },
-        { label: 'Cape Verde', value: 'cape_verde' },
-        { label: 'Central African Republic', value: 'central_african_republic' },
-        { label: 'Chad', value: 'chad' },
-        { label: 'Chile', value: 'chile' },
-        { label: 'China', value: 'china' },
-        { label: 'Colombia', value: 'colombia' },
-        { label: 'Comoros', value: 'comoros' },
-        { label: 'Congo', value: 'congo' },
-        { label: 'Costa Rica', value: 'costa_rica' },
-        { label: 'Croatia', value: 'croatia' },
-        { label: 'Cuba', value: 'cuba' },
-        { label: 'Cyprus', value: 'cyprus' },
-        { label: 'Czech Republic', value: 'czech_republic' },
-        { label: 'Denmark', value: 'denmark' },
-        { label: 'Djibouti', value: 'djibouti' },
-        { label: 'Dominica', value: 'dominica' },
-        { label: 'Dominican Republic', value: 'dominican_republic' },
-        { label: 'East Timor', value: 'east_timor' },
-        { label: 'Ecuador', value: 'ecuador' },
-        { label: 'Egypt', value: 'egypt' },
-        { label: 'El Salvador', value: 'el_salvador' },
-        { label: 'Equatorial Guinea', value: 'equatorial_guinea' },
-        { label: 'Eritrea', value: 'eritrea' },
-        { label: 'Estonia', value: 'estonia' },
-        { label: 'Ethiopia', value: 'ethiopia' },
-        { label: 'Fiji', value: 'fiji' },
-        { label: 'Finland', value: 'finland' },
-        { label: 'France', value: 'france' },
-        { label: 'Gabon', value: 'gabon' },
-        { label: 'Gambia', value: 'gambia' },
-        { label: 'Georgia', value: 'georgia' },
-        { label: 'Germany', value: 'germany' },
-        { label: 'Ghana', value: 'ghana' },
-        { label: 'Greece', value: 'greece' },
-        { label: 'Grenada', value: 'grenada' },
-        { label: 'Guatemala', value: 'guatemala' },
-        { label: 'Guinea', value: 'guinea' },
-        { label: 'Guinea-Bissau', value: 'guinea_bissau' },
-        { label: 'Guyana', value: 'guyana' },
-        { label: 'Haiti', value: 'haiti' },
-        { label: 'Honduras', value: 'honduras' },
-        { label: 'Hungary', value: 'hungary' },
-        { label: 'Iceland', value: 'iceland' },
-        { label: 'India', value: 'india' },
-        { label: 'Indonesia', value: 'indonesia' },
-        { label: 'Iran', value: 'iran' },
-        { label: 'Iraq', value: 'iraq' },
-        { label: 'Ireland', value: 'ireland' },
-        { label: 'Israel', value: 'israel' },
-        { label: 'Italy', value: 'italy' },
-        { label: 'Ivory Coast', value: 'ivory_coast' },
-        { label: 'Jamaica', value: 'jamaica' },
-        { label: 'Japan', value: 'japan' },
-        { label: 'Jordan', value: 'jordan' },
-        { label: 'Kazakhstan', value: 'kazakhstan' },
-        { label: 'Kenya', value: 'kenya' },
-        { label: 'Kiribati', value: 'kiribati' },
-        { label: 'North Korea', value: 'north_korea' },
-        { label: 'South Korea', value: 'south_korea' },
-        { label: 'Kuwait', value: 'kuwait' },
-        { label: 'Kyrgyzstan', value: 'kyrgyzstan' },
-        { label: 'Laos', value: 'laos' },
-        { label: 'Latvia', value: 'latvia' },
-        { label: 'Lebanon', value: 'lebanon' },
-        { label: 'Lesotho', value: 'lesotho' },
-        { label: 'Liberia', value: 'liberia' },
-        { label: 'Libya', value: 'libya' },
-        { label: 'Liechtenstein', value: 'liechtenstein' },
-        { label: 'Lithuania', value: 'lithuania' },
-        { label: 'Luxembourg', value: 'luxembourg' },
-        { label: 'Macedonia', value: 'macedonia' },
-        { label: 'Madagascar', value: 'madagascar' },
-        { label: 'Malawi', value: 'malawi' },
-        { label: 'Malaysia', value: 'malaysia' },
-        { label: 'Maldives', value: 'maldives' },
-        { label: 'Mali', value: 'mali' },
-        { label: 'Malta', value: 'malta' },
-        { label: 'Marshall Islands', value: 'marshall_islands' },
-        { label: 'Mauritania', value: 'mauritania' },
-        { label: 'Mauritius', value: 'mauritius' },
-        { label: 'Mexico', value: 'mexico' },
-        { label: 'Micronesia', value: 'micronesia' },
-        { label: 'Moldova', value: 'moldova' },
-        { label: 'Monaco', value: 'monaco' },
-        { label: 'Mongolia', value: 'mongolia' },
-        { label: 'Montenegro', value: 'montenegro' },
-        { label: 'Morocco', value: 'morocco' },
-        { label: 'Mozambique', value: 'mozambique' },
-        { label: 'Myanmar', value: 'myanmar' },
-        { label: 'Namibia', value: 'namibia' },
-        { label: 'Nauru', value: 'nauru' },
-        { label: 'Nepal', value: 'nepal' },
-        { label: 'Netherlands', value: 'netherlands' },
-        { label: 'New Zealand', value: 'new_zealand' },
-        { label: 'Nicaragua', value: 'nicaragua' },
-        { label: 'Niger', value: 'niger' },
-        { label: 'Nigeria', value: 'nigeria' },
-        { label: 'Norway', value: 'norway' },
-        { label: 'Oman', value: 'oman' },
-        { label: 'Pakistan', value: 'pakistan' },
-        { label: 'Palau', value: 'palau' },
-        { label: 'Panama', value: 'panama' },
-        { label: 'Papua New Guinea', value: 'papua_new_guinea' },
-        { label: 'Paraguay', value: 'paraguay' },
-        { label: 'Peru', value: 'peru' },
-        { label: 'Philippines', value: 'philippines' },
-        { label: 'Poland', value: 'poland' },
-        { label: 'Portugal', value: 'portugal' },
-        { label: 'Qatar', value: 'qatar' },
-        { label: 'Romania', value: 'romania' },
-        { label: 'Russia', value: 'russia' },
-        { label: 'Rwanda', value: 'rwanda' },
-        { label: 'Saint Kitts and Nevis', value: 'saint_kitts_and_nevis' },
-        { label: 'Saint Lucia', value: 'saint_lucia' },
-        { label: 'Saint Vincent and the Grenadines', value: 'saint_vincent_and_the_grenadines' },
-        { label: 'Samoa', value: 'samoa' },
-        { label: 'San Marino', value: 'san_marino' },
-        { label: 'Sao Tome and Principe', value: 'sao_tome_and_principe' },
-        { label: 'Saudi Arabia', value: 'saudi_arabia' },
-        { label: 'Senegal', value: 'senegal' },
-        { label: 'Serbia', value: 'serbia' },
-        { label: 'Seychelles', value: 'seychelles' },
-        { label: 'Sierra Leone', value: 'sierra_leone' },
-        { label: 'Singapore', value: 'singapore' },
-        { label: 'Slovakia', value: 'slovakia' },
-        { label: 'Slovenia', value: 'slovenia' },
-        { label: 'Solomon Islands', value: 'solomon_islands' },
-        { label: 'Somalia', value: 'somalia' },
-        { label: 'South Africa', value: 'south_africa' },
-        { label: 'South Sudan', value: 'south_sudan' },
-        { label: 'Spain', value: 'spain' },
-        { label: 'Sri Lanka', value: 'sri_lanka' },
-        { label: 'Sudan', value: 'sudan' },
-        { label: 'Suriname', value: 'suriname' },
-        { label: 'Swaziland', value: 'swaziland' },
-        { label: 'Sweden', value: 'sweden' },
-        { label: 'Switzerland', value: 'switzerland' },
-        { label: 'Syria', value: 'syria' },
-        { label: 'Taiwan', value: 'taiwan' },
-        { label: 'Tajikistan', value: 'tajikistan' },
-        { label: 'Tanzania', value: 'tanzania' },
-        { label: 'Thailand', value: 'thailand' },
-        { label: 'Togo', value: 'togo' },
-        { label: 'Tonga', value: 'tonga' },
-        { label: 'Trinidad and Tobago', value: 'trinidad_and_tobago' },
-        { label: 'Tunisia', value: 'tunisia' },
-        { label: 'Turkey', value: 'turkey' },
-        { label: 'Turkmenistan', value: 'turkmenistan' },
-        { label: 'Tuvalu', value: 'tuvalu' },
-        { label: 'Uganda', value: 'uganda' },
-        { label: 'Ukraine', value: 'ukraine' },
-        { label: 'United Arab Emirates', value: 'united_arab_emirates' },
-        { label: 'United Kingdom', value: 'united_kingdom' },
-        { label: 'United States', value: 'united_states' },
-        { label: 'Uruguay', value: 'uruguay' },
-        { label: 'Uzbekistan', value: 'uzbekistan' },
-        { label: 'Vanuatu', value: 'vanuatu' },
-        { label: 'Vatican City', value: 'vatican_city' },
-        { label: 'Venezuela', value: 'venezuela' },
-        { label: 'Vietnam', value: 'vietnam' },
-        { label: 'Yemen', value: 'yemen' },
-        { label: 'Zambia', value: 'zambia' },
-        { label: 'Zimbabwe', value: 'zimbabwe' }
-      ]
+      options: COUNTRIES
     },
     {
       id: 'fromDate',
@@ -2182,17 +1792,17 @@ export const CANADA: VisaForm = {
       type: 'header',
       label: 'Review the extracted data from your documents'
     },
-    {
-      id: 'hasOtherInviter',
-      group: 'application',
-      type: 'select',
-      label: 'Has someone else also invited you?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
+    // {
+    //   id: 'hasOtherInviter',
+    //   group: 'application',
+    //   type: 'select',
+    //   label: 'Has someone else also invited you?',
+    //   required: true,
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
 
     // Finances Subsection
     // {
@@ -2406,202 +2016,7 @@ export const CANADA: VisaForm = {
       label: 'Select a country or territory',
       required: true,
       showIf: { field: 'hasPostSecondaryEducation', value: 'yes' },
-      options: [
-        { label: 'Afghanistan', value: 'afghanistan' },
-        { label: 'Albania', value: 'albania' },
-        { label: 'Algeria', value: 'algeria' },
-        { label: 'Andorra', value: 'andorra' },
-        { label: 'Angola', value: 'angola' },
-        { label: 'Antigua and Barbuda', value: 'antigua_and_barbuda' },
-        { label: 'Argentina', value: 'argentina' },
-        { label: 'Armenia', value: 'armenia' },
-        { label: 'Australia', value: 'australia' },
-        { label: 'Austria', value: 'austria' },
-        { label: 'Azerbaijan', value: 'azerbaijan' },
-        { label: 'Bahamas', value: 'bahamas' },
-        { label: 'Bahrain', value: 'bahrain' },
-        { label: 'Bangladesh', value: 'bangladesh' },
-        { label: 'Barbados', value: 'barbados' },
-        { label: 'Belarus', value: 'belarus' },
-        { label: 'Belgium', value: 'belgium' },
-        { label: 'Belize', value: 'belize' },
-        { label: 'Benin', value: 'benin' },
-        { label: 'Bhutan', value: 'bhutan' },
-        { label: 'Bolivia', value: 'bolivia' },
-        { label: 'Bosnia and Herzegovina', value: 'bosnia_and_herzegovina' },
-        { label: 'Botswana', value: 'botswana' },
-        { label: 'Brazil', value: 'brazil' },
-        { label: 'Brunei', value: 'brunei' },
-        { label: 'Bulgaria', value: 'bulgaria' },
-        { label: 'Burkina Faso', value: 'burkina_faso' },
-        { label: 'Burundi', value: 'burundi' },
-        { label: 'Cambodia', value: 'cambodia' },
-        { label: 'Cameroon', value: 'cameroon' },
-        { label: 'Canada', value: 'canada' },
-        { label: 'Cape Verde', value: 'cape_verde' },
-        { label: 'Central African Republic', value: 'central_african_republic' },
-        { label: 'Chad', value: 'chad' },
-        { label: 'Chile', value: 'chile' },
-        { label: 'China', value: 'china' },
-        { label: 'Colombia', value: 'colombia' },
-        { label: 'Comoros', value: 'comoros' },
-        { label: 'Congo', value: 'congo' },
-        { label: 'Costa Rica', value: 'costa_rica' },
-        { label: 'Croatia', value: 'croatia' },
-        { label: 'Cuba', value: 'cuba' },
-        { label: 'Cyprus', value: 'cyprus' },
-        { label: 'Czech Republic', value: 'czech_republic' },
-        { label: 'Denmark', value: 'denmark' },
-        { label: 'Djibouti', value: 'djibouti' },
-        { label: 'Dominica', value: 'dominica' },
-        { label: 'Dominican Republic', value: 'dominican_republic' },
-        { label: 'East Timor', value: 'east_timor' },
-        { label: 'Ecuador', value: 'ecuador' },
-        { label: 'Egypt', value: 'egypt' },
-        { label: 'El Salvador', value: 'el_salvador' },
-        { label: 'Equatorial Guinea', value: 'equatorial_guinea' },
-        { label: 'Eritrea', value: 'eritrea' },
-        { label: 'Estonia', value: 'estonia' },
-        { label: 'Ethiopia', value: 'ethiopia' },
-        { label: 'Fiji', value: 'fiji' },
-        { label: 'Finland', value: 'finland' },
-        { label: 'France', value: 'france' },
-        { label: 'Gabon', value: 'gabon' },
-        { label: 'Gambia', value: 'gambia' },
-        { label: 'Georgia', value: 'georgia' },
-        { label: 'Germany', value: 'germany' },
-        { label: 'Ghana', value: 'ghana' },
-        { label: 'Greece', value: 'greece' },
-        { label: 'Grenada', value: 'grenada' },
-        { label: 'Guatemala', value: 'guatemala' },
-        { label: 'Guinea', value: 'guinea' },
-        { label: 'Guinea-Bissau', value: 'guinea_bissau' },
-        { label: 'Guyana', value: 'guyana' },
-        { label: 'Haiti', value: 'haiti' },
-        { label: 'Honduras', value: 'honduras' },
-        { label: 'Hungary', value: 'hungary' },
-        { label: 'Iceland', value: 'iceland' },
-        { label: 'India', value: 'india' },
-        { label: 'Indonesia', value: 'indonesia' },
-        { label: 'Iran', value: 'iran' },
-        { label: 'Iraq', value: 'iraq' },
-        { label: 'Ireland', value: 'ireland' },
-        { label: 'Israel', value: 'israel' },
-        { label: 'Italy', value: 'italy' },
-        { label: 'Ivory Coast', value: 'ivory_coast' },
-        { label: 'Jamaica', value: 'jamaica' },
-        { label: 'Japan', value: 'japan' },
-        { label: 'Jordan', value: 'jordan' },
-        { label: 'Kazakhstan', value: 'kazakhstan' },
-        { label: 'Kenya', value: 'kenya' },
-        { label: 'Kiribati', value: 'kiribati' },
-        { label: 'North Korea', value: 'north_korea' },
-        { label: 'South Korea', value: 'south_korea' },
-        { label: 'Kuwait', value: 'kuwait' },
-        { label: 'Kyrgyzstan', value: 'kyrgyzstan' },
-        { label: 'Laos', value: 'laos' },
-        { label: 'Latvia', value: 'latvia' },
-        { label: 'Lebanon', value: 'lebanon' },
-        { label: 'Lesotho', value: 'lesotho' },
-        { label: 'Liberia', value: 'liberia' },
-        { label: 'Libya', value: 'libya' },
-        { label: 'Liechtenstein', value: 'liechtenstein' },
-        { label: 'Lithuania', value: 'lithuania' },
-        { label: 'Luxembourg', value: 'luxembourg' },
-        { label: 'Macedonia', value: 'macedonia' },
-        { label: 'Madagascar', value: 'madagascar' },
-        { label: 'Malawi', value: 'malawi' },
-        { label: 'Malaysia', value: 'malaysia' },
-        { label: 'Maldives', value: 'maldives' },
-        { label: 'Mali', value: 'mali' },
-        { label: 'Malta', value: 'malta' },
-        { label: 'Marshall Islands', value: 'marshall_islands' },
-        { label: 'Mauritania', value: 'mauritania' },
-        { label: 'Mauritius', value: 'mauritius' },
-        { label: 'Mexico', value: 'mexico' },
-        { label: 'Micronesia', value: 'micronesia' },
-        { label: 'Moldova', value: 'moldova' },
-        { label: 'Monaco', value: 'monaco' },
-        { label: 'Mongolia', value: 'mongolia' },
-        { label: 'Montenegro', value: 'montenegro' },
-        { label: 'Morocco', value: 'morocco' },
-        { label: 'Mozambique', value: 'mozambique' },
-        { label: 'Myanmar', value: 'myanmar' },
-        { label: 'Namibia', value: 'namibia' },
-        { label: 'Nauru', value: 'nauru' },
-        { label: 'Nepal', value: 'nepal' },
-        { label: 'Netherlands', value: 'netherlands' },
-        { label: 'New Zealand', value: 'new_zealand' },
-        { label: 'Nicaragua', value: 'nicaragua' },
-        { label: 'Niger', value: 'niger' },
-        { label: 'Nigeria', value: 'nigeria' },
-        { label: 'Norway', value: 'norway' },
-        { label: 'Oman', value: 'oman' },
-        { label: 'Pakistan', value: 'pakistan' },
-        { label: 'Palau', value: 'palau' },
-        { label: 'Panama', value: 'panama' },
-        { label: 'Papua New Guinea', value: 'papua_new_guinea' },
-        { label: 'Paraguay', value: 'paraguay' },
-        { label: 'Peru', value: 'peru' },
-        { label: 'Philippines', value: 'philippines' },
-        { label: 'Poland', value: 'poland' },
-        { label: 'Portugal', value: 'portugal' },
-        { label: 'Qatar', value: 'qatar' },
-        { label: 'Romania', value: 'romania' },
-        { label: 'Russia', value: 'russia' },
-        { label: 'Rwanda', value: 'rwanda' },
-        { label: 'Saint Kitts and Nevis', value: 'saint_kitts_and_nevis' },
-        { label: 'Saint Lucia', value: 'saint_lucia' },
-        { label: 'Saint Vincent and the Grenadines', value: 'saint_vincent_and_the_grenadines' },
-        { label: 'Samoa', value: 'samoa' },
-        { label: 'San Marino', value: 'san_marino' },
-        { label: 'Sao Tome and Principe', value: 'sao_tome_and_principe' },
-        { label: 'Saudi Arabia', value: 'saudi_arabia' },
-        { label: 'Senegal', value: 'senegal' },
-        { label: 'Serbia', value: 'serbia' },
-        { label: 'Seychelles', value: 'seychelles' },
-        { label: 'Sierra Leone', value: 'sierra_leone' },
-        { label: 'Singapore', value: 'singapore' },
-        { label: 'Slovakia', value: 'slovakia' },
-        { label: 'Slovenia', value: 'slovenia' },
-        { label: 'Solomon Islands', value: 'solomon_islands' },
-        { label: 'Somalia', value: 'somalia' },
-        { label: 'South Africa', value: 'south_africa' },
-        { label: 'South Sudan', value: 'south_sudan' },
-        { label: 'Spain', value: 'spain' },
-        { label: 'Sri Lanka', value: 'sri_lanka' },
-        { label: 'Sudan', value: 'sudan' },
-        { label: 'Suriname', value: 'suriname' },
-        { label: 'Swaziland', value: 'swaziland' },
-        { label: 'Sweden', value: 'sweden' },
-        { label: 'Switzerland', value: 'switzerland' },
-        { label: 'Syria', value: 'syria' },
-        { label: 'Taiwan', value: 'taiwan' },
-        { label: 'Tajikistan', value: 'tajikistan' },
-        { label: 'Tanzania', value: 'tanzania' },
-        { label: 'Thailand', value: 'thailand' },
-        { label: 'Togo', value: 'togo' },
-        { label: 'Tonga', value: 'tonga' },
-        { label: 'Trinidad and Tobago', value: 'trinidad_and_tobago' },
-        { label: 'Tunisia', value: 'tunisia' },
-        { label: 'Turkey', value: 'turkey' },
-        { label: 'Turkmenistan', value: 'turkmenistan' },
-        { label: 'Tuvalu', value: 'tuvalu' },
-        { label: 'Uganda', value: 'uganda' },
-        { label: 'Ukraine', value: 'ukraine' },
-        { label: 'United Arab Emirates', value: 'united_arab_emirates' },
-        { label: 'United Kingdom', value: 'united_kingdom' },
-        { label: 'United States', value: 'united_states' },
-        { label: 'Uruguay', value: 'uruguay' },
-        { label: 'Uzbekistan', value: 'uzbekistan' },
-        { label: 'Vanuatu', value: 'vanuatu' },
-        { label: 'Vatican City', value: 'vatican_city' },
-        { label: 'Venezuela', value: 'venezuela' },
-        { label: 'Vietnam', value: 'vietnam' },
-        { label: 'Yemen', value: 'yemen' },
-        { label: 'Zambia', value: 'zambia' },
-        { label: 'Zimbabwe', value: 'zimbabwe' }
-      ]
+      options: COUNTRIES
     },
     {
       id: 'educationStreetAddress',
@@ -3215,34 +2630,260 @@ export const CANADA: VisaForm = {
     //     { label: 'No', value: 'no' }
     //   ]
     // }
+    // Visa History Section
+    {
+      id: 'visaHistoryHeader',
+      group: 'visa_history',
+      type: 'header',
+      label: 'Visa History'
+    },
+    {
+      id: 'visaHistoryDescription',
+      group: 'visa_history',
+      type: 'info',
+      label: 'Previous Visa Applications',
+      content: [
+        'Any previous refusal of USA, refused a visa or permit denied entry, figure print collected previously for the purpose of applying for Schengen visa, has the applicant ever had a visa for Australia or any other country refused or cancelled, have you ever been refused visa / permit, work, study for another country excluding New Zealand.'
+      ]
+    },
+    {
+      id: 'hasAppliedForVisa',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Did you ever file visa application for any country?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'hasVisaRefusal',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Was any of your visa application refused?',
+      required: true,
+      showIf: { field: 'hasAppliedForVisa', value: 'yes' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'refusalCountry',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Which country refused your visa?',
+      required: true,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasAppliedForVisa', value: 'yes' },
+          { field: 'hasVisaRefusal', value: 'yes' }
+        ]
+      },
+      options: COUNTRIES
+    },
+    {
+      id: 'visaRefusalType',
+      group: 'visa_history',
+      type: 'select',
+      label: 'What for you applied?',
+      required: true,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasAppliedForVisa', value: 'yes' },
+          { field: 'hasVisaRefusal', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Temporary short visit', value: 'temporary' },
+        { label: 'Permanent settlement', value: 'permanent' }
+      ]
+    },
+    {
+      id: 'refusalDate',
+      group: 'visa_history',
+      type: 'date',
+      label: 'When did this problem occur?',
+      required: false,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasAppliedForVisa', value: 'yes' },
+          { field: 'hasVisaRefusal', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'hasRefusalLetter',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Do you have any letter of refusal?',
+      required: false,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasAppliedForVisa', value: 'yes' },
+          { field: 'hasVisaRefusal', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    // Travel Plans Section
+    {
+      id: 'travelPlansHeader',
+      group: 'visa_history',
+      type: 'header',
+      label: 'Travel Plans'
+    },
+    {
+      id: 'travelPlansDescription',
+      group: 'visa_history',
+      type: 'info',
+      label: 'Travel Dates',
+      content: [
+        'Date you will arrive and leave, intended date of arrival, planned arrival date, planned final departure date, indicate how long you plan to stay from – to, intended date of arrival of first intend stay in the Schengen area, intended date of departure.'
+      ]
+    },
+    {
+      id: 'hasConfirmedTravelPlans',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Do you have confirmed travel plans?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'plannedArrivalDate',
+      group: 'visa_history',
+      type: 'date',
+      label: 'Planned arrival date',
+      required: false,
+      showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
+    },
+    {
+      id: 'plannedDepartureDate',
+      group: 'visa_history',
+      type: 'date',
+      label: 'Planned departure date',
+      required: false,
+      showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
+    },
+    // Additional Information Section
+    {
+      id: 'additionalInfoHeader',
+      group: 'additional',
+      type: 'header',
+      label: 'Additional Information and Services'
+    },
+    {
+      id: 'needExplanations',
+      group: 'additional',
+      type: 'select',
+      label: 'Do you want to add any explanations?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'explanationText',
+      group: 'additional',
+      type: 'text',
+      label: 'Please provide your explanation',
+      required: false,
+      showIf: { field: 'needExplanations', value: 'yes' },
+      placeholder: 'Enter your explanation here'
+    },
+    {
+      id: 'needTravelServices',
+      group: 'additional',
+      type: 'select',
+      label: 'Do you need any pre departure or post arrival service (such as air tickets, travel insurances, forex cards, mobile SIM, booking of accommodation, package tours)?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'preferredContactMethod',
+      group: 'additional',
+      type: 'text',
+      label: 'What is the best method to contact you regarding your application?',
+      required: false,
+      options: [
+        { label: 'Email', value: 'email' },
+        { label: 'WhatsApp', value: 'whatsapp' },
+        { label: 'Phone call', value: 'phone' }
+      ]
+    },
+    {
+      id: 'needAdditionalContact',
+      group: 'additional',
+      type: 'select',
+      label: 'Do you like to provide additional email or phone number than that you used for creating your application?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'additionalEmail',
+      group: 'additional',
+      type: 'text',
+      label: 'Additional Email',
+      required: false,
+      showIf: { field: 'needAdditionalContact', value: 'yes' },
+      placeholder: 'Enter your additional email address'
+    },
+    {
+      id: 'additionalPhone',
+      group: 'additional',
+      type: 'text',
+      label: 'Additional Phone',
+      required: false,
+      showIf: { field: 'needAdditionalContact', value: 'yes' },
+      placeholder: 'Enter your additional phone number'
+    }
   ],
   documents: [
-    {
-      id: 'medicalFacilityDeposit',
-      group: 'application',
-      type: 'select',
-      label: 'Have you paid a deposit to the Canadian medical facility?',
-      required: false,
-      showIf: { field: 'purposeOfVisit', value: 'medical_treatment' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
+    // {
+    //   id: 'medicalFacilityDeposit',
+    //   group: 'application',
+    //   type: 'select',
+    //   label: 'Have you paid a deposit to the Canadian medical facility?',
+    //   required: false,
+    //   showIf: { field: 'purposeOfVisit', value: 'medical_treatment' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
 
     // To Study Without a Permit
-    {
-      id: 'courseDurationCheck',
-      group: 'application',
-      type: 'select',
-      label: 'Is your course/program less than 6 months long?',
-      required: false,
-      showIf: { field: 'purposeOfVisit', value: 'short_term_study' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
+    // {
+    //   id: 'courseDurationCheck',
+    //   group: 'application',
+    //   type: 'select',
+    //   label: 'Is your course/program less than 6 months long?',
+    //   required: false,
+    //   showIf: { field: 'purposeOfVisit', value: 'short_term_study' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
     {
       id: 'financialProof',
       name: 'Proof of Financial Support',
@@ -3255,14 +2896,94 @@ export const CANADA: VisaForm = {
       name: 'Travel Itinerary',
       type: 'file' as DocumentType,
       description: 'Details of your planned trip including flight reservations',
-      required: false
+      required: true,
+      conditions: [
+        { questionId: 'visaType', value: 'visitor' }
+      ]
     },
     {
       id: 'invitationLetter',
-      name: 'Invitation Letter (if applicable)',
+      name: 'Invitation Letter',
       type: 'file' as DocumentType,
-      description: 'If visiting family or friends, include a letter of invitation from your host in Canada',
-      required: false
-    }
+      description: 'Letter of invitation from your host in Canada',
+      required: true,
+      conditions: [
+        { questionId: 'purposeOfVisit', value: 'visit_friends' }
+      ]
+    },
+    {
+      id: 'marriageCertificate',
+      name: 'Marriage Certificate',
+      type: 'file' as DocumentType,
+      description: 'Required for married applicants',
+      required: true,
+      conditions: [
+        { questionId: 'maritalStatus', value: 'married' }
+      ]
+    },
+    {
+      id: 'divorceDecree',
+      name: 'Divorce Decree or Separation Certificate',
+      type: 'file' as DocumentType,
+      description: 'Required for divorced or separated applicants',
+      required: true,
+      conditions: [
+        { questionId: 'maritalStatus', value: 'divorced' }
+      ]
+    },
+    {
+      id: 'spousePassport',
+      name: 'Spouse Passport Copy',
+      type: 'file' as DocumentType,
+      description: 'Required for married applicants when spouse is accompanying',
+      required: true,
+      conditions: [
+        { questionId: 'maritalStatus', value: 'married' },
+        { questionId: 'spouseAccompanyMarried', value: 'yes' }
+      ]
+    },
+    {
+      id: 'commonLawProof',
+      name: 'Proof of Common-Law Relationship',
+      type: 'file' as DocumentType,
+      description: 'Documents proving your common-law relationship (shared bills, lease, etc.)',
+      required: true,
+      conditions: [
+        { questionId: 'maritalStatus', value: 'common_law' }
+      ]
+    },
+    {
+      id: 'commonLawPartnerPassport',
+      name: 'Common-Law Partner Passport Copy',
+      type: 'file' as DocumentType,
+      description: 'Required when common-law partner is accompanying',
+      required: true,
+      conditions: [
+        { questionId: 'maritalStatus', value: 'common_law' },
+        { questionId: 'spouseAccompany', value: 'yes' }
+      ]
+    },
+    {
+      id: 'medicalExamRecord',
+      name: 'Medical Examination Records',
+      type: 'file' as DocumentType,
+      description: 'Results of your IRCC authorized medical examination',
+      required: true,
+      conditions: [
+        { questionId: 'hasMedicalExam', value: 'yes' }
+      ]
+    },
+    // {
+    //   id: 'wantAdditionalApplicant',
+    //   group: 'additional_applicant',
+    //   type: 'select',
+    //   label: 'Do you want to add another applicant?',
+    //   required: true,
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // }
+    
   ]
 };

@@ -25,7 +25,7 @@ export type FormGroup =
   | 'past_names'
   | 'application'
   | 'medical'
-<<<<<<< Updated upstream
+  | 'employment'
   | 'education'
   // Additional form groups for generic country form
   | 'destination'
@@ -43,9 +43,6 @@ export type FormGroup =
   | 'travel_plans'
   | 'social_media'
   | 'additional'
-=======
-  | 'employment'
->>>>>>> Stashed changes
   ;
 
 export interface FormStep {

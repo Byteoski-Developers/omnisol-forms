@@ -9,13 +9,15 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card } from '@/components/ui/card';
-import { Upload, AlertCircle, Calendar as CalendarIcon } from 'lucide-react';
+import { Upload, AlertCircle, Calendar as CalendarIcon, FileText, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { ChildrenInput } from './ChildrenInput';
 import { WorkExperience } from './WorkExperience';
 import { TravelItinerary } from './TravelItinerary';
+import { ResidenceCountries } from './ResidenceCountries';
+import { DocumentUpload } from './DocumentUpload';
 import { useParams } from 'next/navigation';
 import authRequest from '@/api/authRequest';
 
@@ -142,26 +144,31 @@ export function DynamicForm({
   }, [form.fields, form.documents, formData]);
 
   const validateField = (field: FormField, value: any): string | null => {
-    if (field.required && !value) {
+    if (field.required && (value === undefined || value === null || value === '')) {
       return 'This field is required';
     }
+    
     if (field.validations) {
-      const { min, max, pattern, customValidation } = field.validations;
-      if (typeof value === 'number') {
-        if (min !== undefined && value < min) {
-          return `Value must be at least ${min}`;
-        }
-        if (max !== undefined && value > max) {
-          return `Value must be at most ${max}`;
+      if (field.validations.min !== undefined && value < field.validations.min) {
+        return `Value must be at least ${field.validations.min}`;
+      }
+      
+      if (field.validations.max !== undefined && value > field.validations.max) {
+        return `Value must be at most ${field.validations.max}`;
+      }
+      
+      if (field.validations.pattern && typeof value === 'string') {
+        const regex = new RegExp(field.validations.pattern);
+        if (!regex.test(value)) {
+          return 'Invalid format';
         }
       }
-      if (pattern && typeof value === 'string' && !new RegExp(pattern).test(value)) {
-        return 'Invalid format';
-      }
-      if (customValidation && !customValidation(value)) {
-        return 'Please ensure all information is complete and valid';
+      
+      if (field.validations.customValidation && !field.validations.customValidation(value)) {
+        return 'Invalid value';
       }
     }
+    
     return null;
   };
 
@@ -174,32 +181,32 @@ export function DynamicForm({
 
   // Function to update case question and answer via API with debouncing
   const updateCaseQuestionAnswer = (question: string, label: string, answer: any) => {
+    if (!caseId) return;
+    
     // Clear any existing timer for this question
     if (debounceTimers.current[question]) {
       clearTimeout(debounceTimers.current[question]);
     }
-
-    // Set a new timer for this question (500ms debounce time)
+    
+    // Set a new timer
     debounceTimers.current[question] = setTimeout(async () => {
       try {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000';
         const response = await authRequest({
           method: 'POST',
-          url: `${baseUrl}/api/form-manager-v2/case-qa`,
+          url: `${baseUrl}/api/case-manager/questions/answer`,
           data: {
-            case_id: caseId,
-            question: question,
-            label: label, 
-            answer: String(answer)
+            case_id: parseInt(caseId as string, 10),
+            question,
+            label,
+            answer
           }
         });
-        
-        console.log('API response for', question, '(', label, '):', response.data);
-        return response.data;
+        console.log('Answer saved:', response.data);
       } catch (error) {
-        console.error('Error updating case question and answer:', error);
+        console.error('Error saving answer:', error);
       }
-    }, 500); // 500ms debounce time
+    }, 1000); // 1 second debounce
   };
 
   // Clean up timers on unmount
@@ -211,22 +218,29 @@ export function DynamicForm({
   }, []);
 
   const handleFieldChange = (fieldId: string, value: any) => {
+    setFormData(prev => {
+      const newData = { ...prev, [fieldId]: value };
+      console.log(`Field ${fieldId} changed to:`, value);
+      return newData;
+    });
+    
+    // Validate the field
     const field = form.fields.find(f => f.id === fieldId);
-    console.log("FIELD ----<>",field)
     if (field) {
       const error = validateField(field, value);
-      setErrors(prev => ({
-        ...prev,
-        [fieldId]: error || ''
-      }));
-
-      // Call API to update the question and answer
-      if (caseId) {
-        // Pass both field ID and label to the update function
-        updateCaseQuestionAnswer(fieldId, field.label, value);
+      if (error) {
+        setErrors(prev => ({ ...prev, [fieldId]: error }));
+      } else {
+        setErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors[fieldId];
+          return newErrors;
+        });
       }
+      
+      // Update the case question/answer in the backend
+      updateCaseQuestionAnswer(fieldId, field.label, value);
     }
-    setFormData(prev => ({ ...prev, [fieldId]: value }));
   };
 
   const renderField = (field: FormField) => {
@@ -236,121 +250,267 @@ export function DynamicForm({
     }
 
     const error = errors[field.id];
-    const commonProps = {
-      id: field.id,
-      'aria-invalid': !!error,
-      className: cn(
-        'w-full',
-        error ? 'border-destructive' : 'border-input'
-      )
-    };
-
-    if (field.id === 'children' && field.group === 'family') {
-      return (
-        <div className="space-y-2" key={field.id}>
-          <ChildrenInput
-            onChange={(children) => handleFieldChange(field.id, children)}
-            value={formData[field.id]}
-            onError={setChildrenHasErrors}
-          />
-          {error && (
-            <div className="flex items-center gap-2 text-destructive mt-2">
-              <AlertCircle className="h-4 w-4" />
-              <p className="text-sm">{error}</p>
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    if (field.id === 'workExperience' && field.group === 'work') {
-      return (
-        <div className="space-y-2" key={field.id}>
-          <WorkExperience
-            onChange={(experiences) => handleFieldChange(field.id, experiences)}
-            value={formData[field.id]}
-          />
-          {error && (
-            <div className="flex items-center gap-2 text-destructive mt-2">
-              <AlertCircle className="h-4 w-4" />
-              <p className="text-sm">{error}</p>
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    if (field.id === 'itinerary' && field.group === 'travel') {
-      return (
-        <div className="space-y-2" key={field.id}>
-          <TravelItinerary
-            onChange={(destinations) => handleFieldChange(field.id, destinations)}
-            value={formData[field.id]}
-            onError={setItineraryHasErrors}
-          />
-          {error && (
-            <div className="flex items-center gap-2 text-destructive mt-2">
-              <AlertCircle className="h-4 w-4" />
-              <p className="text-sm">{error}</p>
-            </div>
-          )}
-        </div>
-      );
-    }
-
+    
+    // Handle different field types
     switch (field.type) {
-      case 'info':
-        return (
-          <div className="space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-200" key={field.id}>
-            <h3 className="text-lg font-medium text-blue-900">{field.label}</h3>
-            <div className="space-y-2 text-sm text-blue-800">
-              {field.content?.map((line, index) => (
-                <p key={index} className={line.startsWith('✓') ? 'flex items-start' : 'pl-6'}>
-                  {line.startsWith('✓') && (
-                    <span className="mr-2 text-green-600">✓</span>
-                  )}
-                  {line.startsWith('•') ? (
-                    <span className="flex items-start">
-                      <span className="mr-2">•</span>
-                      <span>{line.substring(1).trim()}</span>
-                    </span>
-                  ) : (
-                    line
-                  )}
-                </p>
-              ))}
-            </div>
-          </div>
-        );
-      case 'text':
+      case 'residence_countries':
+        // Initialize with an empty array if not already set
+        if (!formData[field.id] || !Array.isArray(formData[field.id])) {
+          // Use immediate update instead of setTimeout to avoid race conditions
+          handleFieldChange(field.id, []);
+        }
+        
         return (
           <div className="space-y-2" key={field.id}>
             <Label htmlFor={field.id}>{field.label}</Label>
-            <Input
-              {...commonProps}
-              placeholder={field.placeholder}
-              value={formData[field.id] || ''}
-              onChange={(e) => handleFieldChange(field.id, e.target.value)}
-              required={field.required}
+            <ResidenceCountries
+              countries={[
+                { value: 'us', label: 'United States' },
+                { value: 'ca', label: 'Canada' },
+                { value: 'uk', label: 'United Kingdom' },
+                { value: 'au', label: 'Australia' },
+                { value: 'in', label: 'India' },
+                { value: 'cn', label: 'China' },
+                { value: 'jp', label: 'Japan' },
+                { value: 'tg', label: 'Togo' },
+                { value: 'fr', label: 'France' },
+                { value: 'de', label: 'Germany' },
+                { value: 'other', label: 'Other' }
+              ]}
+              statuses={[
+                { value: 'citizen', label: 'Citizen' },
+                { value: 'permanent_resident', label: 'Permanent resident' },
+                { value: 'temporary_resident', label: 'Temporary resident' },
+                { value: 'worker', label: 'Worker' },
+                { value: 'student', label: 'Student' },
+                { value: 'visitor', label: 'Visitor' }
+              ]}
+              value={formData[field.id] || []}
+              onChange={(countries) => handleFieldChange(field.id, countries)}
             />
             {error && (
-              <div className="flex items-center gap-2 text-destructive">
+              <div className="flex items-center gap-2 text-destructive mt-2">
                 <AlertCircle className="h-4 w-4" />
                 <p className="text-sm">{error}</p>
               </div>
             )}
           </div>
         );
-      case 'select':
+        
+      case 'work_experience':
         return (
           <div className="space-y-2" key={field.id}>
             <Label htmlFor={field.id}>{field.label}</Label>
+            <WorkExperience
+              onChange={(experiences) => handleFieldChange(field.id, experiences)}
+              value={formData[field.id]}
+            />
+            {error && (
+              <div className="flex items-center gap-2 text-destructive mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+          </div>
+        );
+        
+      case 'file':
+        return (
+          <div className="space-y-2 mb-6" key={field.id}>
+            <div className="flex items-center justify-between mb-2">
+              <Label htmlFor={field.id} className="font-medium">
+                {field.label}
+                {field.required && <span className="text-destructive ml-1">*</span>}
+              </Label>
+              <div className="text-sm text-muted-foreground">
+                PDF, JPG, PNG (max 4MB)
+              </div>
+            </div>
+            
+            {field.description && (
+              <p className="text-sm text-muted-foreground mb-3">{field.description}</p>
+            )}
+            
+            {!formData[field.id] ? (
+              <div className="flex items-center justify-center h-32 bg-muted rounded-md cursor-pointer border border-dashed"
+                onClick={() => {
+                  const input = document.createElement('input');
+                  input.type = 'file';
+                  input.accept = '.pdf,.jpg,.jpeg,.png';
+                  input.onchange = (e: any) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      if (file.size > 4 * 1024 * 1024) {
+                        setErrors(prev => ({
+                          ...prev,
+                          [field.id]: 'File size exceeds 4MB limit'
+                        }));
+                        return;
+                      }
+                      
+                      if (!['application/pdf', 'image/jpeg', 'image/png'].includes(file.type)) {
+                        setErrors(prev => ({
+                          ...prev,
+                          [field.id]: 'Invalid file type. Please upload PDF, JPG, or PNG'
+                        }));
+                        return;
+                      }
+                      
+                      handleFieldChange(field.id, {
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        lastModified: file.lastModified
+                      });
+                      
+                      if (errors[field.id]) {
+                        setErrors(prev => {
+                          const newErrors = {...prev};
+                          delete newErrors[field.id];
+                          return newErrors;
+                        });
+                      }
+                    }
+                  };
+                  input.click();
+                }}
+              >
+                <div className="text-center">
+                  <Upload className="h-10 w-10 text-muted-foreground mx-auto mb-2" />
+                  <p className="text-sm font-medium">Click to upload</p>
+                  <p className="text-xs text-muted-foreground mt-1">or drag and drop</p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between p-3 bg-muted rounded-md">
+                <div className="flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-muted-foreground" />
+                  <span className="text-sm truncate max-w-[200px]">
+                    {formData[field.id].name}
+                  </span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    handleFieldChange(field.id, null);
+                  }}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
+            
+            {error && (
+              <div className="flex items-center gap-2 text-destructive mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+          </div>
+        );
+        
+      case 'header':
+        return (
+          <div key={field.id} className="mb-4">
+            <h2 className="text-xl font-semibold mb-2">{field.label}</h2>
+            {field.description && (
+              <p className="text-sm text-muted-foreground">{field.description}</p>
+            )}
+          </div>
+        );
+        
+      case 'info':
+        return (
+          <div key={field.id} className="mb-4 p-4 bg-muted rounded-md">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div>
+                {field.label && <h3 className="font-medium mb-1">{field.label}</h3>}
+                {field.description && <p className="text-sm">{field.description}</p>}
+                {field.content && Array.isArray(field.content) && (
+                  <div className="mt-2 space-y-1">
+                    {field.content.map((item, index) => (
+                      <p key={index} className="text-sm">{item}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'text':
+      case 'email':
+      case 'tel':
+      case 'number':
+        return (
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>
+              {field.label}
+              {field.required && <span className="text-destructive ml-1">*</span>}
+            </Label>
+            <Input
+              id={field.id}
+              type={field.type}
+              placeholder={field.placeholder}
+              value={formData[field.id] || ''}
+              onChange={(e) => handleFieldChange(field.id, e.target.value)}
+              className={cn(
+                'w-full',
+                error ? 'border-destructive' : 'border-input'
+              )}
+            />
+            {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
+            {error && (
+              <p className="text-sm text-destructive flex items-center mt-1">
+                <AlertCircle className="h-4 w-4 mr-1" />
+                {error}
+              </p>
+            )}
+          </div>
+        );
+
+      case 'textarea':
+        return (
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>
+              {field.label}
+              {field.required && <span className="text-destructive ml-1">*</span>}
+            </Label>
+            <textarea
+              id={field.id}
+              placeholder={field.placeholder}
+              value={formData[field.id] || ''}
+              onChange={(e) => handleFieldChange(field.id, e.target.value)}
+              className={cn(
+                'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+                error && 'border-destructive'
+              )}
+            />
+            {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
+            {error && (
+              <p className="text-sm text-destructive flex items-center mt-1">
+                <AlertCircle className="h-4 w-4 mr-1" />
+                {error}
+              </p>
+            )}
+          </div>
+        );
+
+      case 'select':
+        return (
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>
+              {field.label}
+              {field.required && <span className="text-destructive ml-1">*</span>}
+            </Label>
             <Select
               value={formData[field.id] || ''}
               onValueChange={(value) => handleFieldChange(field.id, value)}
             >
-              <SelectTrigger className={cn("w-full", error && "border-destructive")}>
-                <SelectValue placeholder="Select an option" />
+              <SelectTrigger id={field.id} className={cn(error && 'border-destructive')}>
+                <SelectValue placeholder={field.placeholder || 'Select an option'} />
               </SelectTrigger>
               <SelectContent>
                 {field.options?.map((option) => (
@@ -360,79 +520,138 @@ export function DynamicForm({
                 ))}
               </SelectContent>
             </Select>
+            {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
             {error && (
-              <div className="flex items-center gap-2 text-destructive">
-                <AlertCircle className="h-4 w-4" />
-                <p className="text-sm">{error}</p>
-              </div>
+              <p className="text-sm text-destructive flex items-center mt-1">
+                <AlertCircle className="h-4 w-4 mr-1" />
+                {error}
+              </p>
             )}
           </div>
         );
+
       case 'date':
         return (
-          <div className="space-y-2" key={field.id}>
-            <Label htmlFor={field.id}>{field.label}</Label>
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>
+              {field.label}
+              {field.required && <span className="text-destructive ml-1">*</span>}
+            </Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
+                  id={field.id}
                   variant="outline"
                   className={cn(
                     'w-full justify-start text-left font-normal',
                     !formData[field.id] && 'text-muted-foreground',
-                    error && "border-destructive"
+                    error && 'border-destructive'
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {formData[field.id] ? format(new Date(formData[field.id]), 'PPP') : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
+              <PopoverContent className="w-auto p-0">
                 <Calendar
                   mode="single"
                   selected={formData[field.id] ? new Date(formData[field.id]) : undefined}
-                  onSelect={(date) => handleFieldChange(field.id, date)}
+                  onSelect={(date) => handleFieldChange(field.id, date ? date.toISOString() : '')}
                   initialFocus
                 />
               </PopoverContent>
             </Popover>
+            {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
             {error && (
-              <div className="flex items-center gap-2 text-destructive">
-                <AlertCircle className="h-4 w-4" />
-                <p className="text-sm">{error}</p>
-              </div>
+              <p className="text-sm text-destructive flex items-center mt-1">
+                <AlertCircle className="h-4 w-4 mr-1" />
+                {error}
+              </p>
             )}
           </div>
         );
+
       case 'checkbox':
         return (
-          <div className="flex items-center space-x-2" key={field.id}>
+          <div key={field.id} className="mb-4 flex items-start space-x-2">
             <Checkbox
-              {...commonProps}
-              checked={formData[field.id] || false}
+              id={field.id}
+              checked={formData[field.id] === true}
               onCheckedChange={(checked) => handleFieldChange(field.id, checked)}
+              className={error ? 'border-destructive' : ''}
             />
+            <div className="grid gap-1.5 leading-none">
+              <Label
+                htmlFor={field.id}
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                {field.label}
+                {field.required && <span className="text-destructive ml-1">*</span>}
+              </Label>
+              {field.description && (
+                <p className="text-sm text-muted-foreground">{field.description}</p>
+              )}
+              {error && (
+                <p className="text-sm text-destructive flex items-center mt-1">
+                  <AlertCircle className="h-4 w-4 mr-1" />
+                  {error}
+                </p>
+              )}
+            </div>
+          </div>
+        );
+
+      case 'children':
+        return (
+          <div key={field.id} className="mb-4">
             <Label htmlFor={field.id}>{field.label}</Label>
+            <ChildrenInput
+              value={formData[field.id] || []}
+              onChange={(children) => {
+                handleFieldChange(field.id, children);
+              }}
+              onError={(hasErrors) => setChildrenHasErrors(hasErrors)}
+            />
             {error && (
-              <div className="flex items-center gap-2 text-destructive">
+              <div className="flex items-center gap-2 text-destructive mt-2">
                 <AlertCircle className="h-4 w-4" />
                 <p className="text-sm">{error}</p>
               </div>
             )}
           </div>
         );
+
+      case 'travel_itinerary':
+        return (
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>{field.label}</Label>
+            <TravelItinerary
+              value={formData[field.id] || []}
+              onChange={(itinerary) => {
+                handleFieldChange(field.id, itinerary);
+              }}
+              onError={(hasErrors) => setItineraryHasErrors(hasErrors)}
+            />
+            {error && (
+              <div className="flex items-center gap-2 text-destructive mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+          </div>
+        );
+
       default:
         return null;
     }
   };
 
-  // Function to request documents from the backend
   const requestDocuments = async () => {
     if (!caseId || !form.documents || form.documents.length === 0) return;
     
     try {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000';
       
-      // Prepare document requests based on the required documents
       const documentRequests = form.documents
         .filter(doc => requiredDocuments.has(doc.id))
         .map(doc => ({
@@ -443,7 +662,6 @@ export function DynamicForm({
       
       if (documentRequests.length === 0) return;
       
-      // Send the document requests to the backend
       const response = await authRequest({
         method: 'POST',
         url: `${baseUrl}/api/case-manager/documents/request-multiple-documents`,
@@ -459,7 +677,7 @@ export function DynamicForm({
       console.error('Error requesting documents:', error);
     }
   };
-  
+
   // Debug panel to show which documents are required based on form responses
   const renderDebugPanel = () => {
     if (process.env.NODE_ENV === 'production') return null;
@@ -497,12 +715,37 @@ export function DynamicForm({
       </div>
     );
   };
-  
-  // This function is kept for compatibility but doesn't render anything
+
+  // Render document upload component when showDocuments is true
   const renderDocuments = () => {
-    // We don't render document upload fields anymore
-    // Documents will be requested via API when the form is submitted
-    return null;
+    if (!form.showDocuments) return null;
+    
+    // Get the purpose of visit from form data
+    const purposeOfVisit = formData.purposeOfVisit || '';
+    
+    return (
+      <div className="mt-8">
+        <DocumentUpload 
+          form={form} 
+          purposeOfVisit={purposeOfVisit}
+          onUploadComplete={(documentId, extractedData) => {
+            // Update form data with extracted information
+            setFormData(prev => ({
+              ...prev,
+              ...extractedData,
+              [`document_${documentId}_uploaded`]: true
+            }));
+          }}
+          onError={(hasErrors) => {
+            // Track document upload errors
+            setErrors(prev => ({
+              ...prev,
+              documentUploadErrors: hasErrors ? 'Please fix document upload errors' : ''
+            }));
+          }}
+        />
+      </div>
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -518,11 +761,12 @@ export function DynamicForm({
       }
     });
 
-    // We no longer validate document uploads since they're handled separately
+    // Check for document upload errors if we're on a document step
+    const hasDocumentErrors = form.showDocuments && errors.documentUploadErrors;
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0 && !childrenHasErrors && !itineraryHasErrors) {
+    if (Object.keys(newErrors).length === 0 && !childrenHasErrors && !itineraryHasErrors && !hasDocumentErrors) {
       // If we're on the final step and documents are required, request them from the backend
       if (currentStep === totalSteps - 1 && form.showDocuments) {
         await requestDocuments();

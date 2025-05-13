@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { DynamicForm } from './DynamicForm';
 import { VisaForm } from '@/types/form';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface StepFormProps {
   form: VisaForm;
@@ -16,10 +17,16 @@ interface StepFormProps {
 export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState(initialData);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
   const handleStepSubmit = (stepData: Record<string, any>) => {
     const newFormData = { ...formData, ...stepData };
     setFormData(newFormData);
+    
+    // Mark current step as completed
+    if (!completedSteps.includes(currentStep)) {
+      setCompletedSteps(prev => [...prev, currentStep]);
+    }
     
     if (currentStep === form.steps.length - 1) {
       onSubmit(newFormData);
@@ -30,6 +37,11 @@ export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
 
   const handleBack = () => {
     setCurrentStep(prev => prev - 1);
+  };
+
+  const handleStepClick = (stepIndex: number) => {
+    // Allow navigation to any step
+    setCurrentStep(stepIndex);
   };
 
   const currentStepData = form.steps[currentStep];
@@ -46,16 +58,35 @@ export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
         </div>
       </div>
 
-      <div className="flex space-x-4 mb-8">
-        {form.steps.map((step, index) => (
-          <div
-            key={step.title}
-            className={`flex-1 h-2 rounded-full ${
-              index <= currentStep ? 'bg-primary' : 'bg-gray-200'
-            }`}
-          />
-        ))}
-      </div>
+      <TooltipProvider>
+        <div className="flex space-x-4 mb-8">
+          {form.steps.map((step, index) => {
+            const isCompleted = completedSteps.includes(index);
+            const isActive = index === currentStep;
+            const isClickable = isCompleted || index === 0 || index <= Math.max(...completedSteps, 0) + 1;
+            
+            return (
+              <Tooltip key={step.title}>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={() => handleStepClick(index)}
+                    className="flex-1 relative cursor-pointer hover:opacity-80"
+                    aria-label={`Go to step ${index + 1}: ${step.title}`}
+                  >
+                    <div 
+                      className={`h-2 rounded-full transition-all duration-300 ${isActive ? 'bg-primary' : isCompleted ? 'bg-primary/80' : 'bg-gray-200'}`}
+                    />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{step.title}</p>
+                </TooltipContent>
+              </Tooltip>
+            );
+          })}
+        </div>
+      </TooltipProvider>
 
       <Card className="p-6">
         <DynamicForm

@@ -25,6 +25,7 @@ export type FormGroup =
   | 'past_names'
   | 'application'
   | 'medical'
+  | 'employment'
   | 'education'
   // Additional form groups for generic country form
   | 'destination'
@@ -68,7 +69,7 @@ export interface Document {
 
 export interface FormField {
   id: string;
-  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info';
+  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary';
   content?: string[];
   label: string;
   placeholder?: string;

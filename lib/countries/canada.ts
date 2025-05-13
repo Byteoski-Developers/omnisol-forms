@@ -19,12 +19,12 @@ export const CANADA: VisaForm = {
     },
     {
       title: 'Travel Document Information',
-      group: 'travel_document',
-      showDocuments: false
+      group: 'travel',
+      showDocuments: false 
     },
     {
-      title: 'Citizenship and Residency',
-      group: 'citizenship',
+      title: 'National Identity Document',
+      group: 'national_id',
       showDocuments: false
     },
     {
@@ -33,8 +33,8 @@ export const CANADA: VisaForm = {
       showDocuments: false
     },
     {
-      title: 'Names Used in the Past',
-      group: 'past_names',
+      title: 'Citizenship and Residency',
+      group: 'citizenship',
       showDocuments: false
     },
     {
@@ -43,8 +43,8 @@ export const CANADA: VisaForm = {
       showDocuments: false
     },
     {
-      title: 'Application',
-      group: 'application',
+      title: 'Employment Information',
+      group: 'employment',
       showDocuments: false
     },
 
@@ -63,6 +63,42 @@ export const CANADA: VisaForm = {
       group: 'family',
       showDocuments: false
     },
+    // {
+    //   title: 'Previous Travel History',
+    //   group: 'history',
+    //   showDocuments: false
+    // },
+    {
+      title: 'Additional Information',
+      group: 'additional',
+      showDocuments: false
+    },
+    // {
+    //   title: 'Upload Documents',
+    //   group: 'documents',
+    //   showDocuments: true
+    // },
+    {
+      title: 'Visa History',
+      group: 'visa_history',
+      showDocuments: false
+    },
+    // {
+    //   title: 'Travel Plans',
+    //   group: 'visa_history',
+    //   showDocuments: false
+    // },
+    {
+      title: 'Additional Information',
+      group: 'additional',
+      showDocuments: false
+    },
+    // {
+    //   title: 'Additional Information',
+    //   group: 'additional_applicant',
+    //   showDocuments: false
+    // },
+    
   ],
   fields: [
     {
@@ -89,18 +125,35 @@ export const CANADA: VisaForm = {
     },
     
     // Travel Document Section
-    {
-      id: 'travelDocumentHeader',
-      group: 'travel_document',
-      type: 'header',
-      label: 'Travel Document Information',
-      description: 'Enter your travel document details'
-    },
+    // {
+    //   id: 'travelDocumentHeader',
+    //   group: 'travel_document',
+    //   type: 'header',
+    //   label: 'Travel Document Information',
+    //   description: 'Enter your travel document details and upload required documents'
+    // },
+    // {
+    //   id: 'passportBiodata',
+    //   group: 'travel_document',
+    //   type: 'file',
+    //   label: 'Passport Biodata Page',
+    //   description: 'Upload a clear scan or photo of your passport biodata page showing your photo, name, date of birth, and passport details',
+    //   required: true
+    // },
+    // {
+    //   id: 'travelHistory',
+    //   group: 'travel_document',
+    //   type: 'file',
+    //   label: 'Travel History (Visa Stamps)',
+    //   description: 'Upload scans of passport pages showing visa stamps and entry/exit seals from the last 5 years',
+    //   required: false
+    // },
     {
       id: 'documentsInfo',
       group: 'description_section',
       type: 'info',
       label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'critical_illness' },
       content: [
         '✓ A valid passport or travel document',
         '  • You must have at least 1 free page where we can stick your visitor visa.',
@@ -120,20 +173,35 @@ export const CANADA: VisaForm = {
       ]
     },
     {
-      id: 'surname',
-      group: 'travel_document',
-      type: 'text',
-      label: 'Surname or last name',
-      description: 'Write your name exactly as it appears on your passport or identity document',
-      required: true
-    },
-    {
-      id: 'givenName',
-      group: 'travel_document',
-      type: 'text',
-      label: 'Given name or first name',
-      description: 'Write your given name. If none, leave this field blank',
-      required: true
+      id: 'documentsInfoMedicalCare',
+      group: 'description_section',
+      type: 'info',
+      label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'medical_care' },
+      content: [
+        'You selected: visitor visa - provide support or care to a person who is critically ill or has a medical reason as approved by a licensed health care practitioner in Canada',
+        'If this isn\'t what you expected, check your answers again.',
+        '',
+        '✓ A valid passport or travel document',
+        '  • You must have at least 1 free page where we can stick your visitor visa.',
+        '',
+        'Upload in the "Additional document" field in the Documents table:',
+        '✓ A written explanation that details your reason for entering Canada',
+        '  • Provide as much detail about your visit as possible',
+        '',
+        'You may need other documents depending on how you answer the questions in the application.',
+        '',
+        'Information you need to enter:',
+        '1. Personal details',
+        '2. Travel document details',
+        '3. Finances',
+        '4. Education history',
+        '5. Criminality and security',
+        '6. Medical background',
+        '7. Family information',
+        '',
+        'You may need to give us more information depending on how you answer the questions in the application.'
+      ]
     },
     {
       id: 'dateOfBirth',
@@ -163,53 +231,131 @@ export const CANADA: VisaForm = {
       description: 'Enter your travel document details'
     },
     {
-      id: 'documentType',
-      group: 'travel_document',
-      type: 'select',
-      label: 'What document are you travelling with?',
-      required: true,
-      showIf: { field: 'visaType', not: 'not_sure' },
-      options: [
-        { label: 'Passport or other travel document', value: 'passport' },
-        { label: 'Travel document', value: 'travel_document' }
+      id: 'documentsInfoTourism',
+      group: 'description_section',
+      type: 'info',
+      label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'tourism' },
+      content: [
+        'You selected: visit Canada as a tourist',
+        'If this isn\'t what you expected, check your answers again.',
+        '',
+        'A visitor visa is an official document put in your passport that shows that you meet the requirements needed to enter Canada to visit as a tourist, visit family or friends, or attend meetings and events. Most visitors can stay for up to 6 months in Canada.',
+        '',
+        'Documents you need to complete the application:',
+        '',
+        '✓ A valid passport or travel document',
+        '  • You must have at least 1 free page where we can stick your visitor visa.',
+        '',
+        'Other documents may be needed based on your application answers.',
+        '',
+        'Information you need to enter:',
+        '',
+        '1. Personal details',
+        '2. Travel document details',
+        '3. Finances',
+        '4. Education history',
+        '5. Criminality and security',
+        '6. Medical background',
+        '7. Family information',
+        '',
+        'You may be asked to provide more information based on your responses.'
       ]
     },
     {
-      id: 'passportType',
-      group: 'travel_document',
-      type: 'select',
-      label: 'What kind of passport?',
-      
-      required: true,
-      showIf: { 
-        field: 'documentType',
-        value: 'passport'
-      },
-      options: [
-        { label: 'Regular', value: 'regular' },
-        { label: 'Diplomatic', value: 'diplomatic' },
-        { label: 'Official', value: 'official' },
-        { label: 'Service (official government service, not diplomatic)', value: 'service' },
-        { label: 'Alien\'s passport (issued to non-citizens)', value: 'alien' }
+      id: 'documentsInfoVisitImmediateFamily',
+      group: 'description_section',
+      type: 'info',
+      label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'visit_immediate_family' },
+      content: [
+        'You selected: visitor visa - to visit my spouse, common-law partner, dependent child, parent, step-parent, guardian or tutor',
+        'If this isn\'t what you expected, check your answers again.',
+        '',
+        'A visitor visa is an official document put in your passport that shows that you meet the requirements needed to enter Canada. Most visitors can stay for up to 6 months.',
+        '',
+        'Documents you need to complete the application:',
+        '',
+        '✓ A valid passport or travel document',
+        '  • You must have at least 1 free page where we can stick your visitor visa.',
+        '',
+        '✓ A letter of invitation',
+        '',
+        'Other documents may be needed based on your application answers.',
+        '',
+        'Information you need to enter:',
+        '',
+        '1. Personal details',
+        '2. Travel document details',
+        '3. Finances',
+        '4. Education history',
+        '5. Criminality and security',
+        '6. Medical background',
+        '7. Family information'
       ]
     },
     {
-      id: 'travelDocumentType',
-      group: 'travel_document',
-      type: 'select',
-      label: 'What kind of travel document?',
-      required: true,
-      showIf: { 
-        field: 'documentType',
-        value: 'travel_document'
-      },
-      options: [
-        { label: 'Certificate of Identity', value: 'certificate_identity' },
-        { label: 'Refugee Travel Document', value: 'refugee' },
-        { label: 'Red Cross Travel Document', value: 'red_cross' },
-        { label: 'Laissez-Passer', value: 'laissez_passer' },
-        { label: 'Organization of American States (OAS) Travel Document', value: 'oas' },
-        { label: 'Other travel document', value: 'other' }
+      id: 'documentsInfoVisitTempResident',
+      group: 'description_section',
+      type: 'info',
+      label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'visit_temp_resident' },
+      content: [
+        'You selected: visitor visa - to visit my spouse, common-law partner, dependent child, parent, step-parent, guardian or tutor',
+        'If this isn\'t what you expected, check your answers again.',
+        '',
+        'A visitor visa is an official document put in your passport that shows that you meet the requirements needed to enter Canada. Most visitors can stay for up to 6 months.',
+        '',
+        'Documents you need to complete the application:',
+        '',
+        '✓ A valid passport or travel document',
+        '  • You must have at least 1 free page where we can stick your visitor visa.',
+        '',
+        '✓ A letter of invitation',
+        '',
+        'Other documents may be needed based on your application answers.',
+        '',
+        'Information you need to enter:',
+        '',
+        '1. Personal details',
+        '2. Travel document details',
+        '3. Finances',
+        '4. Education history',
+        '5. Criminality and security',
+        '6. Medical background',
+        '7. Family information'
+      ]
+    },
+    {
+      id: 'documentsInfoVisitExtendedFamily',
+      group: 'description_section',
+      type: 'info',
+      label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'visit_extended_family' },
+      content: [
+        'You selected: visitor visa - to visit my grandparent, grandchild, sibling, non-dependent child',
+        'If this isn\'t what you expected, check your answers again.',
+        '',
+        'A visitor visa is an official document that shows you meet the requirements to visit Canada. Most visitors can stay for up to 6 months.',
+        '',
+        'Documents you need to complete the application:',
+        '',
+        '✓ A valid passport or travel document',
+        '  • You must have at least 1 free page where we can stick your visitor visa.',
+        '',
+        '✓ A letter of invitation',
+        '',
+        'Other documents may be needed based on your application answers.',
+        '',
+        'Information you need to enter:',
+        '',
+        '1. Personal details',
+        '2. Travel document details',
+        '3. Finances',
+        '4. Education history',
+        '5. Criminality and security',
+        '6. Medical background',
+        '7. Family information'
       ]
     },   
     {
@@ -224,70 +370,159 @@ export const CANADA: VisaForm = {
       }
     },
     {
-      id: 'documentNumber',
-      group: 'travel_document',
+      id: 'documentsInfoBusiness',
+      group: 'description_section',
+      type: 'info',
+      label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'business' },
+      content: [
+        'You selected: visitor visa for business reasons - such as meetings, conferences, events or training',
+        'If this isn\'t what you expected, check your answers again.',
+        '',
+        'A visitor visa allows travel for business meetings, events or training. Most visitors can stay for up to 6 months.',
+        '',
+        'Documents you need to complete the application:',
+        '',
+        '✓ A valid passport or travel document',
+        '  • You must have at least 1 free page where we can stick your visitor visa.',
+        '',
+        '✓ A letter of invitation from the business/host',
+        '',
+        '✓ 24-hour contact details for the host',
+        '',
+        'Other documents may be needed based on your application answers.',
+        '',
+        'Information you need to enter:',
+        '',
+        '1. Personal details',
+        '2. Travel document details',
+        '3. Finances',
+        '4. Education history',
+        '5. Criminality and security',
+        '6. Medical background',
+        '7. Family information'
+      ]
+    },
+    {
+      id: 'documentsInfoMedicalTreatment',
+      group: 'description_section',
+      type: 'info',
+      label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'medical_treatment' },
+      content: [
+        'You selected: visitor visa for a scheduled medical procedure or treatment',
+        'If this isn\'t what you expected, check your answers again.',
+        '',
+        'A visitor visa may be issued for a scheduled medical procedure or treatment. Most visitors can stay up to 6 months.',
+        '',
+        'Documents you need to complete the application:',
+        '',
+        '✓ A valid passport or travel document',
+        '  • You must have at least 1 free page where we can stick your visitor visa.',
+        '',
+        '✓ Proof of your scheduled procedure or treatment',
+        '',
+        'Other documents may be needed based on your application answers.',
+        '',
+        'Information you need to enter:',
+        '',
+        '1. Personal details',
+        '2. Travel document details',
+        '3. Finances',
+        '4. Education history',
+        '5. Criminality and security',
+        '6. Medical background',
+        '7. Family information'
+      ]
+    },
+    {
+      id: 'documentsInfoShortTermStudy',
+      group: 'description_section',
+      type: 'info',
+      label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'short_term_study' },
+      content: [
+        'You selected: apply for a visitor visa to study without a permit for less than 6 months',
+        'If this isn\'t what you expected, check your answers again.',
+        '',
+        'Documents you need to complete the application:',
+        '',
+        '✓ A valid passport or travel document',
+        '  • You must have at least 1 free page where we can stick your visitor visa.',
+        '',
+        'Other documents may be needed based on your application answers.',
+        '',
+        'Information you need to enter:',
+        '',
+        '1. Personal details',
+        '2. Travel document details',
+        '3. Finances',
+        '4. Education history',
+        '5. Criminality and security',
+        '6. Medical background',
+        '7. Family information'
+      ]
+    },
+    {
+      id: 'documentsInfoWorkWithoutPermit',
+      group: 'description_section',
+      type: 'info',
+      label: 'Documents you need to complete the application',
+      showIf: { field: 'purposeOfVisit', value: 'work_without_permit' },
+      content: [
+        'You selected: apply for a visitor visa to work without a work permit',
+        'If this isn\'t what you expected, check your answers again.',
+        '',
+        'A visitor visa may be issued for certain work purposes that do not require a permit. Most visitors can stay for up to 6 months.',
+        '',
+        'Documents you need to complete the application:',
+        '',
+        '✓ A valid passport or travel document',
+        '  • You must have at least 1 free page where we can stick your visitor visa.',
+        '',
+        '✓ Job offer letter or contract',
+        '',
+        'Other documents may be needed based on your application answers.',
+        '',
+        'Information you need to enter:',
+        '',
+        '1. Personal details',
+        '2. Travel document details',
+        '3. Finances',
+        '4. Education history',
+        '5. Criminality and security',
+        '6. Medical background',
+        '7. Family information'
+      ]
+    },
+    {
+      id: 'surname',
+      group: 'travel',
       type: 'text',
-      label: 'What\'s your passport or travel document number?',
-      required: true,
-      showIf: { 
-        field: 'documentType',
-        operator: 'or',
-        conditions: [
-          { field: 'documentType', value: 'passport' },
-          { field: 'documentType', value: 'travel_document' }
-        ]
-      }
+      label: 'Surname or last name',
+      description: 'Write your name exactly as it appears on your passport or identity document',
+      required: true
     },
     {
-      id: 'confirmDocumentNumber',
-      group: 'travel_document',
+      id: 'givenName',
+      group: 'travel',
       type: 'text',
-      label: 'Confirm your passport or travel document number',
-      required: true,
-      showIf: { 
-        field: 'documentType',
-        operator: 'or',
-        conditions: [
-          { field: 'documentType', value: 'passport' },
-          { field: 'documentType', value: 'travel_document' }
-        ]
-      }
+      label: 'Given name or first name',
+      description: 'Write your given name. If none, leave this field blank',
+      required: true
     },
     {
-      id: 'documentIssueDate',
-      group: 'travel_document',
+      id: 'dateOfBirth',
+      group: 'travel',
       type: 'date',
-      label: 'Date of issue of passport or travel document',
-      required: true,
-      showIf: { 
-        field: 'documentType',
-        operator: 'or',
-        conditions: [
-          { field: 'documentType', value: 'passport' },
-          { field: 'documentType', value: 'travel_document' }
-        ]
-      }
+      label: 'Date of birth',
+      required: true
     },
     {
-      id: 'documentExpiryDate',
-      group: 'travel_document',
-      type: 'date',
-      label: 'Date of expiry of your passport or travel document',
-      required: true,
-      showIf: { 
-        field: 'documentType',
-        operator: 'or',
-        conditions: [
-          { field: 'documentType', value: 'passport' },
-          { field: 'documentType', value: 'travel_document' }
-        ]
-      }
-    },
-    {
-      id: 'usPermanentResident',
-      group: 'travel_document',
+      id: 'gender',
+      group: 'travel',
       type: 'select',
-      label: 'Are you a lawful permanent resident of the United States with a valid Green Card (alien registration card)?',
+      label: 'Gender',
       required: true,
       options: [
         { label: 'Yes', value: 'yes' },
@@ -295,28 +530,13 @@ export const CANADA: VisaForm = {
       ]
     },
     {
-      id: 'previousCanadianVisa',
-      group: 'travel_document',
-      type: 'select',
-      label: 'Have you held a Canadian visitor visa in the past 10 years?',
+      id: 'traveldocument',
+      group: 'travel',
+      type: 'file',
+      label: 'Travel document',
+      description: 'Upload the related document like Passport or Travel Document',
       required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'usNonimmigrantVisa',
-      group: 'travel_document',
-      type: 'select',
-      label: 'Are you travelling to Canada by air?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    
+    },    
     // Citizenship and Places Lived Section
     {
       id: 'citizenshipHeader',
@@ -327,10 +547,205 @@ export const CANADA: VisaForm = {
     {
       id: 'birthCountry',
       group: 'citizenship',
-      type: 'text',
+      type: 'select',
       label: 'Country or territory where you were born',
       required: true,
-      placeholder: 'Enter country of birth'
+      options: [
+        { label: 'Afghanistan', value: 'afghanistan' },
+        { label: 'Albania', value: 'albania' },
+        { label: 'Algeria', value: 'algeria' },
+        { label: 'Andorra', value: 'andorra' },
+        { label: 'Angola', value: 'angola' },
+        { label: 'Antigua and Barbuda', value: 'antigua_and_barbuda' },
+        { label: 'Argentina', value: 'argentina' },
+        { label: 'Armenia', value: 'armenia' },
+        { label: 'Australia', value: 'australia' },
+        { label: 'Austria', value: 'austria' },
+        { label: 'Azerbaijan', value: 'azerbaijan' },
+        { label: 'Bahamas', value: 'bahamas' },
+        { label: 'Bahrain', value: 'bahrain' },
+        { label: 'Bangladesh', value: 'bangladesh' },
+        { label: 'Barbados', value: 'barbados' },
+        { label: 'Belarus', value: 'belarus' },
+        { label: 'Belgium', value: 'belgium' },
+        { label: 'Belize', value: 'belize' },
+        { label: 'Benin', value: 'benin' },
+        { label: 'Bhutan', value: 'bhutan' },
+        { label: 'Bolivia', value: 'bolivia' },
+        { label: 'Bosnia and Herzegovina', value: 'bosnia_and_herzegovina' },
+        { label: 'Botswana', value: 'botswana' },
+        { label: 'Brazil', value: 'brazil' },
+        { label: 'Brunei', value: 'brunei' },
+        { label: 'Bulgaria', value: 'bulgaria' },
+        { label: 'Burkina Faso', value: 'burkina_faso' },
+        { label: 'Burundi', value: 'burundi' },
+        { label: 'Cambodia', value: 'cambodia' },
+        { label: 'Cameroon', value: 'cameroon' },
+        { label: 'Canada', value: 'canada' },
+        { label: 'Cape Verde', value: 'cape_verde' },
+        { label: 'Central African Republic', value: 'central_african_republic' },
+        { label: 'Chad', value: 'chad' },
+        { label: 'Chile', value: 'chile' },
+        { label: 'China', value: 'china' },
+        { label: 'Colombia', value: 'colombia' },
+        { label: 'Comoros', value: 'comoros' },
+        { label: 'Congo', value: 'congo' },
+        { label: 'Costa Rica', value: 'costa_rica' },
+        { label: 'Croatia', value: 'croatia' },
+        { label: 'Cuba', value: 'cuba' },
+        { label: 'Cyprus', value: 'cyprus' },
+        { label: 'Czech Republic', value: 'czech_republic' },
+        { label: 'Denmark', value: 'denmark' },
+        { label: 'Djibouti', value: 'djibouti' },
+        { label: 'Dominica', value: 'dominica' },
+        { label: 'Dominican Republic', value: 'dominican_republic' },
+        { label: 'East Timor', value: 'east_timor' },
+        { label: 'Ecuador', value: 'ecuador' },
+        { label: 'Egypt', value: 'egypt' },
+        { label: 'El Salvador', value: 'el_salvador' },
+        { label: 'Equatorial Guinea', value: 'equatorial_guinea' },
+        { label: 'Eritrea', value: 'eritrea' },
+        { label: 'Estonia', value: 'estonia' },
+        { label: 'Ethiopia', value: 'ethiopia' },
+        { label: 'Fiji', value: 'fiji' },
+        { label: 'Finland', value: 'finland' },
+        { label: 'France', value: 'france' },
+        { label: 'Gabon', value: 'gabon' },
+        { label: 'Gambia', value: 'gambia' },
+        { label: 'Georgia', value: 'georgia' },
+        { label: 'Germany', value: 'germany' },
+        { label: 'Ghana', value: 'ghana' },
+        { label: 'Greece', value: 'greece' },
+        { label: 'Grenada', value: 'grenada' },
+        { label: 'Guatemala', value: 'guatemala' },
+        { label: 'Guinea', value: 'guinea' },
+        { label: 'Guinea-Bissau', value: 'guinea_bissau' },
+        { label: 'Guyana', value: 'guyana' },
+        { label: 'Haiti', value: 'haiti' },
+        { label: 'Honduras', value: 'honduras' },
+        { label: 'Hungary', value: 'hungary' },
+        { label: 'Iceland', value: 'iceland' },
+        { label: 'India', value: 'india' },
+        { label: 'Indonesia', value: 'indonesia' },
+        { label: 'Iran', value: 'iran' },
+        { label: 'Iraq', value: 'iraq' },
+        { label: 'Ireland', value: 'ireland' },
+        { label: 'Israel', value: 'israel' },
+        { label: 'Italy', value: 'italy' },
+        { label: 'Ivory Coast', value: 'ivory_coast' },
+        { label: 'Jamaica', value: 'jamaica' },
+        { label: 'Japan', value: 'japan' },
+        { label: 'Jordan', value: 'jordan' },
+        { label: 'Kazakhstan', value: 'kazakhstan' },
+        { label: 'Kenya', value: 'kenya' },
+        { label: 'Kiribati', value: 'kiribati' },
+        { label: 'North Korea', value: 'north_korea' },
+        { label: 'South Korea', value: 'south_korea' },
+        { label: 'Kuwait', value: 'kuwait' },
+        { label: 'Kyrgyzstan', value: 'kyrgyzstan' },
+        { label: 'Laos', value: 'laos' },
+        { label: 'Latvia', value: 'latvia' },
+        { label: 'Lebanon', value: 'lebanon' },
+        { label: 'Lesotho', value: 'lesotho' },
+        { label: 'Liberia', value: 'liberia' },
+        { label: 'Libya', value: 'libya' },
+        { label: 'Liechtenstein', value: 'liechtenstein' },
+        { label: 'Lithuania', value: 'lithuania' },
+        { label: 'Luxembourg', value: 'luxembourg' },
+        { label: 'Macedonia', value: 'macedonia' },
+        { label: 'Madagascar', value: 'madagascar' },
+        { label: 'Malawi', value: 'malawi' },
+        { label: 'Malaysia', value: 'malaysia' },
+        { label: 'Maldives', value: 'maldives' },
+        { label: 'Mali', value: 'mali' },
+        { label: 'Malta', value: 'malta' },
+        { label: 'Marshall Islands', value: 'marshall_islands' },
+        { label: 'Mauritania', value: 'mauritania' },
+        { label: 'Mauritius', value: 'mauritius' },
+        { label: 'Mexico', value: 'mexico' },
+        { label: 'Micronesia', value: 'micronesia' },
+        { label: 'Moldova', value: 'moldova' },
+        { label: 'Monaco', value: 'monaco' },
+        { label: 'Mongolia', value: 'mongolia' },
+        { label: 'Montenegro', value: 'montenegro' },
+        { label: 'Morocco', value: 'morocco' },
+        { label: 'Mozambique', value: 'mozambique' },
+        { label: 'Myanmar', value: 'myanmar' },
+        { label: 'Namibia', value: 'namibia' },
+        { label: 'Nauru', value: 'nauru' },
+        { label: 'Nepal', value: 'nepal' },
+        { label: 'Netherlands', value: 'netherlands' },
+        { label: 'New Zealand', value: 'new_zealand' },
+        { label: 'Nicaragua', value: 'nicaragua' },
+        { label: 'Niger', value: 'niger' },
+        { label: 'Nigeria', value: 'nigeria' },
+        { label: 'Norway', value: 'norway' },
+        { label: 'Oman', value: 'oman' },
+        { label: 'Pakistan', value: 'pakistan' },
+        { label: 'Palau', value: 'palau' },
+        { label: 'Panama', value: 'panama' },
+        { label: 'Papua New Guinea', value: 'papua_new_guinea' },
+        { label: 'Paraguay', value: 'paraguay' },
+        { label: 'Peru', value: 'peru' },
+        { label: 'Philippines', value: 'philippines' },
+        { label: 'Poland', value: 'poland' },
+        { label: 'Portugal', value: 'portugal' },
+        { label: 'Qatar', value: 'qatar' },
+        { label: 'Romania', value: 'romania' },
+        { label: 'Russia', value: 'russia' },
+        { label: 'Rwanda', value: 'rwanda' },
+        { label: 'Saint Kitts and Nevis', value: 'saint_kitts_and_nevis' },
+        { label: 'Saint Lucia', value: 'saint_lucia' },
+        { label: 'Saint Vincent and the Grenadines', value: 'saint_vincent_and_the_grenadines' },
+        { label: 'Samoa', value: 'samoa' },
+        { label: 'San Marino', value: 'san_marino' },
+        { label: 'Sao Tome and Principe', value: 'sao_tome_and_principe' },
+        { label: 'Saudi Arabia', value: 'saudi_arabia' },
+        { label: 'Senegal', value: 'senegal' },
+        { label: 'Serbia', value: 'serbia' },
+        { label: 'Seychelles', value: 'seychelles' },
+        { label: 'Sierra Leone', value: 'sierra_leone' },
+        { label: 'Singapore', value: 'singapore' },
+        { label: 'Slovakia', value: 'slovakia' },
+        { label: 'Slovenia', value: 'slovenia' },
+        { label: 'Solomon Islands', value: 'solomon_islands' },
+        { label: 'Somalia', value: 'somalia' },
+        { label: 'South Africa', value: 'south_africa' },
+        { label: 'South Sudan', value: 'south_sudan' },
+        { label: 'Spain', value: 'spain' },
+        { label: 'Sri Lanka', value: 'sri_lanka' },
+        { label: 'Sudan', value: 'sudan' },
+        { label: 'Suriname', value: 'suriname' },
+        { label: 'Swaziland', value: 'swaziland' },
+        { label: 'Sweden', value: 'sweden' },
+        { label: 'Switzerland', value: 'switzerland' },
+        { label: 'Syria', value: 'syria' },
+        { label: 'Taiwan', value: 'taiwan' },
+        { label: 'Tajikistan', value: 'tajikistan' },
+        { label: 'Tanzania', value: 'tanzania' },
+        { label: 'Thailand', value: 'thailand' },
+        { label: 'Togo', value: 'togo' },
+        { label: 'Tonga', value: 'tonga' },
+        { label: 'Trinidad and Tobago', value: 'trinidad_and_tobago' },
+        { label: 'Tunisia', value: 'tunisia' },
+        { label: 'Turkey', value: 'turkey' },
+        { label: 'Turkmenistan', value: 'turkmenistan' },
+        { label: 'Tuvalu', value: 'tuvalu' },
+        { label: 'Uganda', value: 'uganda' },
+        { label: 'Ukraine', value: 'ukraine' },
+        { label: 'United Arab Emirates', value: 'united_arab_emirates' },
+        { label: 'United Kingdom', value: 'united_kingdom' },
+        { label: 'United States', value: 'united_states' },
+        { label: 'Uruguay', value: 'uruguay' },
+        { label: 'Uzbekistan', value: 'uzbekistan' },
+        { label: 'Vanuatu', value: 'vanuatu' },
+        { label: 'Vatican City', value: 'vatican_city' },
+        { label: 'Venezuela', value: 'venezuela' },
+        { label: 'Vietnam', value: 'vietnam' },
+        { label: 'Yemen', value: 'yemen' },
+        { label: 'Zambia', value: 'zambia' },
+        { label: 'Zimbabwe', value: 'zimbabwe' }
+      ]
     },
     {
       id: 'birthCity',
@@ -354,10 +769,10 @@ export const CANADA: VisaForm = {
     {
       id: 'otherCitizenships',
       group: 'citizenship',
-      type: 'text',
+      type: 'select',
       label: 'Which countries or territories are you a citizen of?',
       required: true,
-      placeholder: 'List all citizenships separated by commas',
+     
       showIf: {
         field: 'multipleCitizenship',
         value: 'yes'
@@ -430,6 +845,147 @@ export const CANADA: VisaForm = {
       showIf: { field: 'hasNationalId', value: 'yes' },
       dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }],
       placeholder: 'Select a country',
+    },
+    
+    // Names used in the past section
+    {
+      id: 'pastNamesHeader',
+      group: 'past_names',
+      type: 'header',
+      label: 'Names used in the past'
+    },
+    {
+      id: 'hasUsedOtherNames',
+      group: 'past_names',
+      type: 'select',
+      label: 'Have you used another name in the past?',
+      required: true,
+      placeholder: 'Select an option',
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'pastNames',
+      group: 'past_names',
+      type: 'text',
+      label: 'Names used in the past',
+      required: true,
+      showIf: { field: 'hasUsedOtherNames', value: 'yes' },
+      dependencies: [{ fieldId: 'hasUsedOtherNames', value: 'yes' }],
+      placeholder: 'Enter all previous names (including maiden name if applicable)'
+    },
+    
+
+    {
+      id: 'contactInfoHeader',
+      group: 'contact',
+      type: 'header',
+      label: 'Contact information of the applicant'
+    },
+    {
+      id: 'residentialAddressInfo',
+      group: 'contact',
+      type: 'info',
+      label: 'What\'s your residential address?',
+      content: ['This is the address where you currently live.']
+    },
+    {
+      id: 'residentialCountry',
+      group: 'contact',
+      type: 'select',
+      label: 'Select a country or territory',
+      required: true,
+      placeholder: 'Select a country',
+      options:COUNTRIES
+    },
+    // //{
+    //   id: 'countryOfResidence',
+    //   group: 'contact',
+    //   type: 'select',
+    //   label: 'Country or territory',
+    //   required: true,
+    {
+      id: 'countriesLived',
+      group: 'citizenship',
+      type: 'text',
+      label: 'List all countries or territories where you have lived for more than 6 months',
+      required: true,
+      placeholder: 'List countries separated by commas'
+    },
+
+    // National Identity Document Section
+    {
+      id: 'nationalIdHeader',
+      group: 'citizenship',
+      type: 'header',
+      label: 'National identity document of the applicant'
+    },
+    {
+      id: 'hasNationalId',
+      group: 'national_id',
+      type: 'select',
+      label: 'Do you have a valid national identity document?',
+      description: 'Not all countries issue a national identity document. If you have one, provide your information.',
+      required: true,
+      placeholder: 'Select an option',
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'nationalIdDocument',
+      group: 'national_id',
+      type: 'text',
+      label: 'Document number',
+      required: true,
+      showIf: { field: 'hasNationalId', value: 'yes' },
+      placeholder: 'Enter your document number',
+      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
+    },
+    {
+      id: 'confirmNationalIdNumber',
+      group: 'national_id',
+      type: 'text',
+      label: 'Confirm your document number',
+      required: true,
+      showIf: { field: 'hasNationalId', value: 'yes' },
+      placeholder: 'Re-enter your document number',
+      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
+    },
+    {
+      id: 'nationalIdIssueDate',
+      group: 'national_id',
+      type: 'date',
+      label: 'Date of issue',
+      required: true,
+      showIf: { field: 'hasNationalId', value: 'yes' },
+      description: 'Select the date when the document was issued',
+      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
+    },
+    {
+      id: 'nationalIdIssuingCountry',
+      group: 'national_id',
+      type: 'text',
+      label: 'Write the country or territory that issued this document',
+      required: true,
+      showIf: { field: 'hasNationalId', value: 'yes' },
+      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }],
+      placeholder: 'Select a country',
+      // options: [
+      //   // Using default country options with valid values
+      //   { label: 'United States', value: 'us' },
+      //   { label: 'Canada', value: 'ca' },
+      //   { label: 'United Kingdom', value: 'uk' },
+      //   { label: 'Australia', value: 'au' },
+      //   { label: 'India', value: 'in' },
+      //   { label: 'China', value: 'cn' },
+      //   { label: 'Japan', value: 'jp' },
+      //   { label: 'Other', value: 'other' }
+      //   // Additional countries can be populated dynamically if needed
+      // ]
     },
     
     // Names used in the past section
@@ -571,69 +1127,12 @@ export const CANADA: VisaForm = {
       content: ['List all countries or territories of residence, then add all other countries or territories where you\'ve lived for the past five years, for more than 6 months.']
     },
     {
-      id: 'residenceCountry',
+      id: 'residenceCountries',
       group: 'contact',
-      type: 'select',
-      label: 'Select a country or territory',
+      type: 'residence_countries',
+      label: 'Countries or territories of residence',
       required: true,
-      showIf: { field: 'addResidenceCountryButton', value: 'clicked' },
-      dependencies: [{ fieldId: 'addResidenceCountryButton', value: 'clicked' }],
-      placeholder: 'Select a country',
-      options: [
-        { label: 'United States', value: 'us' },
-        { label: 'Canada', value: 'ca' },
-        { label: 'United Kingdom', value: 'uk' },
-        { label: 'Australia', value: 'au' },
-        { label: 'India', value: 'in' },
-        { label: 'China', value: 'cn' },
-        { label: 'Japan', value: 'jp' },
-        { label: 'Other', value: 'other' }
-      ]
-    },
-    {
-      id: 'residenceStatus',
-      group: 'contact',
-      type: 'select',
-      label: 'What is your status in your country or territory of residence?',
-      required: true,
-      showIf: { field: 'addResidenceCountryButton', value: 'clicked' },
-      dependencies: [{ fieldId: 'addResidenceCountryButton', value: 'clicked' }],
-      options: [
-        { label: 'Citizen', value: 'citizen' },
-        { label: 'Permanent resident', value: 'permanent_resident' },
-        { label: 'Temporary resident', value: 'temporary_resident' },
-        { label: 'Worker', value: 'worker' },
-        { label: 'Student', value: 'student' },
-        { label: 'Visitor', value: 'visitor' },
-        { label: 'Other', value: 'other' }
-      ]
-    },
-    {
-      id: 'residenceFromDate',
-      group: 'contact',
-      type: 'date',
-      label: 'From',
-      required: true,
-      showIf: { field: 'addResidenceCountryButton', value: 'clicked' },
-      dependencies: [{ fieldId: 'addResidenceCountryButton', value: 'clicked' }]
-    },
-    {
-      id: 'residenceCurrentlyLive',
-      group: 'contact',
-      type: 'info',
-      label: '',
-      content: ['This is where I currently live.'],
-      showIf: { field: 'addResidenceCountryButton', value: 'clicked' },
-      dependencies: [{ fieldId: 'addResidenceCountryButton', value: 'clicked' }]
-    },
-    {
-      id: 'residenceToDate',
-      group: 'contact',
-      type: 'date',
-      label: 'To',
-      required: true,
-      showIf: { field: 'addResidenceCountryButton', value: 'clicked' },
-      dependencies: [{ fieldId: 'addResidenceCountryButton', value: 'clicked' }]
+      description: 'Add all countries or territories where you\'ve lived for the past five years, for more than 6 months.'
     },
     {
       id: 'transitPurpose',
@@ -701,16 +1200,58 @@ export const CANADA: VisaForm = {
       type: 'date',
       showIf: { field: 'visaType', not: 'not_sure' },
       label: 'When will you leave Canada?',
+      
       required: true
     },
     {
       id: 'uciNumber',
       group: 'personal',
-      type: 'text',
+      type: 'select',
       label: 'UCI (unique client identifier), if known',
       showIf: { field: 'visaType', not: 'not_sure' },
+      required: true,
+      description: 'If you have previously applied to come to Canada, you may have a UCI. It appears on official documents you received from IRCC.',
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'ucidetail',
+      group: 'personal',
+      type: 'text',
+      label: 'UCI detail',
+      placeholder: 'Enter your UCI detail',
       required: false,
-      description: 'If you have previously applied to come to Canada, you may have a UCI. It appears on official documents you received from IRCC.'
+      showIf: {
+        field: 'uciNumber',
+        value: 'yes'
+      }
+    },
+    {
+      id: 'previousstatus',
+      group: 'personal',
+      type: 'text',
+      label: 'Previous status',
+      placeholder: 'Enter your previous status',
+      required: false,
+      showIf: {
+        field: 'uciNumber',
+        value: 'yes'
+      }
+    },
+
+    {
+      id: 'refusalLetter',
+      group: 'personal',
+      type: 'file',
+      label: 'Any Document related to refusal letter',
+      description: 'Upload the related document if you have any',
+      required: false,
+      showIf: {
+        field: 'uciNumber',
+        value: 'yes'
+      }
     },
     {
       id: 'applyingOnBehalf',
@@ -751,7 +1292,6 @@ export const CANADA: VisaForm = {
       group: 'personal',
       type: 'text',
       label: 'Given name or first name',
-      description: 'Write the given name. If none, leave this field blank.',
       required: false,
       showIf: { field: 'applyingOnBehalf', value: 'yes' }
     },
@@ -773,7 +1313,6 @@ export const CANADA: VisaForm = {
       group: 'personal',
       type: 'select',
       label: 'Select telephone number country or territory',
-      description: 'Choose Canada or the US if you have a telephone number within the North American Numbering Plan',
       required: true,
       showIf: { field: 'applyingOnBehalf', value: 'yes' },
       options: [
@@ -881,20 +1420,28 @@ export const CANADA: VisaForm = {
       required: true,
       placeholder: 'Enter your relationship to the inviter'
     },
+
+
+// Document Upload Follow-up Questions
+    // 1. Passport & Travel History
     {
-      id: 'inviterMailingAddressHeader',
-      group: 'inviter',
-      type: 'header',
-      label: 'Mailing address'
+      id: 'passportNameMatch',
+      group: 'documents',
+      type: 'select',
+      label: 'Is your name in the passport exactly as you\'ve entered it?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
     },
     {
-      id: 'inviterCountry',
-      group: 'inviter',
+      id: 'passportNameCorrection',
+      group: 'documents',
       type: 'text',
-      label: 'Select a country or territory',
+      label: 'Please enter your name exactly as it appears in your passport',
       required: true,
-      description: 'Canada (read only)',
-      placeholder: 'Canada'
+      showIf: { field: 'passportNameMatch', value: 'no' }
     },
     {
       id: 'inviterStreetNumber',
@@ -946,44 +1493,59 @@ export const CANADA: VisaForm = {
       required: true
     },
     {
-      id: 'inviterTelephoneType',
-      group: 'inviter',
+      id: 'fundingSource',
+      group: 'documents',
       type: 'select',
-      label: 'Telephone type',
+      label: 'How will you fund your trip?',
       required: true,
       options: [
-        { label: 'Residence', value: 'residence' },
-        { label: 'Cellular', value: 'cellular' },
+        { label: 'Personal savings', value: 'personal_savings' },
+        { label: 'Sponsor (family/employer)', value: 'sponsor' },
+        { label: 'Education loan', value: 'education_loan' },
         { label: 'Other', value: 'other' }
       ]
     },
     {
-      id: 'inviterTelephoneCountry',
-      group: 'inviter',
+      id: 'fundingSourceOther',
+      group: 'documents',
+      type: 'text',
+      label: 'Please specify your funding source',
+      required: false,
+      showIf: { field: 'fundingSource', value: 'other' }
+    },
+    {
+      id: 'bankAccountInYourName',
+      group: 'documents',
       type: 'select',
-      label: 'Select telephone number country or territory',
+      label: 'Is the bank account in your name?',
       required: true,
-      placeholder: 'Choose Canada or the US if you have a telephone number within the North American Numbering Plan and its country code is 1.',
+      showIf: { 
+        operator: 'or',
+        conditions: [
+          { field: 'fundingSource', value: 'personal_savings' },
+          { field: 'fundingSource', value: 'education_loan' }
+        ]
+      },
       options: [
-        { label: 'Canada or the U.S', value: 'north_america' },
-        { label: 'Other', value: 'other' }
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
       ]
     },
     {
-      id: 'inviterTelephoneNumber',
-      group: 'inviter',
+      id: 'bankAccountOwner',
+      group: 'documents',
       type: 'text',
       label: 'Telephone number',
       required: true,
-      placeholder: 'Enter telephone number'
+      placeholder: 'phone'
     },
     {
-      id: 'inviterTelephoneExtension',
-      group: 'inviter',
-      type: 'text',
-      label: 'Extension number',
+      id: 'averageAccountBalance',
+      group: 'documents',
+      type: 'number',
+      label: 'What is the average balance in your account (in your local currency)?',
       required: false,
-      placeholder: 'Enter extension if applicable'
+      placeholder: 'phone'
     },
     {
       id: 'inviterEmail',
@@ -991,13 +1553,13 @@ export const CANADA: VisaForm = {
       type: 'text',
       label: 'Email address',
       required: true,
-      placeholder: 'Enter email address'
+      placeholder: 'email'
     },
     {
       id: 'countryOfResidence',
       group: 'contact',
       type: 'select',
-      label: 'Country or territory',
+      label: 'Are you currently employed?',
       required: true,
       options: COUNTRIES
     },
@@ -1019,218 +1581,228 @@ export const CANADA: VisaForm = {
       id: 'status',
       group: 'contact',
       type: 'select',
-      label: 'Status',
-      required: true,
+      label: 'Does your employer support your travel?',
+      required: false,
+      showIf: { field: 'isEmployed', value: 'yes' },
       options: [
-        { label: 'Citizen', value: 'citizen' },
-        { label: 'Permanent Resident', value: 'permanent_resident' },
-        { label: 'Visitor', value: 'visitor' },
-        { label: 'Student', value: 'student' },
-        { label: 'Work Permit', value: 'work_permit' },
-        { label: 'Other', value: 'other' }
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
       ]
     },
-    // {
-    //   id: 'addAnotherCountry',
-    //   group: 'contact',
-    //   type: 'checkbox',
-    //   label: 'Add another country or territory',
-    //   required: false
-    // },
-
-    // Application Section
+    
+    // 3. Employment/Study Documents Follow-up
     {
-      id: 'applicationHeader',
-      group: 'application',
-      type: 'header',
-      label: 'Application'
-    },
-    {
-      id: 'invitationHeader',
-      group: 'application',
-      type: 'header',
-      label: 'Invitation'
-    },
-    {
-      id: 'invitationInfo',
-      group: 'application',
-      type: 'info',
-      label: 'Who is inviting you?'
-    },
-    {
-      id: 'inviterLastName',
-      group: 'application',
-      type: 'text',
-      label: 'Surname or last name',
-      required: true,
-      description: 'Write your inviter\'s name exactly as it appears on the ppt or ID',
-      placeholder: 'Write your inviter\'s name exactly as it appears on the ppt or ID'
-    },
-    {
-      id: 'inviterFirstName',
-      group: 'application',
-      type: 'text',
-      label: 'Given name or first name',
-      required: false,
-      description: 'Write the given name. If none, leave this field blank.',
-      placeholder: 'Write the given name. If none, leave this field blank.'
-    },
-    {
-      id: 'relationshipToYou',
-      group: 'application',
-      type: 'text',
-      label: 'Relationship to you',
-      required: true,
-      placeholder: 'Enter your relationship to the inviter'
-    },
-    {
-      id: 'inviterMailingAddressHeader',
-      group: 'application',
-      type: 'header',
-      label: 'Mailing address'
-    },
-    {
-      id: 'inviterCountry',
-      group: 'application',
+      id: 'hasJobOffer',
+      group: 'documents',
       type: 'select',
-      label: 'Select a country or territory',
-      required: true,
-      description: 'Read only 511',
+      label: 'Do you have a job offer from a Canadian employer?',
+      required: false,
+      showIf: { field: 'purposeOfVisit', value: 'work_without_permit' },
       options: [
-        { label: 'Canada', value: 'canada' }
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
       ]
     },
     {
-      id: 'inviterAddressSearch',
-      group: 'application',
-      type: 'text',
-      label: 'Start typing to find your address in the list',
-      required: true,
-      description: 'If you don\'t see your address in the list, select Manually input address to enter your details in the address fields.',
-      placeholder: 'search'
-    },
-    // {
-    //   id: 'manuallyInputAddress',
-    //   group: 'application',
-    //   type: 'checkbox',
-    //   label: 'Manually input address',
-    //   required: false
-    // },
-    {
-      id: 'inviterStreetNumber',
-      group: 'application',
-      type: 'text',
-      label: 'Street number',
-      required: true,
-      description: 'Read only Blank'
-    },
-    {
-      id: 'inviterStreetName',
-      group: 'application',
-      type: 'text',
-      label: 'Street name',
-      required: true,
-      description: 'Read only Blank'
-    },
-    {
-      id: 'inviterApartmentNumber',
-      group: 'application',
-      type: 'text',
-      label: 'Apartment or unit number',
-      required: false,
-      description: 'Read only Blank'
-    },
-    {
-      id: 'inviterPoBox',
-      group: 'application',
-      type: 'text',
-      label: 'PO box',
-      required: false,
-      description: 'Read only Blank'
-    },
-    {
-      id: 'inviterCity',
-      group: 'application',
-      type: 'text',
-      label: 'City or town',
-      required: true,
-      description: 'Read only Blank'
-    },
-    {
-      id: 'inviterProvince',
-      group: 'application',
-      type: 'text',
-      label: 'Province',
-      required: true,
-      description: 'Read only Blank'
-    },
-    {
-      id: 'inviterPostalCode',
-      group: 'application',
-      type: 'text',
-      label: 'Postal code',
-      required: true,
-      description: 'Read only Blank'
-    },
-    {
-      id: 'inviterTelephoneType',
-      group: 'application',
+      id: 'hasLMIA',
+      group: 'documents',
       type: 'select',
-      label: 'Telephone type',
-      required: true,
+      label: 'Does the offer include an LMIA (Labour Market Impact Assessment) number?',
+      required: false,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'purposeOfVisit', value: 'work_without_permit' },
+          { field: 'hasJobOffer', value: 'yes' }
+        ]
+      },
       options: [
-        { label: 'Residence', value: 'residence' },
-        { label: 'Cellular', value: 'cellular' },
-        { label: 'Other', value: 'other' }
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
       ]
     },
     {
-      id: 'inviterTelephoneCountry',
-      group: 'application',
+      id: 'hasWorkPermit',
+      group: 'documents',
       type: 'select',
-      label: 'Select telephone number country or territory',
-      required: true,
-      description: 'Choose Canada or the US if you have a telephone number within the North American Numbering Plan and its country code is 1.',
+      label: 'Do you have a current or previous work permit?',
+      required: false,
       options: [
-        { label: 'Canada or the U.S', value: 'north_america' },
-        { label: 'Other', value: 'other' }
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
       ]
     },
     {
-      id: 'inviterTelephoneNumber',
-      group: 'application',
+      id: 'programName',
+      group: 'documents',
       type: 'text',
-      label: 'Telephone number',
-      required: true,
-      placeholder: 'phone'
-    },
-    {
-      id: 'inviterTelephoneExtension',
-      group: 'application',
-      type: 'text',
-      label: 'Extension number',
+      label: 'What is your program name and duration?',
       required: false,
-      placeholder: 'phone'
+      showIf: { field: 'purposeOfVisit', value: 'short_term_study' }
     },
     {
-      id: 'inviterEmail',
-      group: 'application',
-      type: 'text',
-      label: 'Email address',
-      required: true,
-      placeholder: 'email'
-    },
-    {
-      id: 'hasOtherInviter',
-      group: 'application',
+      id: 'isDLI',
+      group: 'documents',
       type: 'select',
-      label: 'Has someone else also invited you?',
+      label: 'Is the institution a Designated Learning Institution (DLI)?',
+      required: false,
+      showIf: { field: 'purposeOfVisit', value: 'short_term_study' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' },
+        { label: 'I don\'t know', value: 'unknown' }
+      ]
+    },
+    
+    // 4. Family & Civil Status Follow-up
+    {
+      id: 'spouseAccompanying',
+      group: 'documents',
+      type: 'select',
+      label: 'Does your spouse accompany you?',
+      required: false,
+      showIf: { 
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'maritalStatus', value: 'common_law' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'hasChildren',
+      group: 'documents',
+      type: 'select',
+      label: 'Do you have children?',
       required: true,
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
       ]
     },
+    {
+      id: 'childrenTraveling',
+      group: 'documents',
+      type: 'select',
+      label: 'Are they traveling with you?',
+      required: false,
+      showIf: { field: 'hasChildren', value: 'yes' },
+      options: [
+        { label: 'Yes, all of them', value: 'all' },
+        { label: 'Yes, some of them', value: 'some' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    
+    // 5. Travel Purpose & Invitation Follow-up
+    {
+      id: 'isVisitingFamilyFriends',
+      group: 'documents',
+      type: 'select',
+      label: 'Are you visiting family/friends in Canada?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'hostImmigrationStatus',
+      group: 'documents',
+      type: 'select',
+      label: 'What is their immigration status in Canada?',
+      required: false,
+      showIf: { field: 'isVisitingFamilyFriends', value: 'yes' },
+      options: [
+        { label: 'Canadian Citizen', value: 'citizen' },
+        { label: 'Permanent Resident', value: 'pr' },
+        { label: 'Student', value: 'student' },
+        { label: 'Worker', value: 'worker' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    
+    // 6. Additional Documents Follow-up
+    {
+      id: 'hadVisaRefusal',
+      group: 'documents',
+      type: 'select',
+      label: 'Have you ever been refused a visa to Canada or another country?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'refusalReason',
+      group: 'documents',
+      type: 'text',
+      label: 'Explain the reason for refusal (if known)',
+      required: false,
+      showIf: { field: 'hadVisaRefusal', value: 'yes' }
+    },
+    {
+      id: 'livedAbroadSixMonths',
+      group: 'documents',
+      type: 'select',
+      label: 'Have you lived in any other country for 6+ months in the last 10 years?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'countriesLivedIn',
+      group: 'documents',
+      type: 'text',
+      label: 'List the countries you have lived in for 6+ months',
+      required: false,
+      showIf: { field: 'livedAbroadSixMonths', value: 'yes' }
+    },
+    {
+      id: 'completedMedicalExam',
+      group: 'documents',
+      type: 'select',
+      label: 'Have you completed a medical exam for Canada?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'medicalExamNumber',
+      group: 'documents',
+      type: 'text',
+      label: 'Medical receipt/IME number',
+      required: false,
+      showIf: { field: 'completedMedicalExam', value: 'yes' }
+    },
+    
+    // 7. Final Review & Confirmation
+    {
+      id: 'documentReviewHeader',
+      group: 'documents',
+      type: 'header',
+      label: 'Review the extracted data from your documents'
+    },
+    // {
+    //   id: 'hasOtherInviter',
+    //   group: 'application',
+    //   type: 'select',
+    //   label: 'Has someone else also invited you?',
+    //   required: true,
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
 
     // Finances Subsection
     // {
@@ -1240,72 +1812,83 @@ export const CANADA: VisaForm = {
     //   label: 'Finances'
     // },
     // {
-    //   id: 'financialSupport',
-    //   group: 'finances',
+    //   id: 'lmiaExemptionCategory',
+    //   group: 'application',
     //   type: 'select',
-    //   label: 'How will you support yourself financially during your stay in Canada?',
-    //   required: true,
-    //   options: [
-    //     { label: 'Personal savings', value: 'personal_savings' },
-    //     { label: 'Family support', value: 'family_support' },
-    //     { label: 'Employment income', value: 'employment' },
-    //     { label: 'Other', value: 'other' }
-    //   ]
-    // },
-    // {
-    //   id: 'otherFinancialSupport',
-    //   group: 'finances',
-    //   type: 'text',
-    //   label: 'Please specify other source of financial support',
-    //   required: true,
-    //   showIf: { field: 'financialSupport', value: 'other' },
-    //   placeholder: 'Describe your source of financial support'
-    // },
-    // {
-    //   id: 'fundsAvailable',
-    //   group: 'finances',
-    //   type: 'number',
-    //   label: 'Amount of funds available for your trip (in CAD)',
-    //   required: true,
-    //   placeholder: 'Enter amount in Canadian dollars'
-    // },
-    // {
-    //   id: 'hasFinancialDocuments',
-    //   group: 'finances',
-    //   type: 'select',
-    //   label: 'Do you have documents to prove you have sufficient funds for your stay?',
-    //   required: true,
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-    // {
-    //   id: 'financialDocumentTypes',
-    //   group: 'finances',
-    //   type: 'select',
-    //   label: 'What type of financial documents can you provide?',
-    //   required: true,
-    //   showIf: { field: 'hasFinancialDocuments', value: 'yes' },
-    //   dependencies: [{ fieldId: 'hasFinancialDocuments', value: 'yes' }],
-    //   options: [
-    //     { label: 'Bank statements', value: 'bank_statements' },
-    //     { label: 'Pay stubs', value: 'pay_stubs' },
-    //     { label: 'Tax returns', value: 'tax_returns' },
-    //     { label: 'Letter from sponsor', value: 'sponsor_letter' },
-    //     { label: 'Other', value: 'other' }
-    //   ]
-    // },
-    // {
-    //   id: 'otherFinancialDocumentType',
-    //   group: 'finances',
-    //   type: 'text',
-    //   label: 'Please specify other type of financial document',
+    //   label: 'Is your job in a field exempt from LMIA?',
+    //   description: 'Labour Market Impact Assessment exemption category',
     //   required: false,
-    //   showIf: { field: 'financialDocumentTypes', value: 'other' },
-    //   dependencies: [{ fieldId: 'financialDocumentTypes', value: 'other' }],
-    //   placeholder: 'Describe your financial document'
+    //   showIf: { field: 'purposeOfVisit', value: 'work_without_permit' },
+    //   options: [
+    //     { label: 'No', value: 'no' },
+    //     { label: 'Yes - NAFTA/CUSMA Professional', value: 'nafta_cusma' },
+    //     { label: 'Yes - Intra-company transfer', value: 'intra_company' },
+    //     { label: 'Yes - International agreement', value: 'international_agreement' },
+    //     { label: 'Yes - Canadian interests', value: 'canadian_interests' },
+    //     { label: 'Yes - Other', value: 'other_exemption' }
+    //   ]
     // },
+    // {
+    //   id: 'lmiaExemptionDetails',
+    //   group: 'application',
+    //   type: 'text',
+    //   label: 'Please specify the exemption details',
+    //   required: false,
+    //   showIf: { 
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'purposeOfVisit', value: 'work_without_permit' },
+    //       { field: 'lmiaExemptionCategory', value: 'other_exemption' }
+    //     ]
+    //   }
+    // },
+
+    
+// Inviter's Questions
+
+{
+  id: 'marriageCertificate',
+  group: 'family',
+  type: 'file',
+  label: 'Marriage Certificate',
+  description: 'Upload your marriage certificate if you are married',
+  required: false,
+  showIf: {
+    field: 'maritalStatus',
+    value: 'married'
+  }
+},
+{
+  id: 'birthCertificates',
+  group: 'family',
+  type: 'file',
+  label: 'Do you have any children?',
+  description: 'Upload birth certificates for any accompanying children',
+  required: false,
+  showIf: {
+    field: 'maritalStatus',
+    value: 'married'
+  }
+},
+   
+
+    // // Application Section
+    {
+      id: 'invitationLetter',
+      group: 'application',
+      type: 'file',
+      label: 'Invitation Letter',
+      description: 'Upload your invitation letter if you are invited by someone',
+      required: false,
+    },
+    {
+      id: 'host_income',
+      group: 'application',
+      type: 'file',
+      label: 'Proof of host status',
+      description: 'Upload proof of host status if you are invited by someone',
+      required: false,
+    },
 
     // Education Section
     {
@@ -1321,10 +1904,19 @@ export const CANADA: VisaForm = {
       label: 'Post-secondary education history'
     },
     {
+      id: 'educationDescription',
+      group: 'education',
+      type: 'info',
+      label: 'Educational Background',
+      content: [
+        'Educational institution at secondary level or above, any post secondary education at university college or diploma'
+      ]
+    },
+    {
       id: 'hasPostSecondaryEducation',
       group: 'education',
       type: 'select',
-      label: 'Have you ever studied at a post-secondary school (university, college or vocational school)? You don\'t need to have completed a degree or diploma.',
+      label: 'Do you have any post-secondary qualification?',
       required: true,
       options: [
         { label: 'Yes', value: 'yes' },
@@ -1335,7 +1927,7 @@ export const CANADA: VisaForm = {
       id: 'educationDetailsInfo',
       group: 'education',
       type: 'info',
-      label: 'Give details of each program you have studied and are currently studying.',
+      label: 'Give your education details',
       required: true,
       showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
     },
@@ -1343,7 +1935,7 @@ export const CANADA: VisaForm = {
       id: 'institutionName',
       group: 'education',
       type: 'text',
-      label: 'Name the school or institution where you studied, or where you currently study.',
+      label: 'Name of the Institute Attended',
       required: true,
       showIf: { field: 'hasPostSecondaryEducation', value: 'yes' },
       placeholder: 'Enter institution name'
@@ -1352,31 +1944,26 @@ export const CANADA: VisaForm = {
       id: 'educationFromDate',
       group: 'education',
       type: 'date',
-      label: 'From',
+      label: 'Attended From',
       required: true,
       showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
     },
-    // {
-    //   id: 'educationOngoing',
-    //   group: 'education',
-    //   type: 'checkbox',
-    //   label: 'Ongoing',
-    //   required: false,
-    //   showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
-    // },
     {
       id: 'educationToDate',
       group: 'education',
       type: 'date',
-      label: 'To',
+      label: 'Attended To',
       required: true,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'hasPostSecondaryEducation', value: 'yes' },
-          { field: 'educationOngoing', not: true }
-        ]
-      }
+      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
+    },
+    {
+      id: 'award',
+      group: 'education',
+      type: 'text',
+      label: 'Award',
+      required: true,
+      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' },
+      placeholder: 'Enter the degree, diploma or certificate received'
     },
     {
       id: 'levelOfStudy',
@@ -1416,7 +2003,7 @@ export const CANADA: VisaForm = {
       ]
     },
     {
-      id: 'educationAddress',
+      id: 'educationDocument',
       group: 'education',
       type: 'header',
       label: 'Address',
@@ -1480,132 +2067,12 @@ export const CANADA: VisaForm = {
       type: 'text',
       label: 'If known, please provide your Immigration medical examination (IME) or Unique medical identifier (UMI) number.',
       required: false,
-      description: 'The number can be found on the eMedical Information Sheet or the IMM 1017B form. You can get a copy of either document from the Panel Physician who examined you.',
-      showIf: { field: 'hasMedicalExam', value: 'yes' }
+      showIf: {
+        field: 'hasPostSecondaryEducation',
+        value: 'yes'
+      }
     },
-
-    // Medical Background - Tuberculosis Section
-    {
-      id: 'tuberculosisHeader',
-      group: 'medical',
-      type: 'header',
-      label: 'Medical background questions - Tuberculosis'
-    },
-    {
-      id: 'hasTuberculosisDiagnosis',
-      group: 'medical',
-      type: 'select',
-      label: 'In the last 2 years, were you diagnosed with tuberculosis?',
-      required: true,
-      description: 'Tuberculosis is a disease of the lungs caused by bacteria. It may also be known as TB, Potts disease, Koch\'s disease, scrofula, latent tuberculosis or extra-pulmonary tuberculosis.\nIf you have a history of tuberculosis, it doesn\'t mean that you can\'t come to Canada. Once you complete your treatment, you can come to Canada.',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'completedTuberculosisTreatment',
-      group: 'medical',
-      type: 'select',
-      label: 'Have you completed full tuberculosis treatment (minimum 6 months)?',
-      required: true,
-      description: 'Tuberculosis is treated with medications taken for 6 months or longer. Some of these medications are: isoniazid (INH), rifampin (Rifadin, Rimactane, RIF), ethambutol (Myambutol, EMB), and pyrazinamide (PZA).',
-      showIf: { field: 'hasTuberculosisDiagnosis', value: 'yes' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'tuberculosisContact',
-      group: 'medical',
-      type: 'select',
-      label: 'In the last 5 years, have you been in close contact with a person with tuberculosis?',
-      required: true,
-      description: 'Tuberculosis is a disease of the lungs caused by bacteria. It may also be known as TB, Potts disease, Koch\'s disease, scrofula, latent tuberculosis or extra-pulmonary tuberculosis.\nIf you have a history of tuberculosis, it doesn\'t mean that you can\'t come to Canada. Once you complete your treatment, you can come to Canada.',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'tuberculosisScreening',
-      group: 'medical',
-      type: 'select',
-      label: 'Have you been screened for tuberculosis?',
-      required: true,
-      showIf: { field: 'tuberculosisContact', value: 'yes' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-
-    // Additional Medical Background Questions
-    {
-      id: 'additionalMedicalHeader',
-      group: 'medical',
-      type: 'header',
-      label: 'Medical background questions'
-    },
-    {
-      id: 'receivingDialysis',
-      group: 'medical',
-      type: 'select',
-      label: 'Are you currently receiving dialysis treatment?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'substanceAddiction',
-      group: 'medical',
-      type: 'select',
-      label: 'Have you had a drug or alcohol addiction causing you to be a threat to yourself or others, or to be hospitalized?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'mentalHealthCondition',
-      group: 'medical',
-      type: 'select',
-      label: 'Have you had a mental health condition causing you to be a threat to yourself or others, or to be hospitalized?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'syphilisDiagnosis',
-      group: 'medical',
-      type: 'select',
-      label: 'Have you ever been diagnosed with syphilis?',
-      required: true,
-      description: 'Syphilis is a disease caused by bacteria and may also be known as lues, syph or pox.\nIf you have a history of syphilis, it doesn\'t mean that you can\'t come to Canada. Once you complete your treatment, you can come to Canada',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'syphilisTreatment',
-      group: 'medical',
-      type: 'select',
-      label: 'Have you been treated for syphilis?',
-      required: true,
-      showIf: { field: 'syphilisDiagnosis', value: 'yes' },
-      description: 'Syphilis is treated with medication that is given as pills for 28 days or as 3 needles. The medications are called penicillin or doxycycline.',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
+    
 
     // Family Information Section
     {
@@ -1646,8 +2113,7 @@ export const CANADA: VisaForm = {
           { field: 'maritalStatus', value: 'separated' },
           { field: 'maritalStatus', value: 'widowed' }
         ]
-      },
-      description: 'Select the date of your marriage or start of common-law relationship'
+      },      
     },
     // Additional fields for previous relationships
     {
@@ -1857,32 +2323,32 @@ export const CANADA: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
-    {
-      id: 'spouseAddressHeader',
-      group: 'family',
-      type: 'header',
-      label: 'Present address of spouse',
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'spouseSameAddress', value: 'no' }
-        ]
-      }
-    },
-    {
-      id: 'spouseAddressHeaderMarried',
-      group: 'family',
-      type: 'header',
-      label: 'Present address of spouse',
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseSameAddress', value: 'no' }
-        ]
-      }
-    },
+    // {
+    //   id: 'spouseAddressHeader',
+    //   group: 'family',
+    //   type: 'header',
+    //   label: 'Present address of spouse',
+    //   showIf: { 
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'common_law' },
+    //       { field: 'spouseSameAddress', value: 'no' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'spouseAddressHeaderMarried',
+    //   group: 'family',
+    //   type: 'header',
+    //   label: 'Present address of spouse',
+    //   showIf: { 
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseSameAddress', value: 'no' }
+    //     ]
+    //   }
+    // },
     {
       id: 'spouseCountry',
       group: 'family',
@@ -1999,14 +2465,126 @@ export const CANADA: VisaForm = {
         ]
       }
     },
+    
+    // Sibling Information Section
     {
-      id: 'spouseAccompany',
+      id: 'hasSiblings',
       group: 'family',
       type: 'select',
-      label: 'Will your spouse or common-law partner accompany you to Canada?',
+      label: 'Do you have any siblings (brothers and sisters)?',
       required: true,
-      showIf: { field: 'maritalStatus', value: 'common_law' },
-      description: 'Answer yes even if your spouse will join you later in Canada.',
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'siblingsDescription',
+      group: 'family',
+      type: 'info',
+      label: 'Description',
+      content: [
+        'Include all brother and sister including half brother sisters.'
+      ],
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingsDetailsHeader',
+      group: 'family',
+      type: 'header',
+      label: 'Question 8A: Give details of you all siblings',
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingName1',
+      group: 'family',
+      type: 'text',
+      label: 'Name of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingDateOfBirth1',
+      group: 'family',
+      type: 'date',
+      label: 'Date of Birth of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingDeceased1',
+      group: 'family',
+      type: 'select',
+      label: 'Is sibling 1 deceased?',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'siblingDeathDetails1',
+      group: 'family',
+      type: 'text',
+      label: 'Date and place of death of sibling 1',
+      required: true,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasSiblings', value: 'yes' },
+          { field: 'siblingDeceased1', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'siblingMaritalStatus1',
+      group: 'family',
+      type: 'select',
+      label: 'Marital Status of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' },
+      options: [
+        { label: 'Single', value: 'single' },
+        { label: 'Married', value: 'married' },
+        { label: 'Common Law', value: 'common_law' },
+        { label: 'Divorced', value: 'divorced' },
+        { label: 'Separated', value: 'separated' },
+        { label: 'Widowed', value: 'widowed' }
+      ]
+    },
+    {
+      id: 'siblingOccupation1',
+      group: 'family',
+      type: 'text',
+      label: 'Occupation of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingAddress1',
+      group: 'family',
+      type: 'text',
+      label: 'Address of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' }
+    },
+    {
+      id: 'siblingCountryOfBirth1',
+      group: 'family',
+      type: 'select',
+      label: 'Country of Birth of sibling 1',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' },
+      options: COUNTRIES
+    },
+    {
+      id: 'hasMoreSiblings',
+      group: 'family',
+      type: 'select',
+      label: 'Do you have more siblings to add?',
+      required: true,
+      showIf: { field: 'hasSiblings', value: 'yes' },
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
@@ -2052,22 +2630,260 @@ export const CANADA: VisaForm = {
     //     { label: 'No', value: 'no' }
     //   ]
     // }
+    // Visa History Section
+    {
+      id: 'visaHistoryHeader',
+      group: 'visa_history',
+      type: 'header',
+      label: 'Visa History'
+    },
+    {
+      id: 'visaHistoryDescription',
+      group: 'visa_history',
+      type: 'info',
+      label: 'Previous Visa Applications',
+      content: [
+        'Any previous refusal of USA, refused a visa or permit denied entry, figure print collected previously for the purpose of applying for Schengen visa, has the applicant ever had a visa for Australia or any other country refused or cancelled, have you ever been refused visa / permit, work, study for another country excluding New Zealand.'
+      ]
+    },
+    {
+      id: 'hasAppliedForVisa',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Did you ever file visa application for any country?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'hasVisaRefusal',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Was any of your visa application refused?',
+      required: true,
+      showIf: { field: 'hasAppliedForVisa', value: 'yes' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'refusalCountry',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Which country refused your visa?',
+      required: true,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasAppliedForVisa', value: 'yes' },
+          { field: 'hasVisaRefusal', value: 'yes' }
+        ]
+      },
+      options: COUNTRIES
+    },
+    {
+      id: 'visaRefusalType',
+      group: 'visa_history',
+      type: 'select',
+      label: 'What for you applied?',
+      required: true,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasAppliedForVisa', value: 'yes' },
+          { field: 'hasVisaRefusal', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Temporary short visit', value: 'temporary' },
+        { label: 'Permanent settlement', value: 'permanent' }
+      ]
+    },
+    {
+      id: 'refusalDate',
+      group: 'visa_history',
+      type: 'date',
+      label: 'When did this problem occur?',
+      required: false,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasAppliedForVisa', value: 'yes' },
+          { field: 'hasVisaRefusal', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'hasRefusalLetter',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Do you have any letter of refusal?',
+      required: false,
+      showIf: { 
+        operator: 'and',
+        conditions: [
+          { field: 'hasAppliedForVisa', value: 'yes' },
+          { field: 'hasVisaRefusal', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    // Travel Plans Section
+    {
+      id: 'travelPlansHeader',
+      group: 'visa_history',
+      type: 'header',
+      label: 'Travel Plans'
+    },
+    {
+      id: 'travelPlansDescription',
+      group: 'visa_history',
+      type: 'info',
+      label: 'Travel Dates',
+      content: [
+        'Date you will arrive and leave, intended date of arrival, planned arrival date, planned final departure date, indicate how long you plan to stay from – to, intended date of arrival of first intend stay in the Schengen area, intended date of departure.'
+      ]
+    },
+    {
+      id: 'hasConfirmedTravelPlans',
+      group: 'visa_history',
+      type: 'select',
+      label: 'Do you have confirmed travel plans?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'plannedArrivalDate',
+      group: 'visa_history',
+      type: 'date',
+      label: 'Planned arrival date',
+      required: false,
+      showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
+    },
+    {
+      id: 'plannedDepartureDate',
+      group: 'visa_history',
+      type: 'date',
+      label: 'Planned departure date',
+      required: false,
+      showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
+    },
+    // Additional Information Section
+    {
+      id: 'additionalInfoHeader',
+      group: 'additional',
+      type: 'header',
+      label: 'Additional Information and Services'
+    },
+    {
+      id: 'needExplanations',
+      group: 'additional',
+      type: 'select',
+      label: 'Do you want to add any explanations?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'explanationText',
+      group: 'additional',
+      type: 'text',
+      label: 'Please provide your explanation',
+      required: false,
+      showIf: { field: 'needExplanations', value: 'yes' },
+      placeholder: 'Enter your explanation here'
+    },
+    {
+      id: 'needTravelServices',
+      group: 'additional',
+      type: 'select',
+      label: 'Do you need any pre departure or post arrival service (such as air tickets, travel insurances, forex cards, mobile SIM, booking of accommodation, package tours)?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'preferredContactMethod',
+      group: 'additional',
+      type: 'text',
+      label: 'What is the best method to contact you regarding your application?',
+      required: false,
+      options: [
+        { label: 'Email', value: 'email' },
+        { label: 'WhatsApp', value: 'whatsapp' },
+        { label: 'Phone call', value: 'phone' }
+      ]
+    },
+    {
+      id: 'needAdditionalContact',
+      group: 'additional',
+      type: 'select',
+      label: 'Do you like to provide additional email or phone number than that you used for creating your application?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'additionalEmail',
+      group: 'additional',
+      type: 'text',
+      label: 'Additional Email',
+      required: false,
+      showIf: { field: 'needAdditionalContact', value: 'yes' },
+      placeholder: 'Enter your additional email address'
+    },
+    {
+      id: 'additionalPhone',
+      group: 'additional',
+      type: 'text',
+      label: 'Additional Phone',
+      required: false,
+      showIf: { field: 'needAdditionalContact', value: 'yes' },
+      placeholder: 'Enter your additional phone number'
+    }
   ],
   documents: [
-    {
-      id: 'passport',
-      name: 'Passport',
-      type: 'file' as DocumentType,
-      description: 'Must be valid for at least 6 months beyond your planned date of departure from Canada',
-      required: true
-    },
-    {
-      id: 'photograph',
-      name: 'Photograph',
-      type: 'file' as DocumentType,
-      description: 'Two identical passport photos taken within the last 6 months',
-      required: true
-    },
+    // {
+    //   id: 'medicalFacilityDeposit',
+    //   group: 'application',
+    //   type: 'select',
+    //   label: 'Have you paid a deposit to the Canadian medical facility?',
+    //   required: false,
+    //   showIf: { field: 'purposeOfVisit', value: 'medical_treatment' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+
+    // To Study Without a Permit
+    // {
+    //   id: 'courseDurationCheck',
+    //   group: 'application',
+    //   type: 'select',
+    //   label: 'Is your course/program less than 6 months long?',
+    //   required: false,
+    //   showIf: { field: 'purposeOfVisit', value: 'short_term_study' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
     {
       id: 'financialProof',
       name: 'Proof of Financial Support',
@@ -2156,6 +2972,18 @@ export const CANADA: VisaForm = {
       conditions: [
         { questionId: 'hasMedicalExam', value: 'yes' }
       ]
-    }
+    },
+    // {
+    //   id: 'wantAdditionalApplicant',
+    //   group: 'additional_applicant',
+    //   type: 'select',
+    //   label: 'Do you want to add another applicant?',
+    //   required: true,
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // }
+    
   ]
 };

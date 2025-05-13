@@ -49,5 +49,7 @@ formRegistry.register(KAZAKHSTAN);
 formRegistry.register(UNITED_ARAB_EMIRATES);
 formRegistry.register(VIETNAM);
 formRegistry.register(CANADA);
-formRegistry.register(GENERIC_COUNTRY)
+formRegistry.register(GENERIC_COUNTRY);
+
+
 

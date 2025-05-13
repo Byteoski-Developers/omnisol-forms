@@ -287,16 +287,16 @@ export const australiaVisaForm: VisaForm = {
       type: 'header',
       label: 'Purpose of stay'
     },
-    {
-      id: 'purposeOfStayInfo',
-      group: 'travel',
-      type: 'info',
-      label: '',
-      content: ['Select the stream the applicant is applying for:']
-    },
+    // {
+    //   id: 'purposeOfStayInfo',
+    //   group: 'travel',
+    //   type: 'info',
+    //   label: '',
+    //   content: ['Select the stream the applicant is applying for:']
+    // },
     {
       id: 'visaStream',
-      group: 'travel',
+      group: 'eligibility',
       type: 'select',
       label: 'Visa stream',
       required: true,
@@ -309,14 +309,14 @@ export const australiaVisaForm: VisaForm = {
     },
     {
       id: 'streamInfoNote',
-      group: 'travel',
+      group: 'eligibility',
       type: 'info',
       label: '',
       content: ['Note: Once the application has been lodged, the stream cannot be changed. For more information on each stream, click on the help icon above.']
     },
     {
       id: 'reasonsForVisit',
-      group: 'travel',
+      group: 'eligibility',
       type: 'select',
       label: 'List all reasons for visiting Australia',
       required: true,
@@ -332,7 +332,7 @@ export const australiaVisaForm: VisaForm = {
     },
     {
       id: 'significantDates',
-      group: 'travel',
+      group: 'eligibility',
       type: 'text',
       label: 'Give details of any significant dates on which the applicant needs to be in Australia',
       required: false
@@ -341,13 +341,13 @@ export const australiaVisaForm: VisaForm = {
     // Group Processing Section
     {
       id: 'groupProcessingHeader',
-      group: 'travel',
+      group: 'eligibility',
       type: 'header',
       label: 'Group processing'
     },
     {
       id: 'groupApplication',
-      group: 'travel',
+      group: 'eligibility',
       type: 'select',
       label: 'Is this application being lodged as part of a group of applications?',
       required: true,

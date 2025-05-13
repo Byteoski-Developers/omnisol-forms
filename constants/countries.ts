@@ -80,6 +80,11 @@ export const SAMPLE_COUNTRIES: Country[] = [
     flag: 'https://flagcdn.com/w80/sg.png',
   },
   {
+    code: 'CA',
+    name: 'Canada',
+    flag: 'https://flagcdn.com/w80/ca.png',
+  },
+  {
     code: 'TR',
     name: 'Turkey',
     flag: 'https://flagcdn.com/w80/tr.png',
@@ -93,6 +98,11 @@ export const SAMPLE_COUNTRIES: Country[] = [
     code: 'AZ',
     name: 'Azerbaijan',
     flag: 'https://flagcdn.com/w80/az.png',
+  },
+  {
+    code: 'AU',
+    name: 'Australia',
+    flag: 'https://flagcdn.com/w80/au.png',
   },
   {
     code: 'NZ',
@@ -155,4 +165,4 @@ export const SAMPLE_COUNTRIES: Country[] = [
     name: 'generic',
     flag: 'https://flagcdn.com/w80/au.png',
   }
-];
+  ];

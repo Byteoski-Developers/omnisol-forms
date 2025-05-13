@@ -287,30 +287,9 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'destinationCountries',
       group: 'destination' as FormGroup,
-      type: 'select',
+      type: 'countriesInput',
       label: `Which country/ies you want to visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      options: COUNTRIES
-    },
-    {
-      id: 'addAnotherCountry',
-      group: 'destination' as FormGroup,
-      type: 'select',
-      label: `Do you wish to add another country? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'additionalCountry',
-      group: 'destination' as FormGroup,
-      type: 'select',
-      label: 'Select additional country',
-      required: false,
-      showIf: { field: 'addAnotherCountry', value: 'yes' },
-      options: COUNTRIES
+      required: true
     },
 
     // -------------------- CITIZENSHIP & RESIDENCE --------------------
@@ -2419,98 +2398,18 @@ export const GENERIC_COUNTRY: VisaForm = {
       id: 'siblingsDetailsHeader',
       group: 'family' as FormGroup,
       type: 'header',
-      label: 'Give details of you all siblings',
+      label: 'Give details of all your siblings',
       showIf: { field: 'hasSiblings', value: 'yes' }
     },
     {
-      id: 'siblingName1',
+      id: 'siblingsInput',
       group: 'family' as FormGroup,
-      type: 'text',
-      label: 'Name of sibling 1',
+      type: 'siblingsInput',
+      label: 'Siblings Information',
       required: true,
       showIf: { field: 'hasSiblings', value: 'yes' }
     },
-    {
-      id: 'siblingDateOfBirth1',
-      group: 'family' as FormGroup,
-      type: 'date',
-      label: 'Date of Birth of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' }
-    },
-    {
-      id: 'siblingDeceased1',
-      group: 'family' as FormGroup,
-      type: 'select',
-      label: 'Is sibling 1 deceased?',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'siblingDeathDetails1',
-      group: 'family' as FormGroup,
-      type: 'text',
-      label: 'Date and place of death of sibling 1',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'hasSiblings', value: 'yes' },
-          { field: 'siblingDeceased1', value: 'yes' }
-        ]
-      }
-    },
-    {
-      id: 'siblingMaritalStatus1',
-      group: 'family' as FormGroup,
-      type: 'select',
-      label: 'Marital Status of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' },
-      options: MARITAL_STATUS_OPTIONS
-    },
-    {
-      id: 'siblingOccupation1',
-      group: 'family' as FormGroup,
-      type: 'text',
-      label: 'Occupation of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' }
-    },
-    {
-      id: 'siblingAddress1',
-      group: 'family' as FormGroup,
-      type: 'text',
-      label: 'Address of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' }
-    },
-    {
-      id: 'siblingCountryOfBirth1',
-      group: 'family' as FormGroup,
-      type: 'select',
-      label: 'Country of Birth of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' },
-      options: COUNTRIES
-    },
-    {
-      id: 'hasMoreSiblings',
-      group: 'family' as FormGroup,
-      type: 'select',
-      label: 'Do you have more siblings to add?',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-// -------------------- parent INFORMATION --------------------
+// -------------------- PARENTS INFORMATION --------------------
     {
       id: 'parentsHeader',
       group: 'parents' as FormGroup,
@@ -2527,166 +2426,12 @@ export const GENERIC_COUNTRY: VisaForm = {
       ]
     },
     {
-      id: 'parentName1',
+      id: 'parentsInput',
       group: 'parents' as FormGroup,
-      type: 'text',
-      label: `Give details of your parents? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      type: 'parentsInput',
+      label: 'Parents Information',
       required: true
     },
-    {
-      id: 'parentDateOfBirth1',
-      group: 'parents' as FormGroup,
-      type: 'date',
-      label: 'Date of Birth',
-      required: true
-    },
-    {
-      id: 'parentDeceased1',
-      group: 'parents' as FormGroup,
-      type: 'select',
-      label: 'Is this parent deceased?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'parentDeathDetails1',
-      group: 'parents' as FormGroup,
-      type: 'text',
-      label: 'Date and place of death',
-      required: true,
-      showIf: { field: 'parentDeceased1', value: 'yes' }
-    },
-    {
-      id: 'parentMaritalStatus1',
-      group: 'parents' as FormGroup,
-      type: 'select',
-      label: 'Marital Status',
-      required: true,
-      options: MARITAL_STATUS_OPTIONS
-    },
-    {
-      id: 'parentOccupation1',
-      group: 'parents' as FormGroup,
-      type: 'text',
-      label: 'Occupation',
-      required: true
-    },
-    {
-      id: 'parentAddress1',
-      group: 'parents' as FormGroup,
-      type: 'text',
-      label: 'Address',
-      required: true
-    },
-    {
-      id: 'parentCountryOfBirth1',
-      group: 'parents' as FormGroup,
-      type: 'select',
-      label: 'Country of Birth',
-      required: true,
-      options: COUNTRIES
-    },
-    {
-      id: 'hasSecondParent',
-      group: 'parents' as FormGroup,
-      type: 'select',
-      label: 'Do you want to add second parent?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'parentName2',
-      group: 'parents' as FormGroup,
-      type: 'text',
-      label: 'Name of second parent',
-      required: true,
-      showIf: { field: 'hasSecondParent', value: 'yes' }
-    },
-    {
-      id: 'parentDateOfBirth2',
-      group: 'parents' as FormGroup,
-      type: 'date',
-      label: 'Date of Birth of second parent',
-      required: true,
-      showIf: { field: 'hasSecondParent', value: 'yes' }
-    },
-    {
-      id: 'parentDeceased2',
-      group: 'parents' as FormGroup,
-      type: 'select',
-      label: 'Is second parent deceased?',
-      required: true,
-      showIf: { field: 'hasSecondParent', value: 'yes' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'parentDeathDetails2',
-      group: 'parents' as FormGroup,
-      type: 'text',
-      label: 'Date and place of death of second parent',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'hasSecondParent', value: 'yes' },
-          { field: 'parentDeceased2', value: 'yes' }
-        ]
-      }
-    },
-    {
-      id: 'parentMaritalStatus2',
-      group: 'parents' as FormGroup,
-      type: 'select',
-      label: 'Marital Status of second parent',
-      required: true,
-      showIf: { field: 'hasSecondParent', value: 'yes' },
-      options: MARITAL_STATUS_OPTIONS
-    },
-    {
-      id: 'parentOccupation2',
-      group: 'parents' as FormGroup,
-      type: 'text',
-      label: 'Occupation of second parent',
-      required: true,
-      showIf: { field: 'hasSecondParent', value: 'yes' }
-    },
-    {
-      id: 'parentAddress2',
-      group: 'parents' as FormGroup,
-      type: 'text',
-      label: 'Address of second parent',
-      required: true,
-      showIf: { field: 'hasSecondParent', value: 'yes' }
-    },
-    {
-      id: 'parentCountryOfBirth2',
-      group: 'parents' as FormGroup,
-      type: 'select',
-      label: 'Country of Birth of second parent',
-      required: true,
-      showIf: { field: 'hasSecondParent', value: 'yes' },
-      options: COUNTRIES
-    },
-
-  // },
-  // {
-  //   id: 'parentCountryOfBirth2',
-  //   group: 'parents' as FormGroup,
-  //   type: 'select',
-  //   label: 'Country of Birth of second parent',
-  //   required: true,
-  //   showIf: { field: 'hasSecondParent', value: 'yes' },
-  //   options: COUNTRIES
-  // },
 
   // -------------------- VISA HISTORY --------------------
   {

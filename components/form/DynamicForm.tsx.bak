@@ -19,11 +19,8 @@ import { TravelItinerary } from './TravelItinerary';
 import { ResidenceCountries } from './ResidenceCountries';
 import { DocumentUpload } from './DocumentUpload';
 import SiblingTabs from './SiblingTabs';
-import ParentTabs from './ParentTabs';
-import MultiCountryDropdown from './MultiCountryDropdown';
 import { useParams } from 'next/navigation';
 import authRequest from '@/api/authRequest';
-import { COUNTRIES } from '@/lib/countries/constants/countries';
 
 interface DynamicFormProps {
   form: VisaForm & { showDocuments?: boolean };
@@ -198,7 +195,7 @@ export function DynamicForm({
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000';
         const response = await authRequest({
           method: 'POST',
-          url: `${baseUrl}/api/form-manager-v2/case-qa`,
+          url: `${baseUrl}/api/case-manager/questions/answer`,
           data: {
             case_id: parseInt(caseId as string, 10),
             question,
@@ -243,80 +240,25 @@ export function DynamicForm({
       }
       
       // Update the case question/answer in the backend
-      if (caseId) {
-        updateCaseQuestionAnswer(fieldId, field.label, value);
-      }
-    }
-  };
-  
-  const renderField = (field: FormField) => {
-    if (!visibleFields.has(field.id)) {
-      return null;
-    }
-    
-    const error = errors[field.id];
-    
-    switch (field.type) {
-      case 'siblingsInput':
-        return (
-          <div className="space-y-2" key={field.id}>
-            <Label htmlFor={field.id}>{field.label}</Label>
-            <SiblingTabs 
-              value={formData[field.id] ? JSON.stringify(formData[field.id]) : ''} 
-              onChange={(value, save) => handleFieldChange(field.id, value)}
-              readonly={false}
-            />
-            {error && (
-              <div className="flex items-center gap-2 text-destructive mt-2">
-                <AlertCircle className="h-4 w-4" />
-                <p className="text-sm">{error}</p>
-              </div>
-            )}
-          </div>
-        );
-
-      case 'parentsInput':
-        return (
-          <div className="space-y-2" key={field.id}>
-            <Label htmlFor={field.id}>{field.label}</Label>
-            <ParentTabs 
-              value={formData[field.id] ? JSON.stringify(formData[field.id]) : ''} 
-              onChange={(value, save) => handleFieldChange(field.id, value)}
-              readonly={false}
-            />
-            {error && (
-              <div className="flex items-center gap-2 text-destructive mt-2">
-                <AlertCircle className="h-4 w-4" />
-                <p className="text-sm">{error}</p>
-              </div>
-            )}
-          </div>
-        );
+        }
         
-      case 'countriesInput':
-        return (
-          <div className="space-y-2" key={field.id}>
-            <Label htmlFor={field.id}>{field.label}</Label>
-            <MultiCountryDropdown 
-              value={formData[field.id] ? JSON.stringify(formData[field.id]) : ''} 
-              handleChange={(value, save) => handleFieldChange(field.id, value)}
-              readonly={false}
-            />
-            {error && (
-              <div className="flex items-center gap-2 text-destructive mt-2">
-                <AlertCircle className="h-4 w-4" />
-                <p className="text-sm">{error}</p>
-              </div>
-            )}
-          </div>
-        );
-        
-      case 'residence_countries':
         return (
           <div className="space-y-2" key={field.id}>
             <Label htmlFor={field.id}>{field.label}</Label>
             <ResidenceCountries
-              countries={COUNTRIES}
+              countries={[
+                { value: 'us', label: 'United States' },
+                { value: 'ca', label: 'Canada' },
+                { value: 'uk', label: 'United Kingdom' },
+                { value: 'au', label: 'Australia' },
+                { value: 'in', label: 'India' },
+                { value: 'cn', label: 'China' },
+                { value: 'jp', label: 'Japan' },
+                { value: 'tg', label: 'Togo' },
+                { value: 'fr', label: 'France' },
+                { value: 'de', label: 'Germany' },
+                { value: 'other', label: 'Other' }
+              ]}
               statuses={[
                 { value: 'citizen', label: 'Citizen' },
                 { value: 'permanent_resident', label: 'Permanent resident' },

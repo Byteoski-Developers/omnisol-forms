@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { FormField } from '@/types/form';
 import CustomFieldRenderer from './CustomFieldRenderer';

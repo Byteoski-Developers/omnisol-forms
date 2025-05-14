@@ -23,6 +23,13 @@ import MultiCountryDropdown from './MultiCountryDropdown';
 import { useParams } from 'next/navigation';
 import authRequest from '@/api/authRequest';
 import { COUNTRIES } from '@/lib/countries/constants/countries';
+import TextArea from '@/components/ui/textarea';
+import AccessingBodyAssessmentInput from "@/components/form/AccessingBodyAssessmentInput";
+import SocialHandles from "@/components/form/SocialHandles";
+import Last10YearActivity from "./Last10YearActivity";
+import RefusalInput from "./RefusalInput";
+import ChildrenInputField from "./ChildrenInputField";
+import LanguageTestInput from "./LanguageTestInput";
 
 interface DynamicFormProps {
   form: VisaForm & { showDocuments?: boolean };
@@ -46,6 +53,61 @@ export function DynamicForm({
   const [childrenHasErrors, setChildrenHasErrors] = useState(false);
   const [itineraryHasErrors, setItineraryHasErrors] = useState(false);
 
+  // Type definitions for conditions
+  type SimpleCondition = { field: string; value?: string | number | boolean; not?: string | number | boolean; };
+  type ComplexCondition = { 
+    operator: "or" | "and"; 
+    conditions: Array<SimpleCondition | ComplexCondition>; 
+  };
+  
+  // Recursive function to evaluate complex nested conditions
+  const evaluateCondition = (condition: any): boolean => {
+    // Handle complex condition with operator
+    if ('operator' in condition) {
+      const { operator, conditions } = condition as ComplexCondition;
+      console.log('Evaluating complex condition - operator:', operator, 'conditions:', conditions);
+      
+      // Map and evaluate each condition recursively
+      const results = conditions.map(subCondition => evaluateCondition(subCondition));
+      
+      // Apply the appropriate logical operator
+      if (operator === 'and') {
+        return results.every(Boolean);
+      } else if (operator === 'or') {
+        return results.some(Boolean);
+      }
+      return false;
+    }
+    
+    // Handle simple condition
+    const { field, value, not } = condition as SimpleCondition;
+    console.log('Evaluating simple condition - field:', field, 'value:', value, 'not:', not, 'formData[field]:', formData[field]);
+    
+    // Check if the field exists in formData
+    if (!(field in formData)) {
+      console.log('Field not found in formData:', field);
+      return false;
+    }
+    
+    // Check if we're looking for a specific value or a negation
+    if (value !== undefined) {
+      // For array values, check if the value is included in the array
+      if (Array.isArray(formData[field])) {
+        return formData[field].includes(value);
+      }
+      return formData[field] === value;
+    } else if (not !== undefined) {
+      // For array values, check if the value is NOT included in the array
+      if (Array.isArray(formData[field])) {
+        return !formData[field].includes(not);
+      }
+      return formData[field] !== not;
+    }
+    
+    // If no value or not is specified, check if the field has any value
+    return Boolean(formData[field]);
+  };
+
   useEffect(() => {
     const visible = new Set<string>();
     console.log('Form data:', formData);
@@ -59,61 +121,6 @@ export function DynamicForm({
       let showIfConditionMet = true;
       if (field.showIf) {
         console.log('Checking showIf for field:', field.id, 'showIf:', field.showIf);
-        
-        // Type definitions for conditions
-        type SimpleCondition = { field: string; value?: string | number | boolean; not?: string | number | boolean; };
-        type ComplexCondition = { 
-          operator: "or" | "and"; 
-          conditions: Array<SimpleCondition | ComplexCondition>; 
-        };
-        
-        // Recursive function to evaluate complex nested conditions
-        const evaluateCondition = (condition: any): boolean => {
-          // Handle complex condition with operator
-          if ('operator' in condition) {
-            const { operator, conditions } = condition as ComplexCondition;
-            console.log('Evaluating complex condition - operator:', operator, 'conditions:', conditions);
-            
-            // Map and evaluate each condition recursively
-            const results = conditions.map(subCondition => evaluateCondition(subCondition));
-            
-            // Apply the appropriate logical operator
-            if (operator === 'and') {
-              return results.every(Boolean);
-            } else if (operator === 'or') {
-              return results.some(Boolean);
-            }
-            return false; // Default case (should not happen)
-          } 
-          // Handle simple condition
-          else if ('field' in condition) {
-            const simpleCondition = condition as SimpleCondition;
-            const fieldValue = formData[simpleCondition.field];
-            console.log(`Evaluating simple condition - field: ${simpleCondition.field}, value: ${fieldValue}, condition:`, condition);
-            
-            // Handle both value and not conditions
-            let result = true;
-            
-            // If value is defined, check equality
-            if (simpleCondition.value !== undefined) {
-              result = result && (fieldValue === simpleCondition.value);
-              console.log(`Value check: ${fieldValue} === ${simpleCondition.value} -> ${result}`);
-            }
-            
-            // If not is defined, check inequality (this works even if value is also defined)
-            if (simpleCondition.not !== undefined) {
-              result = result && (fieldValue !== simpleCondition.not);
-              console.log(`Not check: ${fieldValue} !== ${simpleCondition.not} -> ${result}`);
-            }
-            
-            return result;
-          }
-          
-          // Default to true if no condition matched
-          return true;
-        };
-        
-        // Evaluate the entire condition tree
         showIfConditionMet = evaluateCondition(field.showIf);
         console.log('Final condition result for field', field.id, ':', showIfConditionMet);
       }
@@ -220,7 +227,7 @@ export function DynamicForm({
     };
   }, []);
 
-  const handleFieldChange = (fieldId: string, value: any) => {
+  const handleFieldChange = (fieldId: string, value: any, save?: boolean) => {
     setFormData(prev => {
       const newData = { ...prev, [fieldId]: value };
       console.log(`Field ${fieldId} changed to:`, value);
@@ -242,20 +249,38 @@ export function DynamicForm({
       }
       
       // Update the case question/answer in the backend
-      if (caseId) {
+      // Only update if save is true or undefined (backward compatibility)
+      if (caseId && (save === undefined || save === true)) {
         updateCaseQuestionAnswer(fieldId, field.label, value);
       }
     }
   };
   
   const renderField = (field: FormField) => {
-    if (!visibleFields.has(field.id)) {
+    const { id, type, label, placeholder, options, required, description, showIf, component } = field;
+    
+    // Check if the field should be shown based on conditional logic
+    if (showIf && !evaluateCondition(showIf)) {
       return null;
     }
+
+    // Get the field value from form data
+    const value = formData[id] || '';
+    const error = errors[id];
     
-    const error = errors[field.id];
-    
-    switch (field.type) {
+    // Common props for all field types
+    const commonProps = {
+      id,
+      label,
+      value,
+      error,
+      required,
+      description,
+      handleChange: (val: any, save?: boolean) => handleFieldChange(id, val, save),
+      readonly: false
+    };
+
+    switch (type) {
       case 'siblingsInput':
         return (
           <div className="space-y-2" key={field.id}>
@@ -353,6 +378,24 @@ export function DynamicForm({
           </div>
         );
         
+      case 'accessingBodyAssessment':
+        return (
+          <div className="space-y-2" key={field.id}>
+            <Label htmlFor={field.id}>{field.label}</Label>
+            <AccessingBodyAssessmentInput
+              handleChange={(value) => handleFieldChange(field.id, value)}
+              inputValue={formData[field.id] || ''}
+              readonly={false}
+            />
+            {error && (
+              <div className="flex items-center gap-2 text-destructive mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+          </div>
+        );
+        
       case 'file':
         return (
           <div className="space-y-2 mb-6" key={field.id}>
@@ -404,7 +447,7 @@ export function DynamicForm({
                       
                       if (errors[field.id]) {
                         setErrors(prev => {
-                          const newErrors = {...prev};
+                          const newErrors = { ...prev };
                           delete newErrors[field.id];
                           return newErrors;
                         });
@@ -517,15 +560,26 @@ export function DynamicForm({
               {field.label}
               {field.required && <span className="text-destructive ml-1">*</span>}
             </Label>
-            <textarea
+            <TextArea
               id={field.id}
+              label=""
               placeholder={field.placeholder}
-              value={formData[field.id] || ''}
-              onChange={(e) => handleFieldChange(field.id, e.target.value)}
-              className={cn(
-                'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
-                error && 'border-destructive'
-              )}
+              defaultValue={formData[field.id] || ''}
+              onChange={(value) => handleFieldChange(field.id, value)}
+              required={field.required}
+              error={error}
+              helpText={field.description}
+              setErrorSubmission={(hasError) => {
+                if (hasError) {
+                  setErrors(prev => ({ ...prev, [field.id]: 'Character limit exceeded' }));
+                } else {
+                  setErrors(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors[field.id];
+                    return newErrors;
+                  });
+                }
+              }}
             />
             {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
             {error && (
@@ -582,7 +636,7 @@ export function DynamicForm({
                   id={field.id}
                   variant="outline"
                   className={cn(
-                    'w-full justify-start text-left font-normal',
+                    'w-full',
                     !formData[field.id] && 'text-muted-foreground',
                     error && 'border-destructive'
                   )}
@@ -592,11 +646,72 @@ export function DynamicForm({
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
+                <div className="p-3 border-b">
+                  <div className="flex justify-between gap-2 mb-2">
+                    {/* Year dropdown */}
+                    <Select
+                      value={formData[field.id] 
+                        ? new Date(formData[field.id]).getFullYear().toString() 
+                        : new Date().getFullYear().toString()}
+                      onValueChange={(year) => {
+                        const currentDate = formData[field.id] 
+                          ? new Date(formData[field.id]) 
+                          : new Date();
+                        currentDate.setFullYear(parseInt(year));
+                        handleFieldChange(field.id, currentDate.toISOString());
+                      }}
+                    >
+                      <SelectTrigger className="w-[110px]">
+                        <SelectValue placeholder="Year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Array.from({ length: 100 }, (_, i) => {
+                          const year = new Date().getFullYear() - i;
+                          return (
+                            <SelectItem key={year} value={year.toString()}>
+                              {year}
+                            </SelectItem>
+                          );
+                        })}
+                      </SelectContent>
+                    </Select>
+                    
+                    {/* Month dropdown */}
+                    <Select
+                      value={formData[field.id] 
+                        ? (new Date(formData[field.id]).getMonth()).toString() 
+                        : new Date().getMonth().toString()}
+                      onValueChange={(month) => {
+                        const currentDate = formData[field.id] 
+                          ? new Date(formData[field.id]) 
+                          : new Date();
+                        currentDate.setMonth(parseInt(month));
+                        handleFieldChange(field.id, currentDate.toISOString());
+                      }}
+                    >
+                      <SelectTrigger className="w-[110px]">
+                        <SelectValue placeholder="Month" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {[
+                          "January", "February", "March", "April", 
+                          "May", "June", "July", "August", 
+                          "September", "October", "November", "December"
+                        ].map((month, index) => (
+                          <SelectItem key={index} value={index.toString()}>
+                            {month}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
                 <Calendar
                   mode="single"
                   selected={formData[field.id] ? new Date(formData[field.id]) : undefined}
                   onSelect={(date) => handleFieldChange(field.id, date ? date.toISOString() : '')}
                   initialFocus
+                  defaultMonth={formData[field.id] ? new Date(formData[field.id]) : undefined}
                 />
               </PopoverContent>
             </Popover>
@@ -680,6 +795,101 @@ export function DynamicForm({
           </div>
         );
 
+      case 'socialHandles':
+        return (
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>{field.label}</Label>
+            <SocialHandles
+              inputValue={formData[field.id] || {}}
+              handleChange={(handles) => handleFieldChange(field.id, handles.value)}
+            />
+            {error && (
+              <div className="flex items-center gap-2 text-destructive mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+          </div>
+        );
+
+      case 'last10YearActivity':
+        return (
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>{field.label}</Label>
+            <Last10YearActivity
+              inputValue={formData[field.id] || []}
+              handleChange={(activities: any) => handleFieldChange(field.id, activities.value)}
+              readonly={false}
+            />
+            {error && (
+              <div className="flex items-center gap-2 text-destructive mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+          </div>
+        );
+
+      case 'languageTest':
+        return (
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>{field.label}</Label>
+            <LanguageTestInput
+              inputValue={formData[field.id] || {}}
+              handleChange={(val: any, save?: boolean) => handleFieldChange(field.id, val, save)}
+              readonly={false}
+            />
+            {error && (
+              <div className="flex items-center gap-2 text-destructive mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+            {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
+          </div>
+        );
+
+      case 'custom':
+        switch (component) {
+          case 'RefusalInput':
+            return (
+              <div key={id} className="mb-4">
+                <Label htmlFor={id}>{label}</Label>
+                <RefusalInput 
+                  inputValue={value} 
+                  handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)} 
+                  readonly={false}
+                />
+                {error && (
+                  <div className="flex items-center gap-2 text-destructive mt-2">
+                    <AlertCircle className="h-4 w-4" />
+                    <p className="text-sm">{error}</p>
+                  </div>
+                )}
+                {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+              </div>
+            );
+          case 'ChildrenInputField':
+            return (
+              <div key={id} className="mb-4">
+                <Label htmlFor={id}>{label}</Label>
+                <ChildrenInputField 
+                  inputValue={value} 
+                  handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)} 
+                  readonly={false}
+                />
+                {error && (
+                  <div className="flex items-center gap-2 text-destructive mt-2">
+                    <AlertCircle className="h-4 w-4" />
+                    <p className="text-sm">{error}</p>
+                  </div>
+                )}
+                {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+              </div>
+            );
+          default:
+            return null;
+        }
       default:
         return null;
     }
@@ -779,7 +989,7 @@ export function DynamicForm({
 //             // Track document upload errors
 //             setErrors(prev => ({
 //               ...prev,
-//               documentUploadErrors: hasErrors ? 'Please fix document upload errors' : ''
+//               documentUploadErrors: hasError ? 'Please fix document upload errors' : ''
 //             }));
 //           }}
 //         />

@@ -260,8 +260,18 @@ export const GENERIC_COUNTRY: VisaForm = {
       showDocuments: false
     },
     {
+      title: 'Education',
+      group: 'education' as FormGroup,
+      showDocuments: false
+    },
+    {
       title: 'Travel Plans',
       group: 'travel_plans' as FormGroup,
+      showDocuments: false
+    },
+    {
+      title: 'Relatives Information',
+      group: 'relatives' as FormGroup,
       showDocuments: false
     },
     {
@@ -831,6 +841,29 @@ export const GENERIC_COUNTRY: VisaForm = {
   
   // Children information for all marital statuses (except single)
   {
+    id: 'languageTestHeader',
+    group: 'personal' as FormGroup,
+    type: 'header',
+    label: 'Language Proficiency'
+  },
+  {
+    id: 'languageTestDescription',
+    group: 'personal' as FormGroup,
+    type: 'info',
+    label: 'Description',
+    content: [
+      'Please provide information about any language proficiency tests you have taken (e.g., IELTS, TOEFL, CELPIP, PTE).'
+    ]
+  },
+  {
+    id: 'languageTest',
+    group: 'personal' as FormGroup,
+    type: 'languageTest',
+    label: 'Language Test Details',
+    required: false,
+    description: 'Please provide details of your language test results.'
+  },
+  {
     id: 'hasChildren',
     group: 'personal' as FormGroup,
     type: 'select',
@@ -845,11 +878,10 @@ export const GENERIC_COUNTRY: VisaForm = {
   {
     id: 'childrenDetails',
     group: 'personal' as FormGroup,
-    type: 'info', // Using info type that will be handled by the DynamicForm component
+    type: 'custom',
+    component: 'ChildrenInputField',
     label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    description: 'Use the controls below to add information for each child including name, date of birth, relationship, and gender',
     required: false,
-    content: ['ChildrenInput'], // This will be used by DynamicForm to render the ChildrenInput component
     showIf: { 
       operator: 'and',
       conditions: [
@@ -902,14 +934,14 @@ export const GENERIC_COUNTRY: VisaForm = {
       showIf: { field: 'hasWorkExperience', value: 'yes' },
       options: WORK_FIELD_OPTIONS
     },
-    {
-      id: 'languageTest',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `Which test result demonstrates your language proficiency? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      options: LANGUAGE_TEST_OPTIONS
-    },
+    // {
+    //   id: 'languageTest',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'select',
+    //   label: `Which test result demonstrates your language proficiency? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   options: LANGUAGE_TEST_OPTIONS
+    // },
     {
       id: 'visitPurpose',
       group: 'purpose' as FormGroup,
@@ -2473,10 +2505,11 @@ export const GENERIC_COUNTRY: VisaForm = {
     ]
   },
   {
-    id: 'refusalCountry',
+    id: 'refusalDetails',
     group: 'visa_history' as FormGroup,
-    type: 'select',
-    label: 'Which country refused your visa?',
+    type: 'custom',
+    component: 'RefusalInput',
+    label: 'Provide details about your visa refusals',
     required: true,
     showIf: { 
       operator: 'and',
@@ -2487,57 +2520,57 @@ export const GENERIC_COUNTRY: VisaForm = {
     },
     options: COUNTRIES
   },
-  {
-    id: 'visaRefusalType',
-    group: 'visa_history' as FormGroup,
-    type: 'select',
-    label: 'What for you applied?',
-    required: true,
-    showIf: { 
-      operator: 'and',
-      conditions: [
-        { field: 'hasAppliedForVisa', value: 'yes' },
-        { field: 'hasVisaRefusal', value: 'yes' }
-      ]
-    },
-    options: [
-      { label: 'Temporary short visit', value: 'temporary' },
-      { label: 'Permanent settlement', value: 'permanent' }
-    ]
-  },
-  {
-    id: 'refusalDate',
-    group: 'visa_history' as FormGroup,
-    type: 'date',
-    label: 'When did this problem occur?',
-    required: false,
-    showIf: { 
-      operator: 'and',
-      conditions: [
-        { field: 'hasAppliedForVisa', value: 'yes' },
-        { field: 'hasVisaRefusal', value: 'yes' }
-      ]
-    }
-  },
-  {
-    id: 'hasRefusalLetter',
-    group: 'visa_history' as FormGroup,
-    type: 'select',
-    label: 'Do you have any letter of refusal?',
-    required: false,
-    showIf: { 
-      operator: 'and',
-      conditions: [
-        { field: 'hasAppliedForVisa', value: 'yes' },
-        { field: 'hasVisaRefusal', value: 'yes' }
-      ]
-    },
-    options: [
-      { label: 'Yes', value: 'yes' },
-      { label: 'No', value: 'no' }
-    ]
-  },
-
+  // {
+  //   id: 'visaRefusalType',
+  //   group: 'visa_history' as FormGroup,
+  //   type: 'select',
+  //   label: 'What for you applied?',
+  //   required: true,
+  //   showIf: { 
+  //     operator: 'and',
+  //     conditions: [
+  //       { field: 'hasAppliedForVisa', value: 'yes' },
+  //       { field: 'hasVisaRefusal', value: 'yes' }
+  //     ]
+  //   },
+  //   options: [
+  //     { label: 'Temporary short visit', value: 'temporary' },
+  //     { label: 'Permanent settlement', value: 'permanent' }
+  //   ]
+  // },
+  // {
+  //   id: 'refusalDate',
+  //   group: 'visa_history' as FormGroup,
+  //   type: 'date',
+  //   label: 'When did this problem occur?',
+  //   required: false,
+  //   showIf: { 
+  //     operator: 'and',
+  //     conditions: [
+  //       { field: 'hasAppliedForVisa', value: 'yes' },
+  //       { field: 'hasVisaRefusal', value: 'yes' }
+  //     ]
+  //   }
+  // },
+  // {
+  //   id: 'hasRefusalLetter',
+  //   group: 'visa_history' as FormGroup,
+  //   type: 'select',
+  //   label: 'Do you have any letter of refusal?',
+  //   required: false,
+  //   showIf: { 
+  //     operator: 'and',
+  //     conditions: [
+  //       { field: 'hasAppliedForVisa', value: 'yes' },
+  //       { field: 'hasVisaRefusal', value: 'yes' }
+  //     ]
+  //   },
+  //   options: [
+  //     { label: 'Yes', value: 'yes' },
+  //     { label: 'No', value: 'no' }
+  //   ]
+  // },
+  
   // -------------------- TRAVEL PLANS --------------------
 {
   id: 'travelPlansHeader',
@@ -2582,7 +2615,41 @@ export const GENERIC_COUNTRY: VisaForm = {
   showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
 },
 
-
+// -------------------- RELATIVES INFORMATION --------------------
+{
+  id: 'relativesHeader',
+  group: 'relatives' as FormGroup,
+  type: 'header',
+  label: 'Description'
+},
+{
+  id: 'relativesDescription',
+  group: 'relatives' as FormGroup,
+  type: 'info',
+  label: 'Relatives Information',
+  content: [
+    'Please provide information about any relatives you have in the destination country. This information may be required for visa processing.'
+  ]
+},
+{
+  id: 'hasRelativesInDestination',
+  group: 'relatives' as FormGroup,
+  type: 'select',
+  label: 'Do you have any relatives in the destination country?',
+  required: false,
+  options: [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' }
+  ]
+},
+{
+  id: 'relativesDetails',
+  group: 'relatives' as FormGroup,
+  type: 'textarea',
+  label: 'Relative Details',
+  required: false,
+  showIf: { field: 'hasRelativesInDestination', value: 'yes' },
+},
 
 // -------------------- ADDITIONAL INFORMATION --------------------
 {
@@ -2590,6 +2657,29 @@ export const GENERIC_COUNTRY: VisaForm = {
   group: 'additional' as FormGroup,
   type: 'header',
   label: 'Additional Information and Services'
+},
+{
+  id: 'socialMediaHeader',
+  group: 'additional' as FormGroup,
+  type: 'header',
+  label: 'Description'
+},
+{
+  id: 'socialMediaDescription',
+  group: 'additional' as FormGroup,
+  type: 'info',
+  content: [
+    'Please provide your social media handles. This information may be used to verify your application.'
+  ],
+  label: 'Social Media Information'
+},
+{
+  id: 'socialMediaHandles',
+  group: 'additional' as FormGroup,
+  type: 'socialHandles',
+  label: 'Social Media Handles',
+  required: false,
+  description: 'Please provide your social media handles if available'
 },
 {
   id: 'needExplanations',
@@ -2605,11 +2695,11 @@ export const GENERIC_COUNTRY: VisaForm = {
 {
   id: 'explanationText',
   group: 'additional' as FormGroup,
-  type: 'text',
+  type: 'textarea',
   label: 'Please provide your explanation',
   required: false,
   showIf: { field: 'needExplanations', value: 'yes' },
-  placeholder: 'Enter your explanation here'
+  placeholder: 'Enter your explanation here',
 },
 {
   id: 'needTravelServices',
@@ -2667,5 +2757,67 @@ export const GENERIC_COUNTRY: VisaForm = {
   showIf: { field: 'needAdditionalContact', value: 'yes' },
   placeholder: 'Enter your additional phone number'
 },   
+  {
+    id: 'educationHeader',
+    group: 'education' as FormGroup,
+    type: 'header',
+    label: 'Education History'
+  },
+  {
+    id: 'educationDescription',
+    group: 'education' as FormGroup,
+    type: 'info',
+    label: 'Education Information',
+    content: [
+      'Please provide information about your educational background. Include all education from high school/secondary school onwards.'
+    ]
+  },
+  {
+    id: 'highestEducation',
+    group: 'education' as FormGroup,
+    type: 'select',
+    label: 'Highest level of education completed',
+    required: true,
+    options: EDUCATION_QUALIFICATION_OPTIONS
+  },
+  {
+    id: 'accessingBodyAssessment',
+    group: 'education' as FormGroup,
+    type: 'textarea',
+    label: 'Accessing Body Assessment',
+    required: false,
+    description: 'If you have had your qualifications assessed by an accessing body, please provide the details below.'
+  },
+  {
+    id: 'fieldOfStudy',
+    group: 'education' as FormGroup,
+    type: 'select',
+    label: 'Field of study',
+    required: false,
+    options: EDUCATION_FIELD_OPTIONS
+  },
+  // {
+  //   id: 'last10YearActivityHeader',
+  //   group: 'education' as FormGroup,
+  //   type: 'header',
+  //   label: 'Last 10 Years Activity'
+  // },
+  {
+    id: 'last10YearActivityDescription',
+    group: 'education' as FormGroup,
+    type: 'info',
+    label: 'Last 10 Years Activity Information',
+    content: [
+      'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
+    ]
+  },
+  // {
+  //   id: 'last10YearActivity',
+  //   group: 'education' as FormGroup,
+  //   type: 'textarea',
+  //   label: 'Description',
+  //   required: true,
+  //   description: 'Please provide details of all your activities in the last 10 years including education, employment, and any periods of unemployment.'
+  // }
   ]
 };

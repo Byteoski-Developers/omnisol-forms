@@ -9,3 +9,15 @@ export interface Sibling {
   relation: string;
   countryOfBirth?: string;
 }
+
+export type RelativeSubclass = 'sibling' | 'parent' | 'relative';
+
+export interface Relative {
+  id: number;
+  relationWithRelative?: string;
+  nameOfRelative?: string;
+  residenceOfRelative?: string;
+  immigrationStatusOfRelative?: string;
+  contactNumberOfRelative?: string;
+  emailOfRelative?: string;
+}

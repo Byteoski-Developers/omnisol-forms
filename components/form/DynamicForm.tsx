@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Card } from '@/components/ui/card';
 import { Upload, AlertCircle, Calendar as CalendarIcon, FileText, X } from 'lucide-react';
 import { format } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -757,36 +756,36 @@ export function DynamicForm({
   };
 
   // Render document upload component when showDocuments is true
-  const renderDocuments = () => {
-    if (!form.showDocuments) return null;
+//   const renderDocuments = () => {
+//     if (!form.showDocuments) return null;
     
-    // Get the purpose of visit from form data
-    const purposeOfVisit = formData.purposeOfVisit || '';
+//     // Get the purpose of visit from form data
+//     const purposeOfVisit = formData.purposeOfVisit || '';
     
-    return (
-      <div className="mt-8">
-        <DocumentUpload 
-          form={form} 
-          purposeOfVisit={purposeOfVisit}
-          onUploadComplete={(documentId, extractedData) => {
-            // Update form data with extracted information
-            setFormData(prev => ({
-              ...prev,
-              ...extractedData,
-              [`document_${documentId}_uploaded`]: true
-            }));
-          }}
-          onError={(hasErrors) => {
-            // Track document upload errors
-            setErrors(prev => ({
-              ...prev,
-              documentUploadErrors: hasErrors ? 'Please fix document upload errors' : ''
-            }));
-          }}
-        />
-      </div>
-    );
-  };
+//     return (
+//       <div className="mt-8">
+//         <DocumentUpload 
+//           form={form} 
+//           purposeOfVisit={purposeOfVisit}
+//           onUploadComplete={(documentId, extractedData) => {
+//             // Update form data with extracted information
+//             setFormData(prev => ({
+//               ...prev,
+//               ...extractedData,
+//               [`document_${documentId}_uploaded`]: true
+//             }));
+//           }}
+//           onError={(hasErrors) => {
+//             // Track document upload errors
+//             setErrors(prev => ({
+//               ...prev,
+//               documentUploadErrors: hasErrors ? 'Please fix document upload errors' : ''
+//             }));
+//           }}
+//         />
+//       </div>
+//     );
+//   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -822,7 +821,7 @@ export function DynamicForm({
       <div className="space-y-6">
         {form.fields.map(renderField)}
       </div>
-      {renderDocuments()}
+      {/* {renderDocuments()} */}
       
       {/* Show debug panel in development mode when documents are available */}
       {process.env.NODE_ENV !== 'production' && form.documents && form.documents.length > 0 && renderDebugPanel()}

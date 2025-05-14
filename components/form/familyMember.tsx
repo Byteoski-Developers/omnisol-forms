@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { Sibling } from './types';
 import { Input } from "@/components/ui/input";

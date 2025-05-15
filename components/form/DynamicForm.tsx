@@ -30,6 +30,7 @@ import Last10YearActivity from "./Last10YearActivity";
 import RefusalInput from "./RefusalInput";
 import ChildrenInputField from "./ChildrenInputField";
 import LanguageTestInput from "./LanguageTestInput";
+import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
 
 interface DynamicFormProps {
   form: VisaForm & { showDocuments?: boolean };
@@ -141,17 +142,30 @@ export function DynamicForm({
       } 
       // If document has conditions, check if all conditions are met
       else if (doc.conditions && doc.required) {
-        const allConditionsMet = doc.conditions.every(
-          (condition) => formData[condition.questionId] === condition.value
-        );
+        // For documents with multiple conditions (like language_test), any matching condition is sufficient
+        const allConditionsMet = doc.conditions.some((condition) => {
+          // Special handling for language test conditions
+          if (condition.questionId === 'languageTest') {
+            // Check if languageTest exists in formData and has a value property
+            if (formData.languageTest && formData.languageTest.value) {
+              // Extract the testType from the languageTest object
+              const testType = formData.languageTest.value.testType;
+              return testType === condition.value;
+            }
+            return false;
+          }
+          
+          // Regular condition checking
+          return formData[condition.questionId] === condition.value;
+        });
+        
         if (allConditionsMet) {
           documents.add(doc.id);
         }
       }
     });
     setRequiredDocuments(documents);
-    console.log('Required documents updated:', Array.from(documents));
-  }, [form.fields, form.documents, formData]);
+  }, [form, formData]);
 
   const validateField = (field: FormField, value: any): string | null => {
     if (field.required && (value === undefined || value === null || value === '')) {
@@ -927,76 +941,6 @@ export function DynamicForm({
     }
   };
 
-  // Debug panel to show which documents are required based on form responses
-  const renderDebugPanel = () => {
-    if (process.env.NODE_ENV === 'production') return null;
-    
-    return (
-      <div className="mt-6 p-4 border-2 border-dashed border-gray-300 rounded-md bg-gray-50">
-        <h3 className="text-sm font-medium mb-2">Required Documents (Debug):</h3>
-        {requiredDocuments.size === 0 ? (
-          <p className="text-xs text-gray-500">No documents required based on current form state</p>
-        ) : (
-          <ul className="text-xs space-y-1">
-            {Array.from(requiredDocuments).map(docId => {
-              const doc = form.documents.find(d => d.id === docId);
-              return (
-                <li key={docId} className="flex items-start">
-                  <span className="mr-2 text-green-600">✓</span>
-                  <div>
-                    <span className="font-medium">{doc?.name}</span> (ID: {docId})
-                    {doc?.conditions && (
-                      <div className="text-gray-500 ml-4 mt-1">
-                        <span className="text-xs">Conditions: </span>
-                        {doc.conditions.map((c, i) => (
-                          <span key={i} className="text-xs">
-                            {c.questionId}={c.value}{i < doc.conditions!.length - 1 ? ' AND ' : ''}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-    );
-  };
-
-  // Render document upload component when showDocuments is true
-//   const renderDocuments = () => {
-//     if (!form.showDocuments) return null;
-    
-//     // Get the purpose of visit from form data
-//     const purposeOfVisit = formData.purposeOfVisit || '';
-    
-//     return (
-//       <div className="mt-8">
-//         <DocumentUpload 
-//           form={form} 
-//           purposeOfVisit={purposeOfVisit}
-//           onUploadComplete={(documentId, extractedData) => {
-//             // Update form data with extracted information
-//             setFormData(prev => ({
-//               ...prev,
-//               ...extractedData,
-//               [`document_${documentId}_uploaded`]: true
-//             }));
-//           }}
-//           onError={(hasErrors) => {
-//             // Track document upload errors
-//             setErrors(prev => ({
-//               ...prev,
-//               documentUploadErrors: hasError ? 'Please fix document upload errors' : ''
-//             }));
-//           }}
-//         />
-//       </div>
-//     );
-//   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
@@ -1028,13 +972,24 @@ export function DynamicForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
-      <div className="space-y-6">
-        {form.fields.map(renderField)}
+      <div className="flex flex-col md:flex-row md:space-x-6">
+        {/* Main form content */}
+        <div className="md:w-2/3 space-y-6">
+          {form.fields.map(renderField)}
+        </div>
+        
+        {/* Document panel as a separate div aligned with the form */}
+        {form.documents && form.documents.length > 0 && (
+          <div className="md:w-1/3 md:pt-0 pt-6">
+            <div className="md:sticky md:top-4">
+              <DocumentPreviewPanel 
+                documents={form.documents} 
+                requiredDocuments={requiredDocuments} 
+              />
+            </div>
+          </div>
+        )}
       </div>
-      {/* {renderDocuments()} */}
-      
-      {/* Show debug panel in development mode when documents are available */}
-      {process.env.NODE_ENV !== 'production' && form.documents && form.documents.length > 0 && renderDebugPanel()}
       
       <Button 
         type="submit" 

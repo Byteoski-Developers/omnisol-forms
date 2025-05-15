@@ -70,8 +70,45 @@ export const GENERIC_COUNTRY: VisaForm = {
       id: 'financial_proof',
       name: 'Proof of Financial Means',
       description: 'Bank statements, income tax returns, or other proof of sufficient funds for your visit',
-      type: 'default',
-      required: true
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'bank_statements'
+      }]
+    },
+    {
+      id: 'demat_account',
+      name: 'Demat Account Statement',
+      description: 'Recent statement from your demat account showing sufficient funds for your visit',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'demat_account'
+      }]
+    },
+    {
+      id: 'property_documents',
+      name: 'Property Documents',
+      description: 'Documents showing ownership of property as proof of financial stability',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }]
+    },
+    {
+      id: 'sponsor_letter',
+      name: 'Sponsor Letter and Bank Statements',
+      description: 'Letter from sponsor and their bank statements showing sufficient funds',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'sponsor'
+      }]
     },
     {
       id: 'travel_itinerary',
@@ -259,11 +296,11 @@ export const GENERIC_COUNTRY: VisaForm = {
       group: 'visa_history' as FormGroup,
       showDocuments: false
     },
-    {
-      title: 'Education',
-      group: 'education' as FormGroup,
-      showDocuments: false
-    },
+    // {
+    //   title: 'Education',
+    //   group: 'education' as FormGroup,
+    //   showDocuments: false
+    // },
     {
       title: 'Travel Plans',
       group: 'travel_plans' as FormGroup,
@@ -2077,6 +2114,31 @@ export const GENERIC_COUNTRY: VisaForm = {
       label: 'Expenses Information'
     },
     {
+      id: 'financialSource',
+      group: 'finances' as FormGroup,
+      type: 'select',
+      label: `Source of funds for your trip ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Bank Statements', value: 'bank_statements' },
+        { label: 'Demat Account', value: 'demat_account' },
+        { label: 'Property Ownership', value: 'property' },
+        { label: 'Sponsorship', value: 'sponsor' },
+        { label: 'Other Financial Assets', value: 'other_assets' }
+      ]
+    },
+    {
+      id: 'financialDetails',
+      group: 'finances' as FormGroup,
+      type: 'textarea',
+      label: `Additional details about your financial situation ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      placeholder: 'Please provide any additional information about your financial situation',
+      showIf: {
+        field: 'financialSource',
+        value: 'other_assets'
+      }
+    },
+    {
       id: 'selfPayingExpenses',
       group: 'finances' as FormGroup,
       type: 'select',
@@ -2757,67 +2819,67 @@ export const GENERIC_COUNTRY: VisaForm = {
   showIf: { field: 'needAdditionalContact', value: 'yes' },
   placeholder: 'Enter your additional phone number'
 },   
-  {
-    id: 'educationHeader',
-    group: 'education' as FormGroup,
-    type: 'header',
-    label: 'Education History'
-  },
-  {
-    id: 'educationDescription',
-    group: 'education' as FormGroup,
-    type: 'info',
-    label: 'Education Information',
-    content: [
-      'Please provide information about your educational background. Include all education from high school/secondary school onwards.'
-    ]
-  },
-  {
-    id: 'highestEducation',
-    group: 'education' as FormGroup,
-    type: 'select',
-    label: 'Highest level of education completed',
-    required: true,
-    options: EDUCATION_QUALIFICATION_OPTIONS
-  },
-  {
-    id: 'accessingBodyAssessment',
-    group: 'education' as FormGroup,
-    type: 'textarea',
-    label: 'Accessing Body Assessment',
-    required: false,
-    description: 'If you have had your qualifications assessed by an accessing body, please provide the details below.'
-  },
-  {
-    id: 'fieldOfStudy',
-    group: 'education' as FormGroup,
-    type: 'select',
-    label: 'Field of study',
-    required: false,
-    options: EDUCATION_FIELD_OPTIONS
-  },
   // {
-  //   id: 'last10YearActivityHeader',
+  //   id: 'educationHeader',
   //   group: 'education' as FormGroup,
   //   type: 'header',
-  //   label: 'Last 10 Years Activity'
+  //   label: 'Education History'
   // },
-  {
-    id: 'last10YearActivityDescription',
-    group: 'education' as FormGroup,
-    type: 'info',
-    label: 'Last 10 Years Activity Information',
-    content: [
-      'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
-    ]
-  },
   // {
-  //   id: 'last10YearActivity',
+  //   id: 'educationDescription',
+  //   group: 'education' as FormGroup,
+  //   type: 'info',
+  //   label: 'Education Information',
+  //   content: [
+  //     'Please provide information about your educational background. Include all education from high school/secondary school onwards.'
+  //   ]
+  // },
+  // {
+  //   id: 'highestEducation',
+  //   group: 'education' as FormGroup,
+  //   type: 'select',
+  //   label: 'Highest level of education completed',
+  //   required: true,
+  //   options: EDUCATION_QUALIFICATION_OPTIONS
+  // },
+  // {
+  //   id: 'accessingBodyAssessment',
   //   group: 'education' as FormGroup,
   //   type: 'textarea',
-  //   label: 'Description',
-  //   required: true,
-  //   description: 'Please provide details of all your activities in the last 10 years including education, employment, and any periods of unemployment.'
-  // }
+  //   label: 'Accessing Body Assessment',
+  //   required: false,
+  //   description: 'If you have had your qualifications assessed by an accessing body, please provide the details below.'
+  // },
+  // {
+  //   id: 'fieldOfStudy',
+  //   group: 'education' as FormGroup,
+  //   type: 'select',
+  //   label: 'Field of study',
+  //   required: false,
+  //   options: EDUCATION_FIELD_OPTIONS
+  // },
+  // // {
+  // //   id: 'last10YearActivityHeader',
+  // //   group: 'education' as FormGroup,
+  // //   type: 'header',
+  // //   label: 'Last 10 Years Activity'
+  // // },
+  // {
+  //   id: 'last10YearActivityDescription',
+  //   group: 'education' as FormGroup,
+  //   type: 'info',
+  //   label: 'Last 10 Years Activity Information',
+  //   content: [
+  //     'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
+  //   ]
+  // },
+  // // {
+  // //   id: 'last10YearActivity',
+  // //   group: 'education' as FormGroup,
+  // //   type: 'textarea',
+  // //   label: 'Description',
+  // //   required: true,
+  // //   description: 'Please provide details of all your activities in the last 10 years including education, employment, and any periods of unemployment.'
+  // // }
   ]
 };

@@ -243,83 +243,299 @@ export const GENERIC_COUNTRY: VisaForm = {
       description: 'Copies of previous visas to any country',
       type: 'default',
       required: false
-    }
+    },
+    // what is source of income of 
+    {
+      id: 'salary_proof',
+      name: 'Salary Proof',
+      description: 'Salary slips, employment letter, or other proof of salary income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'salary'
+      }]
+    },
+    {
+      id: 'business_income_proof',
+      name: 'Business Income Proof',
+      description: 'Business registration, tax returns, or financial statements showing business income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'business_income'
+      }]
+    },
+    {
+      id: 'partnership_share_proof',
+      name: 'Partnership Share Proof',
+      description: 'Partnership deed, profit sharing agreement, or other proof of partnership income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'partnership_share'
+      }]
+    },
+    {
+      id: 'professional_income_proof',
+      name: 'Professional Income Proof',
+      description: 'Client invoices, professional registration, or other proof of professional income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'professional_income'
+      }]
+    },
+    {
+      id: 'interest_dividend_proof',
+      name: 'Interest and Dividend Proof',
+      description: 'Bank statements, investment account statements, or other proof of interest and dividend income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'interest_dividend'
+      }]
+    },
+    {
+      id: 'agriculture_income_proof',
+      name: 'Agriculture Income Proof',
+      description: 'Land ownership documents, crop sales receipts, or other proof of agricultural income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'agriculture_income'
+      }]
+    },
+    {
+      id: 'rental_income_proof',
+      name: 'Rental Income Proof',
+      description: 'Lease agreements, rental receipts, or other proof of rental income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'rental_income'
+      }]
+    },
+    {
+      id: 'pension_income_proof',
+      name: 'Pension Income Proof',
+      description: 'Pension statements, retirement account statements, or other proof of pension income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'pension_income'
+      }]
+    },
+    {
+      id: 'other_income_proof',
+      name: 'Other Income Proof',
+      description: 'Documents showing other sources of income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'other_income'
+      }]
+    },
+    // what is additional source of income
+    {
+      id: 'additional_salary_proof',
+      name: 'Additional Salary Proof',
+      description: 'Salary slips, employment letter, or other proof of additional salary income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'salary'
+      }]
+    },
+    {
+      id: 'additional_business_income_proof',
+      name: 'Additional Business Income Proof',
+      description: 'Business registration, tax returns, or financial statements showing additional business income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'business_income'
+      }]
+    },
+    {
+      id: 'additional_partnership_share_proof',
+      name: 'Additional Partnership Share Proof',
+      description: 'Partnership deed, profit sharing agreement, or other proof of additional partnership income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'partnership_share'
+      }]
+    },
+    {
+      id: 'additional_professional_income_proof',
+      name: 'Additional Professional Income Proof',
+      description: 'Client invoices, professional registration, or other proof of additional professional income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'professional_income'
+      }]
+    },
+    {
+      id: 'additional_interest_dividend_proof',
+      name: 'Additional Interest and Dividend Proof',
+      description: 'Bank statements, investment account statements, or other proof of additional interest and dividend income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'interest_dividend'
+      }]
+    },
+    {
+      id: 'additional_agriculture_income_proof',
+      name: 'Additional Agriculture Income Proof',
+      description: 'Land ownership documents, crop sales receipts, or other proof of additional agricultural income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'agriculture_income'
+      }]
+    },
+    {
+      id: 'additional_rental_income_proof',
+      name: 'Additional Rental Income Proof',
+      description: 'Lease agreements, rental receipts, or other proof of additional rental income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'rental_income'
+      }]
+    },
+    {
+      id: 'additional_pension_income_proof',
+      name: 'Additional Pension Income Proof',
+      description: 'Pension statements, retirement account statements, or other proof of additional pension income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'pension_income'
+      }]
+    },
+    {
+      id: 'additional_other_income_proof',
+      name: 'Additional Other Income Proof',
+      description: 'Documents showing other additional sources of income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'other_income'
+      }]
+    },
+    
   ],
   steps: [
     {
       title: 'Destination Selection',
       group: 'destination' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'destination-selection'
     },
     {
       title: 'Citizenship & Residence',
       group: 'citizenship' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'citizenship-residence'
     },
     {
       title: 'Personal Information',
       group: 'personal' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'personal-information'
     },
     {
       title: 'Purpose of Visit',
       group: 'purpose' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'purpose-of-visit'
     },
     {
       title: 'Financial Information',
       group: 'finances' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'financial-information'
     },
     {
       title: 'Residence Information',
       group: 'residence' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'residence-information'
     },
     {
       title: 'Passport Information',
       group: 'passport' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'passport-information'
     },
     {
       title: 'Family Information',
       group: 'family' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'family-information'
     },
     {
       title: 'Parents Information',
       group: 'parents' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'parents-information'
     },
     {
       title: 'Visa History',
       group: 'visa_history' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'visa-history'
     },
     // {
     //   title: 'Education',
     //   group: 'education' as FormGroup,
-    //   showDocuments: false
+    //   showDocuments: false,
+    //   slug: 'education'
     // },
     {
       title: 'Travel Plans',
       group: 'travel_plans' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'travel-plans'
     },
     {
       title: 'Relatives Information',
       group: 'relatives' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'relatives-information'
     },
     {
       title: 'Additional Information',
       group: 'additional' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'additional-information'
     },
     {
       title: 'Contact Preferences',
       group: 'contact' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'contact-preferences'
     },
   ],
   fields: [
@@ -386,7 +602,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'residenceStatusOther',
       group: 'citizenship' as FormGroup,
-      type: 'text',
+      type: 'textarea',
       label: 'Please specify your residence status',
       required: true,
       placeholder: 'Enter your residence status',
@@ -450,22 +666,22 @@ export const GENERIC_COUNTRY: VisaForm = {
         ]
       }
     },
-  {
-    id: 'onshoreServiceTypeOther',
-    group: 'citizenship' as FormGroup,
-    type: 'text',
-    label: 'Please specify the onshore service you need',
-    required: true,
-    placeholder: 'Enter service details',
-    showIf: { 
-      operator: 'and',
-      conditions: [
-        { field: 'livesInCitizenshipCountry', value: 'no' },
-        { field: 'needsOnshoreServices', value: 'yes' },
-        { field: 'onshoreServiceType', value: 'other' }
-      ]
-    }
-  },
+  // {
+  //   id: 'onshoreServiceTypeOther',
+  //   group: 'citizenship' as FormGroup,
+  //   type: 'text',
+  //   label: 'Please specify the onshore service you need',
+  //   required: true,
+  //   placeholder: 'Enter service details',
+  //   showIf: { 
+  //     operator: 'and',
+  //     conditions: [
+  //       { field: 'livesInCitizenshipCountry', value: 'no' },
+  //       { field: 'needsOnshoreServices', value: 'yes' },
+  //       { field: 'onshoreServiceType', value: 'other' }
+  //     ]
+  //   }
+  // },
   {
     id: 'applicationCountry',
     group: 'citizenship' as FormGroup,
@@ -514,7 +730,7 @@ export const GENERIC_COUNTRY: VisaForm = {
   {
     id: 'spouseName',
     group: 'personal' as FormGroup,
-    type: 'text',
+    type: 'textarea',
     label: `What is name of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
     required: false,
     placeholder: 'Enter spouse name',
@@ -2538,7 +2754,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     id: 'visaHistoryDescription',
     group: 'visa_history' as FormGroup,
     type: 'info',
-    label: 'Previous Visa Applications',
+    label: 'Description',
     content: [
       'Any previous refusal of USA, refused a visa or permit denied entry, figure print collected previously for the purpose of applying for Schengen visa, has the applicant ever had a visa for Australia or any other country refused or cancelled, have you ever been refused visa / permit, work, study for another country excluding New Zealand.'
     ]
@@ -2644,7 +2860,7 @@ export const GENERIC_COUNTRY: VisaForm = {
   id: 'travelPlansDescription',
   group: 'travel_plans' as FormGroup,
   type: 'info',
-  label: 'Travel Dates',
+  label: 'Description',
   content: [
     'Date you will arrive and leave, intended date of arrival, planned arrival date, planned final departure date, indicate how long you plan to stay from – to, intended date of arrival of first intend stay in the Schengen area, intended date of departure.'
   ]
@@ -2682,13 +2898,13 @@ export const GENERIC_COUNTRY: VisaForm = {
   id: 'relativesHeader',
   group: 'relatives' as FormGroup,
   type: 'header',
-  label: 'Description'
+  label: 'Relatives Information'
 },
 {
   id: 'relativesDescription',
   group: 'relatives' as FormGroup,
   type: 'info',
-  label: 'Relatives Information',
+  label: 'Description',
   content: [
     'Please provide information about any relatives you have in the destination country. This information may be required for visa processing.'
   ]
@@ -2724,7 +2940,7 @@ export const GENERIC_COUNTRY: VisaForm = {
   id: 'socialMediaHeader',
   group: 'additional' as FormGroup,
   type: 'header',
-  label: 'Description'
+  label: 'Social Media Information'
 },
 {
   id: 'socialMediaDescription',
@@ -2733,7 +2949,7 @@ export const GENERIC_COUNTRY: VisaForm = {
   content: [
     'Please provide your social media handles. This information may be used to verify your application.'
   ],
-  label: 'Social Media Information'
+  label: 'Description'
 },
 {
   id: 'socialMediaHandles',
@@ -2789,6 +3005,51 @@ export const GENERIC_COUNTRY: VisaForm = {
   label: 'What is the best method to contact you regarding your application?',
   required: false,
   options: CONTACT_METHOD_OPTIONS
+},
+{
+  id: 'emailoption',
+  group: 'contact' as FormGroup,
+  type: 'text',
+  label: 'Please enter your email',
+  required: true,
+  placeholder: 'Enter your email',
+  showIf: { 
+    operator: 'and',
+    conditions: [
+      { field: 'preferredContactMethod', value: 'email' },
+      
+    ]
+  }
+},
+{
+  id: 'whatsappoption',
+  group: 'contact' as FormGroup,
+  type: 'text',
+  label: 'Please enter your whatsapp Number',
+  required: true,
+  placeholder: 'Enter your whatsapp Number',
+  showIf: { 
+    operator: 'and',
+    conditions: [
+      { field: 'preferredContactMethod', value: 'whatsapp' },
+      
+    ]
+  }
+},
+{
+  id: 'phoneoption',
+  group: 'contact' as FormGroup,
+  type: 'text',
+  label: 'Please enter your phone number',
+  required: true,
+  placeholder: 'Enter your phone number',
+  showIf: { 
+    operator: 'and',
+    conditions: [
+      { field: 'preferredContactMethod', value: 'phone_call' },
+      
+    ]
+  }
 },
 {
   id: 'needAdditionalContact',

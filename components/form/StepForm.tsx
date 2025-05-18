@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DynamicForm } from './DynamicForm';
@@ -15,7 +16,21 @@ interface StepFormProps {
 }
 
 export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
+  const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(0);
+
+  // Open step by slug if present in URL
+  useEffect(() => {
+    const stepSlug = searchParams?.get('slug');
+    if (stepSlug && form.steps) {
+      const foundIndex = form.steps.findIndex(step => step.slug === stepSlug);
+      if (foundIndex !== -1) {
+        setCurrentStep(foundIndex);
+      }
+    }
+    // Only run on mount or when form.steps/searchParams changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.steps, searchParams]);
   const [formData, setFormData] = useState(initialData);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 

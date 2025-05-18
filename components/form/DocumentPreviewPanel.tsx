@@ -57,8 +57,8 @@ const DocumentPreviewPanel: React.FC<DocumentPreviewPanelProps> = ({
                     <CheckCircle className="h-3.5 w-3.5" />
                   </div>
                   <div>
-                    <span className="text-xs font-medium">{doc.name}</span>
-                    <p className="text-xs text-gray-500">{doc.description}</p>
+                    <span className="text-xs text-black font-medium block">{doc.name}</span>
+                    <p className="text-xs text-gray-600">{doc.description}</p>
                   </div>
                 </li>
               ))}
@@ -94,8 +94,8 @@ const DocumentPreviewPanel: React.FC<DocumentPreviewPanelProps> = ({
                         <CheckCircle className="h-3.5 w-3.5" />
                       </div>
                       <div>
-                        <span className="text-xs font-medium">{doc.name}</span>
-                        <p className="text-xs text-gray-500">{doc.description}</p>
+                        <span className="text-xs text-blue-600 font-medium block">{doc.name}</span>
+                        <p className="text-xs text-gray-600">{doc.description}</p>
                       </div>
                     </li>
                   );
@@ -106,7 +106,7 @@ const DocumentPreviewPanel: React.FC<DocumentPreviewPanelProps> = ({
         })}
 
         {requiredDocuments.size === 0 && (
-          <p className="text-xs text-gray-500">No documents required based on your current form responses.</p>
+          <p className="text-xs text-gray-600">No documents required based on your current form responses.</p>
         )}
       </div>
     </div>

@@ -31,6 +31,7 @@ import RefusalInput from "./RefusalInput";
 import ChildrenInputField from "./ChildrenInputField";
 import LanguageTestInput from "./LanguageTestInput";
 import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
+import { MultiSelect } from "./MultiSelect";
 
 interface DynamicFormProps {
   form: VisaForm & { showDocuments?: boolean };
@@ -634,6 +635,26 @@ export function DynamicForm({
                 {error}
               </p>
             )}
+          </div>
+        );
+
+      case 'multiselect':
+        return (
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>{field.label}</Label>
+            <MultiSelect
+              options={field.options || []}
+              selectedValues={Array.isArray(formData[field.id]) ? formData[field.id] : (formData[field.id] ? [formData[field.id]] : [])}
+              onChange={(values) => handleFieldChange(field.id, values, true)}
+              placeholder={field.placeholder || 'Select options'}
+            />
+            {error && (
+              <div className="flex items-center gap-2 text-destructive mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+            {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
           </div>
         );
 

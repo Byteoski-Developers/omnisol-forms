@@ -1000,11 +1000,7 @@ export function DynamicForm({
       
       // Save all pending changes to the backend
       await saveAllChanges();
-      
-      // If we're on the final step and documents are required, request them from the backend
-      if (currentStep === totalSteps - 1 && form.showDocuments) {
-        await requestDocuments();
-      }
+      await requestDocuments();
       
       // Continue with form submission
       onSubmit(formData);

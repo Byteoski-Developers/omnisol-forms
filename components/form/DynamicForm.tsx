@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { FormField, VisaForm } from '@/types/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,7 +17,6 @@ import { ChildrenInput } from './ChildrenInput';
 import { WorkExperience } from './WorkExperience';
 import { TravelItinerary } from './TravelItinerary';
 import { ResidenceCountries } from './ResidenceCountries';
-import { DocumentUpload } from './DocumentUpload';
 import SiblingTabs from './SiblingTabs';
 import ParentTabs from './ParentTabs';
 import MultiCountryDropdown from './MultiCountryDropdown';
@@ -48,6 +48,7 @@ export function DynamicForm({
   currentStep = 0, 
   totalSteps = 1 
 }: DynamicFormProps) {
+  const searchParams = typeof window !== 'undefined' ? useSearchParams() : null;
   const [formData, setFormData] = useState<Record<string, any>>(initialData);
   const [visibleFields, setVisibleFields] = useState<Set<string>>(new Set());
   const [requiredDocuments, setRequiredDocuments] = useState<Set<string>>(new Set());
@@ -201,46 +202,78 @@ export function DynamicForm({
   const params = useParams();
   const caseId = params?.caseId || '';
 
-  // Debounce timer reference
-  const debounceTimers = useRef<Record<string, NodeJS.Timeout>>({});
+  // Track changes that need to be saved
+  const [pendingChanges, setPendingChanges] = useState<Array<{
+    question: string;
+    label: string;
+    answer: any;
+    category?: string;
+    step?: number;
+    step_slug?: string;
+    question_type?: string;
+  }>>([]);
 
-  // Function to update case question and answer via API with debouncing
-  const updateCaseQuestionAnswer = (question: string, label: string, answer: any) => {
-    if (!caseId) return;
+  // Function to save all pending changes to the backend
+  const saveAllChanges = async () => {
+    if (!caseId || pendingChanges.length === 0) return;
     
-    // Clear any existing timer for this question
-    if (debounceTimers.current[question]) {
-      clearTimeout(debounceTimers.current[question]);
+    // Get the current step slug if available
+    const currentStepSlug = form.steps && form.steps[currentStep] ? form.steps[currentStep].slug : undefined;
+    
+    // Create a copy of pendingChanges with stringified answers
+    const questionsWithStringifiedAnswers = pendingChanges.map(change => ({
+      ...change,
+      answer: typeof change.answer === 'object' && change.answer !== null
+        ? JSON.stringify(change.answer)
+        : String(change.answer) // Convert all non-object values to strings too
+    }));
+    
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000';
+      const response = await authRequest({
+        method: 'POST',
+        url: `${baseUrl}/api/form-manager-v2/case-qa-batch`,
+        data: {
+          case_id: parseInt(caseId as string, 10),
+          step: currentStep,
+          step_slug: currentStepSlug,
+          total_steps: totalSteps,
+          questions: questionsWithStringifiedAnswers
+        }
+      });
+      console.log('All changes saved:', response.data);
+      
+      // Clear pending changes after successful save
+      setPendingChanges([]);
+    } catch (error) {
+      console.error('Error saving changes:', error);
     }
-    
-    // Set a new timer
-    debounceTimers.current[question] = setTimeout(async () => {
-      try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000';
-        const response = await authRequest({
-          method: 'POST',
-          url: `${baseUrl}/api/form-manager-v2/case-qa`,
-          data: {
-            case_id: parseInt(caseId as string, 10),
-            question,
-            label,
-            answer
-          }
-        });
-        console.log('Answer saved:', response.data);
-      } catch (error) {
-        console.error('Error saving answer:', error);
-      }
-    }, 1000); // 1 second debounce
   };
 
-  // Clean up timers on unmount
-  useEffect(() => {
-    return () => {
-      // Clear all debounce timers when component unmounts
-      Object.values(debounceTimers.current).forEach(timer => clearTimeout(timer));
-    };
-  }, []);
+  // Function to add a change to the pending changes queue
+  const queueChange = (question: string, label: string, answer: any, category?: string) => {
+    // Get the current step slug if available
+    const currentStepSlug = form.steps && form.steps[currentStep] ? form.steps[currentStep].slug : undefined;
+    
+    // Find the field to get its type
+    const field = form.fields.find(f => f.id === question);
+    const questionType = field ? field.type : undefined;
+    
+    setPendingChanges(prev => {
+      // Remove any existing change for this question
+      const filtered = prev.filter(change => change.question !== question);
+      // Add the new change with the current step information, slug, and question type
+      return [...filtered, { 
+        question, 
+        label, 
+        answer, 
+        category, 
+        step: currentStep,
+        step_slug: currentStepSlug,
+        question_type: questionType
+      }];
+    });
+  };
 
   const handleFieldChange = (fieldId: string, value: any, save?: boolean) => {
     setFormData(prev => {
@@ -263,10 +296,10 @@ export function DynamicForm({
         });
       }
       
-      // Update the case question/answer in the backend
-      // Only update if save is true or undefined (backward compatibility)
+      // Queue the change to be saved when the form is submitted
+      // Only queue if save is true or undefined (backward compatibility)
       if (caseId && (save === undefined || save === true)) {
-        updateCaseQuestionAnswer(fieldId, field.label, value);
+        queueChange(fieldId, field.label, value, field.category);
       }
     }
   };
@@ -962,10 +995,12 @@ export function DynamicForm({
     }
   };
 
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
     
+    // Validate all visible fields
     form.fields.forEach(field => {
       if (visibleFields.has(field.id)) {
         const error = validateField(field, formData[field.id]);
@@ -981,14 +1016,40 @@ export function DynamicForm({
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0 && !childrenHasErrors && !itineraryHasErrors && !hasDocumentErrors) {
-      // If we're on the final step and documents are required, request them from the backend
-      if (currentStep === totalSteps - 1 && form.showDocuments) {
-        await requestDocuments();
-      }
+      // Ensure all visible fields are included in the submission, even if they weren't changed
+      ensureAllVisibleFieldsAreQueued();
+      
+      // Save all pending changes to the backend
+      await saveAllChanges();
+      await requestDocuments();
       
       // Continue with form submission
       onSubmit(formData);
+
+      // If slug is present in URL, close the window
+      const stepSlug = searchParams?.get && searchParams.get('slug');
+      if (stepSlug && typeof window !== 'undefined') {
+        setTimeout(() => window.close(), 100);
+      }
     }
+  };
+  
+  // Function to ensure all visible fields are included in the submission
+  const ensureAllVisibleFieldsAreQueued = () => {
+    // Get all visible fields that are not already in pendingChanges
+    const visibleFieldIds = Array.from(visibleFields);
+    const pendingFieldIds = pendingChanges.map(change => change.question);
+    
+    // Find fields that are visible but not in pendingChanges
+    const missingFieldIds = visibleFieldIds.filter(id => !pendingFieldIds.includes(id));
+    
+    // Add all missing fields to pendingChanges
+    missingFieldIds.forEach(fieldId => {
+      const field = form.fields.find(f => f.id === fieldId);
+      if (field) {
+        queueChange(fieldId, field.label, formData[fieldId] || '', field.category);
+      }
+    });
   };
 
   return (

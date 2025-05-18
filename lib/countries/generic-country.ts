@@ -2675,77 +2675,92 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       title: 'Destination Selection',
       group: 'destination' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'destination-selection'
     },
     {
       title: 'Citizenship & Residence',
       group: 'citizenship' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'citizenship-residence'
     },
     {
       title: 'Personal Information',
       group: 'personal' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'personal-information'
     },
     {
       title: 'Purpose of Visit',
       group: 'purpose' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'purpose-of-visit'
     },
     {
       title: 'Financial Information',
       group: 'finances' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'financial-information'
     },
     {
       title: 'Residence Information',
       group: 'residence' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'residence-information'
     },
     {
       title: 'Passport Information',
       group: 'passport' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'passport-information'
     },
     {
       title: 'Family Information',
       group: 'family' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'family-information'
     },
     {
       title: 'Parents Information',
       group: 'parents' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'parents-information'
     },
     {
       title: 'Visa History',
       group: 'visa_history' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'visa-history'
     },
     // {
     //   title: 'Education',
     //   group: 'education' as FormGroup,
-    //   showDocuments: false
+    //   showDocuments: false,
+    //   slug: 'education'
     // },
     {
       title: 'Travel Plans',
       group: 'travel_plans' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'travel-plans'
     },
     {
       title: 'Relatives Information',
       group: 'relatives' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'relatives-information'
     },
     {
       title: 'Additional Information',
       group: 'additional' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'additional-information'
     },
     {
       title: 'Contact Preferences',
       group: 'contact' as FormGroup,
-      showDocuments: false
+      showDocuments: false,
+      slug: 'contact-preferences'
     },
   ],
   fields: [

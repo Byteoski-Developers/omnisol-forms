@@ -49,6 +49,7 @@ export interface FormStep {
   title: string;
   group: FormGroup;
   showDocuments: boolean;
+  slug?: string; // Unique identifier for the step
 }
 
 export interface Document {
@@ -76,6 +77,7 @@ export interface FormField {
   placeholder?: string;
   required?: boolean;
   group: FormGroup;
+  category?: string; // Category of the question for backend classification
   autoExtracted?: boolean;
   description?: string;
   showInForm?: boolean; // Controls whether the field is displayed in the form UI

@@ -122,7 +122,7 @@ export default function Dashboard() {
       
       if (countryCode) {
         // If we have a country_code question, use its answer
-        const country = SAMPLE_COUNTRIES.find(c => c.code === countryCode?.toUpperCase());
+        const country = SAMPLE_COUNTRIES.find(c => c.code.toUpperCase() === countryCode?.toUpperCase());
         if (country) {
           // Just set the country without calling the API again
           setSelectedCountry(country);

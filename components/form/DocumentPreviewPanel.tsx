@@ -31,14 +31,14 @@ const DocumentPreviewPanel: React.FC<DocumentPreviewPanelProps> = ({
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-3">
-      <div className="flex items-center mb-2">
-        <FileText className="h-4 w-4 mr-2 text-blue-600" />
-        <h3 className="text-sm font-medium text-blue-600">Required Documents</h3>
+    <div className="bg-white rounded-lg shadow-md border border-gray-100 p-4">
+      <div className="flex items-center mb-3">
+        <FileText className="h-5 w-5 mr-2 text-blue-600" />
+        <h3 className="text-sm font-semibold text-blue-600">Required Documents</h3>
       </div>
       
       <div 
-        className="space-y-3 max-h-[70vh] overflow-y-auto"
+        className="space-y-4 max-h-[70vh] overflow-y-auto pr-1"
         style={{ 
           scrollbarWidth: 'thin',
           scrollbarColor: '#E5E7EB transparent'
@@ -50,15 +50,17 @@ const DocumentPreviewPanel: React.FC<DocumentPreviewPanelProps> = ({
             <h4 className="text-xs font-medium text-gray-700 uppercase mb-2">
               GENERAL REQUIREMENTS
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {defaultDocuments.map(doc => (
                 <li key={doc.id} className="flex items-start">
                   <div className="mr-2 mt-0.5 flex-shrink-0 text-green-500">
-                    <CheckCircle className="h-3.5 w-3.5" />
+                    <div className="rounded-full border border-green-500 p-0.5">
+                      <CheckCircle className="h-3 w-3" />
+                    </div>
                   </div>
                   <div>
                     <span className="text-xs text-black font-medium block">{doc.name}</span>
-                    <p className="text-xs text-gray-600">{doc.description}</p>
+                    <p className="text-xs text-gray-600 mt-0.5">{doc.description}</p>
                   </div>
                 </li>
               ))}
@@ -79,11 +81,11 @@ const DocumentPreviewPanel: React.FC<DocumentPreviewPanelProps> = ({
             .replace(/([a-z])([A-Z])/g, '$1 $2'); // Add space between camelCase
 
           return (
-            <div key={fieldId} className="mt-3">
+            <div key={fieldId} className="mt-4">
               <h4 className="text-xs font-medium text-gray-700 uppercase mb-2">
                 {fieldName.toUpperCase()}
               </h4>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {docs.map(doc => {
                   const isRequired = requiredDocuments.has(doc.id);
                   if (!isRequired) return null;
@@ -91,11 +93,13 @@ const DocumentPreviewPanel: React.FC<DocumentPreviewPanelProps> = ({
                   return (
                     <li key={doc.id} className="flex items-start">
                       <div className="mr-2 mt-0.5 flex-shrink-0 text-green-500">
-                        <CheckCircle className="h-3.5 w-3.5" />
+                        <div className="rounded-full border border-green-500 p-0.5">
+                          <CheckCircle className="h-3 w-3" />
+                        </div>
                       </div>
                       <div>
                         <span className="text-xs text-blue-600 font-medium block">{doc.name}</span>
-                        <p className="text-xs text-gray-600">{doc.description}</p>
+                        <p className="text-xs text-gray-600 mt-0.5">{doc.description}</p>
                       </div>
                     </li>
                   );

@@ -32,6 +32,7 @@ import ChildrenInputField from "./ChildrenInputField";
 import LanguageTestInput from "./LanguageTestInput";
 import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
 import { MultiSelect } from "./MultiSelect";
+import { CheckboxMultiSelect } from "./CheckboxMultiSelect";
 
 interface DynamicFormProps {
   form: VisaForm & { showDocuments?: boolean };
@@ -158,6 +159,12 @@ export function DynamicForm({
           }
           
           // Regular condition checking
+          // Handle array values from checkbox-multiselect
+          if (Array.isArray(formData[condition.questionId])) {
+            return formData[condition.questionId].includes(condition.value);
+          }
+          
+          // Regular single value checking
           return formData[condition.questionId] === condition.value;
         });
         
@@ -691,6 +698,26 @@ export function DynamicForm({
           </div>
         );
 
+      case 'checkbox-multiselect':
+        return (
+          <div key={field.id} className="mb-4">
+            <Label htmlFor={field.id}>{field.label}</Label>
+            <CheckboxMultiSelect
+              options={field.options || []}
+              selectedValues={Array.isArray(formData[field.id]) ? formData[field.id] : (formData[field.id] ? [formData[field.id]] : [])}
+              onChange={(values) => handleFieldChange(field.id, values, true)}
+              placeholder={field.placeholder || 'Select options'}
+            />
+            {error && (
+              <div className="flex items-center gap-2 text-destructive mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
+            )}
+            {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+          </div>
+        );
+
       case 'date':
         return (
           <div key={field.id} className="mb-4">
@@ -1056,12 +1083,12 @@ export function DynamicForm({
     <form onSubmit={handleSubmit} className="space-y-8">
       <div className="flex flex-col md:flex-row md:space-x-6">
         {/* Main form content */}
-        <div className="md:w-2/3 space-y-6">
+        <div className={currentStep !== 0 ? "md:w-2/3 space-y-6" : "w-full space-y-6"}>
           {form.fields.map(renderField)}
         </div>
         
         {/* Document panel as a separate div aligned with the form */}
-        {form.documents && form.documents.length > 0 && (
+        {form.documents && form.documents.length > 0 && currentStep !== 0 && (
           <div className="md:w-1/3 md:pt-0 pt-6">
             <div className="md:sticky md:top-4">
               <DocumentPreviewPanel 

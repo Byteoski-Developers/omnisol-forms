@@ -2744,12 +2744,12 @@ export const GENERIC_COUNTRY: VisaForm = {
       showDocuments: false,
       slug: 'travel-plans'
     },
-    {
-      title: 'Relatives Information',
-      group: 'relatives' as FormGroup,
-      showDocuments: false,
-      slug: 'relatives-information'
-    },
+    // {
+    //   title: 'Relatives Information',
+    //   group: 'relatives' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'relatives-information'
+    // },
     {
       title: 'Additional Information',
       group: 'additional' as FormGroup,
@@ -2907,28 +2907,28 @@ export const GENERIC_COUNTRY: VisaForm = {
     //     ]
     //   }
     // },
-    {
-      id: 'applicationCountry',
-      group: 'citizenship' as FormGroup,
-      type: 'select',
-      label: 'Which country you want to apply for?',
-      required: true,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'livesInCitizenshipCountry', value: 'no' },
-          { field: 'needsOnshoreServices', value: 'no' }
-        ]
-      },
-      options: COUNTRIES
-    },
+    // {
+    //   id: 'applicationCountry',
+    //   group: 'citizenship' as FormGroup,
+    //   type: 'select',
+    //   label: 'Which country you want to apply for?',
+    //   required: true,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'livesInCitizenshipCountry', value: 'no' },
+    //       { field: 'needsOnshoreServices', value: 'no' }
+    //     ]
+    //   },
+    //   options: COUNTRIES
+    // },
 
     // -------------------- PERSONAL INFORMATION (MARITAL STATUS) --------------------
     {
       id: 'personalInfoHeader',
       group: 'personal' as FormGroup,
       type: 'header',
-      label: 'Personal Information'
+      label: 'Martial Status'
     },
     {
       id: 'maritalStatus',
@@ -3322,13 +3322,15 @@ export const GENERIC_COUNTRY: VisaForm = {
       id: 'languageTestHeader',
       group: 'personal' as FormGroup,
       type: 'header',
-      label: 'Language Proficiency'
+      label: 'Language Proficiency',
+      showIf: { field: 'residenceStatus', value: 'student' },
     },
     {
       id: 'languageTestDescription',
       group: 'personal' as FormGroup,
       type: 'info',
       label: 'Description',
+      showIf: { field: 'residenceStatus', value: 'student' },
       content: [
         'Please provide information about any language proficiency tests you have taken (e.g., IELTS, TOEFL, CELPIP, PTE).'
       ]
@@ -3339,7 +3341,14 @@ export const GENERIC_COUNTRY: VisaForm = {
       type: 'languageTest',
       label: 'Language Test Details',
       required: false,
-      description: 'Please provide details of your language test results.'
+      description: 'Please provide details of your language test results.',
+      showIf: { field: 'residenceStatus', value: 'student' },
+    },
+    {
+      id: 'familyDetailsHeader',
+      group: 'personal' as FormGroup,
+      type: 'header',
+      label: 'Family details'
     },
     {
       id: 'hasChildren',
@@ -3377,10 +3386,30 @@ export const GENERIC_COUNTRY: VisaForm = {
       label: 'Purpose of Visit Information'
     },
     {
+      id: 'visitPurpose',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is purpose of your visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Visitation', value: 'visitation' },
+        { label: 'Tourism', value: 'tourism' },
+        { label: 'Business', value: 'business' },
+        { label: 'Study', value: 'study' },
+        { label: 'Work', value: 'work' },
+        { label: 'Long duration family visit', value: 'long_family_visit' },
+        { label: 'Join family permanently', value: 'join_family_permanent' },
+        { label: 'Skill-based immigration', value: 'skill_immigration' },
+        { label: 'Performance in sports/religious events/public speaker', value: 'performance' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    {
       id: 'educationLevel',
       group: 'purpose' as FormGroup,
       type: 'select',
       label: `What is your highest educational qualification? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      showIf: { field: 'visitPurpose', value: 'study' },
       required: true,
       options: EDUCATION_QUALIFICATION_OPTIONS
     },
@@ -3389,6 +3418,7 @@ export const GENERIC_COUNTRY: VisaForm = {
       group: 'purpose' as FormGroup,
       type: 'select',
       label: `Which option describes your education? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      showIf: { field: 'visitPurpose', value: 'study' },
       required: false,
       options: EDUCATION_FIELD_OPTIONS
     },
@@ -3397,6 +3427,13 @@ export const GENERIC_COUNTRY: VisaForm = {
       group: 'purpose' as FormGroup,
       type: 'select',
       label: `Do you have any work experience? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'visitPurpose', value: 'work' },
+        ]
+      },
       required: false,
       options: [
         { label: 'Yes', value: 'yes' },
@@ -3420,25 +3457,6 @@ export const GENERIC_COUNTRY: VisaForm = {
     //   required: true,
     //   options: LANGUAGE_TEST_OPTIONS
     // },
-    {
-      id: 'visitPurpose',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `What is purpose of your visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      options: [
-        { label: 'Visitation', value: 'visitation' },
-        { label: 'Tourism', value: 'tourism' },
-        { label: 'Business', value: 'business' },
-        { label: 'Study', value: 'study' },
-        { label: 'Work', value: 'work' },
-        { label: 'Long duration family visit', value: 'long_family_visit' },
-        { label: 'Join family permanently', value: 'join_family_permanent' },
-        { label: 'Skill-based immigration', value: 'skill_immigration' },
-        { label: 'Performance in sports/religious events/public speaker', value: 'performance' },
-        { label: 'Other', value: 'other' }
-      ]
-    },
 
     // For visitation purpose
     {
@@ -3511,6 +3529,15 @@ export const GENERIC_COUNTRY: VisaForm = {
       ]
     },
     {
+      id: 'addAnotherInviterName',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: `Details of the person? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: true,
+      showIf: { field: 'addAnotherInviter', value: 'yes' },
+      
+    },
+    {
       id: 'hasSpecificReasons',
       group: 'purpose' as FormGroup,
       type: 'select',
@@ -3567,7 +3594,81 @@ export const GENERIC_COUNTRY: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
-
+    {
+      id: 'assistanceType',
+      group: 'purpose' as FormGroup,
+      type: 'checkbox-multiselect',
+      label: 'What kind of assistance do you need?',
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+      options: [
+        { label: 'Hotel Booking', value: 'hotel' },
+        { label: 'Flight Booking', value: 'flight' },
+        { label: 'Travel Insurance', value: 'insurance' }
+      ]
+    },
+    {
+      id: 'assistanceNotes',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Any preferences or special requests (e.g. airline, hotel rating, insurance coverage)?',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+    },
+    {
+      id: 'hotelDetails',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Hotel name and address (if already booked)',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'no' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+    },
+    {
+      id: 'flightDetails',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Flight details (airline, flight number, departure/arrival time)',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'no' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+    },
+    {
+      id: 'insuranceDetails',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Travel insurance provider and policy number (if applicable)',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'no' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+    }, 
     // For business purpose
     {
       id: 'businessActivity',
@@ -3746,6 +3847,32 @@ export const GENERIC_COUNTRY: VisaForm = {
           { field: 'longVisitSponsorStatus', value: 'other' }
         ]
       }
+    },
+    {
+      id: 'educationLevell',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is your highest educational qualification? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      showIf: { field: 'longVisitSponsorStatus', value: 'student' },
+      required: false,
+      options: EDUCATION_QUALIFICATION_OPTIONS
+    },
+    {
+      id: 'educationFieldd',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Which option describes the education of your sponsor? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      showIf: { field: 'longVisitSponsorStatus', value: 'student' },
+      required: false,
+      options: EDUCATION_FIELD_OPTIONS
+    },
+    {
+      id: 'institutionName',
+      group: 'purpose' as FormGroup,
+      type: 'textarea', 
+      label: `Details of the institution ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      showIf: { field: 'longVisitSponsorStatus', value: 'student' },
+      required: false,
     },
     {
       id: 'longVisitActivity',
@@ -4542,7 +4669,7 @@ export const GENERIC_COUNTRY: VisaForm = {
       type: 'info',
       label: 'Important Information',
       description: 'You may need to contact us to understand your requirements.',
-      content: [],
+      content: [],  
       required: false,
       showIf: { field: 'visitPurpose', value: 'other' }
     },
@@ -4554,20 +4681,20 @@ export const GENERIC_COUNTRY: VisaForm = {
       type: 'header',
       label: 'Expenses Information'
     },
-    {
-      id: 'financialSource',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Source of funds for your trip ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      options: [
-        { label: 'Bank Statements', value: 'bank_statements' },
-        { label: 'Demat Account', value: 'demat_account' },
-        { label: 'Property Ownership', value: 'property' },
-        { label: 'Sponsorship', value: 'sponsor' },
-        { label: 'Other Financial Assets', value: 'other_assets' }
-      ]
-    },
+    // {
+    //   id: 'financialSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Source of funds for your trip ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   options: [
+    //     { label: 'Bank Statements', value: 'bank_statements' },
+    //     { label: 'Demat Account', value: 'demat_account' },
+    //     { label: 'Property Ownership', value: 'property' },
+    //     { label: 'Sponsorship', value: 'sponsor' },
+    //     { label: 'Other Financial Assets', value: 'other_assets' }
+    //   ]
+    // },
     {
       id: 'financialDetails',
       group: 'finances' as FormGroup,
@@ -4617,7 +4744,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'expensePayerOccupation',
       group: 'finances' as FormGroup,
-      type: 'select',
+      type: 'checkbox-multiselect',
       label: `What is the primary occupation of the person paying for expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       showIf: {
@@ -4647,7 +4774,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'expensePayerIncomeSource',
       group: 'finances' as FormGroup,
-      type: 'select',
+      type: 'checkbox-multiselect',
       label: `What is the source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       showIf: { field: 'selfPayingExpenses', value: 'no' },
@@ -4683,7 +4810,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'expensePayerAdditionalIncomeSource',
       group: 'finances' as FormGroup,
-      type: 'select',
+      type: 'checkbox-multiselect',
       label: `What is the additional source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       showIf: {

@@ -16,10 +16,11 @@ interface IChild {
   name: string;
   dateOfBirth: string;
   relationship: string;
-  education: string;
+  activity: string;
   address: string;
   countryOfBirth: string;
   comingAlong: string;
+  visaStatus?: string;
 }
 
 const RELATIONSHIP_OPTIONS = [
@@ -31,14 +32,12 @@ const RELATIONSHIP_OPTIONS = [
   { value: "adopted_daughter", label: "Adopted Daughter" }
 ];
 
-const EDUCATION_OPTIONS = [
-  { value: "pre_school", label: "Pre-school" },
-  { value: "primary", label: "Primary School" },
-  { value: "secondary", label: "Secondary School" },
-  { value: "high_school", label: "High School" },
-  { value: "college", label: "College" },
-  { value: "university", label: "University" },
-  { value: "not_applicable", label: "Not Applicable" }
+const CHILD_ACTIVITY_OPTIONS = [
+  { value: "study", label: "Studying" },
+  { value: "employed", label: "Employed" },
+  { value: "farming", label: "Farming" },
+  { value: "unemployed", label: "Unemployed" },
+  { value: "doctor", label: "Doctor" }
 ];
 
 const COMING_ALONG_OPTIONS = [
@@ -51,10 +50,11 @@ const createEmptyChild = (id: number): IChild => ({
   name: "",
   dateOfBirth: "",
   relationship: "",
-  education: "",
+  activity: "",
   address: "",
   countryOfBirth: "",
-  comingAlong: "no"
+  comingAlong: "no",
+  visaStatus: ""
 });
 
 const ChildrenInputField = (props: IChildrenInputProps) => {
@@ -68,7 +68,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
         const parsedValue = typeof inputValue === 'string'
           ? JSON.parse(inputValue)
           : inputValue;
-        
+
         if (Array.isArray(parsedValue?.value)) {
           if (parsedValue.value.length === 0) {
             const initialChild = createEmptyChild(1);
@@ -112,30 +112,21 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
   }, [inputValue]);
 
   const handleAddChild = (e: React.MouseEvent) => {
-    // Prevent any default form submission behavior
     e.preventDefault();
     e.stopPropagation();
-    
+
     const newId = children.length > 0 ? Math.max(...children.map(c => c.id)) + 1 : 1;
     const newChild = createEmptyChild(newId);
     const newChildren = [...children, newChild];
-    
-    // Update local state
+
     setChildren(newChildren);
     setActiveChild(newId);
-    
-    // Pass the updated data back to the parent component
-    // Make sure we're using the correct format expected by the parent
+
     if (typeof inputValue === 'object' && inputValue !== null && 'value' in inputValue) {
-      // If inputValue is already in {value: [...]} format
       handleChange({ value: newChildren }, true);
     } else {
-      // If inputValue is expected to be the array directly
       handleChange(newChildren, true);
     }
-    
-    console.log("Added new child:", newChild);
-    console.log("Updated children array:", newChildren);
   };
 
   const handleRemoveChild = (id: number) => {
@@ -177,9 +168,9 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-medium">Children Information</h3>
         {!readonly && (
-          <Button 
-            type="button" 
-            variant="default" 
+          <Button
+            type="button"
+            variant="default"
             onClick={handleAddChild}
             className="bg-teal-600 hover:bg-teal-700"
           >
@@ -189,15 +180,14 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
         )}
       </div>
 
-      {/* Child tabs */}
       <div className="flex space-x-2 mb-4 overflow-x-auto pb-2">
         {children.map((child) => (
           <button
             key={child.id}
             type="button"
             className={`px-4 py-2 rounded-md text-sm font-medium ${
-              activeChild === child.id 
-                ? "bg-teal-50 text-teal-700 border border-teal-200" 
+              activeChild === child.id
+                ? "bg-teal-50 text-teal-700 border border-teal-200"
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
             }`}
             onClick={(e) => {
@@ -211,7 +201,6 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
         ))}
       </div>
 
-      {/* Active child form */}
       {activeChildData && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -255,17 +244,17 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">Education</label>
+            <label className="text-sm font-medium">Activities</label>
             <Select
-              value={activeChildData.education}
-              onValueChange={(value) => handleFieldChange(activeChildData.id, "education", value)}
+              value={activeChildData.activity}
+              onValueChange={(value) => handleFieldChange(activeChildData.id, "activity", value)}
               disabled={readonly}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select education" />
+                <SelectValue placeholder="Select Activities" />
               </SelectTrigger>
               <SelectContent>
-                {EDUCATION_OPTIONS.map((option) => (
+                {CHILD_ACTIVITY_OPTIONS.map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
                   </SelectItem>
@@ -323,15 +312,37 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
               </SelectContent>
             </Select>
           </div>
+
+          {activeChildData.comingAlong === "yes" && (
+            <div className="space-y-2">
+              <label className="text-sm font-medium">
+                Is the child applying along or already possesses a valid visa?
+              </label>
+              <Select
+                value={activeChildData.visaStatus || ""}
+                onValueChange={(value) =>
+                  handleFieldChange(activeChildData.id, "visaStatus", value)
+                }
+                disabled={readonly}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select one" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="applying_along">Applying Along</SelectItem>
+                  <SelectItem value="has_visa">Already Has Valid Visa</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
         </div>
       )}
 
-      {/* Remove button */}
       {children.length > 1 && !readonly && activeChildData && (
         <div className="mt-4 flex justify-end">
-          <Button 
+          <Button
             type="button"
-            variant="destructive" 
+            variant="destructive"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();

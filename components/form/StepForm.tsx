@@ -74,32 +74,55 @@ export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
       </div>
 
       <TooltipProvider>
-        <div className="flex space-x-4 mb-8">
-          {form.steps.map((step, index) => {
-            const isCompleted = completedSteps.includes(index);
-            const isActive = index === currentStep;
-            const isClickable = isCompleted || index === 0 || index <= Math.max(...completedSteps, 0) + 1;
-            
-            return (
-              <Tooltip key={step.title}>
-                <TooltipTrigger asChild>
+        <div className="overflow-x-auto pb-2 mb-6 scrollbar-thin">
+          <style jsx>{`
+            /* Custom scrollbar styling */
+            .scrollbar-thin::-webkit-scrollbar {
+              height: 4px;
+            }
+            .scrollbar-thin::-webkit-scrollbar-track {
+              background: #f1f1f1;
+              border-radius: 10px;
+            }
+            .scrollbar-thin::-webkit-scrollbar-thumb {
+              background: #888;
+              border-radius: 10px;
+            }
+            .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+              background: #555;
+            }
+            /* For Firefox */
+            .scrollbar-thin {
+              scrollbar-width: thin;
+              scrollbar-color: #888 #f1f1f1;
+            }
+          `}</style>
+          <div className="flex min-w-full">
+            {form.steps.map((step, index) => {
+              const isCompleted = completedSteps.includes(index);
+              const isActive = index === currentStep;
+              const isClickable = isCompleted || index === 0 || index <= Math.max(...completedSteps, 0) + 1;
+              
+              return (
+                <div key={step.title} className="flex-shrink-0 px-1" style={{ minWidth: '80px' }}>
                   <button
                     type="button"
                     onClick={() => handleStepClick(index)}
-                    className="flex-1 relative cursor-pointer hover:opacity-80"
+                    className={`w-full py-1 px-1 text-center rounded text-xs transition-all duration-300 ${
+                      isActive 
+                        ? 'bg-primary text-white font-medium' 
+                        : isCompleted 
+                          ? 'bg-primary/80 text-white' 
+                          : 'bg-gray-200 text-gray-600'
+                    }`}
                     aria-label={`Go to step ${index + 1}: ${step.title}`}
                   >
-                    <div 
-                      className={`h-2 rounded-full transition-all duration-300 ${isActive ? 'bg-primary' : isCompleted ? 'bg-primary/80' : 'bg-gray-200'}`}
-                    />
+                    <span className="block truncate">{step.title}</span>
                   </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{step.title}</p>
-                </TooltipContent>
-              </Tooltip>
-            );
-          })}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </TooltipProvider>
 

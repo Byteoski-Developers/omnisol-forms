@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { COUNTRIES } from "@/lib/countries/constants/countries";
+import { DatePicker } from "@/components/ui/date-picker";
 
 interface IChildrenInputProps {
   handleChange: (val: any, save?: boolean) => void;
@@ -76,7 +77,9 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             setActiveChild(1);
           } else {
             setChildren(parsedValue.value);
-            setActiveChild(parsedValue.value[0].id);
+            if (activeChild === null || !parsedValue.value.some((child: IChild) => child.id === activeChild)) {
+              setActiveChild(parsedValue.value[0].id);
+            }
           }
         } else if (parsedValue && typeof parsedValue === 'object') {
           if (Array.isArray(parsedValue)) {
@@ -86,7 +89,9 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
               setActiveChild(1);
             } else {
               setChildren(parsedValue);
-              setActiveChild(parsedValue[0].id);
+              if (activeChild === null || !parsedValue.some((child: IChild) => child.id === activeChild)) {
+                setActiveChild(parsedValue[0].id);
+              }
             }
           } else {
             const initialChild = createEmptyChild(1);
@@ -109,7 +114,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
       setChildren([initialChild]);
       setActiveChild(1);
     }
-  }, [inputValue]);
+  }, [inputValue, activeChild]);
 
   const handleAddChild = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -137,9 +142,13 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
       setActiveChild(1);
       handleChange({ value: [initialChild] }, true);
     } else {
-      setChildren(newChildren);
-      setActiveChild(newChildren[0].id);
-      handleChange({ value: newChildren }, true);
+      const renumberedChildren = newChildren.map((child, index) => ({
+        ...child,
+        id: index + 1
+      }));
+      setChildren(renumberedChildren);
+      setActiveChild(renumberedChildren[0].id);
+      handleChange({ value: renumberedChildren }, true);
     }
   };
 
@@ -215,10 +224,9 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Date of Birth</label>
-            <Input
-              type="date"
-              value={activeChildData.dateOfBirth}
-              onChange={(e) => handleFieldChange(activeChildData.id, "dateOfBirth", e.target.value)}
+            <DatePicker
+              value={activeChildData.dateOfBirth ? new Date(activeChildData.dateOfBirth) : undefined}
+              onChange={(date) => handleFieldChange(activeChildData.id, "dateOfBirth", date ? date.toISOString().split('T')[0] : '')}
               disabled={readonly}
             />
           </div>

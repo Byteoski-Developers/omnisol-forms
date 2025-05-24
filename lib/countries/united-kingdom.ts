@@ -24,11 +24,11 @@ import {
   WORK_FIELD_OPTIONS
 } from './constants/form-labels';
 
-export const GENERIC_COUNTRY: VisaForm = {
-  id: 'generic-visa',
-  countryCode: 'generic',
-  name: 'Generic Visa Application Form',
-  description: 'Universal visa application form for any country',
+export const UNITED_KINGDOM: VisaForm = {
+  id: 'united-kingdom',
+  countryCode: 'uk',
+  name: 'United Kingdom Visa Application Form',
+  description: 'Universal visa application form for United Kingdom',
   documents: [
     {
       id: 'passport',
@@ -161,7 +161,8 @@ export const GENERIC_COUNTRY: VisaForm = {
         value: 'visitation'
       }]
     },
-     // Documents for self-arranged travel
+
+    // Documents for self-arranged travel
 {
   id: 'hotel_booking_confirmation',
   name: 'Hotel Booking Confirmation',
@@ -196,17 +197,17 @@ export const GENERIC_COUNTRY: VisaForm = {
   }]
 },
     // tourism docs
-    {
-      id: 'tourism_itinerary',
-      name: 'Tourism Itinerary ',
-      description: 'Detailed itinerary of your trip ',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'visitPurpose',
-        value: 'tourism'
-      }]
-    },
+    // {
+    //   id: 'tourism_itinerary',
+    //   name: 'Tourism Itinerary ',
+    //   description: 'Detailed itinerary of your trip ',
+    //   type: 'conditional',
+    //   required: true,
+    //   conditions: [{
+    //     questionId: 'visitPurpose',
+    //     value: 'tourism'
+    //   }]
+    // },
     {
       id: 'tourism_accommodation',
       name: 'Tourism Accommodation ',
@@ -2748,12 +2749,12 @@ export const GENERIC_COUNTRY: VisaForm = {
       showDocuments: false,
       slug: 'passport-information'
     },
-    {
-      title: 'Family Information',
-      group: 'family' as FormGroup,
-      showDocuments: false,
-      slug: 'family-information'
-    },
+    // {
+    //   title: 'Family Information',
+    //   group: 'family' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'family-information'
+    // },
     {
       title: 'Parents Information',
       group: 'parents' as FormGroup,
@@ -2779,16 +2780,16 @@ export const GENERIC_COUNTRY: VisaForm = {
       slug: 'travel-plans'
     },
     // {
-    //   title: 'Relatives Information',
-    //   group: 'relatives' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'relatives-information'
-    // },
-    // {
     //   title: 'Additional Information',
     //   group: 'additional' as FormGroup,
     //   showDocuments: false,
     //   slug: 'additional-information'
+    // },
+    // {
+    //   title: 'Health, Legal & Security Details',
+    //   group: 'medical' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'health-legal-security-details'
     // },
     {
       title: 'Health, Legal & Security Details',
@@ -3039,6 +3040,14 @@ export const GENERIC_COUNTRY: VisaForm = {
       group: 'personal' as FormGroup,
       type: 'date',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'maritalStatus', not: 'single' }
+    },
+    {
+      id: 'marriageDate',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What is date of marriage? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       showIf: { field: 'maritalStatus', not: 'single' }
     },
@@ -3417,6 +3426,33 @@ export const GENERIC_COUNTRY: VisaForm = {
         ]
       }
     },
+    {
+      id: 'hasDependentChildren',
+      group: 'personal' as FormGroup,
+      type: 'select',
+      label: `Do you have any dependent children below the age of 18? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'maritalStatus', not: 'single' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'dependentChildrenDetails',
+      group: 'personal' as FormGroup,
+      type: 'custom',
+      component: 'ChildrenInputField',
+      label: `Give details of all your dependent children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', not: 'single' },
+          { field: 'hasDependentChildren', value: 'yes' }
+        ]
+      }
+    },
 
     // -------------------- PURPOSE OF VISIT --------------------
     {
@@ -3709,6 +3745,70 @@ export const GENERIC_COUNTRY: VisaForm = {
         ]
       },
     }, 
+    // -------------------- RELATIVES INFORMATION --------------------
+    {
+      id: 'relativesHeader',
+      group: 'purpose' as FormGroup,
+      type: 'header',
+      label: 'Relatives Information',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+    },
+    {
+      id: 'relativesDescription',
+      group: 'purpose' as FormGroup,
+      type: 'info',
+      label: 'Description',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+      content: [
+        'Please provide information about any relatives you have in the destination country. This information may be required for visa processing.'
+      ]
+    },
+    {
+      id: 'hasRelativesInDestination',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: 'Do you have any relatives in the destination country?',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'relativesDetails',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Relative Details',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'visitPurpose', value: 'tourism' },
+          { field: 'hasRelativesInDestination', value: 'yes' }
+        ]
+      },
+    },
+    
     // For business purpose
     {
       id: 'businessActivity',
@@ -4893,7 +4993,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'spouseIncomeSource',
       group: 'finances' as FormGroup,
-      type: 'select',
+      type: 'checkbox-multiselect',
       label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -4942,7 +5042,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'spouseAdditionalIncomeSource',
       group: 'finances' as FormGroup,
-      type: 'select',
+      type: 'checkbox-multiselect',
       label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -5285,42 +5385,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
     },
 
-    // -------------------- RELATIVES INFORMATION --------------------
-    {
-      id: 'relativesHeader',
-      group: 'relatives' as FormGroup,
-      type: 'header',
-      label: 'Relatives Information'
-    },
-    {
-      id: 'relativesDescription',
-      group: 'relatives' as FormGroup,
-      type: 'info',
-      label: 'Description',
-      content: [
-        'Please provide information about any relatives you have in the destination country. This information may be required for visa processing.'
-      ]
-    },
-    {
-      id: 'hasRelativesInDestination',
-      group: 'relatives' as FormGroup,
-      type: 'select',
-      label: 'Do you have any relatives in the destination country?',
-      required: false,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'relativesDetails',
-      group: 'relatives' as FormGroup,
-      type: 'textarea',
-      label: 'Relative Details',
-      required: false,
-      showIf: { field: 'hasRelativesInDestination', value: 'yes' },
-    },
-
     // -------------------- ADDITIONAL INFORMATION --------------------
     {
       id: 'additionalInfoHeader',
@@ -5534,6 +5598,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     // //   required: true,
     // //   description: 'Please provide details of all your activities in the last 10 years including education, employment, and any periods of unemployment.'
     // // }
+
     // Health, Legal & Security Details
 {
   id: 'healthLegalSecurityHeader',

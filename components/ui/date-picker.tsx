@@ -45,9 +45,9 @@ export function DatePicker({
     }
   };
 
-  // Get available years (10 years before and after current year)
+  // Get available years (80 years before and after current year)
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 21 }, (_, i) => currentYear - 10 + i);
+  const years = Array.from({ length: 100 }, (_, i) => currentYear - 80 + i);
   
   // Get all months
   const months = [

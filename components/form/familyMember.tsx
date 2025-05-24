@@ -124,26 +124,6 @@ export default function FamilyMember({
           </Select>
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Occupation</label>
-          <Input
-            value={localSibling.occupation}
-            onChange={(e) => handleInputChange('occupation', e.target.value)}
-            disabled={readonly}
-            placeholder="Occupation"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Current Address</label>
-          <Input
-            value={localSibling.address}
-            onChange={(e) => handleInputChange('address', e.target.value)}
-            disabled={readonly}
-            placeholder="Current address"
-          />
-        </div>
-
         {countryOfBirthRequired && (
           <div className="space-y-2">
             <label className="text-sm font-medium">Country of Birth</label>

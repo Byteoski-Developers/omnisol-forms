@@ -257,3 +257,11 @@ export const ADDITIONAL_APPLICANT_OPTIONS = [
   { label: 'Friend', value: 'friend' },
   { label: 'Team Member', value: 'team_member' }
 ];
+
+// Hotel details options
+export const HOTEL_DETAILS_OPTIONS = [
+  { label: 'Hotel Booking', value: 'hotel' },
+  { label: 'Flight Booking', value: 'flight' },
+  { label: 'Travel Insurance', value: 'insurance' }
+];
+

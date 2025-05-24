@@ -50,6 +50,25 @@ export interface FormStep {
   group: FormGroup;
   showDocuments: boolean;
   slug?: string; // Unique identifier for the step
+  showIf?: {
+    field: string;
+    value?: string | boolean | number;
+    not?: string | boolean | number;
+  } | {
+    operator: 'or' | 'and';
+    conditions: Array<{
+      field: string;
+      value?: string | boolean | number;
+      not?: string | boolean | number;
+    } | {
+      operator: 'or' | 'and';
+      conditions: Array<{
+        field: string;
+        value?: string | boolean | number;
+        not?: string | boolean | number;
+      }>;
+    }>;
+  };
 }
 
 export interface Document {

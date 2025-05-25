@@ -18,21 +18,72 @@ interface StepFormProps {
 export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
   const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState(initialData);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+
+  // Function to evaluate conditions (similar to DynamicForm's evaluateCondition)
+  const evaluateCondition = (condition: any): boolean => {
+    // Handle complex condition with operator
+    if ('operator' in condition) {
+      const { operator, conditions } = condition;
+      
+      // Map and evaluate each condition recursively
+      const results = conditions.map((subCondition: any) => evaluateCondition(subCondition));
+      
+      // Apply the appropriate logical operator
+      if (operator === 'and') {
+        return results.every(Boolean);
+      } else if (operator === 'or') {
+        return results.some(Boolean);
+      }
+      return false;
+    }
+    
+    // Handle simple condition
+    const { field, value, not } = condition;
+    
+    // Check if the field exists in formData
+    if (!(field in formData)) {
+      return false;
+    }
+    
+    // Check if we're looking for a specific value or a negation
+    if (value !== undefined) {
+      // For array values, check if the value is included in the array
+      if (Array.isArray(formData[field])) {
+        return formData[field].includes(value);
+      }
+      return formData[field] === value;
+    } else if (not !== undefined) {
+      // For array values, check if the value is NOT included in the array
+      if (Array.isArray(formData[field])) {
+        return !formData[field].includes(not);
+      }
+      return formData[field] !== not;
+    }
+    
+    // If no value or not is specified, check if the field has any value
+    return Boolean(formData[field]);
+  };
+
+  // Filter visible steps based on showIf conditions
+  const visibleSteps = form.steps.filter(step => {
+    if (!step.showIf) return true; // If no showIf condition, always show
+    return evaluateCondition(step.showIf);
+  });
 
   // Open step by slug if present in URL
   useEffect(() => {
     const stepSlug = searchParams?.get('slug');
-    if (stepSlug && form.steps) {
-      const foundIndex = form.steps.findIndex(step => step.slug === stepSlug);
+    if (stepSlug && visibleSteps.length > 0) {
+      const foundIndex = visibleSteps.findIndex(step => step.slug === stepSlug);
       if (foundIndex !== -1) {
         setCurrentStep(foundIndex);
       }
     }
-    // Only run on mount or when form.steps/searchParams changes
+    // Only run on mount or when visibleSteps/searchParams changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.steps, searchParams]);
-  const [formData, setFormData] = useState(initialData);
-  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  }, [visibleSteps, searchParams]);
 
   const handleStepSubmit = (stepData: Record<string, any>) => {
     const newFormData = { ...formData, ...stepData };
@@ -43,7 +94,7 @@ export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
       setCompletedSteps(prev => [...prev, currentStep]);
     }
     
-    if (currentStep === form.steps.length - 1) {
+    if (currentStep === visibleSteps.length - 1) {
       onSubmit(newFormData);
     } else {
       setCurrentStep(prev => prev + 1);
@@ -59,7 +110,12 @@ export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
     setCurrentStep(stepIndex);
   };
 
-  const currentStepData = form.steps[currentStep];
+  // If no visible steps, render nothing or a message
+  if (visibleSteps.length === 0) {
+    return <div>No applicable form steps available.</div>;
+  }
+
+  const currentStepData = visibleSteps[currentStep];
   const stepFields = currentStepData.showDocuments 
     ? [] 
     : form.fields.filter(f => f.group === currentStepData.group);
@@ -69,7 +125,7 @@ export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl font-bold">{currentStepData.title}</h2>
         <div className="text-sm text-gray-500">
-          Step {currentStep + 1} of {form.steps.length}
+          Step {currentStep + 1} of {visibleSteps.length}
         </div>
       </div>
 
@@ -98,7 +154,7 @@ export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
             }
           `}</style>
           <div className="flex min-w-full">
-            {form.steps.map((step, index) => {
+            {visibleSteps.map((step, index) => {
               const isCompleted = completedSteps.includes(index);
               const isActive = index === currentStep;
               const isClickable = isCompleted || index === 0 || index <= Math.max(...completedSteps, 0) + 1;
@@ -136,7 +192,7 @@ export function StepForm({ form, onSubmit, initialData = {} }: StepFormProps) {
           onSubmit={handleStepSubmit}
           initialData={formData}
           currentStep={currentStep}
-          totalSteps={form.steps.length}
+          totalSteps={visibleSteps.length}
         />
       </Card>
 

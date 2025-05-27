@@ -311,9 +311,8 @@ export function DynamicForm({
     }
   };
   
-  // Update field visibility whenever form data changes
-  useEffect(() => {
-    const newVisibleFields = new Set<string>();
+  const renderField = (field: FormField) => {
+    const { id, type, label, placeholder, options, required, description, showIf, component } = field;
     
     // Check if the field should be shown based on conditional logic
     const isVisible = !showIf || evaluateCondition(showIf);

@@ -316,28 +316,7 @@ export function DynamicForm({
     
     // Check if the field should be shown based on conditional logic
     const isVisible = !showIf || evaluateCondition(showIf);
-    
-    // Update visibility tracking
-    useEffect(() => {
-      setVisibleFields(prev => {
-        const newVisibleFields = new Set(prev);
-        if (isVisible) {
-          newVisibleFields.add(id);
-        } else {
-          newVisibleFields.delete(id);
-          // Remove the field value from formData when hidden
-          setFormData(prev => {
-            const newData = { ...prev };
-            delete newData[id];
-            return newData;
-          });
-          // Remove any pending changes for this field
-          setPendingChanges(prev => prev.filter(change => change.question !== id));
-        }
-        return newVisibleFields;
-      });
-    }, [id, isVisible]);
-
+  
     if (!isVisible) {
       return null;
     }

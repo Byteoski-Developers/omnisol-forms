@@ -5454,17 +5454,26 @@ export const UNITED_KINGDOM: VisaForm = {
       required: false,
       showIf: { field: 'destinationHeader', value: 'yes' }
     },
-    // {
-    //   id: 'needTravelServices',
-    //   group: 'additional' as FormGroup,
-    //   type: 'select',
-    //   label: 'Do you need any pre departure or post arrival service (such as air tickets, travel insurances, forex cards, mobile SIM, booking of accommodation, package tours)?',
-    //   required: false,
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
+    {
+      id: 'needTravelServices',
+      group: 'additional' as FormGroup,
+      type: 'select',
+      label: 'Do you need any pre departure or post arrival service (such as air tickets, travel insurances, forex cards, mobile SIM, booking of accommodation, package tours)?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'travelServicesExplanations',
+      group: 'additional' as FormGroup,
+      type: 'textarea',
+      label: 'Please provide the details of the services you need',
+      required: false,
+      showIf: { field: 'needTravelServices', value: 'yes' },
+      placeholder: 'Enter your explanation here',
+    },
 
     // -------------------- CONTACT PREFERENCES --------------------
     {

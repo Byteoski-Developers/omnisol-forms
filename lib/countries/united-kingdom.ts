@@ -5472,7 +5472,7 @@ export const UNITED_KINGDOM: VisaForm = {
       label: 'Please provide the details of the services you need',
       required: false,
       showIf: { field: 'needTravelServices', value: 'yes' },
-      placeholder: 'Enter your explanation here',
+      placeholder: 'Enter the details of the services you need',
     },
 
     // -------------------- CONTACT PREFERENCES --------------------

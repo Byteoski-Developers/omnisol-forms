@@ -5363,6 +5363,25 @@ export const CANADA: VisaForm = {
       ]
     },
     {
+          id: 'destinationHeader',
+          group: 'additional' as FormGroup,
+          type: 'select',
+          label: 'Do you want to add any countries?',
+          required: false,
+          options: [
+            { label: 'Yes', value: 'yes' },
+            { label: 'No', value: 'no' }
+          ]
+        },
+        {
+          id: 'destinationCountries',
+          group: 'additional' as FormGroup,
+          type: 'countriesInput',
+          label: `Which country/ies you want to visit?`,
+          required: false,
+          showIf: { field: 'destinationHeader', value: 'yes' }
+        },
+    {
       id: 'explanationText',
       group: 'additional' as FormGroup,
       type: 'textarea',

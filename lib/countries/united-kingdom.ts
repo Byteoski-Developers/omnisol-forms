@@ -5627,62 +5627,19 @@ export const UNITED_KINGDOM: VisaForm = {
     // //   description: 'Please provide details of all your activities in the last 10 years including education, employment, and any periods of unemployment.'
     // // }
 
-    // Health, Legal & Security Details
+    // Health, Legal, and Security Details
 {
   id: 'healthLegalSecurityHeader',
   group: 'criminal' as FormGroup,
   type: 'header',
-  label: 'Health, Legal & Security Details'
+  label: 'Health, Legal, and Security Details'
 },
 {
-  id: 'healthLegalSecurityDescription',
-  group: 'criminal' as FormGroup,
-  type: 'info',
-  label: 'Health, Legal & Security Information',
-  content: [
-    'Please provide information about your health status, and security background. This information is important for assessing your eligibility for entry.'
-  ]
-},
-// Health Questions
-{
-  id: 'medicalInformationHeader',
-  group: 'criminal' as FormGroup,
-  type: 'header',
-  label: 'Medical Information'
-},
-{
-  id: 'hasCommunicableDisease',
+  id: 'healthStatusSummary',
   group: 'criminal' as FormGroup,
   type: 'select',
-  label: `Do you have a communicable disease (e.g., tuberculosis, HIV)? ${FIELD_REQUIREMENTS.MANDATORY}`,
+  label: `Do you have any communicable diseases, mental health history, or require ongoing medical support? ${FIELD_REQUIREMENTS.MANDATORY}`,
   required: true,
-  description: 'Vital for assessing health and entry eligibility.',
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
-{
-  id: 'hasMentalDisorderHistory',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Have you ever had a serious mental disorder? ${FIELD_REQUIREMENTS.MANDATORY}`,
-  required: true,
-  showIf: { field: 'hasCommunicableDisease', value: 'yes' },
-  description: 'Important for evaluating medical risks or requirements.',
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
-{
-  id: 'requiresMedicalSupport',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Do you require ongoing medical treatment or support during your stay? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-  required: false,
-  showIf: { field: 'hasCommunicableDisease', value: 'yes' },
-  description: 'Helps plan and prepare for any potential medical needs.',
   options: [
     { label: 'Yes', value: 'yes' },
     { label: 'No', value: 'no' }
@@ -5692,183 +5649,28 @@ export const UNITED_KINGDOM: VisaForm = {
   id: 'healthDetails',
   group: 'criminal' as FormGroup,
   type: 'textarea',
-  label: `Please provide details of your health condition (if any): ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+  label: `If yes, please provide brief health-related details: ${FIELD_REQUIREMENTS.RECOMMENDED}`,
   required: false,
-  description: 'Adds helpful detail for medical evaluation.',
-  showIf: {
-    operator: 'or',
-    conditions: [
-      { field: 'hasCommunicableDisease', value: 'yes' },
-      { field: 'hasMentalDisorderHistory', value: 'yes' },
-      { field: 'requiresMedicalSupport', value: 'yes' }
-    ]
-  }
-},
-
-// Criminal History and Convictions
-{
-  id: 'criminalHistoryHeader',
-  group: 'criminal' as FormGroup,
-  type: 'header',
-  label: 'Criminal History and Convictions'
+  showIf: { field: 'healthStatusSummary', value: 'yes' }
 },
 {
-  id: 'hasCriminalRecord',
+  id: 'criminalSecurityHistory',
   group: 'criminal' as FormGroup,
   type: 'select',
-  label: `Have you ever been convicted of a crime in any country? ${FIELD_REQUIREMENTS.MANDATORY}`,
+  label: `Have you ever had any criminal record, been under investigation, involved in terrorism, or served in the military/security services? ${FIELD_REQUIREMENTS.MANDATORY}`,
   required: true,
-  description: 'Critical for background verification and legal eligibility.',
   options: [
     { label: 'Yes', value: 'yes' },
     { label: 'No', value: 'no' }
   ]
 },
 {
-  id: 'criminalDetails',
+  id: 'criminalSecurityDetails',
   group: 'criminal' as FormGroup,
   type: 'textarea',
-  label: `Please provide details of the conviction(s): ${FIELD_REQUIREMENTS.MANDATORY}`,
+  label: `If yes, please provide relevant details: ${FIELD_REQUIREMENTS.MANDATORY}`,
   required: true,
-  description: 'Required if any conviction is disclosed.',
-  showIf: { field: 'hasCriminalRecord', value: 'yes' }
-},
-{
-  id: 'awaitingTrial',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Are you currently under investigation or awaiting trial? ${FIELD_REQUIREMENTS.MANDATORY}`,
-  required: true,
-  description: 'Important for evaluating ongoing legal matters.',
-  showIf: { field: 'hasCriminalRecord', value: 'yes' },
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
-{
-  id: 'involvedInTerrorism',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Have you ever been involved in terrorist activities or organizations? ${FIELD_REQUIREMENTS.MANDATORY}`,
-  required: true,
-  description: 'Required for national security assessment.',
-  showIf: { field: 'hasCriminalRecord', value: 'yes' },
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
-
-// // Administrative or Judicial Matters
-// {
-//   id: 'administrativeMattersHeader',
-//   group: 'criminal' as FormGroup,
-//   type: 'header',
-//   label: 'Administrative or Judicial Matters'
-// },
-// {
-//   id: 'visaRefused',
-//   group: 'criminal' as FormGroup,
-//   type: 'select',
-//   label: `Have you ever been refused a visa or entry to another country? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-//   required: false,
-//   description: 'Helpful to assess previous immigration decisions.',
-//   options: [
-//     { label: 'Yes', value: 'yes' },
-//     { label: 'No', value: 'no' }
-//   ]
-// },
-// {
-//   id: 'previousDeportation',
-//   group: 'criminal' as FormGroup,
-//   type: 'select',
-//   label: `Have you ever been deported or removed from any country? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-//   required: false,
-//   description: 'Provides context to immigration history.',
-//   options: [
-//     { label: 'Yes', value: 'yes' },
-//     { label: 'No', value: 'no' }
-//   ]
-// },
-// {
-//   id: 'immigrationViolation',
-//   group: 'criminal' as FormGroup,
-//   type: 'select',
-//   label: `Have you ever overstayed a visa or violated immigration laws? ${FIELD_REQUIREMENTS.MANDATORY}`,
-//   required: true,
-//   description: 'Essential for legal admissibility checks.',
-//   options: [
-//     { label: 'Yes', value: 'yes' },
-//     { label: 'No', value: 'no' }
-//   ]
-// },
-// {
-//   id: 'judicialProcess',
-//   group: 'criminal' as FormGroup,
-//   type: 'select',
-//   label: `Are you currently involved in any ongoing legal or judicial proceedings? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-//   required: false,
-//   description: 'Useful to understand legal liabilities.',
-//   options: [
-//     { label: 'Yes', value: 'yes' },
-//     { label: 'No', value: 'no' }
-//   ]
-// },
-
-// Defense and Security Services
-{
-  id: 'defenseSecurityHeader',
-  group: 'criminal' as FormGroup,
-  type: 'header',
-  label: 'Defense and Security Services'
-},
-{
-  id: 'militaryService',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Have you served in the military or any armed forces? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-  required: false,
-  description: 'Adds insight into service background.',
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
-{
-  id: 'militaryDetails',
-  group: 'criminal' as FormGroup,
-  type: 'textarea',
-  label: `Please provide your service details: ${FIELD_REQUIREMENTS.OPTIONAL}`,
-  required: false,
-  description: 'Helps understand nature of past military involvement.',
-  showIf: { field: 'defenseSecurityHeader', value: 'yes' }
-},
-{
-  id: 'securityOrgMembership',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Have you ever worked for an intelligence, security, or law enforcement agency? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-  required: false,
-  showIf: { field: 'defenseSecurityHeader', value: 'yes' },
-  description: 'Relevant to national security and profiling.',
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
-{
-  id: 'combatExperience',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Have you participated in any armed conflict? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-  required: false,
-  showIf: { field: 'defenseSecurityHeader', value: 'yes' },
-  description: 'Provides important background information.',
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
+  showIf: { field: 'criminalSecurityHistory', value: 'yes' }
 },
   ]
 };

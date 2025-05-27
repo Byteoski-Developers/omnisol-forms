@@ -80,7 +80,7 @@ export const SAMPLE_COUNTRIES: Country[] = [
     flag: 'https://flagcdn.com/w80/sg.png',
   },
   {
-    code: 'CA',
+    code: 'ca',
     name: 'Canada',
     flag: 'https://flagcdn.com/w80/ca.png',
   },
@@ -158,6 +158,6 @@ export const SAMPLE_COUNTRIES: Country[] = [
   {
     code: 'uk',
     name: 'United Kingdom',
-    flag: 'https://flagcdn.com/w80/uk.png',
+    flag: 'https://flagcdn.com/w80/gb.png',
   }
 ];

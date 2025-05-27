@@ -2707,12 +2707,12 @@ export const UNITED_KINGDOM: VisaForm = {
 
   ],
   steps: [
-    {
-      title: 'Destination Selection',
-      group: 'destination' as FormGroup,
-      showDocuments: false,
-      slug: 'destination-selection'
-    },
+    // {
+    //   title: 'Destination Selection',
+    //   group: 'destination' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'destination-selection'
+    // },
     {
       title: 'Citizenship & Residence',
       group: 'citizenship' as FormGroup,
@@ -2780,12 +2780,6 @@ export const UNITED_KINGDOM: VisaForm = {
       slug: 'travel-plans'
     },
     // {
-    //   title: 'Additional Information',
-    //   group: 'additional' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'additional-information'
-    // },
-    // {
     //   title: 'Health, Legal & Security Details',
     //   group: 'medical' as FormGroup,
     //   showDocuments: false,
@@ -2802,6 +2796,12 @@ export const UNITED_KINGDOM: VisaForm = {
       group: 'contact' as FormGroup,
       showDocuments: false,
       slug: 'contact-preferences'
+    },
+    {
+      title: 'Additional Information',
+      group: 'additional' as FormGroup,
+      showDocuments: false,
+      slug: 'additional-information'
     },
   ],
   fields: [
@@ -3043,14 +3043,14 @@ export const UNITED_KINGDOM: VisaForm = {
       required: true,
       showIf: { field: 'maritalStatus', not: 'single' }
     },
-    {
-      id: 'marriageDate',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What is date of marriage? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'maritalStatus', not: 'single' }
-    },
+    // {
+    //   id: 'marriageDate',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What is date of marriage? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'maritalStatus', not: 'single' }
+    // },
     {
       id: 'isFirstMarriage',
       group: 'personal' as FormGroup,
@@ -3535,15 +3535,15 @@ export const UNITED_KINGDOM: VisaForm = {
     // },
 
     // For visitation purpose
-    {
-      id: 'relationToVisit',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `What is your relation to person you will visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'visitPurpose', value: 'visitation' },
-      options: RELATION_OPTIONS
-    },
+    // {
+    //   id: 'relationToVisit',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'select',
+    //   label: `What is your relation to person you will visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'visitPurpose', value: 'visitation' },
+    //   options: RELATION_OPTIONS
+    // },
     {
       id: 'relationToVisitOther',
       group: 'purpose' as FormGroup,
@@ -3559,15 +3559,15 @@ export const UNITED_KINGDOM: VisaForm = {
         ]
       }
     },
-    {
-      id: 'inviterImmigrationStatus',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'visitPurpose', value: 'visitation' },
-      options: IMMIGRATION_STATUS_OPTIONS
-    },
+    // {
+    //   id: 'inviterImmigrationStatus',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'select',
+    //   label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'visitPurpose', value: 'visitation' },
+    //   options: IMMIGRATION_STATUS_OPTIONS
+    // },
     {
       id: 'inviterImmigrationStatusOther',
       group: 'purpose' as FormGroup,
@@ -3583,15 +3583,15 @@ export const UNITED_KINGDOM: VisaForm = {
         ]
       }
     },
-    {
-      id: 'inviterContactDetails',
-      group: 'purpose' as FormGroup,
-      type: 'text',
-      label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Name, Address, Phone number, Email',
-      showIf: { field: 'visitPurpose', value: 'visitation' }
-    },
+    // {
+    //   id: 'inviterContactDetails',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'text',
+    //   label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Name, Address, Phone number, Email',
+    //   showIf: { field: 'visitPurpose', value: 'visitation' }
+    // },
     {
       id: 'addAnotherInviter',
       group: 'purpose' as FormGroup,
@@ -5392,29 +5392,29 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'header',
       label: 'Additional Information and Services'
     },
-    {
-      id: 'socialMediaHeader',
-      group: 'additional' as FormGroup,
-      type: 'header',
-      label: 'Social Media Information'
-    },
-    {
-      id: 'socialMediaDescription',
-      group: 'additional' as FormGroup,
-      type: 'info',
-      content: [
-        'Please provide your social media handles. This information may be used to verify your application.'
-      ],
-      label: 'Description'
-    },
-    {
-      id: 'socialMediaHandles',
-      group: 'additional' as FormGroup,
-      type: 'socialHandles',
-      label: 'Social Media Handles',
-      required: false,
-      description: 'Please provide your social media handles if available'
-    },
+    // {
+    //   id: 'socialMediaHeader',
+    //   group: 'additional' as FormGroup,
+    //   type: 'header',
+    //   label: 'Social Media Information'
+    // },
+    // {
+    //   id: 'socialMediaDescription',
+    //   group: 'additional' as FormGroup,
+    //   type: 'info',
+    //   content: [
+    //     'Please provide your social media handles. This information may be used to verify your application.'
+    //   ],
+    //   label: 'Description'
+    // },
+    // {
+    //   id: 'socialMediaHandles',
+    //   group: 'additional' as FormGroup,
+    //   type: 'socialHandles',
+    //   label: 'Social Media Handles',
+    //   required: false,
+    //   description: 'Please provide your social media handles if available'
+    // },
     {
       id: 'needExplanations',
       group: 'additional' as FormGroup,
@@ -5436,16 +5436,35 @@ export const UNITED_KINGDOM: VisaForm = {
       placeholder: 'Enter your explanation here',
     },
     {
-      id: 'needTravelServices',
+      id: 'destinationHeader',
       group: 'additional' as FormGroup,
       type: 'select',
-      label: 'Do you need any pre departure or post arrival service (such as air tickets, travel insurances, forex cards, mobile SIM, booking of accommodation, package tours)?',
+      label: 'Do you want to add any countries?',
       required: false,
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
       ]
     },
+    {
+      id: 'destinationCountries',
+      group: 'additional' as FormGroup,
+      type: 'countriesInput',
+      label: `Which country/ies you want to visit?`,
+      required: false,
+      showIf: { field: 'destinationHeader', value: 'yes' }
+    },
+    // {
+    //   id: 'needTravelServices',
+    //   group: 'additional' as FormGroup,
+    //   type: 'select',
+    //   label: 'Do you need any pre departure or post arrival service (such as air tickets, travel insurances, forex cards, mobile SIM, booking of accommodation, package tours)?',
+    //   required: false,
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
 
     // -------------------- CONTACT PREFERENCES --------------------
     {
@@ -5617,6 +5636,12 @@ export const UNITED_KINGDOM: VisaForm = {
 },
 // Health Questions
 {
+  id: 'medicalInformationHeader',
+  group: 'criminal' as FormGroup,
+  type: 'header',
+  label: 'Medical Information'
+},
+{
   id: 'hasCommunicableDisease',
   group: 'criminal' as FormGroup,
   type: 'select',
@@ -5634,6 +5659,7 @@ export const UNITED_KINGDOM: VisaForm = {
   type: 'select',
   label: `Have you ever had a serious mental disorder? ${FIELD_REQUIREMENTS.MANDATORY}`,
   required: true,
+  showIf: { field: 'hasCommunicableDisease', value: 'yes' },
   description: 'Important for evaluating medical risks or requirements.',
   options: [
     { label: 'Yes', value: 'yes' },
@@ -5646,6 +5672,7 @@ export const UNITED_KINGDOM: VisaForm = {
   type: 'select',
   label: `Do you require ongoing medical treatment or support during your stay? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
   required: false,
+  showIf: { field: 'hasCommunicableDisease', value: 'yes' },
   description: 'Helps plan and prepare for any potential medical needs.',
   options: [
     { label: 'Yes', value: 'yes' },
@@ -5704,6 +5731,7 @@ export const UNITED_KINGDOM: VisaForm = {
   label: `Are you currently under investigation or awaiting trial? ${FIELD_REQUIREMENTS.MANDATORY}`,
   required: true,
   description: 'Important for evaluating ongoing legal matters.',
+  showIf: { field: 'hasCriminalRecord', value: 'yes' },
   options: [
     { label: 'Yes', value: 'yes' },
     { label: 'No', value: 'no' }
@@ -5716,6 +5744,7 @@ export const UNITED_KINGDOM: VisaForm = {
   label: `Have you ever been involved in terrorist activities or organizations? ${FIELD_REQUIREMENTS.MANDATORY}`,
   required: true,
   description: 'Required for national security assessment.',
+  showIf: { field: 'hasCriminalRecord', value: 'yes' },
   options: [
     { label: 'Yes', value: 'yes' },
     { label: 'No', value: 'no' }
@@ -5804,7 +5833,7 @@ export const UNITED_KINGDOM: VisaForm = {
   label: `Please provide your service details: ${FIELD_REQUIREMENTS.OPTIONAL}`,
   required: false,
   description: 'Helps understand nature of past military involvement.',
-  showIf: { field: 'militaryService', value: 'yes' }
+  showIf: { field: 'defenseSecurityHeader', value: 'yes' }
 },
 {
   id: 'securityOrgMembership',
@@ -5812,6 +5841,7 @@ export const UNITED_KINGDOM: VisaForm = {
   type: 'select',
   label: `Have you ever worked for an intelligence, security, or law enforcement agency? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
   required: false,
+  showIf: { field: 'defenseSecurityHeader', value: 'yes' },
   description: 'Relevant to national security and profiling.',
   options: [
     { label: 'Yes', value: 'yes' },
@@ -5824,6 +5854,7 @@ export const UNITED_KINGDOM: VisaForm = {
   type: 'select',
   label: `Have you participated in any armed conflict? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
   required: false,
+  showIf: { field: 'defenseSecurityHeader', value: 'yes' },
   description: 'Provides important background information.',
   options: [
     { label: 'Yes', value: 'yes' },

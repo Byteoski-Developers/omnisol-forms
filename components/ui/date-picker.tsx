@@ -19,42 +19,62 @@ export function DatePicker({
   onChange,
   disabled = false,
 }: DatePickerProps) {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(value);
-  const [month, setMonth] = React.useState<Date>(selectedDate || new Date());
- 
-  // Update selectedDate when value changes from parent
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(value)
+  const [month, setMonth] = React.useState<Date>(selectedDate || new Date())
+
   React.useEffect(() => {
-    setSelectedDate(value);
+    setSelectedDate(value)
     if (value) {
-      setMonth(value);
+      setMonth(value)
     }
-  }, [value]);
+  }, [value])
 
-  // Custom handler for date selection
   const handleSelect = (date?: Date) => {
-    setSelectedDate(date);
-    
+    setSelectedDate(date)
     if (onChange) {
-      onChange(date);
+      onChange(date)
     }
-    
-    // Close the popover when a date is selected
     if (date) {
-      setIsOpen(false);
+      setIsOpen(false)
     }
-  };
+  }
 
-  // Get available years (80 years before and after current year)
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 100 }, (_, i) => currentYear - 80 + i);
-  
-  // Get all months
+  const currentYear = new Date().getFullYear()
+  const years = Array.from({ length: 100 }, (_, i) => currentYear - 80 + i)
   const months = [
     "January", "February", "March", "April", "May", "June", 
     "July", "August", "September", "October", "November", "December"
-  ];
-  
+  ]
+
+  const handleYearChange = (yearStr: string) => {
+    const newYear = parseInt(yearStr)
+    const newDate = new Date(month)
+    newDate.setFullYear(newYear)
+    setMonth(newDate)
+
+    if (selectedDate) {
+      const updatedDate = new Date(selectedDate)
+      updatedDate.setFullYear(newYear)
+      setSelectedDate(updatedDate)
+      onChange?.(updatedDate)
+    }
+  }
+
+  const handleMonthChange = (monthStr: string) => {
+    const newMonthIndex = parseInt(monthStr)
+    const newDate = new Date(month)
+    newDate.setMonth(newMonthIndex)
+    setMonth(newDate)
+
+    if (selectedDate) {
+      const updatedDate = new Date(selectedDate)
+      updatedDate.setMonth(newMonthIndex)
+      setSelectedDate(updatedDate)
+      onChange?.(updatedDate)
+    }
+  }
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -75,11 +95,7 @@ export function DatePicker({
         <div className="flex justify-between p-3 border-b">
           <Select 
             value={month.getFullYear().toString()} 
-            onValueChange={(value) => {
-              const newMonth = new Date(month);
-              newMonth.setFullYear(parseInt(value));
-              setMonth(newMonth);
-            }}
+            onValueChange={handleYearChange}
           >
             <SelectTrigger className="w-[100px]">
               <SelectValue placeholder="Year" />
@@ -95,19 +111,15 @@ export function DatePicker({
           
           <Select 
             value={(month.getMonth()).toString()} 
-            onValueChange={(value) => {
-              const newMonth = new Date(month);
-              newMonth.setMonth(parseInt(value));
-              setMonth(newMonth);
-            }}
+            onValueChange={handleMonthChange}
           >
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="Month" />
             </SelectTrigger>
             <SelectContent>
-              {months.map((month, index) => (
-                <SelectItem key={month} value={index.toString()}>
-                  {month}
+              {months.map((monthName, index) => (
+                <SelectItem key={monthName} value={index.toString()}>
+                  {monthName}
                 </SelectItem>
               ))}
             </SelectContent>

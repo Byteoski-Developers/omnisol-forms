@@ -725,25 +725,28 @@ export function DynamicForm({
           </div>
         );
 
-      case 'checkbox-multiselect':
-        return (
-          <div key={field.id} className="mb-4">
-            <Label htmlFor={field.id}>{field.label}</Label>
-            <CheckboxMultiSelect
-              options={field.options || []}
-              selectedValues={Array.isArray(formData[field.id]) ? formData[field.id] : (formData[field.id] ? [formData[field.id]] : [])}
-              onChange={(values) => handleFieldChange(field.id, values, true)}
-              placeholder={field.placeholder || 'Select options'}
-            />
-            {error && (
-              <div className="flex items-center gap-2 text-destructive mt-2">
-                <AlertCircle className="h-4 w-4" />
-                <p className="text-sm">{error}</p>
-              </div>
-            )}
-            {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
-          </div>
-        );
+        case 'checkbox-multiselect':
+          return (
+            <div key={field.id} className="mb-6">
+              <CheckboxMultiSelect
+                options={field.options || []}
+                selectedValues={Array.isArray(formData[field.id]) ? formData[field.id] : (formData[field.id] ? [formData[field.id]] : [])}
+                onChange={(values) => handleFieldChange(field.id, values, true)}
+                placeholder={field.placeholder || 'Click to select your income sources...'}
+                label={field.label}
+                helpText={field.helpText || "Select all sources of income that apply to your situation. This helps us determine the exact documents you'll need to provide."}
+                showCategories={field.showCategories !== false}
+                maxHeight={field.maxHeight || 300}
+              />
+              {error && (
+                <div className="flex items-center gap-2 text-destructive mt-2">
+                  <AlertCircle className="h-4 w-4" />
+                  <p className="text-sm">{error}</p>
+                </div>
+              )}
+              {description && <p className="text-sm text-muted-foreground mt-2">{description}</p>}
+            </div>
+          );
 
       case 'date':
         return (

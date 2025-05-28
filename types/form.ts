@@ -99,6 +99,9 @@ export interface FormField {
   category?: string; // Category of the question for backend classification
   autoExtracted?: boolean;
   description?: string;
+  helpText?: string;
+  showCategories?: boolean;
+  maxHeight?: number;
   showInForm?: boolean; // Controls whether the field is displayed in the form UI
   showIf?: {
     field: string;

@@ -1,6 +1,6 @@
 import { VisaForm, DocumentType, FormGroup } from '@/types/form';
 import { COUNTRIES } from './constants/countries';
-import { 
+import {
   ADDITIONAL_APPLICANT_OPTIONS,
   BUSINESS_ACTIVITY_OPTIONS,
   CONTACT_METHOD_OPTIONS,
@@ -25,1413 +25,3781 @@ import {
 } from './constants/form-labels';
 
 export const CANADA: VisaForm = {
-  id: 'visitor-visa',
-  countryCode: 'CA',
-  name: 'Canada Visitor Visa Application',
-  description: 'Application for Canada Visitor Visa (Temporary Resident Visa)',
-  steps: [
+  id: 'canada-form',
+  countryCode: 'ca',
+  name: 'Canada Visa Application Form',
+  description: 'Universal visa application form for Canada',
+  documents: [
     {
-      title: 'Personal Information',
-      group: 'personal',
-      showDocuments: false
+      id: 'passport',
+      name: 'Passport',
+      description: 'Upload scanned copy of all pages of your current passport',
+      type: 'default',
+      required: true,
+      extractableFields: [
+        {
+          fieldId: 'passportNumber',
+          source: 'passport'
+        },
+        {
+          fieldId: 'fullName',
+          source: 'passport'
+        },
+        {
+          fieldId: 'dateOfBirth',
+          source: 'passport'
+        },
+        {
+          fieldId: 'nationality',
+          source: 'passport'
+        },
+        {
+          fieldId: 'passportExpiryDate',
+          source: 'passport'
+        }
+      ]
     },
     {
-      title: 'Description Section',
-      group: 'description_section',
-      showDocuments: false
+      id: 'photo',
+      name: 'Recent Photograph',
+      description: 'Upload a recent passport-sized photo with white background',
+      type: 'default',
+      required: true
     },
     {
-      title: 'Travel Document Information',
-      group: 'travel',
-      showDocuments: false 
+      id: 'financial_proof',
+      name: 'Proof of Financial Means',
+      description: 'Bank statements, income tax returns, or other proof of sufficient funds for your visit',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'bank_statements'
+      }]
     },
     {
-      title: 'National Identity Document',
-      group: 'national_id',
-      showDocuments: false
+      id: 'demat_account',
+      name: 'Demat Account Statement',
+      description: 'Recent statement from your demat account showing sufficient funds for your visit',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'demat_account'
+      }]
     },
     {
-      title: 'National Identity Document',
-      group: 'national_id',
-      showDocuments: false
+      id: 'property_documents',
+      name: 'Property Documents',
+      description: 'Documents showing ownership of property as proof of financial stability',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }]
     },
     {
-      title: 'Citizenship and Residency',
-      group: 'citizenship',
-      showDocuments: false
+      id: 'sponsor_letter',
+      name: 'Sponsor Letter and Bank Statements',
+      description: 'Letter from sponsor and their bank statements showing sufficient funds',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'sponsor'
+      }]
     },
     {
-      title: 'Contact Information',
-      group: 'contact',
-      showDocuments: false
+      id: 'travel_itinerary',
+      name: 'Travel Itinerary',
+      description: 'Flight bookings, hotel reservations, or travel plans',
+      type: 'default',
+      required: true
     },
     {
-      title: 'Employment Information',
-      group: 'employment',
-      showDocuments: false
+      id: 'invitation_letter',
+      name: 'Invitation Letter',
+      description: 'Letter from host or family member inviting you',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'visitation'
+      }]
+    },
+    {
+      id: 'inviter_activity',
+      name: 'Inviter activity (if applicable)',
+      description: 'Proof of inviter’s activities – school letter, job letter, and business documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'visitation'
+      }]
+    },
+    {
+      id: 'inviter_income_proof',
+      name: 'Inviter Income proof (if applicable)',
+      description: 'Proof of inviter’s income – income tax return, pay slips, accountant letter',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'visitation'
+      }]
+    },
+    {
+      id: 'inviter_funds_proof',
+      name: 'Inviter Funds proof (if applicable)',
+      description: 'Proof of inviter’s funds – bank account statements ',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'visitation'
+      }]
+    },
+     // Documents for self-arranged travel
+{
+  id: 'hotel_booking_confirmation',
+  name: 'Hotel Booking Confirmation',
+  description: 'Hotel booking confirmation or voucher showing your accommodation details for the entire duration of your stay',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'assistanceType',
+    value: 'hotel'
+  }]
+},
+{
+  id: 'flight_tickets',
+  name: 'Flight Tickets',
+  description: 'Confirmed round-trip flight tickets showing your travel dates and itinerary',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'assistanceType',
+    value: 'flight'
+  }]
+},
+{
+  id: 'travel_insurance_certificate',
+  name: 'Travel Insurance Certificate',
+  description: 'Travel insurance certificate showing coverage for the entire duration of your trip',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'assistanceType',
+    value: 'insurance'
+  }]
+},
+    // tourism docs
+    {
+      id: 'tourism_itinerary',
+      name: 'Tourism Itinerary ',
+      description: 'Detailed itinerary of your trip ',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'tourism'
+      }]
+    },
+    {
+      id: 'tourism_accommodation',
+      name: 'Tourism Accommodation ',
+      description: 'Confirmed booking of accommodation (hotel, AirBnB etc.) ',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'tourism'
+      }]
+    },
+    {
+      id: 'tourism_air_tickets',
+      name: 'Tourism Air Tickets ',
+      description: 'Confirmed return air tickets',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'tourism'
+      }]
+    },
+    {
+      id: 'tourism_insurance',
+      name: 'Tourism Insurance (if applicable) ',
+      description: 'Travel insurance policy',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'tourism'
+      }]
+    },
+    // business docs
+    {
+      id: 'business_documents',
+      name: 'Business Documents',
+      description: 'Business registration, invitations to meetings or conferences',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }]
+    },
+    {
+      id: 'business_invitation',
+      name: 'Business Invitation (if applicable) ',
+      description: 'Official correspondence for visit',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }]
+    },
+    {
+      id: 'business_accommodation',
+      name: 'Business Accommodation (if applicable) ',
+      description: 'Accommodation letter for stay',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }]
     },
 
     {
-      title: 'Education',
-      group: 'education',
-      showDocuments: false
+      id: 'employment_letter',
+      name: 'Employment Letter',
+      description: 'Letter from current employer stating position, salary and duration of employment',
+      type: 'default',
+      required: true
+    },
+    //study docs
+    {
+      id: 'study_acceptance',
+      name: 'Letter of Acceptance',
+      description: 'Acceptance letter from educational institution',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      title: 'Medical Background',
-      group: 'medical',
-      showDocuments: false
+      id: 'academic_transcripts',
+      name: 'Academic Transcripts',
+      description: 'Academic transcripts along with degree or diploma',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'language_proficiency',
+      name: 'Language Proficiency Test Result (if applicable)',
+      description: 'Language proficiency test result (IELTS, PTE or TOEFL etc.)',
+      type: 'conditional',
+      required: true, // R - Recommended
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'work_experience_letter_study',
+      name: 'Work Experience Letter (if applicable)',
+      description: 'Work experience letter if applicable',
+      type: 'conditional',
+      required: true, // O - Optional
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'scholastic_activities',
+      name: 'Scholastic and Extra Activities (if applicable)',
+      description: 'Documentation of scholastic and extra-curricular activities',
+      type: 'conditional',
+      required: true, // O - Optional
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'provincial_attestation',
+      name: 'Provincial Attestation Letter or CAQ - Canada (if applicable)',
+      description: 'Letter of Acceptance and Provincial Attestation Letter or CAQ – Canada',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'confirmation_enrollment',
+      name: 'Confirmation of Enrollment (CoE) - Australia (if applicable)',
+      description: 'Conformation of Enrolment (CoE) – Australia',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'confirmation_acceptance',
+      name: 'Confirmation of Acceptance to Studies (CAS) - UK (if applicable)',
+      description: 'Confirmation of Acceptance to Studies (CAS) – the United Kingdom',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'i20_form',
+      name: 'I-20 Form - USA (if applicable)',
+      description: 'I-20 – USA',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'admission_offer',
+      name: 'Admission Offer (if applicable)',
+      description: 'Admission offer from educational institution',
+      type: 'conditional',
+      required: true, // O - Optional
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'tuition_deposit',
+      name: 'Tuition Deposit Receipts (if applicable)',
+      description: 'Tuition deposit official receipts',
+      type: 'conditional',
+      required: true, // R - Recommended
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'sevis_fee',
+      name: 'SEVIS Fee Receipt - USA (if applicable)',
+      description: 'SEVIS fee receipt – USA',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'sat_gre',
+      name: 'SAT or GRE - USA (if applicable)',
+      description: 'SAT or GRE test results – USA',
+      type: 'conditional',
+      required: true, // O - Optional
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'police_clearance',
+      name: 'Police Clearance Certificate - New Zealand (if applicable)',
+      description: 'Police Clearance Certificate – New Zealand',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'academic_assessment',
+      name: 'Assessment of Academic Documents - Europe (if applicable)',
+      description: 'Assessment of academic documents – Europe',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'living_expenses',
+      name: 'Advance Arrangement of Living Expenses (if applicable)',
+      description: 'Advance arrangement of living expenses (GIC – Canada, FTS – New Zealand, bank deposits – the UK / Europe)',
+      type: 'conditional',
+      required: true, // R - Recommended
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'supporting_income',
+      name: 'Supporting Person\'s Income Documents (if applicable)',
+      description: 'Supporting person\'s income documents',
+      type: 'conditional',
+      required: true, // O - Optional
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'education_loan',
+      name: 'Education Loan Sanction Letter (if applicable)',
+      description: 'Education loan sanction letter',
+      type: 'conditional',
+      required: true, // O - Optional
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'reference_letters',
+      name: 'Academic or Professional Reference Letters (if applicable)',
+      description: 'Academic or professional reference letters',
+      type: 'conditional',
+      required: true, // O - Optional
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'statement_purpose',
+      name: 'Statement of Purpose (SOP) (if applicable)',
+      description: 'Statement of purpose (SOP), covering letter, letter of explanation',
+      type: 'conditional',
+      required: true, // R - Recommended
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'medical_examination',
+      name: 'Medical Examination (if applicable)',
+      description: 'Medical examination results',
+      type: 'conditional',
+      required: true, // R - Recommended
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    // Work-related documents
+    {
+      id: 'detailed_biodata',
+      name: 'Detailed Biodata / Resume (if applicable)',
+      description: 'Detailed biodata or resume',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    {
+      id: 'academic_achievements',
+      name: 'Academic Achievements (if applicable)',
+      description: 'Documentation of academic achievements',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    {
+      id: 'work_experience_proof',
+      name: 'Work Experience Proof',
+      description: 'Work Experience letter, pay slips, bank account statement with pay credits',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    {
+      id: 'professional_licensing',
+      name: 'Professional Licensing or Registration (if applicable)',
+      description: 'Licensing or registration from or with professional body',
+      type: 'conditional',
+      required: true, // O - Optional (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    {
+      id: 'employment_contract',
+      name: 'Employer Employee Contract',
+      description: 'Contract between employer and employee',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    {
+      id: 'lmia_approval',
+      name: 'Labor Market Impact Assessment (LMIA) - Canada ',
+      description: 'Government approvals – Labor Marker Impact Assessment (LMIA) – Canada',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    {
+      id: 'h1b_approval',
+      name: 'H1B Petition Approval - USA',
+      description: 'Approval of H1B petition – USA',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    {
+      id: 'cos_approval',
+      name: 'Confirmation of Sponsorship (CoS) - UK',
+      description: 'Confirmation of Sponsorship (CoS) – the UK',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    {
+      id: 'nulla_osta',
+      name: 'Nulla Osta - Italy',
+      description: 'Nulla Osta – Italy and as applicable in the destination country',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    // Long Term Family Visit documents
+{
+  id: 'language_proficiency_family',
+  name: 'Language Proficiency Test Result (if applicable)',
+  description: 'Language proficiency test result',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+// Child and Parent relationship documents
+{
+  id: 'relationship_proof_child_parent',
+  name: 'Proof of Relationship - Birth Certificate',
+  description: 'Birth certificate proving relationship between child and parent',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+// Partner relationship documents
+{
+  id: 'marriage_certificate_partner',
+  name: 'Marriage Registration Certificate',
+  description: 'Marriage registration certificate for partners',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+{
+  id: 'contact_proof_partner',
+  name: 'Proof of Contact (if applicable)',
+  description: 'Proof of contact – chat screenshots, call logs, pre wedding, wedding and post wedding photographs and any other document',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+// Sponsor immigration status documents - Citizen
+{
+  id: 'citizen_proof_sponsor',
+  name: 'Citizenship Proof of Sponsor',
+  description: 'Citizenship certificate or passport of the sponsor',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+// Sponsor immigration status documents - Permanent Resident
+{
+  id: 'pr_proof_sponsor',
+  name: 'Permanent Resident Proof of Sponsor',
+  description: 'Passport, PR card (front and back), BRP (UK), visa authorization etc. of the sponsor',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+// Sponsor immigration status documents - Student
+{
+  id: 'student_proof_sponsor',
+  name: 'Student Status Proof of Sponsor',
+  description: 'School enrollment letter, passport, visa/permit/BRP, transcripts, job letter and pay slips for part time work, bank statement, accommodation proof of the sponsor',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+// Sponsor immigration status documents - Worker
+{
+  id: 'worker_proof_sponsor',
+  name: 'Worker Status Proof of Sponsor',
+  description: 'Passport, visa/permit/BRP, job letter (with detailed duties) and pay slips for work, bank statement, accommodation proof, income tax return/assessment of the sponsor',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+// Sponsor immigration status documents - Refugee
+{
+  id: 'refugee_proof_sponsor',
+  name: 'Refugee Status Proof of Sponsor',
+  description: 'Passport, court order/visa/permit/BRP, job letter and pay slips for work, bank statement, accommodation proof, income tax return/assessment of the sponsor',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+// Study documents for sponsor
+{
+  id: 'study_admission_sponsor',
+  name: 'Admission Letter of Sponsor (if applicable)',
+  description: 'Admission letter from a school for the sponsor, and the documents as needed for study visa applicant',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'long_family_visit'
+  }]
+},
+// Join Family Permanently documents
+// Partner documents (option iii)
+{
+  id: 'birth_certificate_permanent',
+  name: 'Birth Certificate',
+  description: 'Applicant\'s birth certificate',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'police_clearance_permanent',
+  name: 'Police Clearance Certificate',
+  description: 'Police Clearance Certificate from Passport Office for all countries lived in for more than 6 months',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+// Partner's documents
+{
+  id: 'partner_passport_permanent',
+  name: 'Partner\'s Passport',
+  description: 'Partner\'s passport all pages with travel stamps, air tickets, boarding passes',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'partner_pr_citizenship_permanent',
+  name: 'Partner\'s PR Card/Citizenship',
+  description: 'Partner\'s PR card / Landing documents / CoPR / BRP / visa authorisation or Citizenship',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'partner_job_letter_permanent',
+  name: 'Partner\'s Job Letter',
+  description: 'Partner\'s job letter',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'partner_pay_stubs_permanent',
+  name: 'Partner\'s Pay Stubs (if applicable)',
+  description: 'Partner\'s pay stubs',
+  type: 'conditional',
+  required: true, // O - Optional (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'partner_assessment_permanent',
+  name: 'Partner\'s Notice of Assessment',
+  description: 'Partner\'s notice of assessment',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'partner_bank_statement_permanent',
+  name: 'Partner\'s Bank Account Statement (if applicable)',
+  description: 'Partner\'s bank account statement',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+// Joint Documents
+{
+  id: 'wedding_invitation_permanent',
+  name: 'Wedding Invitation Cards (if applicable)',
+  description: 'Wedding invitation cards',
+  type: 'conditional',
+  required: true, // O - Optional (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'wedding_photos_permanent',
+  name: 'Wedding Photographs (if applicable)',
+  description: 'Pre wedding, wedding and post wedding photographs',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'ceremonies_permanent',
+  name: 'Ceremony Documentation (if applicable)',
+  description: 'Series of ceremonies and celebrations organized individually or jointly',
+  type: 'conditional',
+  required: true, // O - Optional (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'relationship_proof_permanent',
+  name: 'Relationship Development Documentation (if applicable)',
+  description: 'Documents supporting the description of development of this relationship such as social media handles, call logs, messages, chats, matrimonial ads, exchange of gifts, transfer of monies',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'joint_accounts_permanent',
+  name: 'Joint Financial Documents (if applicable)',
+  description: 'Joint bank account statements, mortgages, investments, insurance, ID\'s or any correspondence by third party on same address',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'cohabitation_proof_permanent',
+  name: 'Cohabitation Proof (if applicable)',
+  description: 'Proofs of cohabitations (living or lived together)',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'vendor_invoices_permanent',
+  name: 'Vendor Invoices (if applicable)',
+  description: 'Any invoices from vendors',
+  type: 'conditional',
+  required: true, // O - Optional (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+// Child and Parent relationship documents
+{
+  id: 'birth_certificate_child_parent_permanent',
+  name: 'Proof of Relationship - Birth Certificate',
+  description: 'Birth certificate proving relationship between child and parent',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'police_clearance_above18_permanent',
+  name: 'Police Clearance Certificate (if above age 18)',
+  description: 'Police Clearance Certificate from Passport Office for all countries lived in for more than 6 months (for applicants above age 18)',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'resume_above18_permanent',
+  name: 'Detailed Resume (if above age 18) (if applicable)',
+  description: 'Detailed resume for applicants above age 18',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+// Sponsor's documents
+{
+  id: 'sponsor_passport_permanent',
+  name: 'Sponsor\'s Passport',
+  description: 'Sponsor\'s passport all pages with travel stamps',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'sponsor_pr_citizenship_permanent',
+  name: 'Sponsor\'s PR Card/Citizenship',
+  description: 'Sponsor\'s PR card / Landing documents / CoPR / BRP / visa authorisation or Citizenship',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'sponsor_job_letter_permanent',
+  name: 'Sponsor\'s Job Letter',
+  description: 'Sponsor\'s job letter',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'sponsor_pay_stubs_permanent',
+  name: 'Sponsor\'s Pay Stubs (if applicable)',
+  description: 'Sponsor\'s pay stubs',
+  type: 'conditional',
+  required: true, // O - Optional (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'sponsor_assessment_permanent',
+  name: 'Sponsor\'s Notice of Assessment',
+  description: 'Sponsor\'s notice of assessment',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+{
+  id: 'sponsor_bank_statement_permanent',
+  name: 'Sponsor\'s Bank Account Statement (if applicable)',
+  description: 'Sponsor\'s bank account statement',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'join_family_permanent'
+  }]
+},
+// Skill-based Immigration documents
+{
+  id: 'academic_degrees',
+  name: 'Academic/Professional Degrees and Transcripts',
+  description: 'Academic or professional degrees and transcripts',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'education_assessment',
+  name: 'Education Credential Assessment (ECA)',
+  description: 'Education Credential Assessment (ECA)',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'language_proficiency_skill',
+  name: 'Language Proficiency Test Result',
+  description: 'Language proficiency test result (IELTS, CELPIP, PTE, TOEFL, TEF, TCF)',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'work_experience_letter_skill',
+  name: 'Work Experience Letter',
+  description: 'Work experience letter describing the duration of job, duties, and compensation',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'bank_statement_skill',
+  name: 'Bank Account Statement',
+  description: 'Bank account statement',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'income_tax_returns',
+  name: 'Income Tax Returns',
+  description: 'Income tax returns',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'pay_slips_skill',
+  name: 'Pay Slips',
+  description: 'Pay slips',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'licenses_regulatory',
+  name: 'Licenses or Registrations (if applicable)',
+  description: 'Licenses or registrations with regulatory body',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'family_immigration_status',
+  name: 'Proof of Family Immigration Status (if applicable)',
+  description: 'Proof of immigration status family in country of destination',
+  type: 'conditional',
+  required: true, // O - Optional (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'job_offer_letter',
+  name: 'Job Offer Letter (if applicable)',
+  description: 'Job offer letter from country of application',
+  type: 'conditional',
+  required: true, // O - Optional (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'nomination_letter',
+  name: 'Nomination or Support Letter (if applicable)',
+  description: 'Nomination or support letter from province',
+  type: 'conditional',
+  required: true, // O - Optional (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'birth_certificate_skill',
+  name: 'Birth Certificate',
+  description: 'Birth certificate',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'police_clearance_skill',
+  name: 'Police Clearance Certificate',
+  description: 'Police Clearance Certificate from Passport Office for all countries lived in for more than 6 months',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'marriage_certificate_skill',
+  name: 'Marriage Registration Certificate (if applicable)',
+  description: 'Marriage registration certificate for partner',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+{
+  id: 'invitation_letter_skill',
+  name: 'Invitation Letter/Contract Copy (if applicable)',
+  description: 'Invitation letter, contract copy, or participation registration',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'skill_immigration'
+  }]
+},
+// Performance in Sports/Religious Events/Public Speaker documents
+{
+  id: 'event_details',
+  name: 'Event Details',
+  description: 'Hall booking / ticket sales / event details',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'performance'
+  }]
+},
+{
+  id: 'awards_certifications',
+  name: 'Awards and Certifications (if applicable)',
+  description: 'Awards and certifications',
+  type: 'conditional',
+  required: true, // R - Recommended (setting as true with "if applicable" in name)
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'performance'
+  }]
+},
+{
+  id: 'accommodation_during_stay',
+  name: 'Accommodation During Stay',
+  description: 'Arranged accommodation during stay',
+  type: 'conditional',
+  required: true, // M - Mandatory
+  conditions: [{
+    questionId: 'visitPurpose',
+    value: 'performance'
+  }]
+},
+    {
+      id: 'marriage_certificate',
+      name: 'Marriage Certificate',
+      description: 'If married, please provide a copy of your marriage certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'maritalStatus',
+        value: 'married'
+      }]
+    },
+    {
+      id: 'divorce_certificate',
+      name: 'Divorce Certificate',
+      description: 'If divorced, please provide a copy of your divorce certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'maritalStatus',
+        value: 'divorced'
+      }]
+    },
+    {
+      id: 'death_certificate',
+      name: 'Death Certificate',
+      description: 'If widowed, please provide a copy of the death certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'maritalStatus',
+        value: 'widowed'
+      }]
+    },
+    {
+      id: 'medical_insurance',
+      name: 'Medical Insurance',
+      description: 'Proof of medical insurance coverage for the duration of your stay',
+      type: 'default',
+      required: true
+    },
+    {
+      id: 'language_test',
+      name: 'Language Test Results',
+      description: 'IELTS, TOEFL, or other language proficiency test results',
+      type: 'conditional',
+      required: true,
+      conditions: [
+        {
+          questionId: 'languageTest',
+          value: 'IELTS'
+        },
+        {
+          questionId: 'languageTest',
+          value: 'CELPIP'
+        },
+        {
+          questionId: 'languageTest',
+          value: 'PTE'
+        },
+        {
+          questionId: 'languageTest',
+          value: 'TOEFL'
+        },
+        {
+          questionId: 'languageTest',
+          value: 'others - specify'
+        }
+      ]
+    },
+    {
+      id: 'educational_documents',
+      name: 'Educational Documents',
+      description: 'Diplomas, degrees, and academic transcripts',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
+    },
+    {
+      id: 'previous_visas',
+      name: 'Previous Visa Copies',
+      description: 'Copies of previous visas to any country',
+      type: 'default',
+      required: false
+    },
+    // what is source of income of 
+    {
+      id: 'salary_proof',
+      name: 'Salary Proof',
+      description: 'Salary slips, employment letter, or other proof of salary income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'salary'
+      }]
+    },
+    {
+      id: 'business_income_proof',
+      name: 'Business Income Proof',
+      description: 'Business registration, tax returns, or financial statements showing business income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'business_income'
+      }]
+    },
+    {
+      id: 'partnership_share_proof',
+      name: 'Partnership Share Proof',
+      description: 'Partnership deed, profit sharing agreement, or other proof of partnership income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'partnership_share'
+      }]
+    },
+    {
+      id: 'professional_income_proof',
+      name: 'Professional Income Proof',
+      description: 'Client invoices, professional registration, or other proof of professional income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'professional_income'
+      }]
+    },
+    {
+      id: 'interest_dividend_proof',
+      name: 'Interest and Dividend Proof',
+      description: 'Bank statements, investment account statements, or other proof of interest and dividend income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'interest_dividend'
+      }]
+    },
+    {
+      id: 'agriculture_income_proof',
+      name: 'Agriculture Income Proof',
+      description: 'Land ownership documents, crop sales receipts, or other proof of agricultural income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'agriculture_income'
+      }]
+    },
+    {
+      id: 'rental_income_proof',
+      name: 'Rental Income Proof',
+      description: 'Lease agreements, rental receipts, or other proof of rental income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'rental_income'
+      }]
+    },
+    {
+      id: 'pension_income_proof',
+      name: 'Pension Income Proof',
+      description: 'Pension statements, retirement account statements, or other proof of pension income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'pension_income'
+      }]
+    },
+    {
+      id: 'other_income_proof',
+      name: 'Other Income Proof',
+      description: 'Documents showing other sources of income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerIncomeSource',
+        value: 'other_income'
+      }]
+    },
+    // what is additional source of income
+    {
+      id: 'additional_salary_proof',
+      name: 'Additional Salary Proof',
+      description: 'Salary slips, employment letter, or other proof of additional salary income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'salary'
+      }]
+    },
+    {
+      id: 'additional_business_income_proof',
+      name: 'Additional Business Income Proof',
+      description: 'Business registration, tax returns, or financial statements showing additional business income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'business_income'
+      }]
+    },
+    {
+      id: 'additional_partnership_share_proof',
+      name: 'Additional Partnership Share Proof',
+      description: 'Partnership deed, profit sharing agreement, or other proof of additional partnership income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'partnership_share'
+      }]
+    },
+    {
+      id: 'additional_professional_income_proof',
+      name: 'Additional Professional Income Proof',
+      description: 'Client invoices, professional registration, or other proof of additional professional income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'professional_income'
+      }]
+    },
+    {
+      id: 'additional_interest_dividend_proof',
+      name: 'Additional Interest and Dividend Proof',
+      description: 'Bank statements, investment account statements, or other proof of additional interest and dividend income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'interest_dividend'
+      }]
+    },
+    {
+      id: 'additional_agriculture_income_proof',
+      name: 'Additional Agriculture Income Proof',
+      description: 'Land ownership documents, crop sales receipts, or other proof of additional agricultural income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'agriculture_income'
+      }]
+    },
+    {
+      id: 'additional_rental_income_proof',
+      name: 'Additional Rental Income Proof',
+      description: 'Lease agreements, rental receipts, or other proof of additional rental income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'rental_income'
+      }]
+    },
+    {
+      id: 'additional_pension_income_proof',
+      name: 'Additional Pension Income Proof',
+      description: 'Pension statements, retirement account statements, or other proof of additional pension income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'pension_income'
+      }]
+    },
+    {
+      id: 'additional_other_income_proof',
+      name: 'Additional Other Income Proof',
+      description: 'Documents showing other additional sources of income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerAdditionalIncomeSource',
+        value: 'other_income'
+      }]
+    },
+
+    // Income and Funds Documents - Question 5
+    {
+      id: 'relationship_proof_sponsor',
+      name: 'Proof of Relationship',
+      description: 'Documents proving your relationship to the financial sponsor',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'selfPayingExpenses',
+        value: 'no'
+      }]
+    },
+    {
+      id: 'sponsor_support_letter',
+      name: 'Letter of Support from Financial Sponsor',
+      description: 'Letter from the person who will financially support your trip',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'selfPayingExpenses',
+        value: 'no'
+      }]
+    },
+
+    // Proprietor Documents
+    {
+      id: 'business_registration',
+      name: 'Business Registration',
+      description: 'Business registration (GST, Udhyam, Import Export Code etc. as applicable)',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'proprietor'
+      }]
+    },
+    {
+      id: 'balance_sheets_proprietor',
+      name: 'Balance Sheets (2 years)',
+      description: 'Balance sheets for the last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'proprietor'
+      }]
+    },
+    {
+      id: 'business_bank_statements_proprietor',
+      name: 'Business Bank Account Statements',
+      description: 'Business bank account statements (CC/CA accounts) not issued 15 days prior to submission, with 3 to 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'proprietor'
+      }]
+    },
+    {
+      id: 'income_tax_returns_proprietor',
+      name: 'Income Tax Returns (2 years)',
+      description: 'Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'proprietor'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_proprietor',
+      name: 'Personal Bank Account Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'proprietor'
+      }]
+    },
+    {
+      id: 'other_investments_proprietor',
+      name: 'Documentary Evidence of Other Investments',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'proprietor'
+      }]
+    },
+    {
+      id: 'property_title_deeds_proprietor',
+      name: 'Title Deeds of Properties Owned',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'proprietor'
+      }]
+    },
+    {
+      id: 'partner_documents_proprietor',
+      name: 'Partner Documents (if applicable)',
+      description: 'Additional documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'proprietor'
+      }]
+    },
+
+    // Employed (Salaried) Documents
+    {
+      id: 'job_letter_employed',
+      name: 'Job Letter (if applicable)',
+      description: 'Letter from current employer stating position, salary and duration of employment',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+    {
+      id: 'leave_letter_employed',
+      name: 'Leave Letter',
+      description: 'Letter from employer approving leave for your trip',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+    {
+      id: 'salary_slips_employed',
+      name: 'Salary Slips',
+      description: 'Minimum 3 months\' salary slips',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+    {
+      id: 'income_tax_returns_employed',
+      name: 'Income Tax Returns (2 years)',
+      description: 'Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_employed',
+      name: 'Personal Bank Account Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+    {
+      id: 'provident_fund_statements_employed',
+      name: 'Provident Fund Statements',
+      description: 'Provident Fund Statements showing contributions',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+    {
+      id: 'other_investments_employed',
+      name: 'Documentary Evidence of Other Investments',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+    {
+      id: 'property_title_deeds_employed',
+      name: 'Title Deeds of Properties Owned',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+    {
+      id: 'partner_documents_employed',
+      name: 'Partner Documents (if applicable)',
+      description: 'Additional documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+
+    // Company Director Documents
+    {
+      id: 'certificate_of_incorporation',
+      name: 'Certificate of Incorporation',
+      description: 'Certificate of incorporation, Memorandum and Articles of Association, ROC Form 32 as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'business_registration_director',
+      name: 'Business Registration (if applicable)',
+      description: 'Business registration (GST, Import Export Code etc. as applicable)',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'balance_sheets_director',
+      name: 'Balance Sheets (2 years)',
+      description: 'Balance sheets for the last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'business_tax_returns_director',
+      name: 'Business Income Tax Returns (2 years)',
+      description: 'Business Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'business_bank_statements_director',
+      name: 'Business Bank Account Statements',
+      description: 'Business bank account statements (CC/CA accounts) not issued 15 days prior to submission, with 3 to 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_director',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_director',
+      name: 'Personal Bank Account Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'other_investments_director',
+      name: 'Documentary Evidence of Other Investments',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'property_title_deeds_director',
+      name: 'Title Deeds of Properties Owned (if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'partner_documents_director',
+      name: 'Partner Documents (if applicable)',
+      description: 'Additional documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    // Business Partner Documents
+    {
+      id: 'partnership_deed',
+      name: 'Partnership Deed',
+      description: 'Partnership deed',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'business_registration_partner',
+      name: 'Business Registration (if applicable)',
+      description: 'Business registration (GST, Import Export Code etc. as applicable)',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'balance_sheets_partner',
+      name: 'Balance Sheets (2 years) (if applicable)',
+      description: 'Balance sheets for the last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'business_tax_returns_partner',
+      name: 'Business Income Tax Returns (2 years) (if applicable)',
+      description: 'Business Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'business_bank_statements_partner',
+      name: 'Business Bank Statements (if applicable)',
+      description: 'Business bank account statements (CC/ CA accounts) not issued 15 days prior to submission, with 3 to 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_partner',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_partner',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'investment_evidence_partner',
+      name: 'Investment Evidence (if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'property_title_deeds_partner',
+      name: 'Property Title Deeds (if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'partner_documents_partner',
+      name: 'Partner Documents (if applicable)',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'additional_documents_partner',
+      name: 'Additional Documents (if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    // Professional, Independent Contractor, Freelancer, and Self-employed Documents
+    {
+      id: 'business_registration_professional',
+      name: 'Business Registration/License (if applicable)',
+      description: 'Business registration / License (such as medical association, Dental Councils registrations, Certificate of Practice, Bar Association etc.) / Any contracts',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'professional'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_professional',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'professional'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_professional',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'professional'
+      }]
+    },
+    {
+      id: 'investment_evidence_professional',
+      name: 'Investment Evidence (if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'professional'
+      }]
+    },
+    {
+      id: 'property_title_deeds_professional',
+      name: 'Property Title Deeds (if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'professional'
+      }]
+    },
+    {
+      id: 'partner_documents_professional',
+      name: 'Partner Documents (if applicable)',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'professional'
+      }]
+    },
+    {
+      id: 'additional_documents_professional',
+      name: 'Additional Documents (if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'professional'
+      }]
+    },
+
+    // Independent Contractor Documents
+    {
+      id: 'business_registration_contractor',
+      name: 'Business Registration/License (if applicable)',
+      description: 'Business registration / License / Any contracts',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'independent_contractor'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_contractor',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'independent_contractor'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_contractor',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'independent_contractor'
+      }]
+    },
+    {
+      id: 'investment_evidence_contractor',
+      name: 'Investment Evidence (if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'independent_contractor'
+      }]
+    },
+    {
+      id: 'property_title_deeds_contractor',
+      name: 'Property Title Deeds (if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'independent_contractor'
+      }]
+    },
+    {
+      id: 'partner_documents_contractor',
+      name: 'Partner Documents (if applicable)',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'independent_contractor'
+      }]
+    },
+    {
+      id: 'additional_documents_contractor',
+      name: 'Additional Documents (if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'independent_contractor'
+      }]
+    },
+
+    // Freelancer Documents
+    {
+      id: 'business_registration_freelancer',
+      name: 'Business Registration/License (if applicable)',
+      description: 'Business registration / License / Any contracts',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'freelancer'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_freelancer',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'freelancer'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_freelancer',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'freelancer'
+      }]
+    },
+    {
+      id: 'investment_evidence_freelancer',
+      name: 'Investment Evidence (if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'freelancer'
+      }]
+    },
+    {
+      id: 'property_title_deeds_freelancer',
+      name: 'Property Title Deeds (if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'freelancer'
+      }]
+    },
+    {
+      id: 'partner_documents_freelancer',
+      name: 'Partner Documents (if applicable)',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'freelancer'
+      }]
+    },
+    {
+      id: 'additional_documents_freelancer',
+      name: 'Additional Documents (if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'freelancer'
+      }]
+    },
+
+    // Self-employed Documents
+    {
+      id: 'business_registration_selfemployed',
+      name: 'Business Registration/License (if applicable)',
+      description: 'Business registration / License / Any contracts',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'self_employed'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_selfemployed',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'self_employed'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_selfemployed',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'self_employed'
+      }]
+    },
+    {
+      id: 'investment_evidence_selfemployed',
+      name: 'Investment Evidence (if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'self_employed'
+      }]
+    },
+    {
+      id: 'property_title_deeds_selfemployed',
+      name: 'Property Title Deeds (if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'self_employed'
+      }]
+    },
+    {
+      id: 'partner_documents_selfemployed',
+      name: 'Partner Documents',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: false,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'self_employed'
+      }]
+    },
+    {
+      id: 'additional_documents_selfemployed',
+      name: 'Additional Documents',
+      description: 'Any additional documents',
+      type: 'conditional',
+      required: false,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'self_employed'
+      }]
+    },
+
+    // Farmer Documents
+    {
+      id: 'land_revenue_record',
+      name: 'Land Revenue Record',
+      description: 'Revenue record of the land owned (Jamabandi/Fard)',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'land_lease_record',
+      name: 'Land Lease Record(if applicable)',
+      description: 'Any land lease record',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'form_j',
+      name: 'Form J (Last 2 Crops)',
+      description: 'Form J (for last 2 crops)',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'other_revenue_proof',
+      name: 'Other Revenue Proof(if applicable)',
+      description: 'Any other form of revenue – fodder /timber/ seeds/ fruits / vegetable sale records',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'agricultural_implement_registration',
+      name: 'Agricultural Implement Registration(if applicable)',
+      description: 'Registration of agricultural implement owned – Tractor / Harvester etc.',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_farmer',
+      name: 'Personal Income Tax Returns (2 years) (if applicable)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_farmer',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'investment_evidence_farmer',
+      name: 'Investment Evidence (if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'property_title_deeds_farmer',
+      name: 'Property Title Deeds (if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'partner_documents_farmer',
+      name: 'Partner Documents(if applicable)',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+    {
+      id: 'additional_documents_farmer',
+      name: 'Additional Documents(if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'farmer'
+      }]
+    },
+
+    // Realtor Documents
+    {
+      id: 'rent_deeds',
+      name: 'Rent Deeds',
+      description: 'Rent Deeds',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'realtor'
+      }]
+    },
+    {
+      id: 'property_ownership_proof',
+      name: 'Property Ownership Proof',
+      description: 'Proof of the ownership of properties rented out',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'realtor'
+      }]
+    },
+    {
+      id: 'rental_receipts_bank_history',
+      name: 'Rental Receipts Bank History',
+      description: 'Bank account transaction history of rental receipts',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'realtor'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_realtor',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'realtor'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_realtor',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'realtor'
+      }]
+    },
+    {
+      id: 'investment_evidence_realtor',
+      name: 'Investment Evidence(if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'realtor'
+      }]
+    },
+    {
+      id: 'property_title_deeds_realtor',
+      name: 'Property Title Deeds(if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'realtor'
+      }]
+    },
+    {
+      id: 'partner_documents_realtor',
+      name: 'Partner Documents(if applicable)',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'realtor'
+      }]
+    },
+    {
+      id: 'additional_documents_realtor',
+      name: 'Additional Documents(if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'realtor'
+      }]
+    },
+
+    // Investor Documents
+    {
+      id: 'interest_certificate',
+      name: 'Interest Certificate(if applicable)',
+      description: 'Interest certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'investor'
+      }]
+    },
+    {
+      id: 'interest_investments_details',
+      name: 'Interest Investments Details',
+      description: 'Details of interest-bearing investments',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'investor'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_investor',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'investor'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_investor',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'investor'
+      }]
+    },
+    {
+      id: 'investment_evidence_investor',
+      name: 'Investment Evidence(if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'investor'
+      }]
+    },
+    {
+      id: 'property_title_deeds_investor',
+      name: 'Property Title Deeds(if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'investor'
+      }]
+    },
+    {
+      id: 'partner_documents_investor',
+      name: 'Partner Documents(if applicable)',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'investor'
+      }]
+    },
+    {
+      id: 'additional_documents_investor',
+      name: 'Additional Documents(if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'investor'
+      }]
+    },
+
+    // Retired Documents
+    {
+      id: 'pension_payment_order',
+      name: 'Pension Payment Order',
+      description: 'Pension payment order',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'retired'
+      }]
+    },
+    {
+      id: 'pension_bank_history',
+      name: 'Pension Bank History',
+      description: 'Bank account transaction history of pension receipts',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'retired'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_retired',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'retired'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_retired',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'retired'
+      }]
+    },
+    {
+      id: 'investment_evidence_retired',
+      name: 'Investment Evidence(if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'retired'
+      }]
+    },
+    {
+      id: 'property_title_deeds_retired',
+      name: 'Property Title Deeds(if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'retired'
+      }]
+    },
+    {
+      id: 'partner_documents_retired',
+      name: 'Partner Documents(if applicable)',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'retired'
+      }]
+    },
+    {
+      id: 'additional_documents_retired',
+      name: 'Additional Documents(if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'retired'
+      }]
+    },
+    // Visa Refusal Documents
+    {
+      id: 'previous_passports',
+      name: 'Previous Passports',
+      description: 'All previous passports',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'hasVisaRefusal',
+        value: 'yes'
+      }]
+    },
+    {
+      id: 'visa_travel_stamps',
+      name: 'Visa and Travel Stamps(if applicable)',
+      description: 'All pages bearing visas or travel stamps',
+      type: 'conditional',
+      required: true, // R - Recommended
+      conditions: [{
+        questionId: 'hasVisaRefusal',
+        value: 'yes'
+      }]
+    },
+    {
+      id: 'e_visas',
+      name: 'E-Visas(if applicable)',
+      description: 'E-visas ever issued',
+      type: 'conditional',
+      required: true, // R - Recommended
+      conditions: [{
+        questionId: 'hasVisaRefusal',
+        value: 'yes'
+      }]
+    },
+    {
+      id: 'refusal_letter',
+      name: 'Refusal Letter(if applicable)',
+      description: 'Visa refusal letter from the embassy or consulate',
+      type: 'conditional',
+      required: true, // O - Optional
+      conditions: [{
+        questionId: 'hasVisaRefusal',
+        value: 'yes'
+      }]
+    },
+
+  ],
+  steps: [
+    // {
+    //   title: 'Destination Selection',
+    //   group: 'destination' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'destination-selection'
+    // },
+    {
+      title: 'Citizenship & Residence',
+      group: 'citizenship' as FormGroup,
+      showDocuments: false,
+      slug: 'citizenship-residence'
+    },
+    {
+      title: 'Personal Information',
+      group: 'personal' as FormGroup,
+      showDocuments: false,
+      slug: 'personal-information'
+    },
+    {
+      title: 'Purpose of Visit',
+      group: 'purpose' as FormGroup,
+      showDocuments: false,
+      slug: 'purpose-of-visit'
+    },
+    {
+      title: 'Financial Information',
+      group: 'finances' as FormGroup,
+      showDocuments: false,
+      slug: 'financial-information'
+    },
+    {
+      title: 'Residence Information',
+      group: 'residence' as FormGroup,
+      showDocuments: false,
+      slug: 'residence-information'
+    },
+    {
+      title: 'Passport Information',
+      group: 'passport' as FormGroup,
+      showDocuments: false,
+      slug: 'passport-information'
     },
     {
       title: 'Family Information',
-      group: 'family',
-      showDocuments: false
+      group: 'family' as FormGroup,
+      showDocuments: false,
+      slug: 'family-information'
     },
-    // {
-    //   title: 'Previous Travel History',
-    //   group: 'history',
-    //   showDocuments: false
-    // },
     {
-      title: 'Additional Information',
-      group: 'additional',
-      showDocuments: false
+      title: 'Parents Information',
+      group: 'parents' as FormGroup,
+      showDocuments: false,
+      slug: 'parents-information'
     },
-    // {
-    //   title: 'Upload Documents',
-    //   group: 'documents',
-    //   showDocuments: true
-    // },
     {
       title: 'Visa History',
-      group: 'visa_history',
-      showDocuments: false
+      group: 'visa_history' as FormGroup,
+      showDocuments: false,
+      slug: 'visa-history'
     },
     // {
-    //   title: 'Travel Plans',
-    //   group: 'visa_history',
-    //   showDocuments: false
+    //   title: 'Education',
+    //   group: 'education' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'education'
     // },
+    {
+      title: 'Travel Plans',
+      group: 'travel_plans' as FormGroup,
+      showDocuments: false,
+      slug: 'travel-plans'
+    },
+    // {
+    //   title: 'Relatives Information',
+    //   group: 'relatives' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'relatives-information'
+    // },
+    {
+      title: 'Health, Legal & Security Details',
+      group: 'criminal' as FormGroup,
+      showDocuments: false,
+      slug: 'health-legal-security-details'
+    },
+    {
+      title: 'Contact Preferences',
+      group: 'contact' as FormGroup,
+      showDocuments: false,
+      slug: 'contact-preferences'
+    },
     {
       title: 'Additional Information',
-      group: 'additional',
-      showDocuments: false
+      group: 'additional' as FormGroup,
+      showDocuments: false,
+      slug: 'additional-information'
     },
-    // {
-    //   title: 'Additional Information',
-    //   group: 'additional_applicant',
-    //   showDocuments: false
-    // },
-    
   ],
   fields: [
-    // -------------------- PERSONAL INFORMATION --------------------
+    // -------------------- DESTINATION SELECTION --------------------
     {
-      id: 'personalInfoHeader',
-      group: 'personal' as FormGroup,
+      id: 'destinationHeader',
+      group: 'destination' as FormGroup,
       type: 'header',
-      label: 'Personal Information',
-      description: 'Enter your personal information as it appears on your travel document'
-    },
-    
-    // Visa Type
-    {
-      id: 'visaType',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `I want to apply for a: ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      options: [
-        { label: 'Transit visa or temporary special measures', value: 'transit' },
-        { label: 'Visitor visa or super visa', value: 'visitor' },
-        { label: 'Not sure', value: 'not_sure' }
-      ]
-    },
-    
-    // Travel Document Section
-    // {
-    //   id: 'travelDocumentHeader',
-    //   group: 'travel_document',
-    //   type: 'header',
-    //   label: 'Travel Document Information',
-    //   description: 'Enter your travel document details and upload required documents'
-    // },
-    // {
-    //   id: 'passportBiodata',
-    //   group: 'travel_document',
-    //   type: 'file',
-    //   label: 'Passport Biodata Page',
-    //   description: 'Upload a clear scan or photo of your passport biodata page showing your photo, name, date of birth, and passport details',
-    //   required: true
-    // },
-    // {
-    //   id: 'travelHistory',
-    //   group: 'travel_document',
-    //   type: 'file',
-    //   label: 'Travel History (Visa Stamps)',
-    //   description: 'Upload scans of passport pages showing visa stamps and entry/exit seals from the last 5 years',
-    //   required: false
-    // },
-    {
-      id: 'documentsInfo',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'critical_illness' },
-      content: [
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '✓ A job offer letter or contract from your employer',
-        '  • You may need other documents depending on how you answer the questions in the application.',
-        '',
-        'Information you need to enter:',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information',
-        '',
-        'You may need to give us more information depending on how you answer the questions in the application.'
-      ]
+      label: 'Destination Selection',
+      description: `Fields marked with ${FIELD_REQUIREMENTS.MANDATORY} are mandatory, ${FIELD_REQUIREMENTS.RECOMMENDED} are recommended, and ${FIELD_REQUIREMENTS.OPTIONAL} are optional.`
     },
     {
-      id: 'documentsInfoMedicalCare',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'medical_care' },
-      content: [
-        'You selected: visitor visa - provide support or care to a person who is critically ill or has a medical reason as approved by a licensed health care practitioner in Canada',
-        'If this isn\'t what you expected, check your answers again.',
-        '',
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '',
-        'Upload in the "Additional document" field in the Documents table:',
-        '✓ A written explanation that details your reason for entering Canada',
-        '  • Provide as much detail about your visit as possible',
-        '',
-        'You may need other documents depending on how you answer the questions in the application.',
-        '',
-        'Information you need to enter:',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information',
-        '',
-        'You may need to give us more information depending on how you answer the questions in the application.'
-      ]
-    },
-    {
-      id: 'dateOfBirth',
-      group: 'travel_document',
-      type: 'date',
-      label: 'Date of birth',
+      id: 'destinationCountries',
+      group: 'destination' as FormGroup,
+      type: 'countriesInput',
+      label: `Which country/ies you want to visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true
     },
-    {
-      id: 'gender',
-      group: 'travel_document',
-      type: 'select',
-      label: 'Gender',
-      required: true,
-      options: [
-        { label: 'Male', value: 'male' },
-        { label: 'Female', value: 'female' },
-        { label: 'Unknown', value: 'unknown' },
-        { label: 'Another gender', value: 'other' }
-      ]
-    },
-    {
-      id: 'documentTypeHeader',
-      group: 'travel_document',
-      type: 'header',
-      label: 'Travel Document Information',
-      description: 'Enter your travel document details'
-    },
-    {
-      id: 'documentsInfoTourism',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'tourism' },
-      content: [
-        'You selected: visit Canada as a tourist',
-        'If this isn\'t what you expected, check your answers again.',
-        '',
-        'A visitor visa is an official document put in your passport that shows that you meet the requirements needed to enter Canada to visit as a tourist, visit family or friends, or attend meetings and events. Most visitors can stay for up to 6 months in Canada.',
-        '',
-        'Documents you need to complete the application:',
-        '',
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '',
-        'Other documents may be needed based on your application answers.',
-        '',
-        'Information you need to enter:',
-        '',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information',
-        '',
-        'You may be asked to provide more information based on your responses.'
-      ]
-    },
-    {
-      id: 'documentsInfoVisitImmediateFamily',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'visit_immediate_family' },
-      content: [
-        'You selected: visitor visa - to visit my spouse, common-law partner, dependent child, parent, step-parent, guardian or tutor',
-        'If this isn\'t what you expected, check your answers again.',
-        '',
-        'A visitor visa is an official document put in your passport that shows that you meet the requirements needed to enter Canada. Most visitors can stay for up to 6 months.',
-        '',
-        'Documents you need to complete the application:',
-        '',
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '',
-        '✓ A letter of invitation',
-        '',
-        'Other documents may be needed based on your application answers.',
-        '',
-        'Information you need to enter:',
-        '',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information'
-      ]
-    },
-    {
-      id: 'documentsInfoVisitTempResident',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'visit_temp_resident' },
-      content: [
-        'You selected: visitor visa - to visit my spouse, common-law partner, dependent child, parent, step-parent, guardian or tutor',
-        'If this isn\'t what you expected, check your answers again.',
-        '',
-        'A visitor visa is an official document put in your passport that shows that you meet the requirements needed to enter Canada. Most visitors can stay for up to 6 months.',
-        '',
-        'Documents you need to complete the application:',
-        '',
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '',
-        '✓ A letter of invitation',
-        '',
-        'Other documents may be needed based on your application answers.',
-        '',
-        'Information you need to enter:',
-        '',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information'
-      ]
-    },
-    {
-      id: 'documentsInfoVisitExtendedFamily',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'visit_extended_family' },
-      content: [
-        'You selected: visitor visa - to visit my grandparent, grandchild, sibling, non-dependent child',
-        'If this isn\'t what you expected, check your answers again.',
-        '',
-        'A visitor visa is an official document that shows you meet the requirements to visit Canada. Most visitors can stay for up to 6 months.',
-        '',
-        'Documents you need to complete the application:',
-        '',
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '',
-        '✓ A letter of invitation',
-        '',
-        'Other documents may be needed based on your application answers.',
-        '',
-        'Information you need to enter:',
-        '',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information'
-      ]
-    },   
-    {
-      id: 'issuingCountry',
-      group: 'travel_document',
-      type: 'text',
-      label: 'Which country or organization issued your travel document?',
-      required: true,
-      showIf: { 
-        field: 'documentType',
-        value: 'travel_document'
-      }
-    },
-    {
-      id: 'documentsInfoBusiness',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'business' },
-      content: [
-        'You selected: visitor visa for business reasons - such as meetings, conferences, events or training',
-        'If this isn\'t what you expected, check your answers again.',
-        '',
-        'A visitor visa allows travel for business meetings, events or training. Most visitors can stay for up to 6 months.',
-        '',
-        'Documents you need to complete the application:',
-        '',
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '',
-        '✓ A letter of invitation from the business/host',
-        '',
-        '✓ 24-hour contact details for the host',
-        '',
-        'Other documents may be needed based on your application answers.',
-        '',
-        'Information you need to enter:',
-        '',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information'
-      ]
-    },
-    {
-      id: 'documentsInfoMedicalTreatment',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'medical_treatment' },
-      content: [
-        'You selected: visitor visa for a scheduled medical procedure or treatment',
-        'If this isn\'t what you expected, check your answers again.',
-        '',
-        'A visitor visa may be issued for a scheduled medical procedure or treatment. Most visitors can stay up to 6 months.',
-        '',
-        'Documents you need to complete the application:',
-        '',
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '',
-        '✓ Proof of your scheduled procedure or treatment',
-        '',
-        'Other documents may be needed based on your application answers.',
-        '',
-        'Information you need to enter:',
-        '',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information'
-      ]
-    },
-    {
-      id: 'documentsInfoShortTermStudy',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'short_term_study' },
-      content: [
-        'You selected: apply for a visitor visa to study without a permit for less than 6 months',
-        'If this isn\'t what you expected, check your answers again.',
-        '',
-        'Documents you need to complete the application:',
-        '',
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '',
-        'Other documents may be needed based on your application answers.',
-        '',
-        'Information you need to enter:',
-        '',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information'
-      ]
-    },
-    {
-      id: 'documentsInfoWorkWithoutPermit',
-      group: 'description_section',
-      type: 'info',
-      label: 'Documents you need to complete the application',
-      showIf: { field: 'purposeOfVisit', value: 'work_without_permit' },
-      content: [
-        'You selected: apply for a visitor visa to work without a work permit',
-        'If this isn\'t what you expected, check your answers again.',
-        '',
-        'A visitor visa may be issued for certain work purposes that do not require a permit. Most visitors can stay for up to 6 months.',
-        '',
-        'Documents you need to complete the application:',
-        '',
-        '✓ A valid passport or travel document',
-        '  • You must have at least 1 free page where we can stick your visitor visa.',
-        '',
-        '✓ Job offer letter or contract',
-        '',
-        'Other documents may be needed based on your application answers.',
-        '',
-        'Information you need to enter:',
-        '',
-        '1. Personal details',
-        '2. Travel document details',
-        '3. Finances',
-        '4. Education history',
-        '5. Criminality and security',
-        '6. Medical background',
-        '7. Family information'
-      ]
-    },
-    {
-      id: 'surname',
-      group: 'travel',
-      type: 'text',
-      label: 'Surname or last name',
-      description: 'Write your name exactly as it appears on your passport or identity document',
-      required: true
-    },
-    {
-      id: 'givenName',
-      group: 'travel',
-      type: 'text',
-      label: 'Given name or first name',
-      description: 'Write your given name. If none, leave this field blank',
-      required: true
-    },
-    {
-      id: 'dateOfBirth',
-      group: 'travel',
-      type: 'date',
-      label: 'Date of birth',
-      required: true
-    },
-    {
-      id: 'gender',
-      group: 'travel',
-      type: 'select',
-      label: 'Gender',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'traveldocument',
-      group: 'travel',
-      type: 'file',
-      label: 'Travel document',
-      description: 'Upload the related document like Passport or Travel Document',
-      required: true,
-    },    
-    // Citizenship and Places Lived Section
+
+    // -------------------- CITIZENSHIP & RESIDENCE --------------------
     {
       id: 'citizenshipHeader',
-      group: 'citizenship',
+      group: 'citizenship' as FormGroup,
       type: 'header',
-      label: 'Citizenship and places where the applicant has lived'
+      label: 'Citizenship & Residence Information'
     },
     {
-      id: 'birthCountry',
-      group: 'citizenship',
+      id: 'citizenshipCountry',
+      group: 'citizenship' as FormGroup,
       type: 'select',
-      label: 'Country or territory where you were born',
-      required: true,
-      options: COUNTRIES,
-    },
-    {
-      id: 'birthCity',
-      group: 'citizenship',
-      type: 'text',
-      label: 'City or town where you were born',
-      required: true,
-      placeholder: 'Enter city of birth'
-    },
-    {
-      id: 'multipleCitizenship',
-      group: 'citizenship',
-      type: 'select',
-      label: 'Are you a citizen of more than one country or territory?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'otherCitizenships',
-      group: 'citizenship',
-      type: 'select',
-      label: 'Which countries or territories are you a citizen of?',
-      required: true,
-     
-      showIf: {
-        field: 'multipleCitizenship',
-        value: 'yes'
-      }
-    },
-    {
-      id: 'countriesLived',
-      group: 'citizenship',
-      type: 'text',
-      label: 'List all countries or territories where you have lived for more than 6 months',
-      required: true,
-      placeholder: 'List countries separated by commas'
-    },
-
-    {
-      id: 'nationalIdHeader',
-      group: 'citizenship',
-      type: 'header',
-      label: 'National identity document of the applicant'
-    },
-    {
-      id: 'hasNationalId',
-      group: 'national_id',
-      type: 'select',
-      label: 'Do you have a valid national identity document?',
-      description: 'Not all countries issue a national identity document. If you have one, provide your information.',
-      required: true,
-      placeholder: 'Select an option',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'nationalIdNumber',
-      group: 'national_id',
-      type: 'text',
-      label: 'Document number',
-      required: true,
-      showIf: { field: 'hasNationalId', value: 'yes' },
-      placeholder: 'Enter your document number',
-      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
-    },
-    {
-      id: 'confirmNationalIdNumber',
-      group: 'national_id',
-      type: 'text',
-      label: 'Confirm your document number',
-      required: true,
-      showIf: { field: 'hasNationalId', value: 'yes' },
-      placeholder: 'Re-enter your document number',
-      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
-    },
-    {
-      id: 'nationalIdIssueDate',
-      group: 'national_id',
-      type: 'date',
-      label: 'Date of issue',
-      required: true,
-      showIf: { field: 'hasNationalId', value: 'yes' },
-      description: 'Select the date when the document was issued',
-      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
-    },
-    {
-      id: 'nationalIdIssuingCountry',
-      group: 'national_id',
-      type: 'text',
-      label: 'Write the country or territory that issued this document',
-      required: true,
-      showIf: { field: 'hasNationalId', value: 'yes' },
-      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }],
-      placeholder: 'Select a country',
-      options: COUNTRIES,
-    },
-    
-    // Names used in the past section
-    {
-      id: 'pastNamesHeader',
-      group: 'past_names',
-      type: 'header',
-      label: 'Names used in the past'
-    },
-    {
-      id: 'hasUsedOtherNames',
-      group: 'past_names',
-      type: 'select',
-      label: 'Have you used another name in the past?',
-      required: true,
-      placeholder: 'Select an option',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'pastNames',
-      group: 'past_names',
-      type: 'text',
-      label: 'Names used in the past',
-      required: true,
-      showIf: { field: 'hasUsedOtherNames', value: 'yes' },
-      dependencies: [{ fieldId: 'hasUsedOtherNames', value: 'yes' }],
-      placeholder: 'Enter all previous names (including maiden name if applicable)'
-    },
-    
-
-    {
-      id: 'contactInfoHeader',
-      group: 'contact',
-      type: 'header',
-      label: 'Contact information of the applicant'
-    },
-    {
-      id: 'residentialAddressInfo',
-      group: 'contact',
-      type: 'info',
-      label: 'What\'s your residential address?',
-      content: ['This is the address where you currently live.']
-    },
-    {
-      id: 'residentialCountry',
-      group: 'contact',
-      type: 'select',
-      label: 'Select a country or territory',
-      required: true,
-      placeholder: 'Select a country',
-      options:COUNTRIES
-    },
-    // //{
-    //   id: 'countryOfResidence',
-    //   group: 'contact',
-    //   type: 'select',
-    //   label: 'Country or territory',
-    //   required: true,
-    {
-      id: 'countriesLived',
-      group: 'citizenship',
-      type: 'text',
-      label: 'List all countries or territories where you have lived for more than 6 months',
-      required: true,
-      placeholder: 'List countries separated by commas'
-    },
-
-    // National Identity Document Section
-    {
-      id: 'nationalIdHeader',
-      group: 'citizenship',
-      type: 'header',
-      label: 'National identity document of the applicant'
-    },
-    {
-      id: 'hasNationalId',
-      group: 'national_id',
-      type: 'select',
-      label: 'Do you have a valid national identity document?',
-      description: 'Not all countries issue a national identity document. If you have one, provide your information.',
-      required: true,
-      placeholder: 'Select an option',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'nationalIdDocument',
-      group: 'national_id',
-      type: 'text',
-      label: 'Document number',
-      required: true,
-      showIf: { field: 'hasNationalId', value: 'yes' },
-      placeholder: 'Enter your document number',
-      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
-    },
-    {
-      id: 'confirmNationalIdNumber',
-      group: 'national_id',
-      type: 'text',
-      label: 'Confirm your document number',
-      required: true,
-      showIf: { field: 'hasNationalId', value: 'yes' },
-      placeholder: 'Re-enter your document number',
-      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
-    },
-    {
-      id: 'nationalIdIssueDate',
-      group: 'national_id',
-      type: 'date',
-      label: 'Date of issue',
-      required: true,
-      showIf: { field: 'hasNationalId', value: 'yes' },
-      description: 'Select the date when the document was issued',
-      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }]
-    },
-    {
-      id: 'nationalIdIssuingCountry',
-      group: 'national_id',
-      type: 'text',
-      label: 'Write the country or territory that issued this document',
-      required: true,
-      showIf: { field: 'hasNationalId', value: 'yes' },
-      dependencies: [{ fieldId: 'hasNationalId', value: 'yes' }],
-      placeholder: 'Select a country',
-      options: COUNTRIES,
-    },
-    
-    // Names used in the past section
-    {
-      id: 'pastNamesHeader',
-      group: 'past_names',
-      type: 'header',
-      label: 'Names used in the past'
-    },
-    {
-      id: 'hasUsedOtherNames',
-      group: 'past_names',
-      type: 'select',
-      label: 'Have you used another name in the past?',
-      required: true,
-      placeholder: 'Select an option',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'pastNames',
-      group: 'past_names',
-      type: 'text',
-      label: 'Names used in the past',
-      required: true,
-      showIf: { field: 'hasUsedOtherNames', value: 'yes' },
-      dependencies: [{ fieldId: 'hasUsedOtherNames', value: 'yes' }],
-      placeholder: 'Enter all previous names (including maiden name if applicable)'
-    },
-    
-
-    {
-      id: 'contactInfoHeader',
-      group: 'contact',
-      type: 'header',
-      label: 'Contact information of the applicant'
-    },
-    {
-      id: 'residentialAddressInfo',
-      group: 'contact',
-      type: 'info',
-      label: 'What\'s your residential address?',
-      content: ['This is the address where you currently live.']
-    },
-    {
-      id: 'residentialCountry',
-      group: 'contact',
-      type: 'select',
-      label: 'Select a country or territory',
-      required: true,
-      placeholder: 'Select a country',
-      options:COUNTRIES
-    },
-    {
-      id: 'residentialStreetAddress',
-      group: 'contact',
-      type: 'text',
-      label: 'Street address',
-      required: true,
-      description: 'Enter the address, including house number or building number if applicable.'
-    },
-    {
-      id: 'residentialCity',
-      group: 'contact',
-      type: 'text',
-      label: 'City or town',
-      required: true
-    },
-    {
-      id: 'residentialPostalCode',
-      group: 'contact',
-      type: 'text',
-      label: 'Postal code',
-      description: '(optional)'
-    },
-    {
-      id: 'isSameMailingAddress',
-      group: 'contact',
-      type: 'select',
-      label: 'Is your mailing address the same as your residential address?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'mailingAddressInfo',
-      group: 'contact',
-      type: 'info',
-      label: 'What is your mailing address?',
-      showIf: { field: 'isSameMailingAddress', value: 'no' }
-    },
-    {
-      id: 'mailingCountry',
-      group: 'contact',
-      type: 'text',
-      label: 'Write a country or territory',
-      required: true,
-      showIf: { field: 'isSameMailingAddress', value: 'no' },
-      dependencies: [{ fieldId: 'isSameMailingAddress', value: 'no' }],
-      placeholder: 'Select a country',
-      options: COUNTRIES,
-    },
-    {
-      id: 'mailingStreetAddress',
-      group: 'contact',
-      type: 'text',
-      label: 'Street address',
-      required: true,
-      showIf: { field: 'isSameMailingAddress', value: 'no' },
-      dependencies: [{ fieldId: 'isSameMailingAddress', value: 'no' }],
-      description: 'Enter the address, including house number or building number if applicable.'
-    },
-    {
-      id: 'mailingCity',
-      group: 'contact',
-      type: 'text',
-      label: 'City or town',
-      required: true,
-      showIf: { field: 'isSameMailingAddress', value: 'no' },
-      dependencies: [{ fieldId: 'isSameMailingAddress', value: 'no' }]
-    },
-    {
-      id: 'mailingPostalCode',
-      group: 'contact',
-      type: 'text',
-      label: 'Postal code',
-      description: '(optional)',
-      showIf: { field: 'isSameMailingAddress', value: 'no' },
-      dependencies: [{ fieldId: 'isSameMailingAddress', value: 'no' }]
-    },
-    {
-      id: 'residenceCountriesInfo',
-      group: 'contact',
-      type: 'info',
-      label: 'Countries or territories of residence',
-      content: ['List all countries or territories of residence, then add all other countries or territories where you\'ve lived for the past five years, for more than 6 months.']
-    },
-    {
-      id: 'residenceCountries',
-      group: 'contact',
-      type: 'residence_countries',
-      label: 'Countries or territories of residence',
-      required: true,
-      description: 'Add all countries or territories where you\'ve lived for the past five years, for more than 6 months.'
-    },
-    {
-      id: 'transitPurpose',
-      group: 'personal',
-      type: 'select',
-      label: 'What exactly do you want to apply for?',
-      required: true,
-      showIf: { field: 'visaType', value: 'transit' },
-      options: [
-        { label: 'To transit through Canada by air - between 2 international flights, for less than 48 hours', value: 'air_transit' },
-        { label: 'To transit through Canada by car, bus, boat, cruise ship, or by air', value: 'land_sea_transit' },
-        { label: 'Support for Afghan nationals outside Canada', value: 'afghan_nationals' },
-        { label: 'Not sure', value: 'not_sure_transit' }
-      ]
-    },
-    {
-      id: 'purposeOfVisit',
-      group: 'personal',
-      type: 'select',
-      label: 'Why do you need a visa?',
-      required: true,
-      showIf: { field: 'visaType', value: 'visitor' },
-      options: [
-        { label: 'To be with a loved one who is critically ill or dying', value: 'critical_illness' },
-        { label: 'To provide care for a loved one who needs medical support', value: 'medical_care' },
-        { label: 'To attend a funeral or end-of-life ceremony', value: 'funeral' },
-        { label: 'To join a vessel as a marine crew member', value: 'marine_crew' },
-        { label: 'To take up a diplomatic posting in Canada', value: 'diplomatic' },
-        { label: 'To travel as an accompanying immediate family member of a diplomat', value: 'diplomat_family' },
-        { label: 'To handle the affairs of a victim of Ukraine International Airlines Flight PS752', value: 'ps752_victim' },
-        { label: 'To visit Canada as a tourist', value: 'tourism' },
-        { label: 'To visit my spouse, common-law partner, dependent child, parent, step-parent, guardian or tutor who is a Canadian citizen, person registered under Canada\'s Indian Act or permanent resident of Canada', value: 'visit_immediate_family' },
-        { label: 'To visit my spouse, common law partner, dependent child, parent, step-parent, guardian or tutor who is in Canada temporarily', value: 'visit_temp_resident' },
-        { label: 'To visit my grandparent, grandchild, sibling, half-sibling, step-sibling or non-dependent child who is a Canadian citizen, person registered under Canada\'s Indian Act or permanent resident of Canada', value: 'visit_extended_family' },
-        { label: 'To visit other family who are not listed above or friends for less than 6 months', value: 'visit_friends' },
-        { label: 'To visit my children or grandchildren for more than 6 months (super visa)', value: 'super_visa' },
-        { label: 'For business reasons, like a meeting, conference, event, or training', value: 'business' },
-        { label: 'For a medical procedure (scheduled) or treatment', value: 'medical_treatment' },
-        { label: 'To study without a permit for less than 6 months', value: 'short_term_study' },
-        { label: 'To work without a permit', value: 'work_without_permit' },
-        { label: 'Not sure', value: 'not_sure' }
-      ]
-    },
-    {
-      id: 'tripDetails',
-      group: 'personal',
-      type: 'text',
-      label: 'Tell us more about what you\'ll do in Canada',
-      showIf: { field: 'visaType', not: 'not_sure' },
-      placeholder: 'Include dates and details of your planned activities',
-      required: true
-    },
-    {
-      id: 'intendedDateOfArrival',
-      group: 'personal',
-      type: 'date',
-      label: 'When will you enter Canada?',
-      showIf: { field: 'visaType', not: 'not_sure' },
-      description: 'If you don\'t yet know the date you will travel to Canada, select an approximate date.',
-      required: true
-    },
-    {
-      id: 'intendedDateOfDeparture',
-      group: 'personal',
-      type: 'date',
-      showIf: { field: 'visaType', not: 'not_sure' },
-      label: 'When will you leave Canada?',
-      
-      required: true
-    },
-    {
-      id: 'uciNumber',
-      group: 'personal',
-      type: 'select',
-      label: 'UCI (unique client identifier), if known',
-      showIf: { field: 'visaType', not: 'not_sure' },
-      required: true,
-      description: 'If you have previously applied to come to Canada, you may have a UCI. It appears on official documents you received from IRCC.',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'ucidetail',
-      group: 'personal',
-      type: 'text',
-      label: 'UCI detail',
-      placeholder: 'Enter your UCI detail',
-      required: false,
-      showIf: {
-        field: 'uciNumber',
-        value: 'yes'
-      }
-    },
-    {
-      id: 'previousstatus',
-      group: 'personal',
-      type: 'text',
-      label: 'Previous status',
-      placeholder: 'Enter your previous status',
-      required: false,
-      showIf: {
-        field: 'uciNumber',
-        value: 'yes'
-      }
-    },
-
-    {
-      id: 'refusalLetter',
-      group: 'personal',
-      type: 'file',
-      label: 'Any Document related to refusal letter',
-      description: 'Upload the related document if you have any',
-      required: false,
-      showIf: {
-        field: 'uciNumber',
-        value: 'yes'
-      }
-    },
-    {
-      id: 'applyingOnBehalf',
-      group: 'personal',
-      type: 'select',
-      label: 'Are you applying on behalf of someone else?',
-      description: 'If you\'re preparing an application for someone else, you\'re a representative. To be someone\'s representative, you must provide the right forms to show you have their permission to handle their application for them.',
-      required: true,
-      showIf: { field: 'visaType', not: 'not_sure' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'representativeRelationship',
-      group: 'personal',
-      type: 'select',
-      label: 'Who are you in relation to the person you\'re helping?',
-      required: true,
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      options: [
-        { label: 'Family member', value: 'family' },
-        { label: 'Friend', value: 'friend' },
-        { label: 'Other', value: 'other' }
-      ]
-    },
-    {
-      id: 'representativeSurname',
-      group: 'personal',
-      type: 'text',
-      label: 'Surname or last name',
-      required: true,
-      showIf: { field: 'applyingOnBehalf', value: 'yes' }
-    },
-    {
-      id: 'representativeGivenName',
-      group: 'personal',
-      type: 'text',
-      label: 'Given name or first name',
-      required: false,
-      showIf: { field: 'applyingOnBehalf', value: 'yes' }
-    },
-    {
-      id: 'representativePhoneType',
-      group: 'personal',
-      type: 'select',
-      label: 'Telephone type',
-      required: true,
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      options: [
-        { label: 'Residence', value: 'residence' },
-        { label: 'Cellular', value: 'cellular' },
-        { label: 'Other', value: 'other' }
-      ]
-    },
-    {
-      id: 'representativePhoneCountry',
-      group: 'personal',
-      type: 'select',
-      label: 'Select telephone number country or territory',
-      required: true,
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      options: [
-        { label: 'Canada or the U.S', value: 'north_america' },
-        { label: 'Other', value: 'other' }
-      ]
-    },
-    {
-      id: 'representativePhoneNumber',
-      group: 'personal',
-      type: 'text',
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      label: 'Telephone number',
-      required: true
-    },
-    {
-      id: 'representativeExtension',
-      group: 'personal',
-      type: 'text',
-      label: 'Extension number',
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      required: false
-      
-    },
-    {
-      id: 'representativeAddress',
-      group: 'personal',
-      type: 'text',
-      label: 'Street address',
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      description: 'Enter the address, including house number or building number if applicable.',
-      required: true
-    },
-    {
-      id: 'representativeCity',
-      group: 'personal',
-      type: 'text',
-      label: 'City or town',
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      required: true
-    },
-    {
-      id: 'representativePostalCode',
-      group: 'personal',
-      type: 'text',
-      label: 'Postal code',
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      required: false
-    },
-    {
-      id: 'representativeEmail',
-      group: 'personal',
-      type: 'text',
-      label: 'Email address',
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      required: true
-    },
-    {
-      id: 'representativeConfirmEmail',
-      group: 'personal',
-      type: 'text',
-      label: 'Confirm your email address',
-      showIf: { field: 'applyingOnBehalf', value: 'yes' },
-      required: true
-    },
-    {
-      id: 'applicationHeader',
-      group: 'inviter',
-      type: 'header',
-      label: 'Application'
-    },
-    {
-      id: 'invitationSubheader',
-      group: 'inviter',
-      type: 'header',
-      label: 'Invitation'
-    },
-    {
-      id: 'invitationInfo',
-      group: 'inviter',
-      type: 'info',
-      label: 'Who is inviting you?'
-    },
-    {
-      id: 'inviterLastName',
-      group: 'inviter',
-      type: 'text',
-      label: 'Surname or last name',
-      required: true,
-      placeholder: "Write your inviter's name exactly as it appears on the ppt or ID"
-    },
-    {
-      id: 'inviterFirstName',
-      group: 'inviter',
-      type: 'text',
-      label: 'Given name or first name',
-      required: false,
-      placeholder: 'Write the given name. If none, leave this field blank.'
-    },
-    {
-      id: 'relationshipToYou',
-      group: 'inviter',
-      type: 'text',
-      label: 'Relationship to you',
-      required: true,
-      placeholder: 'Enter your relationship to the inviter'
-    },
-
-
-// Document Upload Follow-up Questions
-    // 1. Passport & Travel History
-    {
-      id: 'passportNameMatch',
-      group: 'documents',
-      type: 'select',
-      label: 'Is your name in the passport exactly as you\'ve entered it?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'passportNameCorrection',
-      group: 'documents',
-      type: 'text',
-      label: 'Please enter your name exactly as it appears in your passport',
-      required: true,
-      showIf: { field: 'passportNameMatch', value: 'no' }
-    },
-    {
-      id: 'inviterStreetNumber',
-      group: 'inviter',
-      type: 'text',
-      label: 'Street number',
-      required: true
-    },
-    {
-      id: 'inviterStreetName',
-      group: 'inviter',
-      type: 'text',
-      label: 'Street name',
-      required: true
-    },
-    {
-      id: 'inviterApartmentNumber',
-      group: 'inviter',
-      type: 'text',
-      label: 'Apartment or unit number',
-      required: false
-    },
-    {
-      id: 'inviterPoBox',
-      group: 'inviter',
-      type: 'text',
-      label: 'PO box',
-      required: false
-    },
-    {
-      id: 'inviterCity',
-      group: 'inviter',
-      type: 'text',
-      label: 'City or town',
-      required: true
-    },
-    {
-      id: 'inviterProvince',
-      group: 'inviter',
-      type: 'text',
-      label: 'Province',
-      required: true
-    },
-    {
-      id: 'inviterPostalCode',
-      group: 'inviter',
-      type: 'text',
-      label: 'Postal code',
-      required: true
-    },
-    {
-      id: 'fundingSource',
-      group: 'documents',
-      type: 'select',
-      label: 'How will you fund your trip?',
-      required: true,
-      options: [
-        { label: 'Personal savings', value: 'personal_savings' },
-        { label: 'Sponsor (family/employer)', value: 'sponsor' },
-        { label: 'Education loan', value: 'education_loan' },
-        { label: 'Other', value: 'other' }
-      ]
-    },
-    {
-      id: 'fundingSourceOther',
-      group: 'documents',
-      type: 'text',
-      label: 'Please specify your funding source',
-      required: false,
-      showIf: { field: 'fundingSource', value: 'other' }
-    },
-    {
-      id: 'bankAccountInYourName',
-      group: 'documents',
-      type: 'select',
-      label: 'Is the bank account in your name?',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'fundingSource', value: 'personal_savings' },
-          { field: 'fundingSource', value: 'education_loan' }
-        ]
-      },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'bankAccountOwner',
-      group: 'documents',
-      type: 'text',
-      label: 'Telephone number',
-      required: true,
-      placeholder: 'phone'
-    },
-    {
-      id: 'averageAccountBalance',
-      group: 'documents',
-      type: 'number',
-      label: 'What is the average balance in your account (in your local currency)?',
-      required: false,
-      placeholder: 'phone'
-    },
-    {
-      id: 'inviterEmail',
-      group: 'inviter',
-      type: 'text',
-      label: 'Email address',
-      required: true,
-      placeholder: 'email'
-    },
-    {
-      id: 'countryOfResidence',
-      group: 'contact',
-      type: 'select',
-      label: 'Are you currently employed?',
+      label: `Your country of citizenship? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       options: COUNTRIES
     },
     {
-      id: 'fromDate',
-      group: 'contact',
-      type: 'date',
-      label: 'From',
-      required: true
-    },
-    {
-      id: 'toDate',
-      group: 'contact',
-      type: 'date',
-      label: 'To',
-      required: true
-    },
-    {
-      id: 'status',
-      group: 'contact',
+      id: 'livesInCitizenshipCountry',
+      group: 'citizenship' as FormGroup,
       type: 'select',
-      label: 'Does your employer support your travel?',
-      required: false,
-      showIf: { field: 'isEmployed', value: 'yes' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    
-    // 3. Employment/Study Documents Follow-up
-    {
-      id: 'hasJobOffer',
-      group: 'documents',
-      type: 'select',
-      label: 'Do you have a job offer from a Canadian employer?',
-      required: false,
-      showIf: { field: 'purposeOfVisit', value: 'work_without_permit' },
+      label: `Do you live in the country of your citizenship? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
       ]
     },
     {
-      id: 'hasLMIA',
-      group: 'documents',
+      id: 'residenceCountry',
+      group: 'citizenship' as FormGroup,
       type: 'select',
-      label: 'Does the offer include an LMIA (Labour Market Impact Assessment) number?',
-      required: false,
-      showIf: { 
+      label: `If you do not live in the country of citizenship then which country do you live in? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'livesInCitizenshipCountry', value: 'no' },
+      options: COUNTRIES
+    },
+    {
+      id: 'residenceStatus',
+      group: 'citizenship' as FormGroup,
+      type: 'select',
+      label: `What is your status in the country of your residence? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'livesInCitizenshipCountry', value: 'no' },
+      options: RESIDENCE_STATUS_OPTIONS
+    },
+    {
+      id: 'residenceStatusOther',
+      group: 'citizenship' as FormGroup,
+      type: 'textarea',
+      label: 'Please specify your residence status',
+      required: true,
+      placeholder: 'Enter your residence status',
+      showIf: {
         operator: 'and',
         conditions: [
-          { field: 'purposeOfVisit', value: 'work_without_permit' },
+          { field: 'livesInCitizenshipCountry', value: 'no' },
+          { field: 'residenceStatus', value: 'other' }
+        ]
+      }
+    },
+    {
+      id: 'needsOnshoreServices',
+      group: 'citizenship' as FormGroup,
+      type: 'select',
+      label: `Do you need any onshore services? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'livesInCitizenshipCountry', value: 'no' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'onshoreServiceType',
+      group: 'citizenship' as FormGroup,
+      type: 'select',
+      label: `What service you want? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'livesInCitizenshipCountry', value: 'no' },
+          { field: 'needsOnshoreServices', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Visitor visa extension', value: 'visitor_extension' },
+        { label: 'Work permit extension', value: 'work_extension' },
+        { label: 'Study permit extension', value: 'study_extension' },
+        { label: 'Apply for a new study permit', value: 'new_study_permit' },
+        { label: 'Apply for a new work permit', value: 'new_work_permit' },
+        { label: 'Apply for permanent residency', value: 'permanent_residency' },
+        { label: 'Refugee', value: 'refugee' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    {
+      id: 'onshoreServiceTypeOther',
+      group: 'citizenship' as FormGroup,
+      type: 'text',
+      label: 'Please specify the onshore service you need',
+      required: true,
+      placeholder: 'Enter service details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'livesInCitizenshipCountry', value: 'no' },
+          { field: 'needsOnshoreServices', value: 'yes' },
+          { field: 'onshoreServiceType', value: 'other' }
+        ]
+      }
+    },
+    // {
+    //   id: 'onshoreServiceTypeOther',
+    //   group: 'citizenship' as FormGroup,
+    //   type: 'text',
+    //   label: 'Please specify the onshore service you need',
+    //   required: true,
+    //   placeholder: 'Enter service details',
+    //   showIf: { 
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'livesInCitizenshipCountry', value: 'no' },
+    //       { field: 'needsOnshoreServices', value: 'yes' },
+    //       { field: 'onshoreServiceType', value: 'other' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'applicationCountry',
+    //   group: 'citizenship' as FormGroup,
+    //   type: 'select',
+    //   label: 'Which country you want to apply for?',
+    //   required: true,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'livesInCitizenshipCountry', value: 'no' },
+    //       { field: 'needsOnshoreServices', value: 'no' }
+    //     ]
+    //   },
+    //   options: COUNTRIES
+    // },
+
+    // -------------------- PERSONAL INFORMATION (MARITAL STATUS) --------------------
+    {
+      id: 'personalInfoHeader',
+      group: 'personal' as FormGroup,
+      type: 'header',
+      label: 'Martial Status'
+    },
+    {
+      id: 'maritalStatus',
+      group: 'personal' as FormGroup,
+      type: 'select',
+      label: `What is your marital status? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: MARITAL_STATUS_OPTIONS
+    },
+
+    // For married applicants
+    {
+      id: 'spouseNameOnPassport',
+      group: 'personal' as FormGroup,
+      type: 'select',
+      label: `Is your spouse's name added on your passport? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'maritalStatus', not: 'single' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'spouseName',
+      group: 'personal' as FormGroup,
+      type: 'textarea',
+      label: `What is name of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter spouse name',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'spouseNameOnPassport', value: 'no' }
+        ]
+      }
+    },
+    {
+      id: 'spouseLivesWithYou',
+      group: 'personal' as FormGroup,
+      type: 'select',
+      label: `Does your spouse live with you? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'maritalStatus', not: 'single' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'spouseResidenceLocation',
+      group: 'personal' as FormGroup,
+      type: 'text',
+      label: `Where does your spouse live? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      placeholder: 'Enter spouse residence location',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'spouseLivesWithYou', value: 'no' }
+        ]
+      }
+    },
+    {
+      id: 'spouseDob',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'maritalStatus', not: 'single' }
+    },
+    {
+      id: 'isFirstMarriage',
+      group: 'personal' as FormGroup,
+      type: 'select',
+      label: `Is this your first marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'maritalStatus', not: 'single' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'previousRelationshipEnd',
+      group: 'personal' as FormGroup,
+      type: 'select',
+      label: `How did your previous relationship end? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'isFirstMarriage', value: 'no' }
+        ]
+      },
+      options: [
+        { label: 'Divorce', value: 'divorce' },
+        { label: 'Separation', value: 'separation' },
+        { label: 'Death of partner', value: 'death' }
+      ]
+    },
+
+    // For divorced applicants
+    {
+      id: 'divorceMarriageDate',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'divorced' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'divorce' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'divorceDissolutionDate',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What is the date of dissolution of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'divorced' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'divorce' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'exSpouseDob',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'divorced' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'divorce' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'exSpouseName',
+      group: 'personal' as FormGroup,
+      type: 'text',
+      label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter ex-spouse name',
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'divorced' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'divorce' }
+            ]
+          }
+        ]
+      }
+    },
+
+    // For widowed applicants
+    {
+      id: 'widowedMarriageDate',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'widowed' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'death' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'placeOfDeath',
+      group: 'personal' as FormGroup,
+      type: 'text',
+      label: `What was the place of death? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      placeholder: 'Enter place of death',
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'widowed' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'death' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'dateOfSpouseDeath',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What is the date of death of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'widowed' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'death' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'deceasedSpouseDob',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What is date of birth of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'widowed' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'death' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'deceasedSpouseName',
+      group: 'personal' as FormGroup,
+      type: 'text',
+      label: `What is the name of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter deceased spouse name',
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'widowed' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'death' }
+            ]
+          }
+        ]
+      }
+    },
+
+    // For separated applicants
+    {
+      id: 'separatedMarriageDate',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'separated' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'separation' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'dateOfSeparation',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What is the date of separation with your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'separated' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'separation' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'separatedSpouseDob',
+      group: 'personal' as FormGroup,
+      type: 'date',
+      label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'separated' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'separation' }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      id: 'separatedSpouseName',
+      group: 'personal' as FormGroup,
+      type: 'text',
+      label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter ex-spouse name',
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'maritalStatus', value: 'separated' },
+          {
+            operator: 'and',
+            conditions: [
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'separation' }
+            ]
+          }
+        ]
+      }
+    },
+
+    // Children information for all marital statuses (except single)
+    {
+      id: 'languageTestHeader',
+      group: 'personal' as FormGroup,
+      type: 'header',
+      label: 'Language Proficiency',
+      showIf: { field: 'residenceStatus', value: 'student' },
+    },
+    {
+      id: 'languageTestDescription',
+      group: 'personal' as FormGroup,
+      type: 'info',
+      label: 'Description',
+      showIf: { field: 'residenceStatus', value: 'student' },
+      content: [
+        'Please provide information about any language proficiency tests you have taken (e.g., IELTS, TOEFL, CELPIP, PTE).'
+      ]
+    },
+    {
+      id: 'languageTest',
+      group: 'personal' as FormGroup,
+      type: 'languageTest',
+      label: 'Language Test Details',
+      required: false,
+      description: 'Please provide details of your language test results.',
+      showIf: { field: 'residenceStatus', value: 'student' },
+    },
+    {
+      id: 'familyDetailsHeader',
+      group: 'personal' as FormGroup,
+      type: 'header',
+      label: 'Family details'
+    },
+    {
+      id: 'hasChildren',
+      group: 'personal' as FormGroup,
+      type: 'select',
+      label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'maritalStatus', not: 'single' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'childrenDetails',
+      group: 'personal' as FormGroup,
+      type: 'custom',
+      component: 'ChildrenInputField',
+      label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', not: 'single' },
+          { field: 'hasChildren', value: 'yes' }
+        ]
+      }
+    },
+
+    // -------------------- PURPOSE OF VISIT --------------------
+    {
+      id: 'purposeHeader',
+      group: 'purpose' as FormGroup,
+      type: 'header',
+      label: 'Purpose of Visit Information'
+    },
+    {
+      id: 'visitPurpose',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is purpose of your visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Visitation', value: 'visitation' },
+        { label: 'Tourism', value: 'tourism' },
+        { label: 'Business', value: 'business' },
+        { label: 'Study', value: 'study' },
+        { label: 'Work', value: 'work' },
+        { label: 'Long duration family visit', value: 'long_family_visit' },
+        { label: 'Join family permanently', value: 'join_family_permanent' },
+        { label: 'Skill-based immigration', value: 'skill_immigration' },
+        { label: 'Performance in sports/religious events/public speaker', value: 'performance' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    {
+      id: 'educationLevel',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is your highest educational qualification? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      showIf: { field: 'visitPurpose', value: 'study' },
+      required: true,
+      options: EDUCATION_QUALIFICATION_OPTIONS
+    },
+    {
+      id: 'educationField',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Which option describes your education? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      showIf: { field: 'visitPurpose', value: 'study' },
+      required: false,
+      options: EDUCATION_FIELD_OPTIONS
+    },
+    {
+      id: 'hasWorkExperience',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have any work experience? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'visitPurpose', value: 'work' },
+        ]
+      },
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'workField',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Which option describes your work? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'hasWorkExperience', value: 'yes' },
+      options: WORK_FIELD_OPTIONS
+    },
+    // {
+    //   id: 'languageTest',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'select',
+    //   label: `Which test result demonstrates your language proficiency? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   options: LANGUAGE_TEST_OPTIONS
+    // },
+
+    // For visitation purpose
+    {
+      id: 'relationToVisit',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is your relation to person you will visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+      options: RELATION_OPTIONS
+    },
+    {
+      id: 'relationToVisitOther',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Please specify your relation',
+      required: true,
+      placeholder: 'Specify your relation',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'relationToVisit', value: 'other' }
+        ]
+      }
+    },
+    {
+      id: 'inviterImmigrationStatus',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+      options: IMMIGRATION_STATUS_OPTIONS
+    },
+    {
+      id: 'inviterImmigrationStatusOther',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Please specify their immigration status',
+      required: true,
+      placeholder: 'Specify immigration status',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'inviterImmigrationStatus', value: 'other' }
+        ]
+      }
+    },
+    {
+      id: 'inviterContactDetails',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Name, Address, Phone number, Email',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'addAnotherInviter',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you want to add another person? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'addAnotherInviterName',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: `Details of the person? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: true,
+      showIf: { field: 'addAnotherInviter', value: 'yes' },
+      
+    },
+    {
+      id: 'hasSpecificReasons',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Are there any specific reasons or significant occasions for you visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'visitEvent',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is the event/occasion? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSpecificReasons', value: 'yes' }
+        ]
+      },
+      options: EVENT_OPTIONS
+    },
+    {
+      id: 'visitEventOther',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Please specify the event/occasion',
+      required: false,
+      placeholder: 'Describe the event or occasion',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSpecificReasons', value: 'yes' },
+          { field: 'visitEvent', value: 'other' }
+        ]
+      }
+    },
+
+    // For tourism purpose
+    {
+      id: 'needsTravelAssistance',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you need assistance for booking hotels, flights, or travel insurance? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'tourism' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'assistanceType',
+      group: 'purpose' as FormGroup,
+      type: 'checkbox-multiselect',
+      label: 'What kind of assistance do you need?',
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'no' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+      options: [
+        { label: 'Hotel Booking', value: 'hotel' },
+        { label: 'Flight Booking', value: 'flight' },
+        { label: 'Travel Insurance', value: 'insurance' }
+      ]
+    },
+    {
+      id: 'assistanceNotes',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Any preferences or special requests (e.g. airline, hotel rating, insurance coverage)?',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'no' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+    },
+    {
+      id: 'hotelDetails',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Hotel name and address (if already booked)',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+    },
+    {
+      id: 'flightDetails',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Flight details (airline, flight number, departure/arrival time)',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+    },
+    {
+      id: 'insuranceDetails',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Travel insurance provider and policy number (if applicable)',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'visitPurpose', value: 'tourism' }
+        ]
+      },
+    }, 
+    // For business purpose
+    {
+      id: 'businessActivity',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What business activity you want to do? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'business' },
+      options: BUSINESS_ACTIVITY_OPTIONS
+    },
+    {
+      id: 'businessActivityOther',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Please specify your business activity',
+      required: true,
+      placeholder: 'Describe your business activity',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'business' },
+          { field: 'businessActivity', value: 'other' }
+        ]
+      }
+    },
+    {
+      id: 'businessTravelAssistance',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you need assistance for booking hotels, flights, or travel insurance? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'business' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+
+    // For study purpose
+    {
+      id: 'hasStudyAcceptance',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have unconditional and confirmed letter of acceptance as an international student? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'study' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+
+    // For work purpose
+    {
+      id: 'hasJobOffer',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have employer employee contract (job offer)? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'work' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'workNoJobOfferMessage',
+      group: 'purpose' as FormGroup,
+      type: 'info',
+      label: 'Important Information',
+      description: 'Under given circumstances, you may not be eligible for this category. Please try another or contact for further details.',
+      content: [],
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'work' },
+          { field: 'hasJobOffer', value: 'no' }
+        ]
+      }
+    },
+    {
+      id: 'hasWorkAuthorization',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have official authorisation from the country you want work in? (such as CoS in the UK, LMIA in Canada, H1B petition in the USA etc.) ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'work' },
           { field: 'hasJobOffer', value: 'yes' }
         ]
       },
@@ -1441,699 +3809,760 @@ export const CANADA: VisaForm = {
       ]
     },
     {
-      id: 'hasWorkPermit',
-      group: 'documents',
-      type: 'select',
-      label: 'Do you have a current or previous work permit?',
+      id: 'workNoAuthorizationMessage',
+      group: 'purpose' as FormGroup,
+      type: 'info',
+      label: 'Important Information',
+      description: 'You need an authorisation to apply under this category, please contact for further details.',
+      content: [],
       required: false,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'programName',
-      group: 'documents',
-      type: 'text',
-      label: 'What is your program name and duration?',
-      required: false,
-      showIf: { field: 'purposeOfVisit', value: 'short_term_study' }
-    },
-    {
-      id: 'isDLI',
-      group: 'documents',
-      type: 'select',
-      label: 'Is the institution a Designated Learning Institution (DLI)?',
-      required: false,
-      showIf: { field: 'purposeOfVisit', value: 'short_term_study' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' },
-        { label: 'I don\'t know', value: 'unknown' }
-      ]
-    },
-    
-    // 4. Family & Civil Status Follow-up
-    {
-      id: 'spouseAccompanying',
-      group: 'documents',
-      type: 'select',
-      label: 'Does your spouse accompany you?',
-      required: false,
-      showIf: { 
-        operator: 'or',
+      showIf: {
+        operator: 'and',
         conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'maritalStatus', value: 'common_law' }
+          { field: 'visitPurpose', value: 'work' },
+          { field: 'hasJobOffer', value: 'yes' },
+          { field: 'hasWorkAuthorization', value: 'no' }
         ]
-      },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
+      }
     },
     {
-      id: 'hasChildren',
-      group: 'documents',
-      type: 'select',
-      label: 'Do you have children?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'childrenTraveling',
-      group: 'documents',
-      type: 'select',
-      label: 'Are they traveling with you?',
+      id: 'workAdditionalDocumentMessage',
+      group: 'purpose' as FormGroup,
+      type: 'info',
+      label: 'Important Information',
+      description: 'Based on the examination of employment contract and work authorisation, there may arise a demand for additional documents.',
+      content: [],
       required: false,
-      showIf: { field: 'hasChildren', value: 'yes' },
-      options: [
-        { label: 'Yes, all of them', value: 'all' },
-        { label: 'Yes, some of them', value: 'some' },
-        { label: 'No', value: 'no' }
-      ]
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'work' },
+          { field: 'hasJobOffer', value: 'yes' },
+          { field: 'hasWorkAuthorization', value: 'yes' }
+        ]
+      }
     },
-    
-    // 5. Travel Purpose & Invitation Follow-up
+
+    // For long duration family visit
     {
-      id: 'isVisitingFamilyFriends',
-      group: 'documents',
+      id: 'longVisitRelation',
+      group: 'purpose' as FormGroup,
       type: 'select',
-      label: 'Are you visiting family/friends in Canada?',
+      label: `What is your relation to person you will join? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
+      showIf: { field: 'visitPurpose', value: 'long_family_visit' },
       options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
+        { label: 'Child', value: 'child' },
+        { label: 'Parent', value: 'parent' },
+        { label: 'Partner/Spouse', value: 'partner' }
       ]
     },
     {
-      id: 'hostImmigrationStatus',
-      group: 'documents',
+      id: 'longVisitSponsorStatus',
+      group: 'purpose' as FormGroup,
       type: 'select',
-      label: 'What is their immigration status in Canada?',
-      required: false,
-      showIf: { field: 'isVisitingFamilyFriends', value: 'yes' },
+      label: `What is the immigration status of your sponsor? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'long_family_visit' },
       options: [
-        { label: 'Canadian Citizen', value: 'citizen' },
-        { label: 'Permanent Resident', value: 'pr' },
+        { label: 'Citizen', value: 'citizen' },
+        { label: 'Permanent Resident', value: 'permanent_resident' },
         { label: 'Student', value: 'student' },
         { label: 'Worker', value: 'worker' },
+        { label: 'Refugee', value: 'refugee' },
         { label: 'Other', value: 'other' }
       ]
     },
-    
-    // 6. Additional Documents Follow-up
     {
-      id: 'hadVisaRefusal',
-      group: 'documents',
-      type: 'select',
-      label: 'Have you ever been refused a visa to Canada or another country?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'refusalReason',
-      group: 'documents',
+      id: 'longVisitSponsorStatusOther',
+      group: 'purpose' as FormGroup,
       type: 'text',
-      label: 'Explain the reason for refusal (if known)',
-      required: false,
-      showIf: { field: 'hadVisaRefusal', value: 'yes' }
+      label: 'Please specify the immigration status',
+      required: true,
+      placeholder: 'Enter immigration status',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'long_family_visit' },
+          { field: 'longVisitSponsorStatus', value: 'other' }
+        ]
+      }
     },
     {
-      id: 'livedAbroadSixMonths',
-      group: 'documents',
+      id: 'educationLevell',
+      group: 'purpose' as FormGroup,
       type: 'select',
-      label: 'Have you lived in any other country for 6+ months in the last 10 years?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'countriesLivedIn',
-      group: 'documents',
-      type: 'text',
-      label: 'List the countries you have lived in for 6+ months',
+      label: `What is your highest educational qualification? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      showIf: { field: 'longVisitSponsorStatus', value: 'student' },
       required: false,
-      showIf: { field: 'livedAbroadSixMonths', value: 'yes' }
+      options: EDUCATION_QUALIFICATION_OPTIONS
     },
     {
-      id: 'completedMedicalExam',
-      group: 'documents',
+      id: 'educationFieldd',
+      group: 'purpose' as FormGroup,
       type: 'select',
-      label: 'Have you completed a medical exam for Canada?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'medicalExamNumber',
-      group: 'documents',
-      type: 'text',
-      label: 'Medical receipt/IME number',
+      label: `Which option describes the education of your sponsor? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      showIf: { field: 'longVisitSponsorStatus', value: 'student' },
       required: false,
-      showIf: { field: 'completedMedicalExam', value: 'yes' }
-    },
-    
-    // 7. Final Review & Confirmation
-    {
-      id: 'documentReviewHeader',
-      group: 'documents',
-      type: 'header',
-      label: 'Review the extracted data from your documents'
-    },
-    // {
-    //   id: 'hasOtherInviter',
-    //   group: 'application',
-    //   type: 'select',
-    //   label: 'Has someone else also invited you?',
-    //   required: true,
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-
-    // Finances Subsection
-    // {
-    //   id: 'financesHeader',
-    //   group: 'finances',
-    //   type: 'header',
-    //   label: 'Finances'
-    // },
-    // {
-    //   id: 'lmiaExemptionCategory',
-    //   group: 'application',
-    //   type: 'select',
-    //   label: 'Is your job in a field exempt from LMIA?',
-    //   description: 'Labour Market Impact Assessment exemption category',
-    //   required: false,
-    //   showIf: { field: 'purposeOfVisit', value: 'work_without_permit' },
-    //   options: [
-    //     { label: 'No', value: 'no' },
-    //     { label: 'Yes - NAFTA/CUSMA Professional', value: 'nafta_cusma' },
-    //     { label: 'Yes - Intra-company transfer', value: 'intra_company' },
-    //     { label: 'Yes - International agreement', value: 'international_agreement' },
-    //     { label: 'Yes - Canadian interests', value: 'canadian_interests' },
-    //     { label: 'Yes - Other', value: 'other_exemption' }
-    //   ]
-    // },
-    // {
-    //   id: 'lmiaExemptionDetails',
-    //   group: 'application',
-    //   type: 'text',
-    //   label: 'Please specify the exemption details',
-    //   required: false,
-    //   showIf: { 
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'purposeOfVisit', value: 'work_without_permit' },
-    //       { field: 'lmiaExemptionCategory', value: 'other_exemption' }
-    //     ]
-    //   }
-    // },
-
-    
-// Inviter's Questions
-
-{
-  id: 'marriageCertificate',
-  group: 'family',
-  type: 'file',
-  label: 'Marriage Certificate',
-  description: 'Upload your marriage certificate if you are married',
-  required: false,
-  showIf: {
-    field: 'maritalStatus',
-    value: 'married'
-  }
-},
-{
-  id: 'birthCertificates',
-  group: 'family',
-  type: 'file',
-  label: 'Do you have any children?',
-  description: 'Upload birth certificates for any accompanying children',
-  required: false,
-  showIf: {
-    field: 'maritalStatus',
-    value: 'married'
-  }
-},
-   
-
-    // // Application Section
-    {
-      id: 'invitationLetter',
-      group: 'application',
-      type: 'file',
-      label: 'Invitation Letter',
-      description: 'Upload your invitation letter if you are invited by someone',
-      required: false,
-    },
-    {
-      id: 'host_income',
-      group: 'application',
-      type: 'file',
-      label: 'Proof of host status',
-      description: 'Upload proof of host status if you are invited by someone',
-      required: false,
-    },
-
-    // Education Section
-    {
-      id: 'educationHeader',
-      group: 'education',
-      type: 'header',
-      label: 'Information about education, work and other activities'
-    },
-    {
-      id: 'postSecondaryEducationHeader',
-      group: 'education',
-      type: 'header',
-      label: 'Post-secondary education history'
-    },
-    {
-      id: 'educationDescription',
-      group: 'education',
-      type: 'info',
-      label: 'Educational Background',
-      content: [
-        'Educational institution at secondary level or above, any post secondary education at university college or diploma'
-      ]
-    },
-    {
-      id: 'hasPostSecondaryEducation',
-      group: 'education',
-      type: 'select',
-      label: 'Do you have any post-secondary qualification?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'educationDetailsInfo',
-      group: 'education',
-      type: 'info',
-      label: 'Give your education details',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
+      options: EDUCATION_FIELD_OPTIONS
     },
     {
       id: 'institutionName',
-      group: 'education',
-      type: 'text',
-      label: 'Name of the Institute Attended',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' },
-      placeholder: 'Enter institution name'
+      group: 'purpose' as FormGroup,
+      type: 'textarea', 
+      label: `Details of the institution ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      showIf: { field: 'longVisitSponsorStatus', value: 'student' },
+      required: false,
     },
     {
-      id: 'educationFromDate',
-      group: 'education',
-      type: 'date',
-      label: 'Attended From',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
-    },
-    {
-      id: 'educationToDate',
-      group: 'education',
-      type: 'date',
-      label: 'Attended To',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
-    },
-    {
-      id: 'award',
-      group: 'education',
-      type: 'text',
-      label: 'Award',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' },
-      placeholder: 'Enter the degree, diploma or certificate received'
-    },
-    {
-      id: 'levelOfStudy',
-      group: 'education',
+      id: 'longVisitActivity',
+      group: 'purpose' as FormGroup,
       type: 'select',
-      label: 'Level of study',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' },
+      label: `What you want to do while with your family? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'long_family_visit' },
       options: [
-        { label: 'Secondary / High School', value: 'secondary' },
-        { label: 'Trade / Apprenticeship', value: 'trade' },
-        { label: 'Non-University Certificate / Diploma', value: 'non_university' },
-        { label: 'Bachelor\'s Degree', value: 'bachelors' },
-        { label: 'Post-Graduate Diploma / Certificate', value: 'post_graduate_diploma' },
-        { label: 'Master\'s Degree', value: 'masters' },
-        { label: 'Doctoral Degree', value: 'doctoral' },
-        { label: 'Other', value: 'other' }
+        { label: 'Study', value: 'study' },
+        { label: 'Work', value: 'work' },
+        { label: 'None of these', value: 'none' }
       ]
     },
     {
-      id: 'fieldOfStudy',
-      group: 'education',
+      id: 'longVisitSponsorContact',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `What are the contact details of the sponsor? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Name, Address, Phone number, Email',
+      showIf: { field: 'visitPurpose', value: 'long_family_visit' }
+    },
+    {
+      id: 'longVisitSponsorIncome',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `What is your sponsor's annual income in local currency? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter income amount',
+      showIf: { field: 'visitPurpose', value: 'long_family_visit' }
+    },
+    {
+      id: 'longVisitSponsorEmployment',
+      group: 'purpose' as FormGroup,
       type: 'select',
-      label: 'Field of study',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' },
+      label: `What is your sponsor's employment level? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'long_family_visit' },
       options: [
-        { label: 'Arts and Humanities', value: 'arts_humanities' },
-        { label: 'Business and Administration', value: 'business' },
-        { label: 'Education', value: 'education' },
-        { label: 'Engineering and Technology', value: 'engineering' },
-        { label: 'Health Sciences', value: 'health' },
-        { label: 'Law', value: 'law' },
-        { label: 'Natural Sciences', value: 'natural_sciences' },
-        { label: 'Social Sciences', value: 'social_sciences' },
-        { label: 'Other', value: 'other' }
+        { label: 'Labour', value: 'labour' },
+        { label: 'Unskilled', value: 'unskilled' },
+        { label: 'Supervisory level or above', value: 'supervisory' },
+        { label: 'Self employed', value: 'self_employed' }
       ]
     },
     {
-      id: 'educationDocument',
-      group: 'education',
-      type: 'header',
-      label: 'Address',
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
-    },
-    {
-      id: 'educationCountry',
-      group: 'education',
+      id: 'appliedForAdmission',
+      group: 'purpose' as FormGroup,
       type: 'select',
-      label: 'Select a country or territory',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' },
-      options: COUNTRIES
-    },
-    {
-      id: 'educationStreetAddress',
-      group: 'education',
-      type: 'text',
-      label: 'Street address',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' },
-      description: 'Enter the address, including house number or building number if applicable.'
-    },
-    {
-      id: 'educationCity',
-      group: 'education',
-      type: 'text',
-      label: 'City or town',
-      required: true,
-      showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
-    },
-    // {
-    //   id: 'educationAddButton',
-    //   group: 'education',
-    //   type: 'info',
-    //   label: '+ Add another education',
-    //   showIf: { field: 'hasPostSecondaryEducation', value: 'yes' }
-    // },
-
-    // Medical Background Section
-    {
-      id: 'medicalBackgroundHeader',
-      group: 'medical',
-      type: 'header',
-      label: 'Medical background questions'
-    },
-    {
-      id: 'hasMedicalExam',
-      group: 'medical',
-      type: 'select',
-      label: 'Have you had a medical exam performed by an IRCC authorized panel physician (doctor) within the last 12 months?',
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'medicalExamNumber',
-      group: 'medical',
-      type: 'text',
-      label: 'If known, please provide your Immigration medical examination (IME) or Unique medical identifier (UMI) number.',
+      label: `Did you apply for admission and admission application is under process? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
-        field: 'hasPostSecondaryEducation',
-        value: 'yes'
-      }
-    },
-    
-
-    // Family Information Section
-    {
-      id: 'familyInfoHeader',
-      group: 'family',
-      type: 'header',
-      label: 'Family information'
-    },
-    {
-      id: 'maritalStatus',
-      group: 'family',
-      type: 'select',
-      label: 'What is your current marital status?',
-      required: true,
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' }
+        ]
+      },
       options: [
-        { label: 'Annulled Marriage', value: 'annulled' },
-        { label: 'Common Law', value: 'common_law' },
-        { label: 'Divorced', value: 'divorced' },
-        { label: 'Married', value: 'married' },
-        { label: 'Separated', value: 'separated' },
-        { label: 'Single', value: 'single' },
-        { label: 'Widowed', value: 'widowed' }
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
       ]
     },
     {
-      id: 'marriageDate',
-      group: 'family',
-      type: 'date',
-      label: 'Date of marriage or start of common-law relationship',
-      required: true,
-      showIf: { 
-        operator: 'or',
+      id: 'admissionPlatformLink',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Please share the weblink of the platform you are using for your admission ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      placeholder: 'Enter the platform URL',
+      showIf: {
+        operator: 'and',
         conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'maritalStatus', value: 'divorced' },
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' },
+          { field: 'appliedForAdmission', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'hasPreparedStatements',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Did you prepare any statement of purpose, cover letter or letter of explanation? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' },
+          { field: 'appliedForAdmission', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'hasAcademicAssessment',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Did you get your academic achievements assessed? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' },
+          { field: 'appliedForAdmission', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'needsAdmissionAssistance',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you want us to assist you for your admission? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'studyDuration',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: 'I want to study for',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' },
+          { field: 'needsAdmissionAssistance', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: '1 year', value: '1_year' },
+        { label: '2 years', value: '2_years' },
+        { label: 'More than 2 years', value: 'more_than_2_years' }
+      ]
+    },
+    {
+      id: 'studyQualificationGoal',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: 'I want to gain',
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' },
+          { field: 'needsAdmissionAssistance', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Post-secondary diploma', value: 'post_secondary_diploma' },
+        { label: "Bachelor's degree", value: 'bachelors' },
+        { label: 'Post-graduate diploma', value: 'post_graduate_diploma' },
+        { label: "Master's degree", value: 'masters' },
+        { label: 'Vocational program', value: 'vocational' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    {
+      id: 'studyQualificationGoalOther',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Please specify what qualification you want to gain',
+      required: false,
+      placeholder: 'Enter qualification type',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' },
+          { field: 'needsAdmissionAssistance', value: 'yes' },
+          { field: 'studyQualificationGoal', value: 'other' }
+        ]
+      }
+    },
+    {
+      id: 'studyLocationPreference1',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Location preference 1',
+      required: false,
+      placeholder: 'Enter your first location preference',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' },
+          { field: 'needsAdmissionAssistance', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'studyLocationPreference2',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Location preference 2',
+      required: false,
+      placeholder: 'Enter your second location preference',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' },
+          { field: 'needsAdmissionAssistance', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'studyLocationPreference3',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Location preference 3',
+      required: false,
+      placeholder: 'Enter your third location preference',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasStudyAcceptance', value: 'no' },
+          { field: 'needsAdmissionAssistance', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'hasArrangedStudyFunds',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Did you arrange for funds needed for tuition and living? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'study' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'needsEducationLoan',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Are you looking for education loan assistance? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'study' },
+          { field: 'hasArrangedStudyFunds', value: 'no' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'spouseWillAccompany',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you wish your spouse accompany you? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
           { field: 'maritalStatus', value: 'married' },
-          { field: 'maritalStatus', value: 'separated' },
-          { field: 'maritalStatus', value: 'widowed' }
+          { field: 'visitPurpose', value: 'study' }
         ]
-      },      
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
     },
-    // Additional fields for previous relationships
+
+    // For join family permanently
     {
-      id: 'previousRelationshipHeader',
-      group: 'family',
-      type: 'header',
-      label: 'Additional details of your previous relationship',
-      showIf: { 
-        operator: 'or',
+      id: 'permanentJoinRelation',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is your relation to person you will join? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'join_family_permanent' },
+      options: [
+        { label: 'Child', value: 'child' },
+        { label: 'Parent', value: 'parent' },
+        { label: 'Partner/Spouse', value: 'partner' }
+      ]
+    },
+    {
+      id: 'permanentJoinSponsorStatus',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is the immigration status of your sponsor? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'join_family_permanent' },
+      options: [
+        { label: 'Citizen', value: 'citizen' },
+        { label: 'Permanent Resident', value: 'permanent_resident' },
+        { label: 'Refugee', value: 'refugee' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    {
+      id: 'permanentJoinSponsorStatusOther',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Please specify the immigration status',
+      required: true,
+      placeholder: 'Enter immigration status',
+      showIf: {
+        operator: 'and',
         conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' },
-          { field: 'maritalStatus', value: 'separated' },
-          { field: 'maritalStatus', value: 'widowed' }
+          { field: 'visitPurpose', value: 'join_family_permanent' },
+          { field: 'permanentJoinSponsorStatus', value: 'other' }
         ]
       }
     },
     {
-      id: 'previousSpouseLastName',
-      group: 'family',
+      id: 'permanentJoinSponsorContact',
+      group: 'purpose' as FormGroup,
       type: 'text',
-      label: 'Surname or last name',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' },
-          { field: 'maritalStatus', value: 'separated' },
-          { field: 'maritalStatus', value: 'widowed' }
-        ]
-      },
-      placeholder: 'Enter surname'
-    },
-    {
-      id: 'previousSpouseFirstName',
-      group: 'family',
-      type: 'text',
-      label: 'Given name or first name',
+      label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' },
-          { field: 'maritalStatus', value: 'separated' },
-          { field: 'maritalStatus', value: 'widowed' }
-        ]
-      },
-      description: 'Write the given name. If none, leave this field blank.',
-      placeholder: 'Enter given name'
+      placeholder: 'Name, Address, Phone number, Email',
+      showIf: { field: 'visitPurpose', value: 'join_family_permanent' }
     },
     {
-      id: 'previousSpouseDob',
-      group: 'family',
-      type: 'date',
-      label: 'Date of birth',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' },
-          { field: 'maritalStatus', value: 'separated' },
-          { field: 'maritalStatus', value: 'widowed' }
-        ]
-      }
-    },
-    {
-      id: 'previousSpouseBirthCountry',
-      group: 'family',
-      type: 'select',
-      label: 'Country or territory of birth',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' },
-          { field: 'maritalStatus', value: 'separated' },
-          { field: 'maritalStatus', value: 'widowed' }
-        ]
-      },
-      options: COUNTRIES
-    },
-    {
-      id: 'relationshipEndDate',
-      group: 'family',
-      type: 'date',
-      label: 'When did the relationship with your spouse or common-law partner end?',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'annulled' },
-          { field: 'maritalStatus', value: 'divorced' },
-          { field: 'maritalStatus', value: 'separated' },
-          { field: 'maritalStatus', value: 'widowed' }
-        ]
-      }
-    },
-    
-    // Common Law Partner Information
-    {
-      id: 'commonLawPartnerHeader',
-      group: 'family',
-      type: 'header',
-      label: 'Name of spouse or common-law partner',
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'maritalStatus', value: 'married' }
-        ]
-      }
-    },
-    {
-      id: 'spouseLastName',
-      group: 'family',
+      id: 'permanentJoinSponsorIncome',
+      group: 'purpose' as FormGroup,
       type: 'text',
-      label: 'Surname or last name',
-      required: true,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'maritalStatus', value: 'married' }
-        ]
-      },
-      placeholder: 'Enter surname'
-    },
-    {
-      id: 'spouseFirstName',
-      group: 'family',
-      type: 'text',
-      label: 'Given name or first name',
+      label: `What is your sponsor's annual income in local currency? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
-      showIf: { 
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'maritalStatus', value: 'married' }
-        ]
-      },
-      description: 'Write the given name. If none, leave this field blank.',
-      placeholder: 'Enter given name'
+      placeholder: 'Enter income amount',
+      showIf: { field: 'visitPurpose', value: 'join_family_permanent' }
+    },
+
+    // For skill-based immigration
+    {
+      id: 'skillHighestQualification',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is your highest qualification? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'skill_immigration' },
+      options: [
+        { label: 'Post secondary diploma', value: 'post_secondary_diploma' },
+        { label: 'Trades diploma', value: 'trades_diploma' },
+        { label: "Bachelor's degree", value: 'bachelors' },
+        { label: 'Post graduate diploma', value: 'post_graduate_diploma' },
+        { label: "Master's degree", value: 'masters' },
+        { label: 'Doctorate degree', value: 'doctorate' }
+      ]
     },
     {
-      id: 'spouseBirthDate',
-      group: 'family',
-      type: 'date',
-      label: 'Date of birth',
-      required: true,
-      showIf: { 
-        operator: 'or',
+      id: 'skillQualificationDetails',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `What is your awarding body and year of award, country of study? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Name, Year, Country',
+      showIf: { field: 'visitPurpose', value: 'skill_immigration' }
+    },
+    {
+      id: 'skillEcaTest',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Is this qualification passed the education credential assessment (ECA) test? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'skill_immigration' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'skillEcaDetails',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Which authorised body assessed your education? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Name, Reference number, Date of assessment, Equivalency',
+      showIf: {
+        operator: 'and',
         conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'maritalStatus', value: 'married' }
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillEcaTest', value: 'yes' }
         ]
       }
     },
     {
-      id: 'spouseBirthCountry',
-      group: 'family',
+      id: 'skillEcaAssistance',
+      group: 'purpose' as FormGroup,
       type: 'select',
-      label: 'Country or territory of birth',
-      required: true,
-      showIf: { 
-        operator: 'or',
+      label: `Do you want our assistance for education credential assessment ECA? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      showIf: {
+        operator: 'and',
         conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'maritalStatus', value: 'married' }
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillEcaTest', value: 'no' }
         ]
       },
-      options: COUNTRIES
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
     },
     {
-      id: 'spouseOccupation',
-      group: 'family',
+      id: 'skillLanguageTest',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have result of language proficiency test (IELTS, PTE, TEF, CELPIP, TOEFL etc.)? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'skill_immigration' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'skillLanguageTestType',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Which test result you have? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillLanguageTest', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'IELTS', value: 'IELTS' },
+        { label: 'CELPIP', value: 'CELPIP' },
+        { label: 'PTE', value: 'PTE' },
+        { label: 'TOEFL', value: 'TOEFL' },
+        { label: 'TEF', value: 'TEF' },
+        { label: 'TCF', value: 'TCF' }
+      ]
+    },
+    {
+      id: 'skillWorkExperienceDuration',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is the duration of your work experience? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'skill_immigration' },
+      options: [
+        { label: 'None or Less than 1 year', value: 'less_than_1' },
+        { label: 'More than 1 year but less than 3 years', value: '1_to_3' },
+        { label: '3 years or more', value: '3_to_5' },
+        { label: 'More than 5 years', value: 'more_than_5' }
+      ]
+    },
+    {
+      id: 'skillIneligibleMessage',
+      group: 'purpose' as FormGroup,
+      type: 'info',
+      label: 'Important Information',
+      description: 'You may not be eligible for this program. Check other visa categories or contact for options.',
+      content: [],
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillWorkExperienceDuration', value: 'less_than_1' }
+        ]
+      }
+    },
+    {
+      id: 'skillDestinationWorkExperience',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Did you work in the country of destination? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillWorkExperienceDuration', not: 'less_than_1' }
+        ]
+      },
+      options: [
+        { label: 'More than 1 year but less than 3 years', value: '1_to_3' },
+        { label: '3 years or more', value: '3_to_5' },
+        { label: 'More than 5 years', value: 'more_than_5' },
+        { label: 'No experience in destination country', value: 'none' }
+      ]
+    },
+    {
+      id: 'skillOccupationCategory',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Which category describes your occupation? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillWorkExperienceDuration', not: 'less_than_1' }
+        ]
+      },
+      options: WORK_FIELD_OPTIONS
+    },
+    {
+      id: 'skillOccupationRegulated',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Is your occupation is licensed or regulated? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillWorkExperienceDuration', not: 'less_than_1' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'skillOccupationLicense',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have license or registration to perform your job? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillWorkExperienceDuration', not: 'less_than_1' },
+          { field: 'skillOccupationRegulated', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'skillFamilyInDestination',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you or your spouse have parent or sibling, permanent resident, or citizen of country of your destination? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'skill_immigration' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'skillJobOffer',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have any job offer from the employer in country of destination? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'skill_immigration' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'skillJobOfferType',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What work is offered? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillJobOffer', value: 'yes' }
+        ]
+      },
+      options: WORK_FIELD_OPTIONS
+    },
+    {
+      id: 'skillJobOfferLocation',
+      group: 'purpose' as FormGroup,
       type: 'text',
-      label: 'Present occupation',
-      required: true,
-      showIf: { 
-        operator: 'or',
+      label: `What is the location of work offered? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter location',
+      showIf: {
+        operator: 'and',
         conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'maritalStatus', value: 'married' }
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'skillJobOffer', value: 'yes' }
         ]
-      },
-      placeholder: 'Enter occupation'
+      }
     },
     {
-      id: 'spouseSameAddress',
-      group: 'family',
+      id: 'skillProvincialNomination',
+      group: 'purpose' as FormGroup,
       type: 'select',
-      label: 'Is their address the same as yours?',
+      label: `Do you have any support letter or nomination from any province or territory of destination country? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      showIf: { 
-        operator: 'or',
+      showIf: { field: 'visitPurpose', value: 'skill_immigration' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'skillSettlementFunds',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have adequate settlement funds? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'skill_immigration' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'skillSpouseAccompany',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Will your spouse accompany you? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
         conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
+          { field: 'visitPurpose', value: 'skill_immigration' },
           { field: 'maritalStatus', value: 'married' }
         ]
       },
@@ -2142,155 +4571,515 @@ export const CANADA: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
-    // {
-    //   id: 'spouseAddressHeader',
-    //   group: 'family',
-    //   type: 'header',
-    //   label: 'Present address of spouse',
-    //   showIf: { 
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'maritalStatus', value: 'common_law' },
-    //       { field: 'spouseSameAddress', value: 'no' }
-    //     ]
-    //   }
-    // },
-    // {
-    //   id: 'spouseAddressHeaderMarried',
-    //   group: 'family',
-    //   type: 'header',
-    //   label: 'Present address of spouse',
-    //   showIf: { 
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'maritalStatus', value: 'married' },
-    //       { field: 'spouseSameAddress', value: 'no' }
-    //     ]
-    //   }
-    // },
     {
-      id: 'spouseCountry',
-      group: 'family',
-      type: 'select',
-      label: 'Select a country or territory',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'spouseSameAddress', value: 'no' }
-        ]
-      },
-      options: COUNTRIES
-      },
-    {
-      id: 'spouseCountryMarried',
-      group: 'family',
-      type: 'select',
-      label: 'Select a country or territory',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseSameAddress', value: 'no' }
-        ]
-      },
-      options: COUNTRIES
-    },
-    {
-      id: 'spouseStreetAddress',
-      group: 'family',
-      type: 'text',
-      label: 'Street address',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'spouseSameAddress', value: 'no' }
-        ]
-      },
-      description: 'Enter the address, including house number or building number if applicable.'
-    },
-    {
-      id: 'spouseStreetAddressMarried',
-      group: 'family',
-      type: 'text',
-      label: 'Street address',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseSameAddress', value: 'no' }
-        ]
-      },
-      description: 'Enter the address, including house number or building number if applicable.'
-    },
-    {
-      id: 'spouseCity',
-      group: 'family',
-      type: 'text',
-      label: 'City or town',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'spouseSameAddress', value: 'no' }
-        ]
-      }
-    },
-    {
-      id: 'spouseCityMarried',
-      group: 'family',
-      type: 'text',
-      label: 'City or town',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseSameAddress', value: 'no' }
-        ]
-      }
-    },
-    {
-      id: 'spousePostalCode',
-      group: 'family',
-      type: 'text',
-      label: 'Postal code',
+      id: 'skillSpouseDetailsMessage',
+      group: 'purpose' as FormGroup,
+      type: 'info',
+      label: 'Important Information',
+      description: 'Would you like to share partner\'s details for assessment? Select YES and answer the questions.',
+      content: [],
       required: false,
-      showIf: { 
+      showIf: {
         operator: 'and',
         conditions: [
-          { field: 'maritalStatus', value: 'common_law' },
-          { field: 'spouseSameAddress', value: 'no' }
+          { field: 'visitPurpose', value: 'skill_immigration' },
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'skillSpouseAccompany', value: 'no' }
+        ]
+      }
+    },
+
+    // For performance in sports/religious events/public speaker
+    {
+      id: 'performanceInvitation',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have an invitation from any event organiser? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'performance' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'performancePaid',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Will you be paid to participate? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'performance' },
+          { field: 'performanceInvitation', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'performanceSelfArrangement',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Are you making your own arrangements? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'performance' },
+          { field: 'performanceInvitation', value: 'no' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'performanceAcknowledged',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Is your work acknowledged or awarded? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'performance' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'performanceQualification',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Do you have any qualification in your expertise? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'performance' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'performanceOnline',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Can your performance or followers be located on internet applications? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'performance' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'performanceProfessionalName',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Are you known by any professional name other than that on your passport? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'performance' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'performanceProfessionalNameDetails',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `What name you use? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter professional name',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'performance' },
+          { field: 'performanceProfessionalName', value: 'yes' }
+        ]
+      }
+    },
+
+    // For other purpose
+    {
+      id: 'otherPurposeMessage',
+      group: 'purpose' as FormGroup,
+      type: 'info',
+      label: 'Important Information',
+      description: 'You may need to contact us to understand your requirements.',
+      content: [],  
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'other' }
+    },
+
+    // -------------------- EXPENSES INFORMATION --------------------
+    {
+      id: 'expensesHeader',
+      group: 'finances' as FormGroup,
+      type: 'header',
+      label: 'Expenses Information'
+    },
+    // {
+    //   id: 'financialSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Source of funds for your trip ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   options: [
+    //     { label: 'Bank Statements', value: 'bank_statements' },
+    //     { label: 'Demat Account', value: 'demat_account' },
+    //     { label: 'Property Ownership', value: 'property' },
+    //     { label: 'Sponsorship', value: 'sponsor' },
+    //     { label: 'Other Financial Assets', value: 'other_assets' }
+    //   ]
+    // },
+    {
+      id: 'financialDetails',
+      group: 'finances' as FormGroup,
+      type: 'textarea',
+      label: `Additional details about your financial situation ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      placeholder: 'Please provide any additional information about your financial situation',
+      showIf: {
+        field: 'financialSource',
+        value: 'other_assets'
+      }
+    },
+    {
+      id: 'selfPayingExpenses',
+      group: 'finances' as FormGroup,
+      type: 'select',
+      label: `Will you be paying for your expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'expensePayer',
+      group: 'finances' as FormGroup,
+      type: 'select',
+      label: `Who will pay for your expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'selfPayingExpenses', value: 'no' },
+      options: EXPENSES_PAYER_OPTIONS
+    },
+    {
+      id: 'expensePayerOther',
+      group: 'finances' as FormGroup,
+      type: 'text',
+      label: 'Please specify who will pay for your expenses',
+      required: true,
+      placeholder: 'Enter payer details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'selfPayingExpenses', value: 'no' },
+          { field: 'expensePayer', value: 'other' }
         ]
       }
     },
     {
-      id: 'spousePostalCodeMarried',
-      group: 'family',
+      id: 'expensePayerOccupation',
+      group: 'finances' as FormGroup,
+      type: 'checkbox-multiselect',
+      label: `What is the primary occupation of the person paying for expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'selfPayingExpenses', value: 'yes' },
+          { field: 'expensePayer', value: 'self' }
+        ]
+      },
+      options: OCCUPATION_SOURCE_OPTIONS || []
+    },
+    {
+      id: 'expensePayerOccupationOther',
+      group: 'finances' as FormGroup,
       type: 'text',
-      label: 'Postal code',
-      required: false,
-      showIf: { 
+      label: 'Please specify the occupation',
+      required: true,
+      placeholder: 'Enter occupation details',
+      showIf: {
         operator: 'and',
         conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseSameAddress', value: 'no' }
+          { field: 'selfPayingExpenses', value: 'no' },
+          { field: 'expensePayerOccupation', value: 'other' }
         ]
       }
     },
-    
-    // Sibling Information Section
+    {
+      id: 'expensePayerIncomeSource',
+      group: 'finances' as FormGroup,
+      type: 'checkbox-multiselect',
+      label: `What is the source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'selfPayingExpenses', value: 'no' },
+      options: INCOME_SOURCE_OPTIONS
+    },
+    {
+      id: 'expensePayerIncomeSourceOther',
+      group: 'finances' as FormGroup,
+      type: 'text',
+      label: 'Please specify the source of income',
+      required: true,
+      placeholder: 'Enter income source details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'selfPayingExpenses', value: 'no' },
+          { field: 'expensePayerIncomeSource', value: 'other' }
+        ]
+      }
+    },
+    {
+      id: 'expensePayerHasAdditionalIncome',
+      group: 'finances' as FormGroup,
+      type: 'select',
+      label: `Do you have additional source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'selfPayingExpenses', value: 'no' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'expensePayerAdditionalIncomeSource',
+      group: 'finances' as FormGroup,
+      type: 'checkbox-multiselect',
+      label: `What is the additional source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'selfPayingExpenses', value: 'no' },
+          { field: 'expensePayerHasAdditionalIncome', value: 'yes' }
+        ]
+      },
+      options: INCOME_SOURCE_OPTIONS
+    },
+    {
+      id: 'expensePayerAdditionalIncomeSourceOther',
+      group: 'finances' as FormGroup,
+      type: 'text',
+      label: 'Please specify the additional source of income',
+      required: true,
+      placeholder: 'Enter additional income source details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'selfPayingExpenses', value: 'no' },
+          { field: 'expensePayerHasAdditionalIncome', value: 'yes' },
+          { field: 'expensePayerAdditionalIncomeSource', value: 'other' }
+        ]
+      }
+    },
+    {
+      id: 'spouseHasIndependentIncome',
+      group: 'finances' as FormGroup,
+      type: 'select',
+      label: `Does your spouse have his/her independent income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'maritalStatus', value: 'married' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'spouseIncomeSource', 
+      group: 'finances' as FormGroup,
+      type: 'checkbox-multiselect',
+      label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'spouseHasIndependentIncome', value: 'yes' }
+        ]
+      },
+      options: INCOME_SOURCE_OPTIONS
+    },
+    {
+      id: 'spouseIncomeSourceOther',
+      group: 'finances' as FormGroup,
+      type: 'text',
+      label: "Please specify your spouse's source of income",
+      required: false,
+      placeholder: 'Enter income source details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'spouseHasIndependentIncome', value: 'yes' },
+          { field: 'spouseIncomeSource', value: 'other' }
+        ]
+      }
+    },
+    {
+      id: 'spouseHasAdditionalIncome',
+      group: 'finances' as FormGroup,
+      type: 'checkbox-multiselect',
+      label: `Does your spouse have additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'spouseHasIndependentIncome', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'spouseAdditionalIncomeSource',
+      group: 'finances' as FormGroup,
+      type: 'select',
+      label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'spouseHasIndependentIncome', value: 'yes' },
+          { field: 'spouseHasAdditionalIncome', value: 'yes' }
+        ]
+      },
+      options: INCOME_SOURCE_OPTIONS
+    },
+
+    // -------------------- RESIDENCE INFORMATION --------------------
+    {
+      id: 'residenceHeader',
+      group: 'residence' as FormGroup,
+      type: 'header',
+      label: 'Residence Information'
+    },
+    {
+      id: 'hasAlternateAddress',
+      group: 'residence' as FormGroup,
+      type: 'select',
+      label: `Do you live at any address other than that you have in your passport? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'currentAddress',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: `What is your address? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter your current address',
+      showIf: { field: 'hasAlternateAddress', value: 'yes' }
+    },
+    {
+      id: 'addressDurationMonths',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: `For how long you have been living at this address? (Months) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter number of months'
+    },
+    {
+      id: 'addressDurationYears',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: `For how long you have been living at this address? (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter number of years'
+    },
+    {
+      id: 'propertyOwnership',
+      group: 'residence' as FormGroup,
+      type: 'select',
+      label: `Who owns this property? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      options: PROPERTY_OWNERSHIP_OPTIONS
+    },
+    {
+      id: 'propertyOwnershipOther',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: 'Please specify who owns the property',
+      required: false,
+      placeholder: 'Enter property ownership details',
+      showIf: { field: 'propertyOwnership', value: 'other' }
+    },
+    {
+      id: 'worksFromHome',
+      group: 'residence' as FormGroup,
+      type: 'select',
+      label: `Do you work from home? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'workAddress',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: `What is your work address? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter your work address',
+      showIf: { field: 'worksFromHome', value: 'no' }
+    },
+
+    // -------------------- PASSPORT INFORMATION --------------------
+    {
+      id: 'passportHeader',
+      group: 'passport' as FormGroup,
+      type: 'header',
+      label: 'Passport Information'
+    },
+    {
+      id: 'isOnlyPassport',
+      group: 'passport' as FormGroup,
+      type: 'select',
+      label: `Is your current passport being the only passport you ever possessed? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'previousPassportLost',
+      group: 'passport' as FormGroup,
+      type: 'select',
+      label: `Was any of your previous passports reported lost? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'isOnlyPassport', value: 'no' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+
+    // -------------------- FAMILY INFORMATION --------------------
+    {
+      id: 'familyHeader',
+      group: 'family' as FormGroup,
+      type: 'header',
+      label: 'Family Information'
+    },
     {
       id: 'hasSiblings',
-      group: 'family',
+      group: 'family' as FormGroup,
       type: 'select',
-      label: 'Do you have any siblings (brothers and sisters)?',
+      label: `Do you have any siblings (brothers and sisters)? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       options: [
         { label: 'Yes', value: 'yes' },
@@ -2299,7 +5088,7 @@ export const CANADA: VisaForm = {
     },
     {
       id: 'siblingsDescription',
-      group: 'family',
+      group: 'family' as FormGroup,
       type: 'info',
       label: 'Description',
       content: [
@@ -2309,167 +5098,64 @@ export const CANADA: VisaForm = {
     },
     {
       id: 'siblingsDetailsHeader',
-      group: 'family',
+      group: 'family' as FormGroup,
       type: 'header',
-      label: 'Question 8A: Give details of you all siblings',
+      label: 'Give details of all your siblings',
       showIf: { field: 'hasSiblings', value: 'yes' }
     },
     {
-      id: 'siblingName1',
-      group: 'family',
-      type: 'text',
-      label: 'Name of sibling 1',
+      id: 'siblingsInput',
+      group: 'family' as FormGroup,
+      type: 'siblingsInput',
+      label: 'Siblings Information',
       required: true,
       showIf: { field: 'hasSiblings', value: 'yes' }
     },
+    // -------------------- PARENTS INFORMATION --------------------
     {
-      id: 'siblingDateOfBirth1',
-      group: 'family',
-      type: 'date',
-      label: 'Date of Birth of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' }
+      id: 'parentsHeader',
+      group: 'parents' as FormGroup,
+      type: 'header',
+      label: 'Parents Information'
     },
     {
-      id: 'siblingDeceased1',
-      group: 'family',
-      type: 'select',
-      label: 'Is sibling 1 deceased?',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
+      id: 'parentsDescription',
+      group: 'parents' as FormGroup,
+      type: 'info',
+      label: 'Description',
+      content: [
+        'Family information, parents detail.'
       ]
     },
     {
-      id: 'siblingDeathDetails1',
-      group: 'family',
-      type: 'text',
-      label: 'Date and place of death of sibling 1',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'hasSiblings', value: 'yes' },
-          { field: 'siblingDeceased1', value: 'yes' }
-        ]
-      }
-    },
-    {
-      id: 'siblingMaritalStatus1',
-      group: 'family',
-      type: 'select',
-      label: 'Marital Status of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' },
-      options: [
-        { label: 'Single', value: 'single' },
-        { label: 'Married', value: 'married' },
-        { label: 'Common Law', value: 'common_law' },
-        { label: 'Divorced', value: 'divorced' },
-        { label: 'Separated', value: 'separated' },
-        { label: 'Widowed', value: 'widowed' }
-      ]
-    },
-    {
-      id: 'siblingOccupation1',
-      group: 'family',
-      type: 'text',
-      label: 'Occupation of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' }
-    },
-    {
-      id: 'siblingAddress1',
-      group: 'family',
-      type: 'text',
-      label: 'Address of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' }
-    },
-    {
-      id: 'siblingCountryOfBirth1',
-      group: 'family',
-      type: 'select',
-      label: 'Country of Birth of sibling 1',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' },
-      options: COUNTRIES
-    },
-    {
-      id: 'hasMoreSiblings',
-      group: 'family',
-      type: 'select',
-      label: 'Do you have more siblings to add?',
-      required: true,
-      showIf: { field: 'hasSiblings', value: 'yes' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseAccompanyMarried',
-      group: 'family',
-      type: 'select',
-      label: 'Will your spouse accompany you to Canada?',
-      required: true,
-      showIf: { field: 'maritalStatus', value: 'married' },
-      description: 'Answer yes even if your spouse will join you later in Canada.',
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
+      id: 'parentsInput',
+      group: 'parents' as FormGroup,
+      type: 'parentsInput',
+      label: 'Parents Information',
+      required: true
     },
 
-
-    // Travel Information
-
-    // Background Information
-    // {
-    //   id: 'hasCriminalRecord',
-    //   group: 'personal',
-    //   type: 'select',
-    //   label: 'Do you have any criminal convictions?',
-    //   required: true,
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-    // {
-    //   id: 'hasCanadianVisaRefusal',
-    //   group: 'personal',
-    //   type: 'select',
-    //   label: 'Have you ever been refused a visa to Canada?',
-    //   required: true,
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // }
-    // Visa History Section
+    // -------------------- VISA HISTORY --------------------
     {
       id: 'visaHistoryHeader',
-      group: 'visa_history',
+      group: 'visa_history' as FormGroup,
       type: 'header',
       label: 'Visa History'
     },
     {
       id: 'visaHistoryDescription',
-      group: 'visa_history',
+      group: 'visa_history' as FormGroup,
       type: 'info',
-      label: 'Previous Visa Applications',
+      label: 'Description',
       content: [
         'Any previous refusal of USA, refused a visa or permit denied entry, figure print collected previously for the purpose of applying for Schengen visa, has the applicant ever had a visa for Australia or any other country refused or cancelled, have you ever been refused visa / permit, work, study for another country excluding New Zealand.'
       ]
     },
     {
       id: 'hasAppliedForVisa',
-      group: 'visa_history',
+      group: 'visa_history' as FormGroup,
       type: 'select',
-      label: 'Did you ever file visa application for any country?',
+      label: `Did you ever file visa application for any country? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       options: [
         { label: 'Yes', value: 'yes' },
@@ -2478,7 +5164,7 @@ export const CANADA: VisaForm = {
     },
     {
       id: 'hasVisaRefusal',
-      group: 'visa_history',
+      group: 'visa_history' as FormGroup,
       type: 'select',
       label: 'Was any of your visa application refused?',
       required: true,
@@ -2489,12 +5175,13 @@ export const CANADA: VisaForm = {
       ]
     },
     {
-      id: 'refusalCountry',
-      group: 'visa_history',
-      type: 'select',
-      label: 'Which country refused your visa?',
+      id: 'refusalDetails',
+      group: 'visa_history' as FormGroup,
+      type: 'custom',
+      component: 'RefusalInput',
+      label: 'Provide details about your visa refusals',
       required: true,
-      showIf: { 
+      showIf: {
         operator: 'and',
         conditions: [
           { field: 'hasAppliedForVisa', value: 'yes' },
@@ -2503,75 +5190,76 @@ export const CANADA: VisaForm = {
       },
       options: COUNTRIES
     },
-    {
-      id: 'visaRefusalType',
-      group: 'visa_history',
-      type: 'select',
-      label: 'What for you applied?',
-      required: true,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'hasAppliedForVisa', value: 'yes' },
-          { field: 'hasVisaRefusal', value: 'yes' }
-        ]
-      },
-      options: [
-        { label: 'Temporary short visit', value: 'temporary' },
-        { label: 'Permanent settlement', value: 'permanent' }
-      ]
-    },
-    {
-      id: 'refusalDate',
-      group: 'visa_history',
-      type: 'date',
-      label: 'When did this problem occur?',
-      required: false,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'hasAppliedForVisa', value: 'yes' },
-          { field: 'hasVisaRefusal', value: 'yes' }
-        ]
-      }
-    },
-    {
-      id: 'hasRefusalLetter',
-      group: 'visa_history',
-      type: 'select',
-      label: 'Do you have any letter of refusal?',
-      required: false,
-      showIf: { 
-        operator: 'and',
-        conditions: [
-          { field: 'hasAppliedForVisa', value: 'yes' },
-          { field: 'hasVisaRefusal', value: 'yes' }
-        ]
-      },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    // Travel Plans Section
+    // {
+    //   id: 'visaRefusalType',
+    //   group: 'visa_history' as FormGroup,
+    //   type: 'select',
+    //   label: 'What for you applied?',
+    //   required: true,
+    //   showIf: { 
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'hasAppliedForVisa', value: 'yes' },
+    //       { field: 'hasVisaRefusal', value: 'yes' }
+    //     ]
+    //   },
+    //   options: [
+    //     { label: 'Temporary short visit', value: 'temporary' },
+    //     { label: 'Permanent settlement', value: 'permanent' }
+    //   ]
+    // },
+    // {
+    //   id: 'refusalDate',
+    //   group: 'visa_history' as FormGroup,
+    //   type: 'date',
+    //   label: 'When did this problem occur?',
+    //   required: false,
+    //   showIf: { 
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'hasAppliedForVisa', value: 'yes' },
+    //       { field: 'hasVisaRefusal', value: 'yes' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'hasRefusalLetter',
+    //   group: 'visa_history' as FormGroup,
+    //   type: 'select',
+    //   label: 'Do you have any letter of refusal?',
+    //   required: false,
+    //   showIf: { 
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'hasAppliedForVisa', value: 'yes' },
+    //       { field: 'hasVisaRefusal', value: 'yes' }
+    //     ]
+    //   },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+
+    // -------------------- TRAVEL PLANS --------------------
     {
       id: 'travelPlansHeader',
-      group: 'visa_history',
+      group: 'travel_plans' as FormGroup,
       type: 'header',
       label: 'Travel Plans'
     },
     {
       id: 'travelPlansDescription',
-      group: 'visa_history',
+      group: 'travel_plans' as FormGroup,
       type: 'info',
-      label: 'Travel Dates',
+      label: 'Description',
       content: [
         'Date you will arrive and leave, intended date of arrival, planned arrival date, planned final departure date, indicate how long you plan to stay from – to, intended date of arrival of first intend stay in the Schengen area, intended date of departure.'
       ]
     },
     {
       id: 'hasConfirmedTravelPlans',
-      group: 'visa_history',
+      group: 'travel_plans' as FormGroup,
       type: 'select',
       label: 'Do you have confirmed travel plans?',
       required: false,
@@ -2582,7 +5270,7 @@ export const CANADA: VisaForm = {
     },
     {
       id: 'plannedArrivalDate',
-      group: 'visa_history',
+      group: 'travel_plans' as FormGroup,
       type: 'date',
       label: 'Planned arrival date',
       required: false,
@@ -2590,22 +5278,82 @@ export const CANADA: VisaForm = {
     },
     {
       id: 'plannedDepartureDate',
-      group: 'visa_history',
+      group: 'travel_plans' as FormGroup,
       type: 'date',
       label: 'Planned departure date',
       required: false,
       showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
     },
-    // Additional Information Section
+
+    // -------------------- RELATIVES INFORMATION --------------------
+    {
+      id: 'relativesHeader',
+      group: 'relatives' as FormGroup,
+      type: 'header',
+      label: 'Relatives Information'
+    },
+    {
+      id: 'relativesDescription',
+      group: 'relatives' as FormGroup,
+      type: 'info',
+      label: 'Description',
+      content: [
+        'Please provide information about any relatives you have in the destination country. This information may be required for visa processing.'
+      ]
+    },
+    {
+      id: 'hasRelativesInDestination',
+      group: 'relatives' as FormGroup,
+      type: 'select',
+      label: 'Do you have any relatives in the destination country?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'relativesDetails',
+      group: 'relatives' as FormGroup,
+      type: 'textarea',
+      label: 'Relative Details',
+      required: false,
+      showIf: { field: 'hasRelativesInDestination', value: 'yes' },
+    },
+
+    // -------------------- ADDITIONAL INFORMATION --------------------
     {
       id: 'additionalInfoHeader',
-      group: 'additional',
+      group: 'additional' as FormGroup,
       type: 'header',
       label: 'Additional Information and Services'
     },
+    // {
+    //   id: 'socialMediaHeader',
+    //   group: 'additional' as FormGroup,
+    //   type: 'header',
+    //   label: 'Social Media Information'
+    // },
+    // {
+    //   id: 'socialMediaDescription',
+    //   group: 'additional' as FormGroup,
+    //   type: 'info',
+    //   content: [
+    //     'Please provide your social media handles. This information may be used to verify your application.'
+    //   ],
+    //   label: 'Description'
+    // },
+    // {
+    //   id: 'socialMediaHandles',
+    //   group: 'additional' as FormGroup,
+    //   type: 'socialHandles',
+    //   label: 'Social Media Handles',
+    //   required: false,
+    //   description: 'Please provide your social media handles if available'
+    // },
     {
       id: 'needExplanations',
-      group: 'additional',
+      group: 'additional' as FormGroup,
       type: 'select',
       label: 'Do you want to add any explanations?',
       required: false,
@@ -2615,17 +5363,36 @@ export const CANADA: VisaForm = {
       ]
     },
     {
+          id: 'destinationHeader',
+          group: 'additional' as FormGroup,
+          type: 'select',
+          label: 'Do you want to add any countries?',
+          required: false,
+          options: [
+            { label: 'Yes', value: 'yes' },
+            { label: 'No', value: 'no' }
+          ]
+        },
+        {
+          id: 'destinationCountries',
+          group: 'additional' as FormGroup,
+          type: 'countriesInput',
+          label: `Which country/ies you want to visit?`,
+          required: false,
+          showIf: { field: 'destinationHeader', value: 'yes' }
+        },
+    {
       id: 'explanationText',
-      group: 'additional',
-      type: 'text',
+      group: 'additional' as FormGroup,
+      type: 'textarea',
       label: 'Please provide your explanation',
       required: false,
       showIf: { field: 'needExplanations', value: 'yes' },
-      placeholder: 'Enter your explanation here'
+      placeholder: 'Enter your explanation here',
     },
     {
       id: 'needTravelServices',
-      group: 'additional',
+      group: 'additional' as FormGroup,
       type: 'select',
       label: 'Do you need any pre departure or post arrival service (such as air tickets, travel insurances, forex cards, mobile SIM, booking of accommodation, package tours)?',
       required: false,
@@ -2634,21 +5401,70 @@ export const CANADA: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
+
+    // -------------------- CONTACT PREFERENCES --------------------
+    {
+      id: 'contactPreferencesHeader',
+      group: 'contact' as FormGroup,
+      type: 'header',
+      label: 'Contact Preferences'
+    },
     {
       id: 'preferredContactMethod',
-      group: 'additional',
-      type: 'text',
+      group: 'contact' as FormGroup,
+      type: 'select',
       label: 'What is the best method to contact you regarding your application?',
       required: false,
-      options: [
-        { label: 'Email', value: 'email' },
-        { label: 'WhatsApp', value: 'whatsapp' },
-        { label: 'Phone call', value: 'phone' }
-      ]
+      options: CONTACT_METHOD_OPTIONS
+    },
+    {
+      id: 'emailoption',
+      group: 'contact' as FormGroup,
+      type: 'text',
+      label: 'Please enter your email',
+      required: true,
+      placeholder: 'Enter your email',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'preferredContactMethod', value: 'email' },
+
+        ]
+      }
+    },
+    {
+      id: 'whatsappoption',
+      group: 'contact' as FormGroup,
+      type: 'text',
+      label: 'Please enter your whatsapp Number',
+      required: true,
+      placeholder: 'Enter your whatsapp Number',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'preferredContactMethod', value: 'whatsapp' },
+
+        ]
+      }
+    },
+    {
+      id: 'phoneoption',
+      group: 'contact' as FormGroup,
+      type: 'text',
+      label: 'Please enter your phone number',
+      required: true,
+      placeholder: 'Enter your phone number',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'preferredContactMethod', value: 'phone_call' },
+
+        ]
+      }
     },
     {
       id: 'needAdditionalContact',
-      group: 'additional',
+      group: 'contact' as FormGroup,
       type: 'select',
       label: 'Do you like to provide additional email or phone number than that you used for creating your application?',
       required: false,
@@ -2659,7 +5475,7 @@ export const CANADA: VisaForm = {
     },
     {
       id: 'additionalEmail',
-      group: 'additional',
+      group: 'contact' as FormGroup,
       type: 'text',
       label: 'Additional Email',
       required: false,
@@ -2668,141 +5484,119 @@ export const CANADA: VisaForm = {
     },
     {
       id: 'additionalPhone',
-      group: 'additional',
+      group: 'contact' as FormGroup,
       type: 'text',
       label: 'Additional Phone',
       required: false,
       showIf: { field: 'needAdditionalContact', value: 'yes' },
       placeholder: 'Enter your additional phone number'
-    }
-  ],
-  documents: [
+    },
     // {
-    //   id: 'medicalFacilityDeposit',
-    //   group: 'application',
-    //   type: 'select',
-    //   label: 'Have you paid a deposit to the Canadian medical facility?',
-    //   required: false,
-    //   showIf: { field: 'purposeOfVisit', value: 'medical_treatment' },
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
+    //   id: 'educationHeader',
+    //   group: 'education' as FormGroup,
+    //   type: 'header',
+    //   label: 'Education History'
+    // },
+    // {
+    //   id: 'educationDescription',
+    //   group: 'education' as FormGroup,
+    //   type: 'info',
+    //   label: 'Education Information',
+    //   content: [
+    //     'Please provide information about your educational background. Include all education from high school/secondary school onwards.'
     //   ]
     // },
-
-    // To Study Without a Permit
     // {
-    //   id: 'courseDurationCheck',
-    //   group: 'application',
+    //   id: 'highestEducation',
+    //   group: 'education' as FormGroup,
     //   type: 'select',
-    //   label: 'Is your course/program less than 6 months long?',
-    //   required: false,
-    //   showIf: { field: 'purposeOfVisit', value: 'short_term_study' },
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-    {
-      id: 'financialProof',
-      name: 'Proof of Financial Support',
-      type: 'file' as DocumentType,
-      description: 'Bank statements, pay stubs, or other proof of sufficient funds for your stay',
-      required: true
-    },
-    {
-      id: 'travelItinerary',
-      name: 'Travel Itinerary',
-      type: 'file' as DocumentType,
-      description: 'Details of your planned trip including flight reservations',
-      required: true,
-      conditions: [
-        { questionId: 'visaType', value: 'visitor' }
-      ]
-    },
-    {
-      id: 'invitationLetter',
-      name: 'Invitation Letter',
-      type: 'file' as DocumentType,
-      description: 'Letter of invitation from your host in Canada',
-      required: true,
-      conditions: [
-        { questionId: 'purposeOfVisit', value: 'visit_friends' }
-      ]
-    },
-    {
-      id: 'marriageCertificate',
-      name: 'Marriage Certificate',
-      type: 'file' as DocumentType,
-      description: 'Required for married applicants',
-      required: true,
-      conditions: [
-        { questionId: 'maritalStatus', value: 'married' }
-      ]
-    },
-    {
-      id: 'divorceDecree',
-      name: 'Divorce Decree or Separation Certificate',
-      type: 'file' as DocumentType,
-      description: 'Required for divorced or separated applicants',
-      required: true,
-      conditions: [
-        { questionId: 'maritalStatus', value: 'divorced' }
-      ]
-    },
-    {
-      id: 'spousePassport',
-      name: 'Spouse Passport Copy',
-      type: 'file' as DocumentType,
-      description: 'Required for married applicants when spouse is accompanying',
-      required: true,
-      conditions: [
-        { questionId: 'maritalStatus', value: 'married' },
-        { questionId: 'spouseAccompanyMarried', value: 'yes' }
-      ]
-    },
-    {
-      id: 'commonLawProof',
-      name: 'Proof of Common-Law Relationship',
-      type: 'file' as DocumentType,
-      description: 'Documents proving your common-law relationship (shared bills, lease, etc.)',
-      required: true,
-      conditions: [
-        { questionId: 'maritalStatus', value: 'common_law' }
-      ]
-    },
-    {
-      id: 'commonLawPartnerPassport',
-      name: 'Common-Law Partner Passport Copy',
-      type: 'file' as DocumentType,
-      description: 'Required when common-law partner is accompanying',
-      required: true,
-      conditions: [
-        { questionId: 'maritalStatus', value: 'common_law' },
-        { questionId: 'spouseAccompany', value: 'yes' }
-      ]
-    },
-    {
-      id: 'medicalExamRecord',
-      name: 'Medical Examination Records',
-      type: 'file' as DocumentType,
-      description: 'Results of your IRCC authorized medical examination',
-      required: true,
-      conditions: [
-        { questionId: 'hasMedicalExam', value: 'yes' }
-      ]
-    },
-    // {
-    //   id: 'wantAdditionalApplicant',
-    //   group: 'additional_applicant',
-    //   type: 'select',
-    //   label: 'Do you want to add another applicant?',
+    //   label: 'Highest level of education completed',
     //   required: true,
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
+    //   options: EDUCATION_QUALIFICATION_OPTIONS
+    // },
+    // {
+    //   id: 'accessingBodyAssessment',
+    //   group: 'education' as FormGroup,
+    //   type: 'textarea',
+    //   label: 'Accessing Body Assessment',
+    //   required: false,
+    //   description: 'If you have had your qualifications assessed by an accessing body, please provide the details below.'
+    // },
+    // {
+    //   id: 'fieldOfStudy',
+    //   group: 'education' as FormGroup,
+    //   type: 'select',
+    //   label: 'Field of study',
+    //   required: false,
+    //   options: EDUCATION_FIELD_OPTIONS
+    // },
+    // // {
+    // //   id: 'last10YearActivityHeader',
+    // //   group: 'education' as FormGroup,
+    // //   type: 'header',
+    // //   label: 'Last 10 Years Activity'
+    // // },
+    // {
+    //   id: 'last10YearActivityDescription',
+    //   group: 'education' as FormGroup,
+    //   type: 'info',
+    //   label: 'Last 10 Years Activity Information',
+    //   content: [
+    //     'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
     //   ]
-    // }
-    
+    // },
+    // // {
+    // //   id: 'last10YearActivity',
+    // //   group: 'education' as FormGroup,
+    // //   type: 'textarea',
+    // //   label: 'Description',
+    // //   required: true,
+    // //   description: 'Please provide details of all your activities in the last 10 years including education, employment, and any periods of unemployment.'
+    // // }
+ // Health, Legal, and Security Details
+{
+  id: 'healthLegalSecurityHeader',
+  group: 'criminal' as FormGroup,
+  type: 'header',
+  label: 'Health, Legal, and Security Details'
+},
+{
+  id: 'healthStatusSummary',
+  group: 'criminal' as FormGroup,
+  type: 'select',
+  label: `Do you have any communicable diseases, mental health history, or require ongoing medical support? ${FIELD_REQUIREMENTS.MANDATORY}`,
+  required: true,
+  options: [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' }
+  ]
+},
+{
+  id: 'healthDetails',
+  group: 'criminal' as FormGroup,
+  type: 'textarea',
+  label: `If yes, please provide brief health-related details: ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+  required: false,
+  showIf: { field: 'healthStatusSummary', value: 'yes' }
+},
+{
+  id: 'criminalSecurityHistory',
+  group: 'criminal' as FormGroup,
+  type: 'select',
+  label: `Have you ever had any criminal record, been under investigation, involved in terrorism, or served in the military/security services? ${FIELD_REQUIREMENTS.MANDATORY}`,
+  required: true,
+  options: [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' }
+  ]
+},
+{
+  id: 'criminalSecurityDetails',
+  group: 'criminal' as FormGroup,
+  type: 'textarea',
+  label: `If yes, please provide relevant details: ${FIELD_REQUIREMENTS.MANDATORY}`,
+  required: true,
+  showIf: { field: 'criminalSecurityHistory', value: 'yes' }
+},
   ]
 };

@@ -162,51 +162,51 @@ export const CANADA: VisaForm = {
       }]
     },
      // Documents for self-arranged travel
-{
-  id: 'hotel_booking_confirmation',
-  name: 'Hotel Booking Confirmation',
-  description: 'Hotel booking confirmation or voucher showing your accommodation details for the entire duration of your stay',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'assistanceType',
-    value: 'hotel'
-  }]
-},
-{
-  id: 'flight_tickets',
-  name: 'Flight Tickets',
-  description: 'Confirmed round-trip flight tickets showing your travel dates and itinerary',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'assistanceType',
-    value: 'flight'
-  }]
-},
-{
-  id: 'travel_insurance_certificate',
-  name: 'Travel Insurance Certificate',
-  description: 'Travel insurance certificate showing coverage for the entire duration of your trip',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'assistanceType',
-    value: 'insurance'
-  }]
-},
-    // tourism docs
-    {
-      id: 'tourism_itinerary',
-      name: 'Tourism Itinerary ',
-      description: 'Detailed itinerary of your trip ',
+     {
+      id: 'hotel_booking_confirmation',
+      name: 'Hotel Booking Confirmation',
+      description: 'We will arrange your hotel booking and provide a confirmation or voucher showing your accommodation details for the entire duration of your stay.',
       type: 'conditional',
       required: true,
       conditions: [{
-        questionId: 'visitPurpose',
-        value: 'tourism'
+        questionId: 'assistanceType',
+        value: 'hotel'
       }]
     },
+    {
+      id: 'flight_tickets',
+      name: 'Flight Tickets',
+      description: 'We will take care of booking your round-trip flights and provide confirmed tickets showing your travel dates and itinerary.',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'assistanceType',
+        value: 'flight'
+      }]
+    },
+    {
+      id: 'travel_insurance_certificate',
+      name: 'Travel Insurance Certificate',
+      description: 'We will arrange travel insurance for your trip and provide a certificate covering the entire duration of your stay.',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'assistanceType',
+        value: 'insurance'
+      }]
+    },    
+    // tourism docs
+    // {
+    //   id: 'tourism_itinerary',
+    //   name: 'Tourism Itinerary ',
+    //   description: 'Detailed itinerary of your trip ',
+    //   type: 'conditional',
+    //   required: true,
+    //   conditions: [{
+    //     questionId: 'visitPurpose',
+    //     value: 'tourism'
+    //   }]
+    // },
     {
       id: 'tourism_accommodation',
       name: 'Tourism Accommodation ',
@@ -4796,21 +4796,36 @@ export const CANADA: VisaForm = {
       },
       options: OCCUPATION_SOURCE_OPTIONS || []
     },
-    {
-      id: 'expensePayerOccupationOther',
-      group: 'finances' as FormGroup,
-      type: 'text',
-      label: 'Please specify the occupation',
-      required: true,
-      placeholder: 'Enter occupation details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'selfPayingExpenses', value: 'no' },
-          { field: 'expensePayerOccupation', value: 'other' }
-        ]
-      }
-    },
+     {
+          id: 'expensePayerOccupationExplanation',
+          group: 'finances' as FormGroup,
+          type: 'textarea',
+          label: 'Please Explain the occupation in brief',
+          required: false,
+          placeholder: 'Enter occupation details',
+          showIf: {
+            operator: 'and',
+            conditions: [
+              { field: 'selfPayingExpenses', value: 'yes' },
+              { field: 'expensePayerOccupation', value: 'other' }
+            ]
+          }
+        }, 
+    // {
+    //   id: 'expensePayerOccupationOther',
+    //   group: 'finances' as FormGroup,
+    //   type: 'text',
+    //   label: 'Please specify the occupation',
+    //   required: true,
+    //   placeholder: 'Enter occupation details',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'selfPayingExpenses', value: 'no' },
+    //       { field: 'expensePayerOccupation', value: 'other' }
+    //     ]
+    //   }
+    // },
     {
       id: 'expensePayerIncomeSource',
       group: 'finances' as FormGroup,

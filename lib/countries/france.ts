@@ -24,11 +24,11 @@ import {
   WORK_FIELD_OPTIONS
 } from './constants/form-labels';
 
-export const UNITED_KINGDOM: VisaForm = {
-  id: 'united-kingdom',
-  countryCode: 'uk',
-  name: 'United Kingdom Visa Application Form',
-  description: 'Universal visa application form for United Kingdom',
+export const FRANCE: VisaForm = {
+  id: 'france-form',
+  countryCode: 'fr',
+  name: 'France Visa Application Form',
+  description: 'Universal visa application form for France',
   documents: [
     {
       id: 'passport',
@@ -161,41 +161,40 @@ export const UNITED_KINGDOM: VisaForm = {
         value: 'visitation'
       }]
     },
-
-    // Documents for self-arranged travel
-    {
-      id: 'hotel_booking_confirmation',
-      name: 'Hotel Booking Confirmation',
-      description: 'We will arrange your hotel booking and provide a confirmation or voucher showing your accommodation details for the entire duration of your stay.',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'assistanceType',
-        value: 'hotel'
-      }]
-    },
-    {
-      id: 'flight_tickets',
-      name: 'Flight Tickets',
-      description: 'We will take care of booking your round-trip flights and provide confirmed tickets showing your travel dates and itinerary.',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'assistanceType',
-        value: 'flight'
-      }]
-    },
-    {
-      id: 'travel_insurance_certificate',
-      name: 'Travel Insurance Certificate',
-      description: 'We will arrange travel insurance for your trip and provide a certificate covering the entire duration of your stay.',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'assistanceType',
-        value: 'insurance'
-      }]
-    },    
+     // Documents for self-arranged travel
+     {
+        id: 'hotel_booking_confirmation',
+        name: 'Hotel Booking Confirmation',
+        description: 'We will arrange your hotel booking and provide a confirmation or voucher showing your accommodation details for the entire duration of your stay.',
+        type: 'conditional',
+        required: true,
+        conditions: [{
+          questionId: 'assistanceType',
+          value: 'hotel'
+        }]
+      },
+      {
+        id: 'flight_tickets',
+        name: 'Flight Tickets',
+        description: 'We will take care of booking your round-trip flights and provide confirmed tickets showing your travel dates and itinerary.',
+        type: 'conditional',
+        required: true,
+        conditions: [{
+          questionId: 'assistanceType',
+          value: 'flight'
+        }]
+      },
+      {
+        id: 'travel_insurance_certificate',
+        name: 'Travel Insurance Certificate',
+        description: 'We will arrange travel insurance for your trip and provide a certificate covering the entire duration of your stay.',
+        type: 'conditional',
+        required: true,
+        conditions: [{
+          questionId: 'assistanceType',
+          value: 'insurance'
+        }]
+      },      
     // tourism docs
     // {
     //   id: 'tourism_itinerary',
@@ -2749,12 +2748,12 @@ export const UNITED_KINGDOM: VisaForm = {
       showDocuments: false,
       slug: 'passport-information'
     },
-    // {
-    //   title: 'Family Information',
-    //   group: 'family' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'family-information'
-    // },
+    {
+      title: 'Family Information',
+      group: 'family' as FormGroup,
+      showDocuments: false,
+      slug: 'family-information'
+    },
     {
       title: 'Parents Information',
       group: 'parents' as FormGroup,
@@ -2780,10 +2779,16 @@ export const UNITED_KINGDOM: VisaForm = {
       slug: 'travel-plans'
     },
     // {
-    //   title: 'Health, Legal & Security Details',
-    //   group: 'medical' as FormGroup,
+    //   title: 'Relatives Information',
+    //   group: 'relatives' as FormGroup,
     //   showDocuments: false,
-    //   slug: 'health-legal-security-details'
+    //   slug: 'relatives-information'
+    // },
+    // {
+    //   title: 'Additional Information',
+    //   group: 'additional' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'additional-information'
     // },
     {
       title: 'Health, Legal & Security Details',
@@ -2796,12 +2801,6 @@ export const UNITED_KINGDOM: VisaForm = {
       group: 'contact' as FormGroup,
       showDocuments: false,
       slug: 'contact-preferences'
-    },
-    {
-      title: 'Additional Information',
-      group: 'additional' as FormGroup,
-      showDocuments: false,
-      slug: 'additional-information'
     },
   ],
   fields: [
@@ -2981,478 +2980,443 @@ export const UNITED_KINGDOM: VisaForm = {
     },
 
     // For married applicants
-    {
-      id: 'spouseNameOnPassport',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Is your spouse's name added on your passport? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseName',
-      group: 'personal' as FormGroup,
-      type: 'textarea',
-      label: `What is name of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter spouse name',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseNameOnPassport', value: 'no' }
-        ]
-      }
-    },
-    {
-      id: 'spouseLivesWithYou',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Does your spouse live with you? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseResidenceLocation',
-      group: 'personal' as FormGroup,
-      type: 'text',
-      label: `Where does your spouse live? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
-      placeholder: 'Enter spouse residence location',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseLivesWithYou', value: 'no' }
-        ]
-      }
-    },
-    {
-      id: 'spouseDob',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'maritalStatus', not: 'single' }
-    },
     // {
-    //   id: 'marriageDate',
+    //   id: 'spouseNameOnPassport',
+    //   group: 'personal' as FormGroup,
+    //   type: 'select',
+    //   label: `Is your spouse's name added on your passport? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', not: 'single' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseName',
+    //   group: 'personal' as FormGroup,
+    //   type: 'textarea',
+    //   label: `What is name of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter spouse name',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseNameOnPassport', value: 'no' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'spouseLivesWithYou',
+    //   group: 'personal' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse live with you? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', not: 'single' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseResidenceLocation',
+    //   group: 'personal' as FormGroup,
+    //   type: 'text',
+    //   label: `Where does your spouse live? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+    //   required: false,
+    //   placeholder: 'Enter spouse residence location',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseLivesWithYou', value: 'no' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'spouseDob',
     //   group: 'personal' as FormGroup,
     //   type: 'date',
-    //   label: `What is date of marriage? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
     //   required: true,
     //   showIf: { field: 'maritalStatus', not: 'single' }
     // },
-    {
-      id: 'isFirstMarriage',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Is this your first marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'previousRelationshipEnd',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `How did your previous relationship end? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'isFirstMarriage', value: 'no' }
-        ]
-      },
-      options: [
-        { label: 'Divorce', value: 'divorce' },
-        { label: 'Separation', value: 'separation' },
-        { label: 'Death of partner', value: 'death' }
-      ]
-    },
+    // {
+    //   id: 'isFirstMarriage',
+    //   group: 'personal' as FormGroup,
+    //   type: 'select',
+    //   label: `Is this your first marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', not: 'single' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'previousRelationshipEnd',
+    //   group: 'personal' as FormGroup,
+    //   type: 'select',
+    //   label: `How did your previous relationship end? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'isFirstMarriage', value: 'no' }
+    //     ]
+    //   },
+    //   options: [
+    //     { label: 'Divorce', value: 'divorce' },
+    //     { label: 'Separation', value: 'separation' },
+    //     { label: 'Death of partner', value: 'death' }
+    //   ]
+    // },
 
-    // For divorced applicants
-    {
-      id: 'divorceMarriageDate',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'divorced' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'divorce' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'divorceDissolutionDate',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What is the date of dissolution of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'divorced' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'divorce' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'exSpouseDob',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'divorced' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'divorce' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'exSpouseName',
-      group: 'personal' as FormGroup,
-      type: 'text',
-      label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter ex-spouse name',
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'divorced' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'divorce' }
-            ]
-          }
-        ]
-      }
-    },
+    // // For divorced applicants
+    // {
+    //   id: 'divorceMarriageDate',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'divorced' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'divorce' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'divorceDissolutionDate',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What is the date of dissolution of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'divorced' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'divorce' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'exSpouseDob',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'divorced' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'divorce' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'exSpouseName',
+    //   group: 'personal' as FormGroup,
+    //   type: 'text',
+    //   label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter ex-spouse name',
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'divorced' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'divorce' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
 
-    // For widowed applicants
-    {
-      id: 'widowedMarriageDate',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'widowed' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'death' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'placeOfDeath',
-      group: 'personal' as FormGroup,
-      type: 'text',
-      label: `What was the place of death? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
-      placeholder: 'Enter place of death',
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'widowed' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'death' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'dateOfSpouseDeath',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What is the date of death of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'widowed' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'death' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'deceasedSpouseDob',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What is date of birth of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'widowed' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'death' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'deceasedSpouseName',
-      group: 'personal' as FormGroup,
-      type: 'text',
-      label: `What is the name of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter deceased spouse name',
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'widowed' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'death' }
-            ]
-          }
-        ]
-      }
-    },
+    // // For widowed applicants
+    // {
+    //   id: 'widowedMarriageDate',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'widowed' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'death' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'placeOfDeath',
+    //   group: 'personal' as FormGroup,
+    //   type: 'text',
+    //   label: `What was the place of death? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+    //   required: false,
+    //   placeholder: 'Enter place of death',
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'widowed' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'death' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'dateOfSpouseDeath',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What is the date of death of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'widowed' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'death' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'deceasedSpouseDob',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What is date of birth of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'widowed' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'death' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'deceasedSpouseName',
+    //   group: 'personal' as FormGroup,
+    //   type: 'text',
+    //   label: `What is the name of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter deceased spouse name',
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'widowed' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'death' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
 
-    // For separated applicants
-    {
-      id: 'separatedMarriageDate',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'separated' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'separation' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'dateOfSeparation',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What is the date of separation with your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'separated' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'separation' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'separatedSpouseDob',
-      group: 'personal' as FormGroup,
-      type: 'date',
-      label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'separated' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'separation' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'separatedSpouseName',
-      group: 'personal' as FormGroup,
-      type: 'text',
-      label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter ex-spouse name',
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'separated' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'separation' }
-            ]
-          }
-        ]
-      }
-    },
+    // // For separated applicants
+    // {
+    //   id: 'separatedMarriageDate',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'separated' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'separation' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'dateOfSeparation',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What is the date of separation with your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'separated' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'separation' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'separatedSpouseDob',
+    //   group: 'personal' as FormGroup,
+    //   type: 'date',
+    //   label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'separated' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'separation' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'separatedSpouseName',
+    //   group: 'personal' as FormGroup,
+    //   type: 'text',
+    //   label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter ex-spouse name',
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'separated' },
+    //       {
+    //         operator: 'and',
+    //         conditions: [
+    //           { field: 'maritalStatus', value: 'married' },
+    //           { field: 'isFirstMarriage', value: 'no' },
+    //           { field: 'previousRelationshipEnd', value: 'separation' }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // },
 
     // Children information for all marital statuses (except single)
-    {
-      id: 'languageTestHeader',
-      group: 'personal' as FormGroup,
-      type: 'header',
-      label: 'Language Proficiency',
-      showIf: { field: 'residenceStatus', value: 'student' },
-    },
-    {
-      id: 'languageTestDescription',
-      group: 'personal' as FormGroup,
-      type: 'info',
-      label: 'Description',
-      showIf: { field: 'residenceStatus', value: 'student' },
-      content: [
-        'Please provide information about any language proficiency tests you have taken (e.g., IELTS, TOEFL, CELPIP, PTE).'
-      ]
-    },
-    {
-      id: 'languageTest',
-      group: 'personal' as FormGroup,
-      type: 'languageTest',
-      label: 'Language Test Details',
-      required: false,
-      description: 'Please provide details of your language test results.',
-      showIf: { field: 'residenceStatus', value: 'student' },
-    },
-    {
-      id: 'familyDetailsHeader',
-      group: 'personal' as FormGroup,
-      type: 'header',
-      label: 'Family details'
-    },
-    {
-      id: 'hasChildren',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'childrenDetails',
-      group: 'personal' as FormGroup,
-      type: 'custom',
-      component: 'ChildrenInputField',
-      label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', not: 'single' },
-          { field: 'hasChildren', value: 'yes' }
-        ]
-      }
-    },
-    {
-      id: 'hasDependentChildren',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Do you have any dependent children below the age of 18? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'dependentChildrenDetails',
-      group: 'personal' as FormGroup,
-      type: 'custom',
-      component: 'ChildrenInputField',
-      label: `Give details of all your dependent children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', not: 'single' },
-          { field: 'hasDependentChildren', value: 'yes' }
-        ]
-      }
-    },
+    // {
+    //   id: 'languageTestHeader',
+    //   group: 'personal' as FormGroup,
+    //   type: 'header',
+    //   label: 'Language Proficiency',
+    //   showIf: { field: 'residenceStatus', value: 'student' },
+    // },
+    // {
+    //   id: 'languageTestDescription',
+    //   group: 'personal' as FormGroup,
+    //   type: 'info',
+    //   label: 'Description',
+    //   showIf: { field: 'residenceStatus', value: 'student' },
+    //   content: [
+    //     'Please provide information about any language proficiency tests you have taken (e.g., IELTS, TOEFL, CELPIP, PTE).'
+    //   ]
+    // },
+    // {
+    //   id: 'languageTest',
+    //   group: 'personal' as FormGroup,
+    //   type: 'languageTest',
+    //   label: 'Language Test Details',
+    //   required: false,
+    //   description: 'Please provide details of your language test results.',
+    //   showIf: { field: 'residenceStatus', value: 'student' },
+    // },
+    // {
+    //   id: 'familyDetailsHeader',
+    //   group: 'personal' as FormGroup,
+    //   type: 'header',
+    //   label: 'Family details'
+    // },
+    // {
+    //   id: 'hasChildren',
+    //   group: 'personal' as FormGroup,
+    //   type: 'select',
+    //   label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', not: 'single' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'childrenDetails',
+    //   group: 'personal' as FormGroup,
+    //   type: 'custom',
+    //   component: 'ChildrenInputField',
+    //   label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', not: 'single' },
+    //       { field: 'hasChildren', value: 'yes' }
+    //     ]
+    //   }
+    // },
 
     // -------------------- PURPOSE OF VISIT --------------------
     {
@@ -3535,15 +3499,15 @@ export const UNITED_KINGDOM: VisaForm = {
     // },
 
     // For visitation purpose
-    // {
-    //   id: 'relationToVisit',
-    //   group: 'purpose' as FormGroup,
-    //   type: 'select',
-    //   label: `What is your relation to person you will visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
-    //   required: true,
-    //   showIf: { field: 'visitPurpose', value: 'visitation' },
-    //   options: RELATION_OPTIONS
-    // },
+    {
+      id: 'relationToVisit',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is your relation to person you will visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+      options: RELATION_OPTIONS
+    },
     {
       id: 'relationToVisitOther',
       group: 'purpose' as FormGroup,
@@ -3559,15 +3523,15 @@ export const UNITED_KINGDOM: VisaForm = {
         ]
       }
     },
-    // {
-    //   id: 'inviterImmigrationStatus',
-    //   group: 'purpose' as FormGroup,
-    //   type: 'select',
-    //   label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
-    //   required: true,
-    //   showIf: { field: 'visitPurpose', value: 'visitation' },
-    //   options: IMMIGRATION_STATUS_OPTIONS
-    // },
+    {
+      id: 'inviterImmigrationStatus',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+      options: IMMIGRATION_STATUS_OPTIONS
+    },
     {
       id: 'inviterImmigrationStatusOther',
       group: 'purpose' as FormGroup,
@@ -3583,15 +3547,15 @@ export const UNITED_KINGDOM: VisaForm = {
         ]
       }
     },
-    // {
-    //   id: 'inviterContactDetails',
-    //   group: 'purpose' as FormGroup,
-    //   type: 'text',
-    //   label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   placeholder: 'Name, Address, Phone number, Email',
-    //   showIf: { field: 'visitPurpose', value: 'visitation' }
-    // },
+    {
+      id: 'inviterContactDetails',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Name, Address, Phone number, Email',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
     {
       id: 'addAnotherInviter',
       group: 'purpose' as FormGroup,
@@ -3679,7 +3643,7 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'no' },
+          { field: 'needsTravelAssistance', value: 'yes' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
@@ -3698,7 +3662,7 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'no' },
+          { field: 'needsTravelAssistance', value: 'yes' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
@@ -3712,7 +3676,7 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'needsTravelAssistance', value: 'no' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
@@ -3726,7 +3690,7 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'needsTravelAssistance', value: 'no' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
@@ -3740,75 +3704,11 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'needsTravelAssistance', value: 'no' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
     }, 
-    // -------------------- RELATIVES INFORMATION --------------------
-    {
-      id: 'relativesHeader',
-      group: 'purpose' as FormGroup,
-      type: 'header',
-      label: 'Relatives Information',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
-          { field: 'visitPurpose', value: 'tourism' }
-        ]
-      },
-    },
-    {
-      id: 'relativesDescription',
-      group: 'purpose' as FormGroup,
-      type: 'info',
-      label: 'Description',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
-          { field: 'visitPurpose', value: 'tourism' }
-        ]
-      },
-      content: [
-        'Please provide information about any relatives you have in the destination country. This information may be required for visa processing.'
-      ]
-    },
-    {
-      id: 'hasRelativesInDestination',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: 'Do you have any relatives in the destination country?',
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
-          { field: 'visitPurpose', value: 'tourism' }
-        ]
-      },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'relativesDetails',
-      group: 'purpose' as FormGroup,
-      type: 'textarea',
-      label: 'Relative Details',
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
-          { field: 'visitPurpose', value: 'tourism' },
-          { field: 'hasRelativesInDestination', value: 'yes' }
-        ]
-      },
-    },
-    
     // For business purpose
     {
       id: 'businessActivity',
@@ -4897,35 +4797,20 @@ export const UNITED_KINGDOM: VisaForm = {
       options: OCCUPATION_SOURCE_OPTIONS || []
     },
     {
-          id: 'expensePayerOccupationExplanation',
-          group: 'finances' as FormGroup,
-          type: 'textarea',
-          label: 'Please Explain the occupation in brief',
-          required: false,
-          placeholder: 'Enter occupation details',
-          showIf: {
-            operator: 'and',
-            conditions: [
-              { field: 'selfPayingExpenses', value: 'yes' },
-              { field: 'expensePayerOccupation', value: 'other' }
-            ]
-          }
-        }, 
-    // {
-    //   id: 'expensePayerOccupationOther',
-    //   group: 'finances' as FormGroup,
-    //   type: 'text',
-    //   label: 'Please specify the occupation',
-    //   required: true,
-    //   placeholder: 'Enter occupation details',
-    //   showIf: {
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'selfPayingExpenses', value: 'no' },
-    //       { field: 'expensePayerOccupation', value: 'other' }
-    //     ]
-    //   }
-    // },
+      id: 'expensePayerOccupationExplanation',
+      group: 'finances' as FormGroup,
+      type: 'textarea',
+      label: 'Please Explain the occupation in brief',
+      required: false,
+      placeholder: 'Enter occupation details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'selfPayingExpenses', value: 'yes' },
+          { field: 'expensePayerOccupation', value: 'other' }
+        ]
+      }
+    },
     {
       id: 'expensePayerIncomeSource',
       group: 'finances' as FormGroup,
@@ -4935,21 +4820,21 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: { field: 'selfPayingExpenses', value: 'no' },
       options: INCOME_SOURCE_OPTIONS
     },
-    {
-      id: 'expensePayerIncomeSourceOther',
-      group: 'finances' as FormGroup,
-      type: 'text',
-      label: 'Please specify the source of income',
-      required: true,
-      placeholder: 'Enter income source details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'selfPayingExpenses', value: 'no' },
-          { field: 'expensePayerIncomeSource', value: 'other' }
-        ]
-      }
-    },
+    // {
+    //   id: 'expensePayerIncomeSourceOther',
+    //   group: 'finances' as FormGroup,
+    //   type: 'text',
+    //   label: 'Please specify the source of income',
+    //   required: true,
+    //   placeholder: 'Enter income source details',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'selfPayingExpenses', value: 'no' },
+    //       { field: 'expensePayerIncomeSource', value: 'other' }
+    //     ]
+    //   }
+    // },
     {
       id: 'expensePayerHasAdditionalIncome',
       group: 'finances' as FormGroup,
@@ -5400,6 +5285,42 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
     },
 
+    // -------------------- RELATIVES INFORMATION --------------------
+    {
+      id: 'relativesHeader',
+      group: 'relatives' as FormGroup,
+      type: 'header',
+      label: 'Relatives Information'
+    },
+    {
+      id: 'relativesDescription',
+      group: 'relatives' as FormGroup,
+      type: 'info',
+      label: 'Description',
+      content: [
+        'Please provide information about any relatives you have in the destination country. This information may be required for visa processing.'
+      ]
+    },
+    {
+      id: 'hasRelativesInDestination',
+      group: 'relatives' as FormGroup,
+      type: 'select',
+      label: 'Do you have any relatives in the destination country?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'relativesDetails',
+      group: 'relatives' as FormGroup,
+      type: 'textarea',
+      label: 'Relative Details',
+      required: false,
+      showIf: { field: 'hasRelativesInDestination', value: 'yes' },
+    },
+
     // -------------------- ADDITIONAL INFORMATION --------------------
     {
       id: 'additionalInfoHeader',
@@ -5407,29 +5328,29 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'header',
       label: 'Additional Information and Services'
     },
-    // {
-    //   id: 'socialMediaHeader',
-    //   group: 'additional' as FormGroup,
-    //   type: 'header',
-    //   label: 'Social Media Information'
-    // },
-    // {
-    //   id: 'socialMediaDescription',
-    //   group: 'additional' as FormGroup,
-    //   type: 'info',
-    //   content: [
-    //     'Please provide your social media handles. This information may be used to verify your application.'
-    //   ],
-    //   label: 'Description'
-    // },
-    // {
-    //   id: 'socialMediaHandles',
-    //   group: 'additional' as FormGroup,
-    //   type: 'socialHandles',
-    //   label: 'Social Media Handles',
-    //   required: false,
-    //   description: 'Please provide your social media handles if available'
-    // },
+    {
+      id: 'socialMediaHeader',
+      group: 'additional' as FormGroup,
+      type: 'header',
+      label: 'Social Media Information'
+    },
+    {
+      id: 'socialMediaDescription',
+      group: 'additional' as FormGroup,
+      type: 'info',
+      content: [
+        'Please provide your social media handles. This information may be used to verify your application.'
+      ],
+      label: 'Description'
+    },
+    {
+      id: 'socialMediaHandles',
+      group: 'additional' as FormGroup,
+      type: 'socialHandles',
+      label: 'Social Media Handles',
+      required: false,
+      description: 'Please provide your social media handles if available'
+    },
     {
       id: 'needExplanations',
       group: 'additional' as FormGroup,
@@ -5442,6 +5363,25 @@ export const UNITED_KINGDOM: VisaForm = {
       ]
     },
     {
+          id: 'destinationHeader',
+          group: 'additional' as FormGroup,
+          type: 'select',
+          label: 'Do you want to add any countries?',
+          required: false,
+          options: [
+            { label: 'Yes', value: 'yes' },
+            { label: 'No', value: 'no' }
+          ]
+        },
+        {
+          id: 'destinationCountries',
+          group: 'additional' as FormGroup,
+          type: 'countriesInput',
+          label: `Which country/ies you want to visit?`,
+          required: false,
+          showIf: { field: 'destinationHeader', value: 'yes' }
+        },
+    {
       id: 'explanationText',
       group: 'additional' as FormGroup,
       type: 'textarea',
@@ -5449,25 +5389,6 @@ export const UNITED_KINGDOM: VisaForm = {
       required: false,
       showIf: { field: 'needExplanations', value: 'yes' },
       placeholder: 'Enter your explanation here',
-    },
-    {
-      id: 'destinationHeader',
-      group: 'additional' as FormGroup,
-      type: 'select',
-      label: 'Do you want to add any countries?',
-      required: false,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'destinationCountries',
-      group: 'additional' as FormGroup,
-      type: 'countriesInput',
-      label: `Which country/ies you want to visit?`,
-      required: false,
-      showIf: { field: 'destinationHeader', value: 'yes' }
     },
     {
       id: 'needTravelServices',
@@ -5479,15 +5400,6 @@ export const UNITED_KINGDOM: VisaForm = {
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
       ]
-    },
-    {
-      id: 'travelServicesExplanations',
-      group: 'additional' as FormGroup,
-      type: 'textarea',
-      label: 'Please provide the details of the services you need',
-      required: false,
-      showIf: { field: 'needTravelServices', value: 'yes' },
-      placeholder: 'Enter the details of the services you need',
     },
 
     // -------------------- CONTACT PREFERENCES --------------------
@@ -5686,6 +5598,6 @@ export const UNITED_KINGDOM: VisaForm = {
   label: `If yes, please provide relevant details: ${FIELD_REQUIREMENTS.MANDATORY}`,
   required: true,
   showIf: { field: 'criminalSecurityHistory', value: 'yes' }
-},
+}
   ]
 };

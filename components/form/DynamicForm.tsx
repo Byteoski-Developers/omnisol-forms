@@ -732,9 +732,9 @@ export function DynamicForm({
                 options={field.options || []}
                 selectedValues={Array.isArray(formData[field.id]) ? formData[field.id] : (formData[field.id] ? [formData[field.id]] : [])}
                 onChange={(values) => handleFieldChange(field.id, values, true)}
-                placeholder={field.placeholder || 'Click to select your income sources...'}
+                placeholder={field.placeholder || 'Click to select sources'}
                 label={field.label}
-                helpText={field.helpText || "Select all sources of income that apply to your situation. This helps us determine the exact documents you'll need to provide."}
+                helpText={field.helpText || "Select all sources that apply to your situation. This helps us determine the exact documents you'll need to provide."}
                 showCategories={field.showCategories !== false}
                 maxHeight={field.maxHeight || 300}
               />

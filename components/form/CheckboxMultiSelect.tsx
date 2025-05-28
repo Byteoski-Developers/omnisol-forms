@@ -30,10 +30,10 @@ export function CheckboxMultiSelect({
   options = [],
   selectedValues = [],
   onChange,
-  placeholder = "Click to select your income sources...",
-  emptyMessage = "No income sources found.",
+  placeholder = "Click to select sources",
+  emptyMessage = "No sources found.",
   label,
-  helpText = "Select all sources of income that apply to your situation. This helps us determine the exact documents you'll need to provide.",
+  helpText = "Select all sources that apply to your situation. This helps us determine the exact documents you'll need to provide.",
   showCategories = true,
   maxHeight = 300
 }: CheckboxMultiSelectProps) {
@@ -116,7 +116,7 @@ export function CheckboxMultiSelect({
               <span className="text-muted-foreground">{placeholder}</span>
             ) : (
               <span className="text-sm font-medium">
-                {safeSelectedValues.length} source{safeSelectedValues.length !== 1 ? 's' : ''} selected
+                {safeSelectedValues.length} Source{safeSelectedValues.length !== 1 ? 's' : ''} selected
               </span>
             )}
           </div>
@@ -202,7 +202,7 @@ export function CheckboxMultiSelect({
             {safeSelectedValues.length > 0 && (
               <div className="border-t p-3 bg-muted/30">
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span>{safeSelectedValues.length} income source{safeSelectedValues.length !== 1 ? 's' : ''} selected</span>
+                  <span>{safeSelectedValues.length} Source{safeSelectedValues.length !== 1 ? 's' : ''} selected</span>
                   <button
                     onClick={clearAll}
                     className="text-primary hover:text-primary/80 font-medium"

@@ -33,7 +33,7 @@ import LanguageTestInput from "./LanguageTestInput";
 import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
 import { MultiSelect } from "./MultiSelect";
 import { CheckboxMultiSelect } from "./CheckboxMultiSelect";
-import { CheckboxOnly } from './CheckboxOnly';
+
 
 interface DynamicFormProps {
   form: VisaForm & { showDocuments?: boolean };

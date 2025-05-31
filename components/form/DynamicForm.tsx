@@ -33,6 +33,7 @@ import LanguageTestInput from "./LanguageTestInput";
 import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
 import { MultiSelect } from "./MultiSelect";
 import { CheckboxMultiSelect } from "./CheckboxMultiSelect";
+import { CheckboxOnly } from './CheckboxOnly';
 
 interface DynamicFormProps {
   form: VisaForm & { showDocuments?: boolean };
@@ -176,34 +177,116 @@ export function DynamicForm({
     setRequiredDocuments(documents);
   }, [form, formData]);
 
-  const validateField = (field: FormField, value: any): string | null => {
-    if (field.required && (value === undefined || value === null || value === '')) {
-      return 'This field is required';
+  // const validateField = (field: FormField, value: any): string | null => {
+  //   if (field.required && (value === undefined || value === null || value === '')) {
+  //     return 'This field is required';
+  //   }
+    
+  //   if (field.validations) {
+  //     if (field.validations.min !== undefined && value < field.validations.min) {
+  //       return `Value must be at least ${field.validations.min}`;
+  //     }
+      
+  //     if (field.validations.max !== undefined && value > field.validations.max) {
+  //       return `Value must be at most ${field.validations.max}`;
+  //     }
+      
+  //     if (field.validations.pattern && typeof value === 'string') {
+  //       const regex = new RegExp(field.validations.pattern);
+  //       if (!regex.test(value)) {
+  //         return 'Invalid format';
+  //       }
+  //     }
+      
+  //     if (field.validations.customValidation && !field.validations.customValidation(value)) {
+  //       return 'Invalid value';
+  //     }
+  //   }
+    
+  //   return null;
+  // };
+
+
+  // Add this enhanced validateField function to replace the existing one in your DynamicForm component
+// Location: Inside the DynamicForm component, replace the existing validateField function
+
+const validateField = (field: FormField, value: any): string | null => {
+  if (field.required && (value === undefined || value === null || value === '')) {
+    return 'This field is required';
+  }
+  
+  // Date-specific validations - ONLY FOR TRAVEL PLANS
+  if (field.type === 'date' && value) {
+    const selectedDate = new Date(value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
+    
+    // Check if the date is valid
+    if (isNaN(selectedDate.getTime())) {
+      return 'Please select a valid date';
     }
     
-    if (field.validations) {
-      if (field.validations.min !== undefined && value < field.validations.min) {
-        return `Value must be at least ${field.validations.min}`;
+    // Define ONLY travel-related fields for validation
+    const travelFields = [
+      'plannedArrivalDate', 'plannedDepartureDate', 'travelDate',
+      'departureDate', 'arrivalDate', 'intendedDateOfTravel',
+      'proposedTravelDate', 'scheduledDepartureDate'
+    ];
+    
+    // Apply validation ONLY to travel-related fields
+    if (travelFields.some(fieldName => field.id.toLowerCase().includes(fieldName.toLowerCase()))) {
+      // Reset time components to ensure accurate date comparison
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      // For travel dates, ensure they are not in the past (allow today and future dates)
+      if (selectedDate < today) {
+        return 'Travel dates cannot be in the past';
       }
       
-      if (field.validations.max !== undefined && value > field.validations.max) {
-        return `Value must be at most ${field.validations.max}`;
-      }
-      
-      if (field.validations.pattern && typeof value === 'string') {
-        const regex = new RegExp(field.validations.pattern);
-        if (!regex.test(value)) {
-          return 'Invalid format';
+      // Additional validation for arrival/departure date logic
+      if (field.id === 'plannedDepartureDate' && formData['plannedArrivalDate']) {
+        const arrivalDate = new Date(formData['plannedArrivalDate']);
+        arrivalDate.setHours(0, 0, 0, 0);
+        if (selectedDate <= arrivalDate) {
+          return 'Departure date must be after arrival date';
         }
       }
       
-      if (field.validations.customValidation && !field.validations.customValidation(value)) {
-        return 'Invalid value';
+      if (field.id === 'plannedArrivalDate' && formData['plannedDepartureDate']) {
+        const departureDate = new Date(formData['plannedDepartureDate']);
+        departureDate.setHours(0, 0, 0, 0);
+        if (selectedDate >= departureDate) {
+          return 'Arrival date must be before departure date';
+        }
+      }
+    }
+  }
+  
+  // Existing validations
+  if (field.validations) {
+    if (field.validations.min !== undefined && value < field.validations.min) {
+      return `Value must be at least ${field.validations.min}`;
+    }
+    
+    if (field.validations.max !== undefined && value > field.validations.max) {
+      return `Value must be at most ${field.validations.max}`;
+    }
+    
+    if (field.validations.pattern && typeof value === 'string') {
+      const regex = new RegExp(field.validations.pattern);
+      if (!regex.test(value)) {
+        return 'Invalid format';
       }
     }
     
-    return null;
-  };
+    if (field.validations.customValidation && !field.validations.customValidation(value)) {
+      return 'Invalid value';
+    }
+  }
+  
+  return null;
+};
 
   // Get case ID from URL params
   const params = useParams();
@@ -790,8 +873,8 @@ export function DynamicForm({
                         <SelectValue placeholder="Year" />
                       </SelectTrigger>
                       <SelectContent>
-                        {Array.from({ length: 100 }, (_, i) => {
-                          const year = new Date().getFullYear() - i;
+                        {Array.from({ length: 40 }, (_, i) => {
+                          const year = new Date().getFullYear() - 10 + i;
                           return (
                             <SelectItem key={year} value={year.toString()}>
                               {year}

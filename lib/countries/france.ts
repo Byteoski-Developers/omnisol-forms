@@ -2703,6 +2703,18 @@ export const FRANCE: VisaForm = {
         value: 'yes'
       }]
     },
+    // fingerprint question
+    {
+        id: 'fingerprint_proof',
+        name: 'Fingerprint Collection Proof',
+        description: 'Document or reference confirming your fingerprints were collected for a Schengen visa (if available).',
+        type: 'conditional',
+        required: true,
+        conditions: [{
+          questionId: 'hasSchengenFingerprints',
+          value: 'yes'
+        }]
+      }    
 
   ],
   steps: [
@@ -2748,18 +2760,18 @@ export const FRANCE: VisaForm = {
       showDocuments: false,
       slug: 'passport-information'
     },
-    {
-      title: 'Family Information',
-      group: 'family' as FormGroup,
-      showDocuments: false,
-      slug: 'family-information'
-    },
-    {
-      title: 'Parents Information',
-      group: 'parents' as FormGroup,
-      showDocuments: false,
-      slug: 'parents-information'
-    },
+    // {
+    //   title: 'Family Information',
+    //   group: 'family' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'family-information'
+    // },
+    // {
+    //   title: 'Parents Information',
+    //   group: 'parents' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'parents-information'
+    // },
     {
       title: 'Visa History',
       group: 'visa_history' as FormGroup,
@@ -2790,12 +2802,19 @@ export const FRANCE: VisaForm = {
     //   showDocuments: false,
     //   slug: 'additional-information'
     // },
+    // {
+    //   title: 'Health, Legal & Security Details',
+    //   group: 'criminal' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'health-legal-security-details'
+    // },
     {
-      title: 'Health, Legal & Security Details',
-      group: 'criminal' as FormGroup,
-      showDocuments: false,
-      slug: 'health-legal-security-details'
-    },
+        title: 'EU/EEA/CH/UK Family Member',
+        group: 'personal_information' as FormGroup,
+        showDocuments: false,
+        slug: 'eu-family-member' 
+      },
+
     {
       title: 'Contact Preferences',
       group: 'contact' as FormGroup,
@@ -4983,30 +5002,30 @@ export const FRANCE: VisaForm = {
       placeholder: 'Enter your current address',
       showIf: { field: 'hasAlternateAddress', value: 'yes' }
     },
-    {
-      id: 'addressDurationMonths',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: `For how long you have been living at this address? (Months) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter number of months'
-    },
-    {
-      id: 'addressDurationYears',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: `For how long you have been living at this address? (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter number of years'
-    },
-    {
-      id: 'propertyOwnership',
-      group: 'residence' as FormGroup,
-      type: 'select',
-      label: `Who owns this property? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
-      options: PROPERTY_OWNERSHIP_OPTIONS
-    },
+    // {
+    //   id: 'addressDurationMonths',
+    //   group: 'residence' as FormGroup,
+    //   type: 'text',
+    //   label: `For how long you have been living at this address? (Months) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter number of months'
+    // },
+    // {
+    //   id: 'addressDurationYears',
+    //   group: 'residence' as FormGroup,
+    //   type: 'text',
+    //   label: `For how long you have been living at this address? (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter number of years'
+    // },
+    // {
+    //   id: 'propertyOwnership',
+    //   group: 'residence' as FormGroup,
+    //   type: 'select',
+    //   label: `Who owns this property? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+    //   required: false,
+    //   options: PROPERTY_OWNERSHIP_OPTIONS
+    // },
     {
       id: 'propertyOwnershipOther',
       group: 'residence' as FormGroup,
@@ -5055,18 +5074,18 @@ export const FRANCE: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
-    {
-      id: 'previousPassportLost',
-      group: 'passport' as FormGroup,
-      type: 'select',
-      label: `Was any of your previous passports reported lost? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'isOnlyPassport', value: 'no' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
+    // {
+    //   id: 'previousPassportLost',
+    //   group: 'passport' as FormGroup,
+    //   type: 'select',
+    //   label: `Was any of your previous passports reported lost? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'isOnlyPassport', value: 'no' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
 
     // -------------------- FAMILY INFORMATION --------------------
     {
@@ -5174,6 +5193,17 @@ export const FRANCE: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
+    {
+        id: 'hasSchengenFingerprints',
+        group: 'visa_history' as FormGroup,
+        type: 'select',
+        label: 'Have your fingerprints ever been collected previously for a Schengen visa application?',
+        required: true,
+        options: [
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]
+      },      
     {
       id: 'refusalDetails',
       group: 'visa_history' as FormGroup,
@@ -5598,6 +5628,85 @@ export const FRANCE: VisaForm = {
   label: `If yes, please provide relevant details: ${FIELD_REQUIREMENTS.MANDATORY}`,
   required: true,
   showIf: { field: 'criminalSecurityHistory', value: 'yes' }
-}
+},
+// -------------------- EU/EEA/CH/UK FAMILY MEMBER --------------------
+{
+    id: 'euFamilyHeader',
+    group: 'personal_information' as FormGroup,
+    type: 'header',
+    label: 'EU/EEA/CH/UK Family Member Information'
+  },
+  {
+    id: 'hasEUFamilyMember',
+    group: 'personal_information' as FormGroup,
+    type: 'select',
+    label: 'Do you have a family member who is an EU, EEA, CH citizen or UK national (beneficiary of the EU-UK Withdrawal Agreement)?',
+    required: true,
+    options: [
+      { label: 'Yes', value: 'yes' },
+      { label: 'No', value: 'no' }
+    ]
+  },
+  // Show these fields only if hasEUFamilyMember is 'yes'
+  {
+    id: 'euFamilySurname',
+    group: 'personal_information' as FormGroup,
+    type: 'text',
+    label: 'Surname (family name)',
+    required: true,
+    showIf: { field: 'hasEUFamilyMember', value: 'yes' }
+  },
+  {
+    id: 'euFamilyGivenNames',
+    group: 'personal_information' as FormGroup,
+    type: 'text',
+    label: 'First name(s) [given name(s)]',
+    required: true,
+    showIf: { field: 'hasEUFamilyMember', value: 'yes' }
+  },
+  {
+    id: 'euFamilyDob',
+    group: 'personal_information' as FormGroup,
+    type: 'date',
+    label: 'Date of birth (day-month-year)',
+    required: true,
+    showIf: { field: 'hasEUFamilyMember', value: 'yes' }
+  },
+  {
+    id: 'euFamilyNationality',
+    group: 'personal_information' as FormGroup,
+    type: 'select',
+    label: 'Nationality',
+    required: true,
+    options: [
+    ], // Populate with country options
+    showIf: { field: 'hasEUFamilyMember', value: 'yes' }
+  },
+  {
+    id: 'euFamilyDocumentNumber',
+    group: 'personal_information' as FormGroup,
+    type: 'text',
+    label: 'Number of travel document or ID card',
+    required: true,
+    showIf: { field: 'hasEUFamilyMember', value: 'yes' }
+  },
+  // Family relationship section
+  {
+    id: 'euFamilyRelationship',
+    group: 'personal_information' as FormGroup,
+    type: 'select',
+    label: 'Family relationship with an EU, EEA or CH citizen or a UK national (beneficiary of the EU-UK Withdrawal Agreement)',
+    required: true,
+    options: [
+      { label: 'Spouse', value: 'spouse' },
+      { label: 'Child', value: 'child' },
+      { label: 'Grandchild', value: 'grandchild' },
+      { label: 'Dependent ascendant', value: 'dependent_ascendant' },
+      { label: 'Registered partnership', value: 'registered_partnership' },
+      { label: 'Other', value: 'other' }
+    ],
+    showIf: { field: 'hasEUFamilyMember', value: 'yes' }
+  }
+
   ]
 };

@@ -2755,12 +2755,12 @@ export const UNITED_KINGDOM: VisaForm = {
     //   showDocuments: false,
     //   slug: 'family-information'
     // },
-    {
-      title: 'Parents Information',
-      group: 'parents' as FormGroup,
-      showDocuments: false,
-      slug: 'parents-information'
-    },
+    // {
+    //   title: 'Parents Information',
+    //   group: 'parents' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'parents-information'
+    // },
     {
       title: 'Visa History',
       group: 'visa_history' as FormGroup,

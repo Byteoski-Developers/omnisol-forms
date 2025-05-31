@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { FormField, VisaForm } from '@/types/form';
 import { Input } from '@/components/ui/input';
@@ -65,7 +65,7 @@ export function DynamicForm({
   };
   
   // Recursive function to evaluate complex nested conditions
-  const evaluateCondition = (condition: any): boolean => {
+  const evaluateCondition = useCallback((condition: any): boolean => {
     // Handle complex condition with operator
     if ('operator' in condition) {
       const { operator, conditions } = condition as ComplexCondition;
@@ -110,11 +110,13 @@ export function DynamicForm({
     
     // If no value or not is specified, check if the field has any value
     return Boolean(formData[field]);
-  };
+  }, [formData]);
 
-  useEffect(() => {
+  // Memoize visible fields calculation to prevent infinite loops
+  const visibleFieldsCalculation = useMemo(() => {
     const visible = new Set<string>();
     console.log('Form data:', formData);
+    
     form.fields.forEach((field) => {
       // Check dependencies first
       const dependenciesMet = !field.dependencies || field.dependencies.every(
@@ -134,9 +136,17 @@ export function DynamicForm({
         visible.add(field.id);
       }
     });
-    setVisibleFields(visible);
 
-    // Update required documents based on form field values
+    return visible;
+  }, [form.fields, formData, evaluateCondition]);
+
+  // Update visible fields when calculation changes
+  useEffect(() => {
+    setVisibleFields(visibleFieldsCalculation);
+  }, [visibleFieldsCalculation]);
+
+  // Separate effect for required documents
+  useEffect(() => {
     const documents = new Set<string>();
     form.documents.forEach((doc) => {
       // If document is required and has no conditions, always include it
@@ -174,7 +184,39 @@ export function DynamicForm({
       }
     });
     setRequiredDocuments(documents);
-  }, [form, formData]);
+  }, [form.documents, formData]);
+
+  // Clean up hidden fields when visibility changes (throttled to prevent loops)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const fieldsToRemove: string[] = [];
+      
+      Object.keys(formData).forEach(fieldId => {
+        // If field exists in form.fields and is not visible, mark for removal
+        const fieldExists = form.fields.some(f => f.id === fieldId);
+        if (fieldExists && !visibleFields.has(fieldId)) {
+          fieldsToRemove.push(fieldId);
+        }
+      });
+
+      // Only update if there are fields to remove
+      if (fieldsToRemove.length > 0) {
+        setFormData(prev => {
+          const newData = { ...prev };
+          fieldsToRemove.forEach(fieldId => {
+            delete newData[fieldId];
+          });
+          return newData;
+        });
+
+        setPendingChanges(prev => 
+          prev.filter(change => !fieldsToRemove.includes(change.question))
+        );
+      }
+    }, 0); // Use setTimeout to defer the update
+
+    return () => clearTimeout(timeoutId);
+  }, [visibleFields]);
 
   const validateField = (field: FormField, value: any): string | null => {
     if (field.required && (value === undefined || value === null || value === '')) {
@@ -311,38 +353,11 @@ export function DynamicForm({
     }
   };
 
-  useEffect(() => {
-    const newVisibleFields = new Set<string>();
-
-    form.fields.forEach((field) => {
-      const isVisible = !field.showIf || evaluateCondition(field.showIf);
-
-      if (isVisible) {
-        newVisibleFields.add(field.id);
-      } else {
-        // Remove the field value from formData when hidden
-        setFormData(prev => {
-          const newData = { ...prev };
-          delete newData[field.id];
-          return newData;
-        });
-        // Remove any pending changes for this field
-        setPendingChanges(prev => prev.filter(change => change.question !== field.id));
-      }
-    });
-
-    setVisibleFields(newVisibleFields);
-  }, [form.fields, formData]);
-
-  
   const renderField = (field: FormField) => {
     const { id, type, label, placeholder, options, required, description, showIf, component } = field;
     
-    // Check if the field should be shown based on conditional logic
-    const isVisible = !showIf || evaluateCondition(showIf);
-    
-
-    if (!isVisible) {
+    // Check if the field should be shown based on visibleFields set
+    if (!visibleFields.has(id)) {
       return null;
     }
 

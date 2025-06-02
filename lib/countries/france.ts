@@ -1,4 +1,5 @@
 import { VisaForm, DocumentType, FormGroup } from '@/types/form';
+import { DatePicker } from '@/components/ui/date-picker';
 import { COUNTRIES } from './constants/countries';
 import {
   ADDITIONAL_APPLICANT_OPTIONS,
@@ -5311,6 +5312,7 @@ export const FRANCE: VisaForm = {
       group: 'travel_plans' as FormGroup,
       type: 'date',
       label: 'Planned departure date',
+      // format: 'yyyy-MM-dd',
       required: false,
       showIf: { field: 'hasConfirmedTravelPlans', value: 'yes' }
     },

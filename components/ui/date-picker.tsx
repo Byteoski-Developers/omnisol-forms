@@ -31,17 +31,19 @@ export function DatePicker({
   }, [value])
 
   const handleSelect = (date?: Date) => {
-    setSelectedDate(date)
-    if (onChange) {
-      onChange(date)
-    }
     if (date) {
+      // Set selected time to noon to avoid timezone offset
+      const fixedDate = new Date(date)
+      fixedDate.setHours(12, 0, 0, 0)
+  
+      setSelectedDate(fixedDate)
+      onChange?.(fixedDate)
       setIsOpen(false)
     }
   }
 
   const currentYear = new Date().getFullYear()
-  const years = Array.from({ length: 120 }, (_, i) => currentYear - 80 + i)
+  const years = Array.from({ length: 2090 - 1945 + 1 }, (_, i) => 1945 + i)
   const months = [
     "January", "February", "March", "April", "May", "June", 
     "July", "August", "September", "October", "November", "December"

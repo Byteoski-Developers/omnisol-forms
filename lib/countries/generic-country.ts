@@ -1,5 +1,6 @@
 import { VisaForm, DocumentType, FormGroup } from '@/types/form';
 import { COUNTRIES } from './constants/countries';
+import { DatePicker } from '@/components/ui/date-picker';
 import {
   ADDITIONAL_APPLICANT_OPTIONS,
   BUSINESS_ACTIVITY_OPTIONS,

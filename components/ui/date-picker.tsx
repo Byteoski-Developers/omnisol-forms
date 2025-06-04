@@ -32,13 +32,20 @@ export function DatePicker({
 
   const handleSelect = (date?: Date) => {
     if (date) {
-      // Set selected time to noon to avoid timezone offset
-      const fixedDate = new Date(date)
-      fixedDate.setHours(12, 0, 0, 0)
+      // Create a new date at noon to avoid timezone issues
+      const fixedDate = new Date(date);
+      fixedDate.setHours(12, 0, 0, 0);
+      
+      // Ensure we're working with local date (no timezone conversion)
+      const localDate = new Date(
+        fixedDate.getFullYear(),
+        fixedDate.getMonth(),
+        fixedDate.getDate()
+      );
   
-      setSelectedDate(fixedDate)
-      onChange?.(fixedDate)
-      setIsOpen(false)
+      setSelectedDate(localDate);
+      onChange?.(localDate);
+      setIsOpen(false);
     }
   }
 
@@ -77,6 +84,11 @@ export function DatePicker({
     }
   }
 
+  // Format the display date to show in local format
+  const displayDate = selectedDate 
+    ? format(selectedDate, 'PPP')
+    : 'Pick a date';
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -90,7 +102,7 @@ export function DatePicker({
           disabled={disabled}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+          {displayDate}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">

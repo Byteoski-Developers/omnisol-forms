@@ -1918,17 +1918,19 @@ export const GENERIC_COUNTRY: VisaForm = {
         value: 'business_partner'
       }]
     },
-    {
-      id: 'partner_documents_partner',
-      name: 'Partner Documents (if applicable)',
-      description: 'Add the documents of your partner as applicable',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'expensePayerOccupation',
-        value: 'business_partner'
-      }]
-    },
+    // {
+    //   id: 'partner_documents_partner',
+    //   name: 'Partner Documents (if applicable)',
+    //   description: 'Add the documents of your partner as applicable',
+    //   type: 'conditional',
+    //   required: true,
+    //   conditions: [
+    //     {
+    //     questionId: 'expensePayerOccupation',
+    //     value: 'business_partner',
+    //   }
+    //   ]
+    // },
     {
       id: 'additional_documents_partner',
       name: 'Additional Documents (if applicable)',
@@ -1989,17 +1991,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       id: 'property_title_deeds_professional',
       name: 'Property Title Deeds (if applicable)',
       description: 'Title deeds of the properties owned',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'expensePayerOccupation',
-        value: 'professional'
-      }]
-    },
-    {
-      id: 'partner_documents_professional',
-      name: 'Partner Documents (if applicable)',
-      description: 'Add the documents of your partner as applicable',
       type: 'conditional',
       required: true,
       conditions: [{
@@ -2076,17 +2067,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       }]
     },
     {
-      id: 'partner_documents_contractor',
-      name: 'Partner Documents (if applicable)',
-      description: 'Add the documents of your partner as applicable',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'expensePayerOccupation',
-        value: 'independent_contractor'
-      }]
-    },
-    {
       id: 'additional_documents_contractor',
       name: 'Additional Documents (if applicable)',
       description: 'Any additional documents',
@@ -2154,17 +2134,7 @@ export const GENERIC_COUNTRY: VisaForm = {
         value: 'freelancer'
       }]
     },
-    {
-      id: 'partner_documents_freelancer',
-      name: 'Partner Documents (if applicable)',
-      description: 'Add the documents of your partner as applicable',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'expensePayerOccupation',
-        value: 'freelancer'
-      }]
-    },
+    
     {
       id: 'additional_documents_freelancer',
       name: 'Additional Documents (if applicable)',
@@ -2228,17 +2198,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
-      conditions: [{
-        questionId: 'expensePayerOccupation',
-        value: 'self_employed'
-      }]
-    },
-    {
-      id: 'partner_documents_selfemployed',
-      name: 'Partner Documents',
-      description: 'Add the documents of your partner as applicable',
-      type: 'conditional',
-      required: false,
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'self_employed'
@@ -2357,17 +2316,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       }]
     },
     {
-      id: 'partner_documents_farmer',
-      name: 'Partner Documents(if applicable)',
-      description: 'Add the documents of your partner as applicable',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'expensePayerOccupation',
-        value: 'farmer'
-      }]
-    },
-    {
       id: 'additional_documents_farmer',
       name: 'Additional Documents(if applicable)',
       description: 'Any additional documents',
@@ -2458,17 +2406,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       }]
     },
     {
-      id: 'partner_documents_realtor',
-      name: 'Partner Documents(if applicable)',
-      description: 'Add the documents of your partner as applicable',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'expensePayerOccupation',
-        value: 'realtor'
-      }]
-    },
-    {
       id: 'additional_documents_realtor',
       name: 'Additional Documents(if applicable)',
       description: 'Any additional documents',
@@ -2548,17 +2485,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       }]
     },
     {
-      id: 'partner_documents_investor',
-      name: 'Partner Documents(if applicable)',
-      description: 'Add the documents of your partner as applicable',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'expensePayerOccupation',
-        value: 'investor'
-      }]
-    },
-    {
       id: 'additional_documents_investor',
       name: 'Additional Documents(if applicable)',
       description: 'Any additional documents',
@@ -2630,17 +2556,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       id: 'property_title_deeds_retired',
       name: 'Property Title Deeds(if applicable)',
       description: 'Title deeds of the properties owned',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'expensePayerOccupation',
-        value: 'retired'
-      }]
-    },
-    {
-      id: 'partner_documents_retired',
-      name: 'Partner Documents(if applicable)',
-      description: 'Add the documents of your partner as applicable',
       type: 'conditional',
       required: true,
       conditions: [{
@@ -2767,12 +2682,12 @@ export const GENERIC_COUNTRY: VisaForm = {
       showDocuments: false,
       slug: 'visa-history'
     },
-    // {
-    //   title: 'Education',
-    //   group: 'education' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'education'
-    // },
+    {
+      title: 'Education',
+      group: 'education' as FormGroup,
+      showDocuments: false,
+      slug: 'education'
+    },
     {
       title: 'Travel Plans',
       group: 'travel_plans' as FormGroup,
@@ -2785,12 +2700,18 @@ export const GENERIC_COUNTRY: VisaForm = {
     //   showDocuments: false,
     //   slug: 'relatives-information'
     // },
-    // {
-    //   title: 'Additional Information',
-    //   group: 'additional' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'additional-information'
-    // },
+    {
+      title: 'Additional Information',
+      group: 'additional' as FormGroup,
+      showDocuments: false,
+      slug: 'additional-information'
+    },
+    {
+      title: 'Social Media Handles',
+      group: 'social' as FormGroup,
+      showDocuments: false,
+      slug: 'social-media-handles'
+    },
     {
       title: 'Health, Legal & Security Details',
       group: 'criminal' as FormGroup,
@@ -3386,12 +3307,6 @@ export const GENERIC_COUNTRY: VisaForm = {
       showIf: { field: 'residenceStatus', value: 'student' },
     },
     {
-      id: 'familyDetailsHeader',
-      group: 'personal' as FormGroup,
-      type: 'header',
-      label: 'Family details'
-    },
-    {
       id: 'hasChildren',
       group: 'personal' as FormGroup,
       type: 'select',
@@ -3548,15 +3463,15 @@ export const GENERIC_COUNTRY: VisaForm = {
         ]
       }
     },
-    {
-      id: 'inviterContactDetails',
-      group: 'purpose' as FormGroup,
-      type: 'text',
-      label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Name, Address, Phone number, Email',
-      showIf: { field: 'visitPurpose', value: 'visitation' }
-    },
+    // {
+    //   id: 'inviterContactDetails',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'text',
+    //   label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Name, Address, Phone number, Email',
+    //   showIf: { field: 'visitPurpose', value: 'visitation' }
+    // },
     {
       id: 'addAnotherInviter',
       group: 'purpose' as FormGroup,
@@ -5364,13 +5279,13 @@ export const GENERIC_COUNTRY: VisaForm = {
     },
     {
       id: 'socialMediaHeader',
-      group: 'additional' as FormGroup,
+      group: 'social' as FormGroup,
       type: 'header',
       label: 'Social Media Information'
     },
     {
       id: 'socialMediaDescription',
-      group: 'additional' as FormGroup,
+      group: 'social' as FormGroup,
       type: 'info',
       content: [
         'Please provide your social media handles. This information may be used to verify your application.'
@@ -5379,7 +5294,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     },
     {
       id: 'socialMediaHandles',
-      group: 'additional' as FormGroup,
+      group: 'social' as FormGroup,
       type: 'socialHandles',
       label: 'Social Media Handles',
       required: false,
@@ -5525,29 +5440,29 @@ export const GENERIC_COUNTRY: VisaForm = {
       showIf: { field: 'needAdditionalContact', value: 'yes' },
       placeholder: 'Enter your additional phone number'
     },
-    // {
-    //   id: 'educationHeader',
-    //   group: 'education' as FormGroup,
-    //   type: 'header',
-    //   label: 'Education History'
-    // },
-    // {
-    //   id: 'educationDescription',
-    //   group: 'education' as FormGroup,
-    //   type: 'info',
-    //   label: 'Education Information',
-    //   content: [
-    //     'Please provide information about your educational background. Include all education from high school/secondary school onwards.'
-    //   ]
-    // },
-    // {
-    //   id: 'highestEducation',
-    //   group: 'education' as FormGroup,
-    //   type: 'select',
-    //   label: 'Highest level of education completed',
-    //   required: true,
-    //   options: EDUCATION_QUALIFICATION_OPTIONS
-    // },
+    {
+      id: 'educationHeader',
+      group: 'education' as FormGroup,
+      type: 'header',
+      label: 'Education History'
+    },
+    {
+      id: 'educationDescription',
+      group: 'education' as FormGroup,
+      type: 'info',
+      label: 'Education Information',
+      content: [
+        'Please provide information about your educational background. Include all education from high school/secondary school onwards.'
+      ]
+    },
+    {
+      id: 'highestEducation',
+      group: 'education' as FormGroup,
+      type: 'select',
+      label: 'Highest level of education completed',
+      required: true,
+      options: EDUCATION_QUALIFICATION_OPTIONS
+    },
     // {
     //   id: 'accessingBodyAssessment',
     //   group: 'education' as FormGroup,
@@ -5556,37 +5471,36 @@ export const GENERIC_COUNTRY: VisaForm = {
     //   required: false,
     //   description: 'If you have had your qualifications assessed by an accessing body, please provide the details below.'
     // },
-    // {
-    //   id: 'fieldOfStudy',
-    //   group: 'education' as FormGroup,
-    //   type: 'select',
-    //   label: 'Field of study',
-    //   required: false,
-    //   options: EDUCATION_FIELD_OPTIONS
-    // },
-    // // {
-    // //   id: 'last10YearActivityHeader',
-    // //   group: 'education' as FormGroup,
-    // //   type: 'header',
-    // //   label: 'Last 10 Years Activity'
-    // // },
-    // {
-    //   id: 'last10YearActivityDescription',
-    //   group: 'education' as FormGroup,
-    //   type: 'info',
-    //   label: 'Last 10 Years Activity Information',
-    //   content: [
-    //     'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
-    //   ]
-    // },
-    // // {
-    // //   id: 'last10YearActivity',
-    // //   group: 'education' as FormGroup,
-    // //   type: 'textarea',
-    // //   label: 'Description',
-    // //   required: true,
-    // //   description: 'Please provide details of all your activities in the last 10 years including education, employment, and any periods of unemployment.'
-    // // }
+    {
+      id: 'fieldOfStudy',
+      group: 'education' as FormGroup,
+      type: 'select',
+      label: 'Field of study',
+      required: false,
+      options: EDUCATION_FIELD_OPTIONS
+    },
+    {
+      id: 'last10YearActivityHeader',
+      group: 'education' as FormGroup,
+      type: 'header',
+      label: 'Last 10 Years Activity'
+    },
+    {
+      id: 'last10YearActivityDescription',
+      group: 'education' as FormGroup,
+      type: 'info',
+      label: 'Last 10 Years Activity Information',
+      content: [
+        'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
+      ]
+    },
+    {
+      id: 'last10YearActivity',
+      group: 'education' as FormGroup,
+      type: 'textarea',
+      label: 'Description',
+      required: true,
+    },
 
     // Health, Legal, and Security Details
     {

@@ -4269,15 +4269,15 @@ export const FRANCE: VisaForm = {
         ]
       }
     },
-    {
-      id: 'permanentJoinSponsorContact',
-      group: 'purpose' as FormGroup,
-      type: 'text',
-      label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Name, Address, Phone number, Email',
-      showIf: { field: 'visitPurpose', value: 'join_family_permanent' }
-    },
+    // {
+    //   id: 'permanentJoinSponsorContact',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'text',
+    //   label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Name, Address, Phone number, Email',
+    //   showIf: { field: 'visitPurpose', value: 'join_family_permanent' }
+    // },
     {
       id: 'permanentJoinSponsorIncome',
       group: 'purpose' as FormGroup,
@@ -4811,7 +4811,7 @@ export const FRANCE: VisaForm = {
         operator: 'or',
         conditions: [
           { field: 'selfPayingExpenses', value: 'yes' },
-          { field: 'expensePayer', value: 'self' }
+          { field: 'expensePayer', value: 'self' },
         ]
       },
       options: OCCUPATION_SOURCE_OPTIONS || []
@@ -4827,7 +4827,7 @@ export const FRANCE: VisaForm = {
         operator: 'and',
         conditions: [
           { field: 'selfPayingExpenses', value: 'yes' },
-          { field: 'expensePayerOccupation', value: 'other' }
+          { field: 'expensePayerOccupation', value: 'other' },
         ]
       }
     },
@@ -5680,9 +5680,9 @@ export const FRANCE: VisaForm = {
     type: 'select',
     label: 'Nationality',
     required: true,
-    options: [
-    ], // Populate with country options
-    showIf: { field: 'hasEUFamilyMember', value: 'yes' }
+    showIf: { field: 'hasEUFamilyMember', value: 'yes' },
+    options: COUNTRIES,
+
   },
   {
     id: 'euFamilyDocumentNumber',

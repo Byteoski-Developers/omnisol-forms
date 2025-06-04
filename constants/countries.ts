@@ -75,6 +75,21 @@ import { Country } from "@/types/form";
 
 export const SAMPLE_COUNTRIES: Country[] = [
   {
+    code: 'generic',
+    name: 'generic',
+    flag: 'https://flagcdn.com/w80/au.png',
+  },
+  {
+    code: 'uk',
+    name: 'United Kingdom',
+    flag: 'https://flagcdn.com/w80/gb.png',
+  },
+  {
+    code: 'fr',
+    name: 'France',
+    flag: 'https://flagcdn.com/w80/fr.png',
+  },
+  {
     code: 'SG',
     name: 'Singapore',
     flag: 'https://flagcdn.com/w80/sg.png',
@@ -150,19 +165,5 @@ export const SAMPLE_COUNTRIES: Country[] = [
     name: 'Sri Lanka',
     flag: 'https://flagcdn.com/w80/lk.png',
   },
-  {
-    code: 'generic',
-    name: 'generic',
-    flag: 'https://flagcdn.com/w80/au.png',
-  },
-  {
-    code: 'uk',
-    name: 'United Kingdom',
-    flag: 'https://flagcdn.com/w80/gb.png',
-  },
-  {
-    code: 'fr',
-    name: 'France',
-    flag: 'https://flagcdn.com/w80/fr.png',
-  }
+  
 ];

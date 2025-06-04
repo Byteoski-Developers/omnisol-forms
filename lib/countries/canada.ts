@@ -3547,15 +3547,15 @@ export const CANADA: VisaForm = {
         ]
       }
     },
-    {
-      id: 'inviterContactDetails',
-      group: 'purpose' as FormGroup,
-      type: 'text',
-      label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Name, Address, Phone number, Email',
-      showIf: { field: 'visitPurpose', value: 'visitation' }
-    },
+    // {
+    //   id: 'inviterContactDetails',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'text',
+    //   label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Name, Address, Phone number, Email',
+    //   showIf: { field: 'visitPurpose', value: 'visitation' }
+    // },
     {
       id: 'addAnotherInviter',
       group: 'purpose' as FormGroup,

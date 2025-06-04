@@ -17,6 +17,7 @@ import { ChildrenInput } from './ChildrenInput';
 import { WorkExperience } from './WorkExperience';
 import { TravelItinerary } from './TravelItinerary';
 import { ResidenceCountries } from './ResidenceCountries';
+import SpouseTabs from '@/components/form/spousedetails'; // Or the correct path if spousedetails.tsx exports SpouseTabs
 import SiblingTabs from './SiblingTabs';
 import ParentTabs from './ParentTabs';
 import MultiCountryDropdown from './MultiCountryDropdown';
@@ -34,6 +35,8 @@ import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
 import { MultiSelect } from "./MultiSelect";
 import { CheckboxMultiSelect } from "./CheckboxMultiSelect";
 import DateField from "./datefield";
+
+
 
 
 interface DynamicFormProps {
@@ -1192,46 +1195,84 @@ const validateField = (field: FormField, value: any): string | null => {
         );
 
       case 'custom':
-        switch (component) {
-          case 'RefusalInput':
-            return (
-              <div key={id} className="mb-4">
-                <Label htmlFor={id}>{label}</Label>
-                <RefusalInput 
-                  inputValue={value} 
-                  handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)} 
-                  readonly={false}
-                />
-                {error && (
-                  <div className="flex items-center gap-2 text-destructive mt-2">
-                    <AlertCircle className="h-4 w-4" />
-                    <p className="text-sm">{error}</p>
-                  </div>
-                )}
-                {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
-              </div>
-            );
-          case 'ChildrenInputField':
-            return (
-              <div key={id} className="mb-4">
-                <Label htmlFor={id}>{label}</Label>
-                <ChildrenInputField 
-                  inputValue={value} 
-                  handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)} 
-                  readonly={false}
-                />
-                {error && (
-                  <div className="flex items-center gap-2 text-destructive mt-2">
-                    <AlertCircle className="h-4 w-4" />
-                    <p className="text-sm">{error}</p>
-                  </div>
-                )}
-                {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
-              </div>
-            );
-          default:
-            return null;
-        }
+  switch (component) {
+    case 'spouseDetails':
+      return (
+        <div key={id} className="mb-4">
+          <Label htmlFor={id}>{label}</Label>
+          <SpouseTabs 
+            value={formData[id] || {}} 
+            onChange={(val) => handleFieldChange(id, val, true)}
+          />
+          {error && (
+            <div className="flex items-center gap-2 text-destructive mt-2">
+              <AlertCircle className="h-4 w-4" />
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
+          {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+        </div>
+      );
+
+    case 'SingleapplicantFamily':
+      return (
+        <div key={id} className="mb-4">
+          <Label htmlFor={id}>{label}</Label>
+          <ParentTabs 
+            value={formData[id] || {}} 
+            onChange={(val) => handleFieldChange(id, val, true)}
+          />
+          {error && (
+            <div className="flex items-center gap-2 text-destructive mt-2">
+              <AlertCircle className="h-4 w-4" />
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
+          {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+        </div>
+      );
+
+    case 'RefusalInput':
+      return (
+        <div key={id} className="mb-4">
+          <Label htmlFor={id}>{label}</Label>
+          <RefusalInput 
+            inputValue={value} 
+            handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)} 
+            readonly={false}
+          />
+          {error && (
+            <div className="flex items-center gap-2 text-destructive mt-2">
+              <AlertCircle className="h-4 w-4" />
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
+          {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+        </div>
+      );
+
+    case 'ChildrenInputField':
+      return (
+        <div key={id} className="mb-4">
+          <Label htmlFor={id}>{label}</Label>
+          <ChildrenInputField 
+            inputValue={value} 
+            handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)} 
+            readonly={false}
+          />
+          {error && (
+            <div className="flex items-center gap-2 text-destructive mt-2">
+              <AlertCircle className="h-4 w-4" />
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
+          {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+        </div>
+      );
+
+    default:
+      return null;
+  }
       default:
         return null;
     }

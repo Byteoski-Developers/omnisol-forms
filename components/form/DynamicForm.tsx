@@ -17,6 +17,7 @@ import { ChildrenInput } from './ChildrenInput';
 import { WorkExperience } from './WorkExperience';
 import { TravelItinerary } from './TravelItinerary';
 import { ResidenceCountries } from './ResidenceCountries';
+import SpouseTabs from '@/components/form/spousedetails'; // Or the correct path if spousedetails.tsx exports SpouseTabs
 import SiblingTabs from './SiblingTabs';
 import ParentTabs from './ParentTabs';
 import MultiCountryDropdown from './MultiCountryDropdown';
@@ -34,6 +35,8 @@ import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
 import { MultiSelect } from "./MultiSelect";
 import { CheckboxMultiSelect } from "./CheckboxMultiSelect";
 import DateField from "./datefield";
+
+
 
 
 interface DynamicFormProps {

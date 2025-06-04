@@ -16,6 +16,7 @@ import { CANADA } from './countries/canada';
 import { GENERIC_COUNTRY } from './countries/generic-country';
 import { UNITED_KINGDOM } from './countries/united-kingdom';
 import { FRANCE } from './countries/france';
+import { AUSTRALIA } from './countries/australia';
 
 class FormRegistry {
   private forms: Map<string, VisaForm> = new Map();
@@ -54,6 +55,7 @@ formRegistry.register(CANADA);
 formRegistry.register(GENERIC_COUNTRY);
 formRegistry.register(UNITED_KINGDOM);
 formRegistry.register(FRANCE);
+formRegistry.register(AUSTRALIA);
 
 
 

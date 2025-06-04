@@ -3360,7 +3360,6 @@ export const AUSTRALIA: VisaForm = {
         operator: 'or',
         conditions: [
           { field: 'maritalStatus', value: 'single' },
-          { field: 'maritalStatus', value: 'married' },
         ]
       },
       options: [
@@ -3368,33 +3367,32 @@ export const AUSTRALIA: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
-    {
-      id: 'siblingsDescription',
-      group: 'personal' as FormGroup,
-      type: 'info',
-      label: 'Description',
-      content: [
-        'Include all brother and sister including half brother sisters.'
-      ],
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'single' },
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'hasSiblings', value: 'yes' },
-        ]
-      },
-    },
+    // {
+    //   id: 'siblingsDescription',
+    //   group: 'personal' as FormGroup,
+    //   type: 'info',
+    //   label: 'Description',
+    //   content: [
+    //     'Include all brother and sister including half brother sisters.'
+    //   ],
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'single' },
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'hasSiblings', value: 'yes' },
+    //     ]
+    //   },
+    // },
     {
       id: 'siblingsDetailsHeader',
       group: 'personal' as FormGroup,
       type: 'header',
       label: 'Give details of all your siblings',
       showIf: {
-        operator: 'or',
+        operator: 'and',
         conditions: [
           { field: 'maritalStatus', value: 'single' },
-          { field: 'maritalStatus', value: 'married' },
           { field: 'hasSiblings', value: 'yes' },
         ]
       },
@@ -3404,13 +3402,12 @@ export const AUSTRALIA: VisaForm = {
       id: 'siblingsInput',
       group: 'personal' as FormGroup,
       type: 'siblingsInput',
-      label: 'Siblings Information',
+      label: '', 
       required: true,
       showIf: {
-        operator: 'or',
+        operator: 'and',
         conditions: [
           { field: 'maritalStatus', value: 'single' },
-          { field: 'maritalStatus', value: 'married' },
           { field: 'hasSiblings', value: 'yes' },
         ]
       },
@@ -3421,7 +3418,7 @@ export const AUSTRALIA: VisaForm = {
       id: 'spouseDetails',
       group: 'personal' as FormGroup,
       type: 'custom',
-      component: 'SpouseTabs',
+      component: 'spouseDetails',
       label: 'Spouse Details',
   description: 'Please provide details about your spouse',
   showIf: {
@@ -3432,14 +3429,28 @@ export const AUSTRALIA: VisaForm = {
   }
 },
 
+{
+  id: 'parentDetailsHeader',
+  group: 'personal' as FormGroup,
+  type: 'header',
+  label: 'Give details of all your parents',
+  showIf: {
+    operator: 'or',
+    conditions: [
+      { field: 'maritalStatus', value: 'single' },
+      { field: 'hasSiblings', value: 'yes' },
+    ]
+  },
+},
+
 // Parent Details (shown only if single)
 {
   id: 'parentDetails',
   group: 'personal' as FormGroup,
   type: 'custom',
-  component: 'ParentTabs',
-  label: 'Parent Details',
-  description: 'Please provide details about your parents',
+  component: 'SingleapplicantFamily',
+  label: '', 
+  description: '', 
   showIf: {
     operator: 'or',
     conditions: [

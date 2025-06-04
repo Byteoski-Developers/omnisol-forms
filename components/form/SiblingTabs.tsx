@@ -118,7 +118,7 @@ export default function SiblingTabs(props: ISiblingProps) {
     <div className="dark:text-gray-100 bg-white relative">
       {!readonly && (
         <div className="flex justify-between items-center border-b p-2">
-          <h4 className="font-bold text-sm ">{"Family Members"}</h4>
+          <h4 className="font-bold text-sm ">{"Siblings Information"}</h4>
           <div className="">
             <GenericButton onClick={handleSiblingAdd}>
               <UserPlus className="w-4 h-4 text-white" /> Add New
@@ -139,7 +139,7 @@ export default function SiblingTabs(props: ISiblingProps) {
                   }`}
                 >
                   <span className="overflow-hidden text-ellipsis whitespace-nowrap max-w-[80px]">
-                    #{s.id} {s.name}
+                  # {s.id} Sibling {s.name}
                   </span>
                   <span className="hidden sm:inline-block">{}</span>
                 </button>

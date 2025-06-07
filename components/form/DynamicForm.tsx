@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
+import { DateOfBirthField } from '@/components/form/DateOfBirthField';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Upload, AlertCircle, Calendar as CalendarIcon, FileText, X } from 'lucide-react';
 import { format } from 'date-fns';
@@ -35,6 +36,7 @@ import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
 import { MultiSelect } from "./MultiSelect";
 import { CheckboxMultiSelect } from "./CheckboxMultiSelect";
 import DateField from "./datefield";
+import ChildrenInputFieldUSA from './ChildrenInputFieldUsa';
 
 
 
@@ -842,13 +844,45 @@ const validateField = (field: FormField, value: any): string | null => {
               />
               {error && (
                 <div className="flex items-center gap-2 text-destructive mt-2">
-                  <AlertCircle className="h-4 w-4" />
-                  <p className="text-sm">{error}</p>
-                </div>
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{error}</p>
+              </div>
               )}
               {description && <p className="text-sm text-muted-foreground mt-2">{description}</p>}
             </div>
           );
+
+          case 'DateofBirth': 
+            return (
+              <div className="space-y-2" key={field.id}>
+                <Label htmlFor={field.id}>
+                  {field.label}
+                  {field.required && <span className="text-destructive ml-1">*</span>}
+                </Label>
+                <DateOfBirthField
+                  field={{
+                    id: field.id,
+                    label: field.label,
+                    required: field.required,
+                    description: field.description
+                  }}
+                  value={value}
+                  onChange={(val) => {
+                    // Clear any existing error when the date changes
+                    if (errors[field.id]) {
+                      const newErrors = { ...errors };
+                      delete newErrors[field.id];
+                      setErrors(newErrors);
+                    }
+                    handleFieldChange(field.id, val);
+                  }}
+                  error={error}
+                />
+                {field.description && (
+                  <p className="text-sm text-muted-foreground mt-1">{field.description}</p>
+                )}
+              </div>
+            );
 
       // case 'date':
       //   return (
@@ -1058,6 +1092,8 @@ const validateField = (field: FormField, value: any): string | null => {
       //       )}
       //     </div>
       //   );
+
+
       
       case 'date':
   return (
@@ -1270,9 +1306,29 @@ const validateField = (field: FormField, value: any): string | null => {
         </div>
       );
 
+    case 'ChildrenInputFieldUSA':
+      return (
+        <div key={id} className="mb-4">
+          <Label htmlFor={id}>{label}</Label>
+          <ChildrenInputFieldUSA 
+            inputValue={value} 
+            handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)} 
+            readonly={false}
+          />
+          {error && (
+            <div className="flex items-center gap-2 text-destructive mt-2">
+              <AlertCircle className="h-4 w-4" />
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
+          {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+        </div>
+      );
+
     default:
       return null;
   }
+
       default:
         return null;
     }

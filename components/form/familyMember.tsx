@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Trash2 } from 'lucide-react';
 import { MARITAL_STATUS_OPTIONS } from '@/lib/countries/constants/form-labels';
 import { COUNTRIES } from '@/lib/countries/constants/countries';
-import { DatePicker } from '../ui/date-picker';
+import { DateOfBirthField } from './DateOfBirthField';
 
 interface FamilyMemberProps {
   sibling: Sibling;
@@ -77,10 +77,15 @@ export default function FamilyMember({
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Date of Birth</label>
-          <DatePicker
-            value={localSibling.dateOfBirth ? new Date(localSibling.dateOfBirth) : undefined}
-            onChange={(date) => handleInputChange('dateOfBirth', date ? date.toISOString().split('T')[0] : '')}
+          <DateOfBirthField
+            value={localSibling.dateOfBirth}
+            onChange={(date) => handleInputChange('dateOfBirth', date)}
             disabled={readonly}
+            field={{
+              id: `dob-${sibling.id}`,
+              label: 'Date of Birth',
+              required: true
+            }}
           />
         </div>
 

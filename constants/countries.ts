@@ -100,6 +100,11 @@ export const SAMPLE_COUNTRIES: Country[] = [
     flag: 'https://flagcdn.com/w80/ca.png',
   },
   {
+    code: 'usa',
+    name: 'United States',
+    flag: 'https://flagcdn.com/w80/us.png',
+  },
+  {
     code: 'TR',
     name: 'Turkey',
     flag: 'https://flagcdn.com/w80/tr.png',

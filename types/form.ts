@@ -89,7 +89,7 @@ export interface Document {
 
 export interface FormField {
   id: string;
-  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary' | 'siblingsInput' | 'parentsInput' | 'countriesInput' | 'accessingBodyAssessment' | 'socialHandles' | 'last10YearActivity' | 'languageTest' | 'multiselect' | 'checkbox-multiselect' | 'custom';
+  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary' | 'siblingsInput' | 'parentsInput' | 'countriesInput' | 'accessingBodyAssessment' | 'socialHandles' | 'last10YearActivity' | 'languageTest' | 'multiselect' | 'checkbox-multiselect' | 'DateofBirth' | 'custom' | 'ChildrenInputFieldUSA';
   component?: string; // For custom component types
   content?: string[];
   label: string;

@@ -2664,18 +2664,18 @@ export const NEWZEALAND: VisaForm = {
       showDocuments: false,
       slug: 'passport-information'
     },
-    {
-      title: 'Family Information',
-      group: 'family' as FormGroup,
-      showDocuments: false,
-      slug: 'family-information'
-    },
-    {
-      title: 'Parents Information',
-      group: 'parents' as FormGroup,
-      showDocuments: false,
-      slug: 'parents-information'
-    },
+    // {
+    //   title: 'Family Information',
+    //   group: 'family' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'family-information'
+    // },
+    // {
+    //   title: 'Parents Information',
+    //   group: 'parents' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'parents-information'
+    // },
     {
       title: 'Visa History',
       group: 'visa_history' as FormGroup,
@@ -2959,7 +2959,7 @@ export const NEWZEALAND: VisaForm = {
     {
       id: 'spouseDob',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       showIf: { field: 'maritalStatus', not: 'single' }
@@ -3306,33 +3306,33 @@ export const NEWZEALAND: VisaForm = {
       description: 'Please provide details of your language test results.',
       showIf: { field: 'residenceStatus', value: 'student' },
     },
-    {
-      id: 'hasChildren',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'childrenDetails',
-      group: 'personal' as FormGroup,
-      type: 'custom',
-      component: 'ChildrenInputField',
-      label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', not: 'single' },
-          { field: 'hasChildren', value: 'yes' }
-        ]
-      }
-    },
+    // {
+    //   id: 'hasChildren',
+    //   group: 'personal' as FormGroup,
+    //   type: 'select',
+    //   label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', not: 'single' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'childrenDetails',
+    //   group: 'personal' as FormGroup,
+    //   type: 'custom',
+    //   component: 'ChildrenInputField',
+    //   label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', not: 'single' },
+    //       { field: 'hasChildren', value: 'yes' }
+    //     ]
+    //   }
+    // },
 
     // -------------------- PURPOSE OF VISIT --------------------
     {
@@ -4932,39 +4932,39 @@ export const NEWZEALAND: VisaForm = {
       placeholder: 'Enter your current address',
       showIf: { field: 'hasAlternateAddress', value: 'yes' }
     },
-    {
-      id: 'addressDurationMonths',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: `For how long you have been living at this address? (Months) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter number of months'
-    },
-    {
-      id: 'addressDurationYears',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: `For how long you have been living at this address? (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter number of years'
-    },
-    {
-      id: 'propertyOwnership',
-      group: 'residence' as FormGroup,
-      type: 'select',
-      label: `Who owns this property? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
-      options: PROPERTY_OWNERSHIP_OPTIONS
-    },
-    {
-      id: 'propertyOwnershipOther',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: 'Please specify who owns the property',
-      required: false,
-      placeholder: 'Enter property ownership details',
-      showIf: { field: 'propertyOwnership', value: 'other' }
-    },
+    // {
+    //   id: 'addressDurationMonths',
+    //   group: 'residence' as FormGroup,
+    //   type: 'text',
+    //   label: `For how long you have been living at this address? (Months) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter number of months'
+    // },
+    // {
+    //   id: 'addressDurationYears',
+    //   group: 'residence' as FormGroup,
+    //   type: 'text',
+    //   label: `For how long you have been living at this address? (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter number of years'
+    // },
+    // {
+    //   id: 'propertyOwnership',
+    //   group: 'residence' as FormGroup,
+    //   type: 'select',
+    //   label: `Who owns this property? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+    //   required: false,
+    //   options: PROPERTY_OWNERSHIP_OPTIONS
+    // },
+    // {
+    //   id: 'propertyOwnershipOther',
+    //   group: 'residence' as FormGroup,
+    //   type: 'text',
+    //   label: 'Please specify who owns the property',
+    //   required: false,
+    //   placeholder: 'Enter property ownership details',
+    //   showIf: { field: 'propertyOwnership', value: 'other' }
+    // },
     {
       id: 'worksFromHome',
       group: 'residence' as FormGroup,
@@ -5312,6 +5312,15 @@ export const NEWZEALAND: VisaForm = {
       ]
     },
     {
+      id: 'explanationText',
+      group: 'additional' as FormGroup,
+      type: 'textarea',
+      label: 'Please provide your explanation',
+      required: false,
+      showIf: { field: 'needExplanations', value: 'yes' },
+      placeholder: 'Enter your explanation here',
+    },
+    {
       id: 'destinationHeader',
       group: 'additional' as FormGroup,
       type: 'select',
@@ -5329,15 +5338,6 @@ export const NEWZEALAND: VisaForm = {
       label: `Which country/ies you want to visit?`,
       required: false,
       showIf: { field: 'destinationHeader', value: 'yes' }
-    },
-    {
-      id: 'explanationText',
-      group: 'additional' as FormGroup,
-      type: 'textarea',
-      label: 'Please provide your explanation',
-      required: false,
-      showIf: { field: 'needExplanations', value: 'yes' },
-      placeholder: 'Enter your explanation here',
     },
     {
       id: 'needTravelServices',

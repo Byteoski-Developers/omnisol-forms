@@ -26,11 +26,11 @@ import {
   WORK_FIELD_OPTIONS
 } from './constants/form-labels';
 
-export const GENERIC_COUNTRY: VisaForm = {
-  id: 'generic-visa',
-  countryCode: 'generic',
-  name: 'Generic Visa Application Form',
-  description: 'Universal visa application form for any country',
+export const USA: VisaForm = {
+  id: 'usa-visa',
+  countryCode: 'usa',
+  name: 'USA Visa Application Form',
+  description: 'Universal visa application form for USA',
   documents: [
     {
       id: 'passport',
@@ -2623,12 +2623,12 @@ export const GENERIC_COUNTRY: VisaForm = {
 
   ],
   steps: [
-    {
-      title: 'Destination Selection',
-      group: 'destination' as FormGroup,
-      showDocuments: false,
-      slug: 'destination-selection'
-    },
+    // {
+    //   title: 'Destination Selection',
+    //   group: 'destination' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'destination-selection'
+    // },
     {
       title: 'Citizenship & Residence',
       group: 'citizenship' as FormGroup,
@@ -2665,12 +2665,12 @@ export const GENERIC_COUNTRY: VisaForm = {
       showDocuments: false,
       slug: 'passport-information'
     },
-    {
-      title: 'Family Information',
-      group: 'family' as FormGroup,
-      showDocuments: false,
-      slug: 'family-information'
-    },
+    // {
+    //   title: 'Family Information',
+    //   group: 'family' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'family-information'
+    // },
     {
       title: 'Parents Information',
       group: 'parents' as FormGroup,
@@ -3320,10 +3320,10 @@ export const GENERIC_COUNTRY: VisaForm = {
       ]
     },
     {
-      id: 'childrenDetails',
+      id: 'childrenDetailsusa',
       group: 'personal' as FormGroup,
       type: 'custom',
-      component: 'ChildrenInputField',
+      component: 'ChildrenInputFieldUSA',
       label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3440,15 +3440,15 @@ export const GENERIC_COUNTRY: VisaForm = {
         ]
       }
     },
-    {
-      id: 'inviterImmigrationStatus',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'visitPurpose', value: 'visitation' },
-      options: IMMIGRATION_STATUS_OPTIONS
-    },
+    // {
+    //   id: 'inviterImmigrationStatus',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'select',
+    //   label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'visitPurpose', value: 'visitation' },
+    //   options: IMMIGRATION_STATUS_OPTIONS
+    // },
     {
       id: 'inviterImmigrationStatusOther',
       group: 'purpose' as FormGroup,
@@ -4828,83 +4828,83 @@ export const GENERIC_COUNTRY: VisaForm = {
         ]
       }
     },
-    {
-      id: 'spouseHasIndependentIncome',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Does your spouse have his/her independent income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', value: 'married' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' }
-        ]
-      },
-      options: INCOME_SOURCE_OPTIONS
-    },
-    {
-      id: 'spouseIncomeSourceOther',
-      group: 'finances' as FormGroup,
-      type: 'text',
-      label: "Please specify your spouse's source of income",
-      required: false,
-      placeholder: 'Enter income source details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' },
-          { field: 'spouseIncomeSource', value: 'other' }
-        ]
-      }
-    },
-    {
-      id: 'spouseHasAdditionalIncome',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Does your spouse have additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' }
-        ]
-      },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseAdditionalIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' },
-          { field: 'spouseHasAdditionalIncome', value: 'yes' }
-        ]
-      },
-      options: INCOME_SOURCE_OPTIONS
-    },
+    // {
+    //   id: 'spouseHasIndependentIncome',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse have his/her independent income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', value: 'married' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
+    // {
+    //   id: 'spouseIncomeSourceOther',
+    //   group: 'finances' as FormGroup,
+    //   type: 'text',
+    //   label: "Please specify your spouse's source of income",
+    //   required: false,
+    //   placeholder: 'Enter income source details',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' },
+    //       { field: 'spouseIncomeSource', value: 'other' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'spouseHasAdditionalIncome',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse have additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseAdditionalIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' },
+    //       { field: 'spouseHasAdditionalIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
 
     // -------------------- RESIDENCE INFORMATION --------------------
     {
@@ -4933,39 +4933,39 @@ export const GENERIC_COUNTRY: VisaForm = {
       placeholder: 'Enter your current address',
       showIf: { field: 'hasAlternateAddress', value: 'yes' }
     },
-    {
-      id: 'addressDurationMonths',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: `For how long you have been living at this address? (Months) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter number of months'
-    },
-    {
-      id: 'addressDurationYears',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: `For how long you have been living at this address? (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter number of years'
-    },
-    {
-      id: 'propertyOwnership',
-      group: 'residence' as FormGroup,
-      type: 'select',
-      label: `Who owns this property? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
-      options: PROPERTY_OWNERSHIP_OPTIONS
-    },
-    {
-      id: 'propertyOwnershipOther',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: 'Please specify who owns the property',
-      required: false,
-      placeholder: 'Enter property ownership details',
-      showIf: { field: 'propertyOwnership', value: 'other' }
-    },
+    // {
+    //   id: 'addressDurationMonths',
+    //   group: 'residence' as FormGroup,
+    //   type: 'text',
+    //   label: `For how long you have been living at this address? (Months) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter number of months'
+    // },
+    // {
+    //   id: 'addressDurationYears',
+    //   group: 'residence' as FormGroup,
+    //   type: 'text',
+    //   label: `For how long you have been living at this address? (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   placeholder: 'Enter number of years'
+    // },
+    // {
+    //   id: 'propertyOwnership',
+    //   group: 'residence' as FormGroup,
+    //   type: 'select',
+    //   label: `Who owns this property? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+    //   required: false,
+    //   options: PROPERTY_OWNERSHIP_OPTIONS
+    // },
+    // {
+    //   id: 'propertyOwnershipOther',
+    //   group: 'residence' as FormGroup,
+    //   type: 'text',
+    //   label: 'Please specify who owns the property',
+    //   required: false,
+    //   placeholder: 'Enter property ownership details',
+    //   showIf: { field: 'propertyOwnership', value: 'other' }
+    // },
     {
       id: 'worksFromHome',
       group: 'residence' as FormGroup,

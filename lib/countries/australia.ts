@@ -2959,10 +2959,10 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'spouseDob',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      showIf: { field: 'maritalStatus', not: 'single' }
+      showIf: { field: 'maritalStatus', not: 'single' } 
     },
     {
       id: 'isFirstMarriage',

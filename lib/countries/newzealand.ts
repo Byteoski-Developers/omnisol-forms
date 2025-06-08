@@ -2962,7 +2962,8 @@ export const NEWZEALAND: VisaForm = {
       type: 'DateofBirth',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      showIf: { field: 'maritalStatus', not: 'single' }
+      showIf: { field: 'maritalStatus', not: 'single' },
+      disableFutureDates: true
     },
     {
       id: 'isFirstMarriage',

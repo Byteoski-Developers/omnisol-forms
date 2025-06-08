@@ -23,12 +23,14 @@ interface DateFieldProps {
   formData: Record<string, any>;
   handleFieldChange: (id: string, value: string) => void;
   error?: string;
+  disableFutureDates?: boolean;
 }
 
-const DateField: React.FC<DateFieldProps> = ({ field, formData, handleFieldChange, error }) => {
+const DateField: React.FC<DateFieldProps> = ({ field, formData, handleFieldChange, error, disableFutureDates = false }) => {
   const savedDate = formData[field.id] ? new Date(formData[field.id]) : null;
   const [open, setOpen] = useState(false);
   const [tempDate, setTempDate] = useState<Date>(savedDate || new Date());
+  const [futureDateError, setFutureDateError] = useState<string>("");
 
   useEffect(() => {
     // When external value changes, sync tempDate
@@ -36,6 +38,11 @@ const DateField: React.FC<DateFieldProps> = ({ field, formData, handleFieldChang
       setTempDate(new Date(formData[field.id]));
     }
   }, [formData[field.id]]);
+
+  // Clear future date error when disableFutureDates changes or field value changes
+  useEffect(() => {
+    setFutureDateError("");
+  }, [disableFutureDates, formData[field.id]]);
 
   const handleYearChange = (year: string) => {
     const updated = new Date(tempDate);
@@ -51,10 +58,21 @@ const DateField: React.FC<DateFieldProps> = ({ field, formData, handleFieldChang
 
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
+      // Check if future date is selected when disableFutureDates is true
+      if (disableFutureDates && date > new Date()) {
+        setFutureDateError("Future dates are not allowed for this field");
+        return;
+      }
+      
+      // Clear any previous future date error
+      setFutureDateError("");
       handleFieldChange(field.id, date.toISOString());
       setOpen(false);
     }
   };
+
+  // Determine which error to show - external error takes precedence
+  const displayError = error || futureDateError;
 
   return (
     <div key={field.id} className="mb-4">
@@ -135,10 +153,10 @@ const DateField: React.FC<DateFieldProps> = ({ field, formData, handleFieldChang
         <p className="text-sm text-muted-foreground mt-1">{field.description}</p>
       )}
 
-      {error && (
+      {displayError && (
         <p className="text-sm text-destructive flex items-center mt-1">
           <AlertCircle className="h-4 w-4 mr-1" />
-          {error}
+          {displayError}
         </p>
       )}
     </div>

@@ -59,7 +59,8 @@ export default function Dashboard() {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [showResetModal, setShowResetModal] = useState<boolean>(false);
+  const [isResetting, setIsResetting] = useState<boolean>(false);
 
   console.log("SelectedCountry ---<>", selectedCountry);
   useEffect(() => {
@@ -211,6 +212,39 @@ export default function Dashboard() {
     }
   };
 
+  const handleResetCase = async () => {
+    if (!caseId) return;
+    
+    try {
+      setIsResetting(true);
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8000';
+      
+      await authRequest({
+        method: 'POST',
+        url: `${baseUrl}/api/case-manager/case/reset`,
+        params: {
+          case_id: caseId
+        }
+      });
+      
+      // Reset local state
+      setSelectedCountry(null);
+      setSelectedForm(null);
+      setFormData({});
+      setShowResetModal(false);
+      
+      // Refetch case data to get the updated state
+      await fetchCaseData();
+      
+      alert('Case has been reset successfully!');
+    } catch (error) {
+      console.error('Error resetting case:', error);
+      alert('Failed to reset case. Please try again.');
+    } finally {
+      setIsResetting(false);
+    }
+  };
+
   console.log("selectedCountry ---<>",selectedCountry)
   console.log("selectedForm ---<>",selectedForm)
   if (loading) {
@@ -232,11 +266,89 @@ export default function Dashboard() {
     );
   }
 
+  // Reset Warning Modal Component
+  const ResetWarningModal = () => {
+    if (!showResetModal) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+          <div className="flex items-center mb-4">
+            <div className="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 18.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-lg font-medium text-gray-900">Reset Case</h3>
+            </div>
+          </div>
+          
+          <div className="mb-4">
+            <p className="text-sm text-gray-500">
+              Are you sure you want to reset this case? This action will:
+            </p>
+            <ul className="mt-2 text-sm text-gray-500 list-disc list-inside">
+              <li>Clear all form data and responses</li>
+              <li>Reset the case status</li>
+              <li>Remove country selection</li>
+            </ul>
+            <p className="mt-2 text-sm font-medium text-red-600">
+              This action cannot be undone.
+            </p>
+          </div>
+          
+          <div className="flex justify-end space-x-3">
+            <button
+              type="button"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={() => setShowResetModal(false)}
+              disabled={isResetting}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:bg-red-400"
+              onClick={handleResetCase}
+              disabled={isResetting}
+            >
+              {isResetting ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Resetting...
+                </>
+              ) : (
+                'Reset Case'
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-8">
-        {caseData?.case.title || 'Visa Application Dashboard'}
-      </h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">
+          {caseData?.case.title || 'Visa Application Dashboard'}
+        </h1>
+        
+        {/* Reset Button - Show when country is selected or form data exists */}
+        {(selectedCountry || Object.keys(formData).length > 0) && (
+          <button
+            type="button"
+            className="px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-300 rounded-md hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            onClick={() => setShowResetModal(true)}
+          >
+            Reset Case
+          </button>
+        )}
+      </div>
       
       {caseData?.case && (
         <div className="bg-blue-50 p-4 rounded-md mb-6">
@@ -277,6 +389,9 @@ export default function Dashboard() {
           </p>
         </div>
       )}
+      
+      {/* Reset Warning Modal */}
+      <ResetWarningModal />
     </div>
   );
 }

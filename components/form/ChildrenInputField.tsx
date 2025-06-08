@@ -228,6 +228,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
               value={activeChildData.dateOfBirth ? new Date(activeChildData.dateOfBirth) : undefined}
               onChange={(date) => handleFieldChange(activeChildData.id, "dateOfBirth", date ? date.toISOString().split('T')[0] : '')}
               disabled={readonly}
+              disableFutureDates={true}
             />
           </div>
 

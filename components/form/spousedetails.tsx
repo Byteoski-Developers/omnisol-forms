@@ -181,6 +181,7 @@ export default function SpouseTabs({ value, onChange, readonly = false }: Spouse
                     value={spouse.dobDate}
                     onChange={(date) => handleSpouseChange(index, 'dobDate', date as Date)}
                     disabled={readonly}
+                    disableFutureDates={true}
                   />
                 </div>
                 <div className="space-y-2">

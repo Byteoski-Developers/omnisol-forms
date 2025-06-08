@@ -3040,7 +3040,8 @@ export const CANADA: VisaForm = {
       type: 'date',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      showIf: { field: 'maritalStatus', not: 'single' }
+      showIf: { field: 'maritalStatus', not: 'single' },
+      disableFutureDates: true
     },
     {
       id: 'isFirstMarriage',
@@ -3405,7 +3406,7 @@ export const CANADA: VisaForm = {
     {
       id: 'childrenDetails',
       group: 'personal' as FormGroup,
-      type: 'custom',
+      type: 'childrenInput',
       component: 'ChildrenInputField',
       label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,

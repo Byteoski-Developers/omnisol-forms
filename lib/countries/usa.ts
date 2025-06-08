@@ -1,5 +1,6 @@
 import { VisaForm, DocumentType, FormGroup } from '@/types/form';
 import { COUNTRIES } from './constants/countries';
+import { DateOfBirthField } from '@/components/form/DateOfBirthField';
 import { DatePicker } from '@/components/ui/date-picker';
 import {
   ADDITIONAL_APPLICANT_OPTIONS,
@@ -25,11 +26,11 @@ import {
   WORK_FIELD_OPTIONS
 } from './constants/form-labels';
 
-export const NEWZEALAND: VisaForm = {
-  id: 'newzealand',
-  countryCode: 'NZ',
-  name: 'New Zealand Visa Application Form',
-  description: 'New Zealand visa application form',
+export const USA: VisaForm = {
+  id: 'usa-visa',
+  countryCode: 'usa',
+  name: 'USA Visa Application Form',
+  description: 'Universal visa application form for USA',
   documents: [
     {
       id: 'passport',
@@ -2670,12 +2671,12 @@ export const NEWZEALAND: VisaForm = {
     //   showDocuments: false,
     //   slug: 'family-information'
     // },
-    // {
-    //   title: 'Parents Information',
-    //   group: 'parents' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'parents-information'
-    // },
+    {
+      title: 'Parents Information',
+      group: 'parents' as FormGroup,
+      showDocuments: false,
+      slug: 'parents-information'
+    },
     {
       title: 'Visa History',
       group: 'visa_history' as FormGroup,
@@ -2700,12 +2701,12 @@ export const NEWZEALAND: VisaForm = {
     //   showDocuments: false,
     //   slug: 'relatives-information'
     // },
-    // {
-    //   title: 'Social Media Handles',
-    //   group: 'social' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'social-media-handles'
-    // },
+    {
+      title: 'Social Media Handles',
+      group: 'social' as FormGroup,
+      showDocuments: false,
+      slug: 'social-media-handles'
+    },
     {
       title: 'Health, Legal & Security Details',
       group: 'criminal' as FormGroup,
@@ -3306,33 +3307,33 @@ export const NEWZEALAND: VisaForm = {
       description: 'Please provide details of your language test results.',
       showIf: { field: 'residenceStatus', value: 'student' },
     },
-    // {
-    //   id: 'hasChildren',
-    //   group: 'personal' as FormGroup,
-    //   type: 'select',
-    //   label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: { field: 'maritalStatus', not: 'single' },
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-    // {
-    //   id: 'childrenDetails',
-    //   group: 'personal' as FormGroup,
-    //   type: 'custom',
-    //   component: 'ChildrenInputField',
-    //   label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: {
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'maritalStatus', not: 'single' },
-    //       { field: 'hasChildren', value: 'yes' }
-    //     ]
-    //   }
-    // },
+    {
+      id: 'hasChildren',
+      group: 'personal' as FormGroup,
+      type: 'select',
+      label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'maritalStatus', not: 'single' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'childrenDetailsusa',
+      group: 'personal' as FormGroup,
+      type: 'custom',
+      component: 'ChildrenInputFieldUSA',
+      label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', not: 'single' },
+          { field: 'hasChildren', value: 'yes' }
+        ]
+      }
+    },
 
     // -------------------- PURPOSE OF VISIT --------------------
     {
@@ -3439,15 +3440,15 @@ export const NEWZEALAND: VisaForm = {
         ]
       }
     },
-    {
-      id: 'inviterImmigrationStatus',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'visitPurpose', value: 'visitation' },
-      options: IMMIGRATION_STATUS_OPTIONS
-    },
+    // {
+    //   id: 'inviterImmigrationStatus',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'select',
+    //   label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'visitPurpose', value: 'visitation' },
+    //   options: IMMIGRATION_STATUS_OPTIONS
+    // },
     {
       id: 'inviterImmigrationStatusOther',
       group: 'purpose' as FormGroup,
@@ -4827,83 +4828,83 @@ export const NEWZEALAND: VisaForm = {
         ]
       }
     },
-    {
-      id: 'spouseHasIndependentIncome',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Does your spouse have his/her independent income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', value: 'married' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' }
-        ]
-      },
-      options: INCOME_SOURCE_OPTIONS
-    },
-    {
-      id: 'spouseIncomeSourceOther',
-      group: 'finances' as FormGroup,
-      type: 'text',
-      label: "Please specify your spouse's source of income",
-      required: false,
-      placeholder: 'Enter income source details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' },
-          { field: 'spouseIncomeSource', value: 'other' }
-        ]
-      }
-    },
-    {
-      id: 'spouseHasAdditionalIncome',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Does your spouse have additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' }
-        ]
-      },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseAdditionalIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' },
-          { field: 'spouseHasAdditionalIncome', value: 'yes' }
-        ]
-      },
-      options: INCOME_SOURCE_OPTIONS
-    },
+    // {
+    //   id: 'spouseHasIndependentIncome',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse have his/her independent income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', value: 'married' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
+    // {
+    //   id: 'spouseIncomeSourceOther',
+    //   group: 'finances' as FormGroup,
+    //   type: 'text',
+    //   label: "Please specify your spouse's source of income",
+    //   required: false,
+    //   placeholder: 'Enter income source details',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' },
+    //       { field: 'spouseIncomeSource', value: 'other' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'spouseHasAdditionalIncome',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse have additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseAdditionalIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' },
+    //       { field: 'spouseHasAdditionalIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
 
     // -------------------- RESIDENCE INFORMATION --------------------
     {
@@ -5312,15 +5313,6 @@ export const NEWZEALAND: VisaForm = {
       ]
     },
     {
-      id: 'explanationText',
-      group: 'additional' as FormGroup,
-      type: 'textarea',
-      label: 'Please provide your explanation',
-      required: false,
-      showIf: { field: 'needExplanations', value: 'yes' },
-      placeholder: 'Enter your explanation here',
-    },
-    {
       id: 'destinationHeader',
       group: 'additional' as FormGroup,
       type: 'select',
@@ -5338,6 +5330,15 @@ export const NEWZEALAND: VisaForm = {
       label: `Which country/ies you want to visit?`,
       required: false,
       showIf: { field: 'destinationHeader', value: 'yes' }
+    },
+    {
+      id: 'explanationText',
+      group: 'additional' as FormGroup,
+      type: 'textarea',
+      label: 'Please provide your explanation',
+      required: false,
+      showIf: { field: 'needExplanations', value: 'yes' },
+      placeholder: 'Enter your explanation here',
     },
     {
       id: 'needTravelServices',
@@ -5479,28 +5480,28 @@ export const NEWZEALAND: VisaForm = {
       required: false,
       options: EDUCATION_FIELD_OPTIONS
     },
-    // {
-    //   id: 'last10YearActivityHeader',
-    //   group: 'education' as FormGroup,
-    //   type: 'header',
-    //   label: 'Last 10 Years Activity'
-    // },
-    // {
-    //   id: 'last10YearActivityDescription',
-    //   group: 'education' as FormGroup,
-    //   type: 'info',
-    //   label: 'Last 10 Years Activity Information',
-    //   content: [
-    //     'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
-    //   ]
-    // },
-    // {
-    //   id: 'last10YearActivity',
-    //   group: 'education' as FormGroup,
-    //   type: 'textarea',
-    //   label: 'Description',
-    //   required: true,
-    // },
+    {
+      id: 'last10YearActivityHeader',
+      group: 'education' as FormGroup,
+      type: 'header',
+      label: 'Last 10 Years Activity'
+    },
+    {
+      id: 'last10YearActivityDescription',
+      group: 'education' as FormGroup,
+      type: 'info',
+      label: 'Last 10 Years Activity Information',
+      content: [
+        'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
+      ]
+    },
+    {
+      id: 'last10YearActivity',
+      group: 'education' as FormGroup,
+      type: 'textarea',
+      label: 'Description',
+      required: true,
+    },
 
     // Health, Legal, and Security Details
     {

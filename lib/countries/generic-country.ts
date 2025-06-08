@@ -1,5 +1,6 @@
 import { VisaForm, DocumentType, FormGroup } from '@/types/form';
 import { COUNTRIES } from './constants/countries';
+import { DateOfBirthField } from '@/components/form/DateOfBirthField';
 import { DatePicker } from '@/components/ui/date-picker';
 import {
   ADDITIONAL_APPLICANT_OPTIONS,
@@ -2701,12 +2702,6 @@ export const GENERIC_COUNTRY: VisaForm = {
     //   slug: 'relatives-information'
     // },
     {
-      title: 'Additional Information',
-      group: 'additional' as FormGroup,
-      showDocuments: false,
-      slug: 'additional-information'
-    },
-    {
       title: 'Social Media Handles',
       group: 'social' as FormGroup,
       showDocuments: false,
@@ -2723,6 +2718,12 @@ export const GENERIC_COUNTRY: VisaForm = {
       group: 'contact' as FormGroup,
       showDocuments: false,
       slug: 'contact-preferences'
+    },
+    {
+      title: 'Additional Information',
+      group: 'additional' as FormGroup,
+      showDocuments: false,
+      slug: 'additional-information'
     },
   ],
   fields: [
@@ -2959,7 +2960,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'spouseDob',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       showIf: { field: 'maritalStatus', not: 'single' }

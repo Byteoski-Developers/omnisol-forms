@@ -1126,7 +1126,11 @@ export function DynamicForm({
                 .map(doc => ({
                     title: doc.name,
                     category_id: parseInt(doc.id, 10) || 1, // Convert string ID to number or use default
-                    remarks: doc.description || ""
+                    remarks: doc.description || "",
+                    extractable_fields: doc.extractableFields?.map(field => ({
+                        field_id: field.fieldId,
+                        source: field.source
+                    })) || []
                 }));
 
             if (documentRequests.length === 0) return;

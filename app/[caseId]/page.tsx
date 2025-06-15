@@ -205,7 +205,7 @@ export default function Dashboard() {
       
       // Since we're redirecting to an external URL (the main frontend),
       // we need to use window.location.href rather than the Next.js router
-      window.location.href = `${mainFrontendUrl}dashboard/cases/detail/${caseId}`;
+      window.location.href = `${mainFrontendUrl}/dashboard/cases/detail/${caseId}`;
     } catch (error) {
       console.error('Error updating case status:', error);
       alert('Form submitted but failed to update case status.');

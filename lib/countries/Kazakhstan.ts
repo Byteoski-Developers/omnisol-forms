@@ -5127,7 +5127,7 @@ export const KAZAKHSTAN: VisaForm = {
     {
       id: 'refusalDetails',
       group: 'visa_history' as FormGroup,
-      type: 'custom',
+      type: 'refusalInput',
       component: 'RefusalInput',
       label: 'Provide details about your visa refusals',
       required: true,

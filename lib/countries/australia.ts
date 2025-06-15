@@ -3418,7 +3418,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'spouseDetails',
       group: 'personal' as FormGroup,
-      type: 'custom',
+      type: 'spouseDetails',
       component: 'spouseDetails',
       label: 'Spouse Details',
   description: 'Please provide details about your spouse',
@@ -3448,7 +3448,7 @@ export const AUSTRALIA: VisaForm = {
 {
   id: 'parentDetails',
   group: 'personal' as FormGroup,
-  type: 'custom',
+  type: 'SingleapplicantFamily',
   component: 'SingleapplicantFamily',
   label: '', 
   description: '', 
@@ -5225,7 +5225,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'refusalDetails',
       group: 'visa_history' as FormGroup,
-      type: 'custom',
+      type: 'refusalInput',
       component: 'RefusalInput',
       label: 'Provide details about your visa refusals',
       required: true,

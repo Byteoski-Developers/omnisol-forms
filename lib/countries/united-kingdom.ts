@@ -3442,7 +3442,7 @@ export const UNITED_KINGDOM: VisaForm = {
     {
       id: 'dependentChildrenDetails',
       group: 'personal' as FormGroup,
-      type: 'custom',
+      type: 'childrenInput',
       component: 'ChildrenInputField',
       label: `Give details of all your dependent children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
@@ -5293,7 +5293,7 @@ export const UNITED_KINGDOM: VisaForm = {
     {
       id: 'refusalDetails',
       group: 'visa_history' as FormGroup,
-      type: 'custom',
+      type: 'refusalInput',
       component: 'RefusalInput',
       label: 'Provide details about your visa refusals',
       required: true,

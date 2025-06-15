@@ -17,6 +17,7 @@ interface IRefusal {
   visaType: string;
   date: string;
   hasRefusalLetter: string;
+  hasAppeal?: string;
 }
 
 const emptyRefusal: IRefusal = {
@@ -24,6 +25,7 @@ const emptyRefusal: IRefusal = {
   visaType: "",
   date: "",
   hasRefusalLetter: "",
+  hasAppeal: "",
 };
 
 // Simple RadioChoices component
@@ -32,13 +34,15 @@ const RadioChoices = ({
   options, 
   selectedOption, 
   onChange, 
-  disabled 
+  disabled,
+  required
 }: { 
   id: string; 
   options: any[]; 
   selectedOption?: any; 
   onChange: (value: string) => void; 
-  disabled?: boolean 
+  disabled?: boolean;
+  required?: boolean
 }) => {
   return (
     <div className="flex flex-col space-y-2">
@@ -54,6 +58,7 @@ const RadioChoices = ({
             checked={selectedOption?.value === option.value}
             onChange={() => onChange(option.value)}
             disabled={disabled}
+            required={required}
             className="h-4 w-4"
           />
           <span className="text-sm">{option.label}</span>
@@ -229,6 +234,32 @@ const RefusalInput = (props: IRefusalInputProps) => {
                 disabled={readonly}
               />
             </div>
+
+            {refusal.country === 'united_kingdom' && (
+              <div className="mt-2">
+                <div className="flex items-center">
+                  <p className="text-sm text-gray-800 mb-2">
+                    Do you have an appeal against that decision which is yet to be heard or is awaiting judgment?
+                    <span className="text-red-500 ml-1">*</span>
+                  </p>
+                </div>
+                <RadioChoices
+                  id={`has-appeal-${index}`}
+                  options={BooleanChoices}
+                  selectedOption={BooleanChoices.find(
+                    (c) => c.value === refusal.hasAppeal
+                  )}
+                  onChange={(val) =>
+                    handleFieldChange(index, "hasAppeal", val)
+                  }
+                  disabled={readonly}
+                  required={refusal.country === 'united_kingdom'}
+                />
+                {refusal.country === 'united_kingdom' && !refusal.hasAppeal && (
+                  <p className="text-sm text-red-500 mt-1">This field is required</p>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>

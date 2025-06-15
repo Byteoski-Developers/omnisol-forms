@@ -63,7 +63,7 @@ export function DateOfBirthField({
       
       // Check if date is in the future
       if (fixedDate > today) {
-        setDateError('Date of birth cannot be in the future');
+        setDateError('These Dates cannot be in the future');
       } else {
         // Only update the form value if it's a valid date
         setDateError('');
@@ -76,7 +76,7 @@ export function DateOfBirthField({
   };
 
   // Generate years from 1945 to 2090
-  const years = Array.from({ length: 2090 - 1945 + 1 }, (_, i) => 1945 + i);
+  const years = Array.from({ length: 2200 - 1900 + 1 }, (_, i) => 1900 + i);
   
   // Generate months
   const months = [

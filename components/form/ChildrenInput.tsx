@@ -230,6 +230,7 @@ export function ChildrenInput({ onChange, value = [], readonly, onError }: Child
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Date of Birth</label>
                     <DatePicker
+                      disableFutureDates={true}
                       value={child.dateOfBirth ? new Date(child.dateOfBirth) : undefined}
                       onChange={(date) => {
                         // Store date in ISO format for backend compatibility and validation

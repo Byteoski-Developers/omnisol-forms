@@ -2963,7 +2963,8 @@ export const GENERIC_COUNTRY: VisaForm = {
       type: 'DateofBirth',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      showIf: { field: 'maritalStatus', not: 'single' }
+      showIf: { field: 'maritalStatus', not: 'single' },
+      disableFutureDates: true
     },
     {
       id: 'isFirstMarriage',
@@ -3322,7 +3323,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'childrenDetails',
       group: 'personal' as FormGroup,
-      type: 'custom',
+      type: 'childrenInput',
       component: 'ChildrenInputField',
       label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
@@ -5127,7 +5128,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'refusalDetails',
       group: 'visa_history' as FormGroup,
-      type: 'custom',
+      type: 'refusalInput',
       component: 'RefusalInput',
       label: 'Provide details about your visa refusals',
       required: true,

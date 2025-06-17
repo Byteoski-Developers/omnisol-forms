@@ -3128,14 +3128,41 @@ export const FRANCE: VisaForm = {
       }
     },
     {
-      id: 'inviterContactDetails',
+      id: 'inviterName',
       group: 'purpose' as FormGroup,
       type: 'text',
-      label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      label: 'Name of the person being visited',
       required: false,
-      placeholder: 'Name, Address, Phone number, Email',
+      placeholder: 'Enter full name of the person you will visit',
       showIf: { field: 'visitPurpose', value: 'visitation' }
     },
+    {
+      id: 'inviterAddress',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Complete address of the person being visited',
+      required: false,
+      placeholder: 'Enter full residential address',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterEmail',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Email ID of the person being visited',
+      required: false,
+      placeholder: 'Enter email address',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterPhone',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Phone number of the person being visited',
+      required: false,
+      placeholder: 'Enter phone number',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },    
     {
       id: 'addAnotherInviter',
       group: 'purpose' as FormGroup,
@@ -3326,6 +3353,51 @@ export const FRANCE: VisaForm = {
         { label: 'No', value: 'no' }
       ]
     },
+    {
+      id: 'businessContactFirstName',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'First name of the contact person in the company/organization',
+      required: true,
+      placeholder: 'Enter first name',
+      showIf: { field: 'visitPurpose', value: 'business' }
+    },
+    {
+      id: 'businessContactLastName',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Surname of the contact person in the company/organization',
+      required: true,
+      placeholder: 'Enter surname',
+      showIf: { field: 'visitPurpose', value: 'business' }
+    },
+    {
+      id: 'businessContactAddress',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: 'Address of the company/organization',
+      required: true,
+      placeholder: 'Enter full address of the company/organization',
+      showIf: { field: 'visitPurpose', value: 'business' }
+    },
+    {
+      id: 'businessContactPhone',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Phone number of the contact person',
+      required: true,
+      placeholder: 'Enter phone number',
+      showIf: { field: 'visitPurpose', value: 'business' }
+    },
+    {
+      id: 'businessContactEmail',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: 'Email address of the contact person',
+      required: true,
+      placeholder: 'Enter email address',
+      showIf: { field: 'visitPurpose', value: 'business' }
+    },    
 
     // For study purpose
     {
@@ -4397,8 +4469,70 @@ export const FRANCE: VisaForm = {
       type: 'checkbox-multiselect',
       label: `What is the source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      showIf: { field: 'selfPayingExpenses', value: 'no' },
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'selfPayingExpenses', value: 'no' },
+          {
+            operator: 'or',
+            conditions: [
+              { field: 'expensePayer', value: 'spouse' },
+              { field: 'expensePayer', value: 'parent' },
+              { field: 'expensePayer', value: 'other_individual' }
+            ]
+          }
+        ]
+      },
       options: INCOME_SOURCE_OPTIONS
+    },
+    {
+      id: 'meansOfSubsistence',
+      group: 'finances' as FormGroup,
+      type: 'checkbox-multiselect',
+      label: `Means of Subsistence (Tick your own means of subsistence) ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'or',
+        conditions: [
+          { field: 'selfPayingExpenses', value: 'yes' },
+          { field: 'expensePayer', value: 'employer' },
+          { field: 'expensePayer', value: 'school' },
+          { field: 'expensePayer', value: 'government' },
+          { field: 'expensePayer', value: 'religious_body' }
+        ]
+      },
+      options: [
+        { label: 'Accommodation prepaid', value: 'accommodation_prepaid' },
+        { label: 'Transport costs prepaid', value: 'transport_prepaid' },
+        { label: 'Traveller\'s cheques', value: 'travellers_cheques' },
+        { label: 'Credit card', value: 'credit_card' },
+        { label: 'Cash', value: 'cash' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    {
+      id: 'meansOfSubsistenceOther',
+      group: 'finances' as FormGroup,
+      type: 'text',
+      label: 'Please specify other means of subsistence',
+      required: true,
+      placeholder: 'Enter details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          {
+            operator: 'or',
+            conditions: [
+              { field: 'selfPayingExpenses', value: 'yes' },
+              { field: 'expensePayer', value: 'employer' },
+              { field: 'expensePayer', value: 'school' },
+              { field: 'expensePayer', value: 'government' },
+              { field: 'expensePayer', value: 'religious_body' }
+            ]
+          },
+          { field: 'meansOfSubsistence', value: 'other' }
+        ]
+      }
     },
     // {
     //   id: 'expensePayerIncomeSourceOther',
@@ -4458,83 +4592,83 @@ export const FRANCE: VisaForm = {
         ]
       }
     },
-    {
-      id: 'spouseHasIndependentIncome',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Does your spouse have his/her independent income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', value: 'married' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' }
-        ]
-      },
-      options: INCOME_SOURCE_OPTIONS
-    },
-    {
-      id: 'spouseIncomeSourceOther',
-      group: 'finances' as FormGroup,
-      type: 'text',
-      label: "Please specify your spouse's source of income",
-      required: false,
-      placeholder: 'Enter income source details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' },
-          { field: 'spouseIncomeSource', value: 'other' }
-        ]
-      }
-    },
-    {
-      id: 'spouseHasAdditionalIncome',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Does your spouse have additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' }
-        ]
-      },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseAdditionalIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' },
-          { field: 'spouseHasAdditionalIncome', value: 'yes' }
-        ]
-      },
-      options: INCOME_SOURCE_OPTIONS
-    },
+    // {
+    //   id: 'spouseHasIndependentIncome',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse have his/her independent income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', value: 'married' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
+    // {
+    //   id: 'spouseIncomeSourceOther',
+    //   group: 'finances' as FormGroup,
+    //   type: 'text',
+    //   label: "Please specify your spouse's source of income",
+    //   required: false,
+    //   placeholder: 'Enter income source details',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' },
+    //       { field: 'spouseIncomeSource', value: 'other' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'spouseHasAdditionalIncome',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse have additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseAdditionalIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' },
+    //       { field: 'spouseHasAdditionalIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
 
     // -------------------- RESIDENCE INFORMATION --------------------
     {
@@ -4731,11 +4865,24 @@ export const FRANCE: VisaForm = {
         'Any previous refusal of USA, refused a visa or permit denied entry, figure print collected previously for the purpose of applying for Schengen visa, has the applicant ever had a visa for Australia or any other country refused or cancelled, have you ever been refused visa / permit, work, study for another country excluding New Zealand.'
       ]
     },
+    // {
+    //   id: 'hasAppliedForVisa',
+    //   group: 'visa_history' as FormGroup,
+    //   type: 'select',
+    //   label: `Did you ever file visa application for any country? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+
+    // // Replace the hasAppliedForVisa field with this:
     {
-      id: 'hasAppliedForVisa',
+      id: 'hasRecentSchengenVisa',
       group: 'visa_history' as FormGroup,
       type: 'select',
-      label: `Did you ever file visa application for any country? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      label: `Have you received a Schengen visa within the last 59 months? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       options: [
         { label: 'Yes', value: 'yes' },
@@ -4743,28 +4890,53 @@ export const FRANCE: VisaForm = {
       ]
     },
     {
-      id: 'hasVisaRefusal',
+      id: 'schengenVisaValidFrom',
+      group: 'visa_history' as FormGroup,
+      type: 'date',
+      label: `Valid From ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'hasRecentSchengenVisa', value: 'yes' }
+    },
+    {
+      id: 'schengenVisaValidTo',
+      group: 'visa_history' as FormGroup,
+      type: 'date',
+      label: `Valid To ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'hasRecentSchengenVisa', value: 'yes' }
+    },
+    {
+      id: 'hasSchengenFingerprints',
       group: 'visa_history' as FormGroup,
       type: 'select',
-      label: 'Was any of your visa application refused?',
+      label: 'Have your fingerprints been taken within the past 59 months for a Schengen visa?',
       required: true,
-      showIf: { field: 'hasAppliedForVisa', value: 'yes' },
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
       ]
-    },
-    {
-        id: 'hasSchengenFingerprints',
-        group: 'visa_history' as FormGroup,
-        type: 'select',
-        label: 'Have your fingerprints ever been collected previously for a Schengen visa application?',
-        required: true,
-        options: [
-          { label: 'Yes', value: 'yes' },
-          { label: 'No', value: 'no' }
-        ]
-      },      
+  },
+  {
+      id: 'schengenVisaNumber',
+      group: 'visa_history' as FormGroup,
+      type: 'text',
+      label: `Visa number ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter your visa number',
+      showIf: { field: 'hasSchengenFingerprints', value: 'yes' }
+  },  
+  {
+    id: 'hasVisaRefusal',
+    group: 'visa_history' as FormGroup,
+    type: 'select',
+    label: 'Was any of your visa application refused?',
+    required: true,
+    showIf: { field: 'hasRecentSchengenVisa', value: 'yes' },
+    options: [
+      { label: 'Yes', value: 'yes' },
+      { label: 'No', value: 'no' }
+    ]
+  },
     {
       id: 'refusalDetails',
       group: 'visa_history' as FormGroup,
@@ -4775,7 +4947,7 @@ export const FRANCE: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'hasAppliedForVisa', value: 'yes' },
+          { field: 'hasRecentSchengenVisa', value: 'yes' },
           { field: 'hasVisaRefusal', value: 'yes' }
         ]
       },

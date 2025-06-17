@@ -3131,7 +3131,7 @@ export const NEWZEALAND: VisaForm = {
     {
       id: 'dateOfSpouseDeath',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is the date of death of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3197,7 +3197,7 @@ export const NEWZEALAND: VisaForm = {
     {
       id: 'separatedMarriageDate',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3218,7 +3218,7 @@ export const NEWZEALAND: VisaForm = {
     {
       id: 'dateOfSeparation',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is the date of separation with your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3239,7 +3239,7 @@ export const NEWZEALAND: VisaForm = {
     {
       id: 'separatedSpouseDob',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {

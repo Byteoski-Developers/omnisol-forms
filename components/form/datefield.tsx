@@ -106,8 +106,8 @@ const DateField: React.FC<DateFieldProps> = ({ field, formData, handleFieldChang
                   <SelectValue placeholder="Year" />
                 </SelectTrigger>
                 <SelectContent className="max-h-[200px] overflow-auto z-50">
-                  {Array.from({ length: 2090 - 1945 + 1 }, (_, i) => {
-                    const year = 1945 + i;
+                  {Array.from({ length: 2200 - 1900 + 1 }, (_, i) => {
+                    const year = 1900 + i;
                     return (
                       <SelectItem key={year} value={year.toString()}>
                         {year}

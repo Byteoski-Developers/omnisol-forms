@@ -3001,7 +3001,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'divorceMarriageDate',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3022,7 +3022,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'divorceDissolutionDate',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is the date of dissolution of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3043,7 +3043,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'exSpouseDob',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3088,7 +3088,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'widowedMarriageDate',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3131,7 +3131,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'dateOfSpouseDeath',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is the date of death of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3152,7 +3152,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'deceasedSpouseDob',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is date of birth of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3197,7 +3197,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'separatedMarriageDate',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3218,7 +3218,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'dateOfSeparation',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is the date of separation with your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -3239,7 +3239,7 @@ export const AUSTRALIA: VisaForm = {
     {
       id: 'separatedSpouseDob',
       group: 'personal' as FormGroup,
-      type: 'date',
+      type: 'DateofBirth',
       label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {

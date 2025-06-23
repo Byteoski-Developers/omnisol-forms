@@ -95,7 +95,7 @@ export interface Document {
 
 export interface FormField {
   id: string;
-  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary' | 'siblingsInput' | 'parentsInput' | 'countriesInput' | 'accessingBodyAssessment' | 'socialHandles' | 'last10YearActivity' | 'languageTest' | 'multiselect' | 'checkbox-multiselect' | 'DateofBirth' | 'custom' | 'ChildrenInputFieldUSA';
+  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary' | 'siblingsInput' | 'parentsInput' | 'countriesInput' | 'accessingBodyAssessment' | 'socialHandles' | 'last10YearActivity' | 'languageTest' | 'multiselect' | 'checkbox-multiselect' | 'DateofBirth' | 'custom' | 'ChildrenInputFieldUSA' | 'childrenInput' | 'spouseDetails' | 'SingleapplicantFamily' | 'refusalInput' | 'ChildrenInputField';
   component?: string; // For custom component types
   content?: string[];
   label: string;
@@ -109,6 +109,7 @@ export interface FormField {
   showCategories?: boolean;
   maxHeight?: number;
   showInForm?: boolean; // Controls whether the field is displayed in the form UI
+  disableFutureDates?: boolean; // Controls whether future dates are disabled for date fields
   showIf?: {
     field: string;
     value?: string | boolean | number;

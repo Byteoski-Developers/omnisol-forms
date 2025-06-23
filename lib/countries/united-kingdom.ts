@@ -4091,13 +4091,8 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'DateofBirth',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'maritalStatus', not: 'single' }, 
-        ]
-      },
+      showIf: { field: 'maritalStatus', not: 'single' },
+      disableFutureDates: true
     },
     // {
     //   id: 'marriageDate',
@@ -4252,7 +4247,7 @@ export const UNITED_KINGDOM: VisaForm = {
     {
       id: 'dependentChildrenDetails',
       group: 'personal' as FormGroup,
-      type: 'custom',
+      type: 'childrenInput',
       component: 'ChildrenInputField',
       label: `Provide details of your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
@@ -4278,9 +4273,9 @@ export const UNITED_KINGDOM: VisaForm = {
     {
       id: 'dependentSupportDetails',
       group: 'personal' as FormGroup,
-      type: 'custom',
-      component: 'DependentSupportField',  // your custom component name
-      label: `Please provide details of all dependents ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      type: 'childrenInput',
+      component: 'ChildrenInputField',
+      label: `Give details of all your dependent children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
         operator: 'and',
@@ -6176,7 +6171,7 @@ export const UNITED_KINGDOM: VisaForm = {
     {
       id: 'refusalDetails',
       group: 'visa_history' as FormGroup,
-      type: 'custom',
+      type: 'refusalInput',
       component: 'RefusalInput',
       label: 'Provide details about your visa refusals',
       required: true,

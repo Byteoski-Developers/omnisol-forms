@@ -185,7 +185,7 @@ export function DateOfBirthField({
             showOutsideDays
             fixedWeeks
             modifiers={{
-              disabled: [] // Remove the disabled dates
+              disabled: (date: Date) => date > today // Disable future dates
             }}
             modifiersStyles={{
               selected: {

@@ -68,107 +68,104 @@
 //   }
 // ];
 
-
-
-
 import { Country } from "@/types/form";
 
 export const SAMPLE_COUNTRIES: Country[] = [
   {
-    code: 'generic',
-    name: 'generic',
-    flag: 'https://flagcdn.com/w80/au.png',
+    code: "AU",
+    name: "Australia",
+    flag: "https://flagcdn.com/w80/au.png",
   },
   {
-    code: 'uk',
-    name: 'United Kingdom',
-    flag: 'https://flagcdn.com/w80/gb.png',
+    code: "AZ",
+    name: "Azerbaijan",
+    flag: "https://flagcdn.com/w80/az.png",
   },
   {
-    code: 'fr',
-    name: 'France',
-    flag: 'https://flagcdn.com/w80/fr.png',
+    code: "ca",
+    name: "Canada",
+    flag: "https://flagcdn.com/w80/ca.png",
   },
   {
-    code: 'SG',
-    name: 'Singapore',
-    flag: 'https://flagcdn.com/w80/sg.png',
+    code: "CN",
+    name: "China",
+    flag: "https://flagcdn.com/w80/cn.png",
   },
   {
-    code: 'ca',
-    name: 'Canada',
-    flag: 'https://flagcdn.com/w80/ca.png',
+    code: "fr",
+    name: "France",
+    flag: "https://flagcdn.com/w80/fr.png",
   },
   {
-    code: 'usa',
-    name: 'United States',
-    flag: 'https://flagcdn.com/w80/us.png',
+    code: "generic",
+    name: "generic",
+    flag: "https://flagcdn.com/w80/au.png",
   },
   {
-    code: 'TR',
-    name: 'Turkey',
-    flag: 'https://flagcdn.com/w80/tr.png',
+    code: "GE",
+    name: "Georgia",
+    flag: "https://flagcdn.com/w80/ge.png",
   },
   {
-    code: 'JP',
-    name: 'Japan',
-    flag: 'https://flagcdn.com/w80/jp.png',
+    code: "ID",
+    name: "Indonesia",
+    flag: "https://flagcdn.com/w80/id.png",
   },
   {
-    code: 'AZ',
-    name: 'Azerbaijan',
-    flag: 'https://flagcdn.com/w80/az.png',
+    code: "JP",
+    name: "Japan",
+    flag: "https://flagcdn.com/w80/jp.png",
   },
   {
-    code: 'AU',
-    name: 'Australia',
-    flag: 'https://flagcdn.com/w80/au.png',
+    code: "KZ",
+    name: "Kazakhstan",
+    flag: "https://flagcdn.com/w80/kz.png",
   },
   {
-    code: 'NZ',
-    name: 'New Zealand',
-    flag: 'https://flagcdn.com/w80/nz.png',
-  },
-  
-  {
-    code: 'GE',
-    name: 'Georgia',
-    flag: 'https://flagcdn.com/w80/ge.png',
+    code: "MY",
+    name: "Malaysia",
+    flag: "https://flagcdn.com/w80/my.png",
   },
   {
-    code: 'KZ',
-    name: 'Kazakhstan',
-    flag: 'https://flagcdn.com/w80/kz.png',
+    code: "NZ",
+    name: "New Zealand",
+    flag: "https://flagcdn.com/w80/nz.png",
   },
   {
-    code: 'AE',
-    name: 'United Arab Emirates',
-    flag: 'https://flagcdn.com/w80/ae.png',
+    code: "SG",
+    name: "Singapore",
+    flag: "https://flagcdn.com/w80/sg.png",
   },
   {
-    code: 'ID',
-    name: 'Indonesia',
-    flag: 'https://flagcdn.com/w80/id.png',
+    code: "LK",
+    name: "Sri Lanka",
+    flag: "https://flagcdn.com/w80/lk.png",
   },
   {
-    code: 'CN',
-    name: 'China',
-    flag: 'https://flagcdn.com/w80/cn.png',
+    code: "TR",
+    name: "Turkey",
+    flag: "https://flagcdn.com/w80/tr.png",
   },
   {
-    code: 'VN',
-    name: 'Vietnam',
-    flag: 'https://flagcdn.com/w80/vn.png',
+    code: "uk",
+    name: "United Kingdom",
+    flag: "https://flagcdn.com/w80/gb.png",
   },
   {
-    code: 'MY',
-    name: 'Malaysia',
-    flag: 'https://flagcdn.com/w80/my.png',
+    code: "AE",
+    name: "United Arab Emirates",
+    flag: "https://flagcdn.com/w80/ae.png",
   },
+
   {
-    code: 'LK',
-    name: 'Sri Lanka',
-    flag: 'https://flagcdn.com/w80/lk.png',
+    code: "usa",
+    name: "United States",
+    flag: "https://flagcdn.com/w80/us.png",
   },
-  
+
+  {
+    code: "VN",
+    name: "Vietnam",
+    flag: "https://flagcdn.com/w80/vn.png",
+  },
 ];

@@ -3976,37 +3976,6 @@ export const UNITED_KINGDOM: VisaForm = {
         ]
       }
     },
-    // {
-    //   id: 'onshoreServiceTypeOther',
-    //   group: 'citizenship' as FormGroup,
-    //   type: 'text',
-    //   label: 'Please specify the onshore service you need',
-    //   required: true,
-    //   placeholder: 'Enter service details',
-    //   showIf: { 
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'livesInCitizenshipCountry', value: 'no' },
-    //       { field: 'needsOnshoreServices', value: 'yes' },
-    //       { field: 'onshoreServiceType', value: 'other' }
-    //     ]
-    //   }
-    // },
-    // {
-    //   id: 'applicationCountry',
-    //   group: 'citizenship' as FormGroup,
-    //   type: 'select',
-    //   label: 'Which country you want to apply for?',
-    //   required: true,
-    //   showIf: {
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'livesInCitizenshipCountry', value: 'no' },
-    //       { field: 'needsOnshoreServices', value: 'no' }
-    //     ]
-    //   },
-    //   options: COUNTRIES
-    // },
 
     // -------------------- PERSONAL INFORMATION (MARITAL STATUS) --------------------
     {
@@ -4025,33 +3994,6 @@ export const UNITED_KINGDOM: VisaForm = {
     },
 
     // For married applicants
-    // {
-    //   id: 'spouseNameOnPassport',
-    //   group: 'personal' as FormGroup,
-    //   type: 'select',
-    //   label: `Is your spouse's name added on your passport? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: { field: 'maritalStatus', not: 'single' },
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-    // {
-    //   id: 'spouseName',
-    //   group: 'personal' as FormGroup,
-    //   type: 'textarea',
-    //   label: `What is name of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   placeholder: 'Enter spouse name',
-    //   showIf: {
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'maritalStatus', value: 'married' },
-    //       { field: 'spouseNameOnPassport', value: 'no' }
-    //     ]
-    //   }
-    // },
     {
       id: 'spouseLivesWithYou',
       group: 'personal' as FormGroup,
@@ -4094,26 +4036,6 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: { field: 'maritalStatus', not: 'single' },
       disableFutureDates: true
     },
-    // {
-    //   id: 'marriageDate',
-    //   group: 'personal' as FormGroup,
-    //   type: 'date',
-    //   label: `What is date of marriage? ${FIELD_REQUIREMENTS.MANDATORY}`,
-    //   required: true,
-    //   showIf: { field: 'maritalStatus', not: 'single' }
-    // },
-    // {
-    //   id: 'isFirstMarriage',
-    //   group: 'personal' as FormGroup,
-    //   type: 'select',
-    //   label: `Is this your first marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: { field: 'maritalStatus', not: 'single' },
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
     {
       id: 'previousRelationshipEnd',
       group: 'personal' as FormGroup,
@@ -4165,35 +4087,9 @@ export const UNITED_KINGDOM: VisaForm = {
       id: 'familyDetailsHeader',
       group: 'personal' as FormGroup,
       type: 'header',
+      showIf: { field: 'maritalStatus', not: 'single' },
       label: 'Family details'
     },
-    // {
-    //   id: 'hasChildren',
-    //   group: 'personal' as FormGroup,
-    //   type: 'select',
-    //   label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: { field: 'maritalStatus', not: 'single' },
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-    // {
-    //   id: 'childrenDetails',
-    //   group: 'personal' as FormGroup,
-    //   type: 'custom',
-    //   component: 'ChildrenInputField',
-    //   label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: {
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'maritalStatus', not: 'single' },
-    //       { field: 'hasChildren', value: 'yes' }
-    //     ]
-    //   }
-    // },
     {
       id: 'hasFinancialDependents',
       group: 'personal' as FormGroup,

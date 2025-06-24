@@ -4117,7 +4117,7 @@ export const UNITED_KINGDOM: VisaForm = {
     {
       id: 'dependentChildrenDetails1',
       group: 'personal' as FormGroup,
-      type: 'custom',
+      type: 'childrenInput',
       component: 'ChildrenInputField',
       label: `Provide details of your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
@@ -5893,7 +5893,6 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'text',
       label: `For how long you have been living at this address? (Months) and (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
-      placeholder: 'Enter number of months'
     },
     {
       id: 'propertyOwnership',

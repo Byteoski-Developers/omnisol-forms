@@ -36,19 +36,20 @@ export function DateOfBirthField({
     value ? new Date(value) : undefined
   );
   const [month, setMonth] = React.useState<Date>(selectedDate || new Date());
-  const [dateError, setDateError] = React.useState<string>('');
 
   // Get today's date at midnight to prevent timezone issues
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  // Get current year and month for limiting selectors
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
 
   React.useEffect(() => {
     if (value) {
       const date = new Date(value);
       setSelectedDate(date);
       setMonth(date);
-      // Clear any previous error when value changes externally
-      setDateError('');
     }
   }, [value]);
 
@@ -61,24 +62,18 @@ export function DateOfBirthField({
       // Update the selected date regardless of validation
       setSelectedDate(fixedDate);
       
-      // Check if date is in the future
-      if (fixedDate > today) {
-        setDateError('These Dates cannot be in the future');
-      } else {
-        // Only update the form value if it's a valid date
-        setDateError('');
-        onChange(fixedDate.toISOString());
-      }
+      // Only update the form value if it's a valid date
+      onChange(fixedDate.toISOString());
       
       // Close the popover after selection
       setIsOpen(false);
     }
   };
 
-  // Generate years from 1945 to 2090
-  const years = Array.from({ length: 2200 - 1900 + 1 }, (_, i) => 1900 + i);
+  // Generate years from 1900 to current year
+  const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => 1900 + i).reverse();
   
-  // Generate months
+  // Generate months (all months if selected year is not current year, or only past months if it is current year)
   const months = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -87,11 +82,23 @@ export function DateOfBirthField({
   const handleYearChange = (yearStr: string) => {
     const newYear = parseInt(yearStr);
     const newDate = new Date(month);
+    
+    // If switching to current year, ensure month is not in the future
+    if (newYear === currentYear && newDate.getMonth() > currentMonth) {
+      newDate.setMonth(currentMonth);
+    }
+    
     newDate.setFullYear(newYear);
     setMonth(newDate);
 
     if (selectedDate) {
       const updatedDate = new Date(selectedDate);
+      
+      // Same check for selected date
+      if (newYear === currentYear && updatedDate.getMonth() > currentMonth) {
+        updatedDate.setMonth(currentMonth);
+      }
+      
       updatedDate.setFullYear(newYear);
       setSelectedDate(updatedDate);
       onChange(updatedDate.toISOString());
@@ -101,6 +108,12 @@ export function DateOfBirthField({
   const handleMonthChange = (monthStr: string) => {
     const newMonthIndex = parseInt(monthStr);
     const newDate = new Date(month);
+    
+    // Prevent selecting future months in current year
+    if (newDate.getFullYear() === currentYear && newMonthIndex > currentMonth) {
+      return;
+    }
+    
     newDate.setMonth(newMonthIndex);
     setMonth(newDate);
 
@@ -167,7 +180,11 @@ export function DateOfBirthField({
               </SelectTrigger>
               <SelectContent>
                 {months.map((monthName, index) => (
-                  <SelectItem key={monthName} value={index.toString()}>
+                  <SelectItem 
+                    key={monthName} 
+                    value={index.toString()}
+                    disabled={month.getFullYear() === currentYear && index > currentMonth}
+                  >
                     {monthName}
                   </SelectItem>
                 ))}
@@ -192,6 +209,13 @@ export function DateOfBirthField({
                 backgroundColor: "black",
                 color: "white",
                 fontWeight: "bold"
+              },
+              disabled: {
+                color: "#ccc",
+                backgroundColor: "#f5f5f5",
+                cursor: "not-allowed",
+                opacity: 0.5,
+                textDecoration: "line-through"
               }
             }}
             styles={{
@@ -216,12 +240,6 @@ export function DateOfBirthField({
       </Popover>
       {field.description && (
         <p className="text-sm text-muted-foreground mt-1">{field.description}</p>
-      )}
-      {error && (
-        <p className="text-sm text-destructive mt-1">{error}</p>
-      )}
-      {dateError && (
-        <p className="text-sm text-destructive mt-1">{dateError}</p>
       )}
     </div>
   );

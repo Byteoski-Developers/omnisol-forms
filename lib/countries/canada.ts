@@ -3871,12 +3871,18 @@ export const CANADA: VisaForm = {
       showDocuments: false,
       slug: 'visa-history'
     },
-    // {
-    //   title: 'Education',
-    //   group: 'education' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'education'
-    // },
+    {
+      title: 'Education',
+      group: 'education' as FormGroup,
+      showDocuments: false,
+      slug: 'education'
+    },
+    {
+      title: 'Employment History',
+      group: 'employment' as FormGroup,
+      showDocuments: false,
+      slug: 'employment-history'
+    },
     {
       title: 'Travel Plans',
       group: 'travel_plans' as FormGroup,
@@ -3894,6 +3900,12 @@ export const CANADA: VisaForm = {
       group: 'criminal' as FormGroup,
       showDocuments: false,
       slug: 'health-legal-security-details'
+    },
+    {
+      title: 'Military/Police',
+      group: 'military' as FormGroup,
+      showDocuments: false,
+      slug: 'military-service'
     },
     {
       title: 'Contact Preferences',
@@ -6105,39 +6117,6 @@ export const CANADA: VisaForm = {
       showIf: { field: 'hasAlternateAddress', value: 'yes' }
     },
     {
-      id: 'addressDurationMonths',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: `For how long you have been living at this address? (Months) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter number of months'
-    },
-    {
-      id: 'addressDurationYears',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: `For how long you have been living at this address? (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter number of years'
-    },
-    {
-      id: 'propertyOwnership',
-      group: 'residence' as FormGroup,
-      type: 'select',
-      label: `Who owns this property? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
-      options: PROPERTY_OWNERSHIP_OPTIONS
-    },
-    {
-      id: 'propertyOwnershipOther',
-      group: 'residence' as FormGroup,
-      type: 'text',
-      label: 'Please specify who owns the property',
-      required: false,
-      placeholder: 'Enter property ownership details',
-      showIf: { field: 'propertyOwnership', value: 'other' }
-    },
-    {
       id: 'worksFromHome',
       group: 'residence' as FormGroup,
       type: 'select',
@@ -6612,12 +6591,22 @@ export const CANADA: VisaForm = {
       showIf: { field: 'needAdditionalContact', value: 'yes' },
       placeholder: 'Enter your additional phone number'
     },
-    // {
-    //   id: 'educationHeader',
-    //   group: 'education' as FormGroup,
-    //   type: 'header',
-    //   label: 'Education History'
-    // },
+    {
+      id: 'educationDescription',
+      group: 'education' as FormGroup,
+      type: 'info',
+      label: 'Education Information',
+      content: [
+        'Please provide information about your education history '
+      ]
+    },
+    {
+      id: 'educationHistory',
+      group: 'education' as FormGroup,
+      type: 'educationHistory',
+      label: 'Education History',
+      required: true,
+    },
     // {
     //   id: 'educationDescription',
     //   group: 'education' as FormGroup,
@@ -6641,7 +6630,6 @@ export const CANADA: VisaForm = {
     //   type: 'textarea',
     //   label: 'Accessing Body Assessment',
     //   required: false,
-    //   description: 'If you have had your qualifications assessed by an accessing body, please provide the details below.'
     // },
     // {
     //   id: 'fieldOfStudy',
@@ -6651,29 +6639,22 @@ export const CANADA: VisaForm = {
     //   required: false,
     //   options: EDUCATION_FIELD_OPTIONS
     // },
-    // // {
-    // //   id: 'last10YearActivityHeader',
-    // //   group: 'education' as FormGroup,
-    // //   type: 'header',
-    // //   label: 'Last 10 Years Activity'
-    // // },
-    // {
-    //   id: 'last10YearActivityDescription',
-    //   group: 'education' as FormGroup,
-    //   type: 'info',
-    //   label: 'Last 10 Years Activity Information',
-    //   content: [
-    //     'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
-    //   ]
-    // },
-    // // {
-    // //   id: 'last10YearActivity',
-    // //   group: 'education' as FormGroup,
-    // //   type: 'textarea',
-    // //   label: 'Description',
-    // //   required: true,
-    // //   description: 'Please provide details of all your activities in the last 10 years including education, employment, and any periods of unemployment.'
-    // // }
+    {
+      id: 'employmentDescription',
+      group: 'employment' as FormGroup,
+      type: 'info',
+      label: 'Employment Information',
+      content: [
+        'Please provide information about your employment history for the past 10 years. Include all full-time and part-time positions.'
+      ]
+    },
+    {
+      id: 'employmentHistory',
+      group: 'employment' as FormGroup,
+      type: 'employmentHistory',
+      label: 'Employment History',
+      required: true,
+    },
  // Health, Legal, and Security Details
 {
   id: 'healthLegalSecurityHeader',
@@ -6718,6 +6699,41 @@ export const CANADA: VisaForm = {
   label: `If yes, please provide relevant details: ${FIELD_REQUIREMENTS.MANDATORY}`,
   required: true,
   showIf: { field: 'criminalSecurityHistory', value: 'yes' }
+},
+// Military/Police History
+{
+  id: 'militaryPoliceHeader',
+  group: 'military' as FormGroup,
+  type: 'header',
+  label: 'Military/Police History'
+},
+{
+  id: 'militaryPoliceDescription',
+  group: 'military' as FormGroup,
+  type: 'info',
+  label: 'Military/Police Service Information',
+  content: [
+    'Please provide information about any military, militia, civil defence unit, security organization or police force service (including non-obligatory service, reserve or voluntary units).'
+  ]
+},
+{
+  id: 'militaryPoliceQuestion',
+  group: 'military' as FormGroup,
+  type: 'select',
+  label: 'Did you serve in any military, militia, civil defence unit, security organization or police force (including non-obligatory service, reserve or voluntary units)?',
+  required: true,
+  options: [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' }
+  ]
+},
+{
+  id: 'militaryServiceHistory',
+  group: 'military' as FormGroup,
+  type: 'militaryHistory',
+  label: 'Military/Police Service Details',
+  required: true,
+  showIf: { field: 'militaryPoliceQuestion', value: 'yes' }
 },
   ]
 };

@@ -34,9 +34,9 @@ import { MultiSelect } from "./MultiSelect";
 import { CheckboxMultiSelect } from "./CheckboxMultiSelect";
 import DateField from "./datefield";
 import ChildrenInputFieldUSA from './ChildrenInputFieldUsa';
-
-
-
+import EducationHistory from './EducationHistory';
+import EmploymentHistory from './EmploymentHistory';
+import MilitaryHistory from './MilitaryHistory'; // Import the MilitaryHistory component
 
 interface DynamicFormProps {
     form: VisaForm & { showDocuments?: boolean };
@@ -551,6 +551,42 @@ export function DynamicForm({
                         <WorkExperience
                             onChange={(experiences) => handleFieldChange(field.id, experiences)}
                             value={formData[field.id]}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'educationHistory':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <EducationHistory
+                            onChange={(value, save) => handleFieldChange(field.id, value, save)}
+                            value={formData[field.id]}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'employmentHistory':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <EmploymentHistory
+                            onChange={(value, save) => handleFieldChange(field.id, value, save)}
+                            value={formData[field.id]}
+                            readonly={false}
                         />
                         {error && (
                             <div className="flex items-center gap-2 text-destructive mt-2">
@@ -1098,6 +1134,25 @@ export function DynamicForm({
                         <ChildrenInputFieldUSA
                             inputValue={value}
                             handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            case 'militaryHistory':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <MilitaryHistory
+                            value={formData[field.id] || ""}
+                            onChange={(val, save) => handleFieldChange(field.id, val, save)}
                             readonly={false}
                         />
                         {error && (

@@ -55,7 +55,8 @@ export const MARITAL_STATUS_OPTIONS = [
 // Relation options
 export const RELATION_OPTIONS = [
   { label: 'Child', value: 'child' },
-  { label: 'Sibling', value: 'sibling' },
+  { label: 'Brother', value: 'brother' },
+  { label: 'Sister', value: 'sister' },
   { label: 'Partner', value: 'partner' },
   { label: 'Parent', value: 'parent' },
   { label: 'Uncle/Aunt', value: 'uncle_aunt' },

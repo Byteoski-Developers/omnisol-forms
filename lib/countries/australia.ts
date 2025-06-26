@@ -3814,24 +3814,24 @@ export const AUSTRALIA: VisaForm = {
     //   showDocuments: false,
     //   slug: 'family-information'
     // },
-    {
-      title: 'Parents Information',
-      group: 'parents' as FormGroup,
-      showDocuments: false,
-      slug: 'parents-information'
-    },
+    // {
+    //   title: 'Parents Information',
+    //   group: 'parents' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'parents-information'
+    // },
     {
       title: 'Visa History',
       group: 'visa_history' as FormGroup,
       showDocuments: false,
       slug: 'visa-history'
     },
-    {
-      title: 'Education',
-      group: 'education' as FormGroup,
-      showDocuments: false,
-      slug: 'education'
-    },
+    // {
+    //   title: 'Education',
+    //   group: 'education' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'education'
+    // },
     {
       title: 'Travel Plans',
       group: 'travel_plans' as FormGroup,
@@ -4046,100 +4046,6 @@ export const AUSTRALIA: VisaForm = {
     },
 
     // For married applicants
-    {
-      id: 'spouseNameOnPassport',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Is your spouse's name added on your passport? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseName',
-      group: 'personal' as FormGroup,
-      type: 'textarea',
-      label: `What is name of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter spouse name',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseNameOnPassport', value: 'no' }
-        ]
-      }
-    },
-    {
-      id: 'spouseLivesWithYou',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Does your spouse live with you? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseResidenceLocation',
-      group: 'personal' as FormGroup,
-      type: 'text',
-      label: `Where does your spouse live? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
-      placeholder: 'Enter spouse residence location',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseLivesWithYou', value: 'no' }
-        ]
-      }
-    },
-    {
-      id: 'spouseDob',
-      group: 'personal' as FormGroup,
-      type: 'DateofBirth',
-      label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      disableFutureDates: true 
-    },
-    {
-      id: 'isFirstMarriage',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Is this your first marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'previousRelationshipEnd',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `How did your previous relationship end? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'isFirstMarriage', value: 'no' }
-        ]
-      },
-      options: [
-        { label: 'Divorce', value: 'divorce' },
-        { label: 'Separation', value: 'separation' },
-        { label: 'Death of partner', value: 'death' }
-      ]
-    },
 
     // For divorced applicants
     {
@@ -4184,49 +4090,7 @@ export const AUSTRALIA: VisaForm = {
         ]
       }
     },
-    {
-      id: 'exSpouseDob',
-      group: 'personal' as FormGroup,
-      type: 'DateofBirth',
-      label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'divorced' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'divorce' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'exSpouseName',
-      group: 'personal' as FormGroup,
-      type: 'text',
-      label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter ex-spouse name',
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'divorced' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'divorce' }
-            ]
-          }
-        ]
-      }
-    },
+   
 
     // For widowed applicants
     {
@@ -4267,157 +4131,6 @@ export const AUSTRALIA: VisaForm = {
               { field: 'maritalStatus', value: 'married' },
               { field: 'isFirstMarriage', value: 'no' },
               { field: 'previousRelationshipEnd', value: 'death' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'dateOfSpouseDeath',
-      group: 'personal' as FormGroup,
-      type: 'DateofBirth',
-      label: `What is the date of death of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'widowed' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'death' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'deceasedSpouseDob',
-      group: 'personal' as FormGroup,
-      type: 'DateofBirth',
-      label: `What is date of birth of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'widowed' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'death' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'deceasedSpouseName',
-      group: 'personal' as FormGroup,
-      type: 'text',
-      label: `What is the name of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter deceased spouse name',
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'widowed' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'death' }
-            ]
-          }
-        ]
-      }
-    },
-
-    // For separated applicants
-    {
-      id: 'separatedMarriageDate',
-      group: 'personal' as FormGroup,
-      type: 'DateofBirth',
-      label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'separated' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'separation' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'dateOfSeparation',
-      group: 'personal' as FormGroup,
-      type: 'DateofBirth',
-      label: `What is the date of separation with your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'separated' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'separation' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'separatedSpouseDob',
-      group: 'personal' as FormGroup,
-      type: 'DateofBirth',
-      label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'separated' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'separation' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: 'separatedSpouseName',
-      group: 'personal' as FormGroup,
-      type: 'text',
-      label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter ex-spouse name',
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'maritalStatus', value: 'separated' },
-          {
-            operator: 'and',
-            conditions: [
-              { field: 'maritalStatus', value: 'married' },
-              { field: 'isFirstMarriage', value: 'no' },
-              { field: 'previousRelationshipEnd', value: 'separation' }
             ]
           }
         ]
@@ -4734,6 +4447,50 @@ export const AUSTRALIA: VisaForm = {
           { field: 'inviterImmigrationStatus', value: 'other' }
         ]
       }
+    },
+    {
+      id: 'inviterFullName',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Full Name of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter full name of the inviter',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterDateOfBirth',
+      group: 'purpose' as FormGroup,
+      type: 'DateofBirth',
+      label: `Date of Birth of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterAddress',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: `Complete Address of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter complete address of the inviter',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterPhoneNumber',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Phone Number of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter phone number of the inviter',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterEmail',
+      group: 'purpose' as FormGroup,
+      type: 'email',
+      label: `Email ID of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter email address of the inviter',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
     },
     // {
     //   id: 'inviterContactDetails',

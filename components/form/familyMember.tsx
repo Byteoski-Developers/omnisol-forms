@@ -62,10 +62,6 @@ export default function FamilyMember({
     handleChange(updatedSibling);
   };
 
-  // Check if address field should be emphasized
-  // For married siblings 
-  const isMarried = localSibling.martialStatus === 'married';
-
   return (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -133,6 +129,7 @@ export default function FamilyMember({
           </Select>
         </div>
 
+
         {countryOfBirthRequired && (
           <div className="space-y-2">
             <label className="text-sm font-medium">Country of Birth</label>
@@ -154,6 +151,8 @@ export default function FamilyMember({
             </Select>
           </div>
         )}
+        
+        
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Coming Along?</label>
@@ -172,8 +171,7 @@ export default function FamilyMember({
           </Select>
         </div>
 
-        {/* Occupation field */}
-        {isMarried && (
+        {/* Occupation field - shown for all marital statuses */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Occupation</label>
           <Input
@@ -183,24 +181,69 @@ export default function FamilyMember({
             placeholder="Current occupation"
           />
         </div>
-         )}
 
-        {/* Current Address field - only shown for married siblings */}
-        {isMarried && (
-          <div className="space-y-2 md:col-span-2">
-            <label className="text-sm font-medium">
-              Current Address
-            </label>
-            <Input
-              value={localSibling.address || ''}
-              onChange={(e) => handleInputChange('address', e.target.value)}
+        {/* Current Address field - shown for all marital statuses */}
+        <div className="space-y-2 md:col-span-2">
+          <label className="text-sm font-medium">
+            Current Address
+          </label>
+          <Input
+            value={localSibling.address || ''}
+            onChange={(e) => handleInputChange('address', e.target.value)}
+            disabled={readonly}
+            placeholder="Current address"
+            className="border-primary focus:border-primary"
+          />
+        </div>
+      </div>
+      {/* Deceased Status field */}
+      <div className="space-y-2">
+          <label className="text-sm font-medium">Is Deceased?</label>
+          <Select
+            value={(localSibling.isDeceased === true) ? 'yes' : 'no'}
+            onValueChange={(value) => handleInputChange('isDeceased', value === 'yes')}
+            disabled={readonly}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select option" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="yes">Yes</SelectItem>
+              <SelectItem value="no">No</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Date of Death field - only shown for deceased family members */}
+        {localSibling.isDeceased === true && (
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Date of Death</label>
+            <DateOfBirthField
+              value={localSibling.dateOfDeath || ''}
+              onChange={(date) => handleInputChange('dateOfDeath', date)}
               disabled={readonly}
-              placeholder="Current address"
-              className="border-primary focus:border-primary"
+              field={{
+                id: `death-date-${localSibling.id || ''}`,
+                label: 'Date of Death',
+                required: false
+              }}
+              showLabel={false}
             />
           </div>
         )}
-      </div>
+
+        {/* Place of Death field - only shown for deceased family members */}
+        {localSibling.isDeceased === true && (
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Place of Death</label>
+            <Input
+              value={localSibling.placeOfDeath || ''}
+              onChange={(e) => handleInputChange('placeOfDeath', e.target.value)}
+              disabled={readonly}
+              placeholder="Enter place of death"
+            />
+          </div>
+        )}
 
       {!readonly && (
         <div className="flex justify-end">

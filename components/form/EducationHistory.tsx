@@ -14,6 +14,7 @@ interface IEducation {
   yearStart: string;
   yearEnd: string;
   qualification: string;
+  degreeName: string;
   completed: boolean;
 }
 
@@ -30,6 +31,7 @@ const emptyEducation: IEducation = {
   yearStart: "",
   yearEnd: "",
   qualification: "",
+  degreeName: "",
   completed: true
 };
 
@@ -214,6 +216,18 @@ export default function EducationHistory(props: IEducationHistoryProps) {
                   </SelectContent>
                 </Select>
               </div>
+
+              {edu.qualification && edu.qualification !== '' && (
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Course/Degree Name</label>
+                  <Input
+                    value={edu.degreeName || ''}
+                    onChange={(e) => handleFieldChange(index, 'degreeName', e.target.value)}
+                    disabled={readonly}
+                    placeholder="Enter your course/degree name"
+                  />
+                </div>
+              )}
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Completed</label>

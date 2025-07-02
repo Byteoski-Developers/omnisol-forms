@@ -4130,7 +4130,14 @@ export const CANADA: VisaForm = {
       type: 'select',
       label: `Does your spouse live with you? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', not: 'single' },
+          { field: 'maritalStatus', not: 'widowed' },
+          { field: 'maritalStatus', not: 'divorced' }
+        ]
+      },
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }

@@ -304,7 +304,7 @@ export const GENERIC_COUNTRY: VisaForm = {
     {
       id: 'salary_slip',
       name: 'Salary Slips',
-      description: 'Upload your latest salary slips',
+      description: 'Upload your latest salary slips (Minimum 3 months’ salary slips)',
       type: 'conditional',
       required: true,
       conditions: [{
@@ -2980,19 +2980,19 @@ export const GENERIC_COUNTRY: VisaForm = {
         value: 'business_partner'
       }]
     },
-    // {
-    //   id: 'partner_documents_partner',
-    //   name: 'Partner Documents (if applicable)',
-    //   description: 'Add the documents of your partner as applicable',
-    //   type: 'conditional',
-    //   required: true,
-    //   conditions: [
-    //     {
-    //     questionId: 'expensePayerOccupation',
-    //     value: 'business_partner',
-    //   }
-    //   ]
-    // },
+    {
+      id: 'partner_documents_partner',
+      name: 'Partner Documents (if applicable)',
+      description: 'Add the documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      conditions: [
+        {
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner',
+      }
+      ]
+    },
     {
       id: 'additional_documents_partner',
       name: 'Additional Documents (if applicable)',

@@ -4332,6 +4332,8 @@ export const UNITED_KINGDOM: VisaForm = {
     //   placeholder: 'Name, Address, Phone number, Email',
     //   showIf: { field: 'visitPurpose', value: 'visitation' }
     // },
+
+    
      // Sponsor Details Section for visiting family/friend
 
      {

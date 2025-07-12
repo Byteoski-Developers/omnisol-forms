@@ -3957,6 +3957,7 @@ export const CANADA: VisaForm = {
       group: 'citizenship' as FormGroup,
       type: 'text',
       label: `City or town where you were born? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter city or town where you were born',
       required: true,
     },
     {
@@ -3964,17 +3965,6 @@ export const CANADA: VisaForm = {
       group: 'citizenship' as FormGroup,
       type: 'select',
       label: `Do you live in the country of your citizenship? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'areYouACitizen',
-      group: 'citizenship' as FormGroup,
-      type: 'select',
-      label: `Are you a citizen of this country or territory since birth? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       options: [
         { label: 'Yes', value: 'yes' },
@@ -4066,22 +4056,17 @@ export const CANADA: VisaForm = {
         ]
       }
     },
-    // {
-    //   id: 'onshoreServiceTypeOther',
-    //   group: 'citizenship' as FormGroup,
-    //   type: 'text',
-    //   label: 'Please specify the onshore service you need',
-    //   required: true,
-    //   placeholder: 'Enter service details',
-    //   showIf: { 
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'livesInCitizenshipCountry', value: 'no' },
-    //       { field: 'needsOnshoreServices', value: 'yes' },
-    //       { field: 'onshoreServiceType', value: 'other' }
-    //     ]
-    //   }
-    // },
+    {
+      id: 'areYouACitizen',
+      group: 'citizenship' as FormGroup,
+      type: 'select',
+      label: `Are you a citizen of this country or territory since birth? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
     // {
     //   id: 'applicationCountry',
     //   group: 'citizenship' as FormGroup,
@@ -4103,7 +4088,7 @@ export const CANADA: VisaForm = {
       id: 'personalInfoHeader',
       group: 'personal' as FormGroup,
       type: 'header',
-      label: 'Martial Status'
+      label: 'Marital Status'
     },
     {
       id: 'maritalStatus',

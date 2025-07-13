@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { Fragment, useEffect, useState, useRef } from "react";
 import { UserPlus } from "lucide-react";
 import { Tab } from "@headlessui/react";
@@ -20,7 +20,7 @@ export default function SiblingTabs(props: ISiblingProps) {
 
   // Track if we're in the middle of a local update
   const isLocalUpdate = useRef(false);
-  
+
   useEffect(() => {
     // Only update from props when we're not in the middle of a local update
     if (!isLocalUpdate.current) {
@@ -51,7 +51,7 @@ export default function SiblingTabs(props: ISiblingProps) {
       dateOfBirth: "",
       address: "",
       occupation: "",
-      martialStatus: "",
+      maritalStatus: "",
       comingAlong: false,
       relation: "",
     };
@@ -60,14 +60,14 @@ export default function SiblingTabs(props: ISiblingProps) {
   function handleChange(updatedSibling: Sibling) {
     // Set the local update flag to prevent state resets
     isLocalUpdate.current = true;
-    
+
     const newData = siblingsData.map((sibling) =>
-      sibling.id === updatedSibling.id ? updatedSibling : sibling,
+      sibling.id === updatedSibling.id ? updatedSibling : sibling
     );
-    
+
     // Update local state first
     setSiblingsData(newData);
-    
+
     // Then propagate change to parent
     onChange(JSON.stringify(newData), true);
   }
@@ -75,7 +75,7 @@ export default function SiblingTabs(props: ISiblingProps) {
   function handleRemove(sibling: Sibling) {
     // Set the local update flag to prevent state resets
     isLocalUpdate.current = true;
-    
+
     const newData = siblingsData.filter((s) => s.id !== sibling.id);
     if (newData.length === 0) {
       newData.push(createNewSibling(1));
@@ -84,13 +84,13 @@ export default function SiblingTabs(props: ISiblingProps) {
         s.id = index + 1;
       });
     }
-    
+
     // Update local state
     setSiblingsData(newData);
-    
+
     // Propagate change to parent
     onChange(JSON.stringify(newData), true);
-    
+
     // Update selected index
     const newSelectedIndex = Math.min(selectedIndex, newData.length - 1);
     setSelectedIndex(newSelectedIndex);
@@ -99,17 +99,17 @@ export default function SiblingTabs(props: ISiblingProps) {
   function handleSiblingAdd() {
     // Set the local update flag to prevent state resets
     isLocalUpdate.current = true;
-    
+
     const newData = [
       ...siblingsData,
       createNewSibling(siblingsData.length + 1),
     ];
-    
+
     // Update local state
     console.log("New data:", newData);
     setSiblingsData(newData);
     setSelectedIndex(siblingsData.length);
-    
+
     // Propagate change to parent
     onChange(JSON.stringify(newData), true);
   }
@@ -138,8 +138,8 @@ export default function SiblingTabs(props: ISiblingProps) {
                       : "border-transparent text-gray-600 hover:bg-teal-50 hover:text-teal-600 dark:text-gray-300 dark:hover:bg-teal-500 dark:hover:bg-opacity-20 dark:hover:text-teal-100"
                   }`}
                 >
-                  <span className="overflow-hidden text-ellipsis whitespace-nowrap max-w-[80px]">
-                  # {s.id} Sibling {s.name}
+                  <span className="overflow-hidden text-ellipsis whitespace-nowrap max-w-[100px]">
+                    # {s.id} Sibling {s.name}
                   </span>
                   <span className="hidden sm:inline-block">{}</span>
                 </button>

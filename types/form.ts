@@ -1,74 +1,80 @@
-export type DocumentType = 'default' | 'conditional';
-export type ExtractSource = 'passport' | 'travel_document';
-export type FormGroup = 
-  | 'eligibility' 
-  | 'personal' 
-  | 'travel' 
-  | 'accommodation' 
-  | 'visa' 
-  | 'contact' 
-  | 'address' 
-  | 'documents' 
-  | 'family' 
-  | 'host'
-  | 'work'
-  | 'education'
-  | 'history'
-  | 'declaration'
-  | 'guarantor'
-  | 'inviter'
-  | 'criminal'
-  | 'travel_document'
-  | 'description_section'
-  | 'citizenship'
-  | 'national_id'
-  | 'past_names'
-  | 'application'
-  | 'medical'
-  | 'employment'
-  | 'education'
+import { Flag } from "lucide-react";
+
+export type DocumentType = "default" | "conditional";
+export type ExtractSource = "passport" | "travel_document";
+export type FormGroup =
+  | "eligibility"
+  | "personal"
+  | "travel"
+  | "accommodation"
+  | "visa"
+  | "contact"
+  | "address"
+  | "documents"
+  | "family"
+  | "host"
+  | "work"
+  | "education"
+  | "history"
+  | "declaration"
+  | "guarantor"
+  | "inviter"
+  | "criminal"
+  | "travel_document"
+  | "description_section"
+  | "citizenship"
+  | "national_id"
+  | "past_names"
+  | "application"
+  | "medical"
+  | "employment"
+  | "education"
   // Additional form groups for generic country form
-  | 'destination'
-  | 'citizenship'
-  | 'personal'
-  | 'purpose'
-  | 'finances'
-  | 'residence'
-  | 'passport'
-  | 'siblings'
-  | 'parents'
-  | 'education_history'
-  | 'work_history'
-  | 'visa_history'
-  | 'travel_plans'
-  | 'social_media'
-  | 'additional'
-  ;
+  | "destination"
+  | "citizenship"
+  | "personal"
+  | "purpose"
+  | "finances"
+  | "residence"
+  | "passport"
+  | "siblings"
+  | "parents"
+  | "education_history"
+  | "work_history"
+  | "visa_history"
+  | "travel_plans"
+  | "social_media"
+  | "additional";
 
 export interface FormStep {
   title: string;
   group: FormGroup;
   showDocuments: boolean;
   slug?: string; // Unique identifier for the step
-  showIf?: {
-    field: string;
-    value?: string | boolean | number;
-    not?: string | boolean | number;
-  } | {
-    operator: 'or' | 'and';
-    conditions: Array<{
-      field: string;
-      value?: string | boolean | number;
-      not?: string | boolean | number;
-    } | {
-      operator: 'or' | 'and';
-      conditions: Array<{
+  showIf?:
+    | {
         field: string;
         value?: string | boolean | number;
         not?: string | boolean | number;
-      }>;
-    }>;
-  };
+      }
+    | {
+        operator: "or" | "and";
+        conditions: Array<
+          | {
+              field: string;
+              value?: string | boolean | number;
+              not?: string | boolean | number;
+            }
+          | {
+              operator: "or" | "and";
+              conditions: Array<{
+                field: string;
+                value?: string | boolean | number;
+                not?: string | boolean | number;
+              }>;
+            }
+        >;
+      };
 }
 
 export interface Document {
@@ -89,7 +95,39 @@ export interface Document {
 
 export interface FormField {
   id: string;
-  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary' | 'siblingsInput' | 'parentsInput' | 'countriesInput' | 'accessingBodyAssessment' | 'socialHandles' | 'last10YearActivity' | 'languageTest' | 'multiselect' | 'checkbox-multiselect' | 'DateofBirth' | 'custom' | 'ChildrenInputFieldUSA' | 'childrenInput' | 'spouseDetails' | 'SingleapplicantFamily' | 'refusalInput' | 'ChildrenInputField';
+  type:
+    | "text"
+    | "select"
+    | "date"
+    | "number"
+    | "checkbox"
+    | "file"
+    | "header"
+    | "info"
+    | "residence_countries"
+    | "email"
+    | "tel"
+    | "textarea"
+    | "children"
+    | "work_experience"
+    | "travel_itinerary"
+    | "siblingsInput"
+    | "parentsInput"
+    | "countriesInput"
+    | "accessingBodyAssessment"
+    | "socialHandles"
+    | "last10YearActivity"
+    | "languageTest"
+    | "multiselect"
+    | "checkbox-multiselect"
+    | "DateofBirth"
+    | "custom"
+    | "ChildrenInputFieldUSA"
+    | "childrenInput"
+    | "spouseDetails"
+    | "SingleapplicantFamily"
+    | "refusalInput"
+    | "ChildrenInputField";
   component?: string; // For custom component types
   content?: string[];
   label: string;
@@ -104,26 +142,31 @@ export interface FormField {
   maxHeight?: number;
   showInForm?: boolean; // Controls whether the field is displayed in the form UI
   disableFutureDates?: boolean; // Controls whether future dates are disabled for date fields
-  showIf?: {
-    field: string;
-    value?: string | boolean | number;
-    not?: string | boolean | number;
-  } | {
-    operator: 'or' | 'and';
-    conditions: Array<{
-      field: string;
-      value?: string | boolean | number;
-      not?: string | boolean | number;
-    } | {
-      operator: 'or' | 'and';
-      conditions: Array<{
+  showIf?:
+    | {
         field: string;
         value?: string | boolean | number;
         not?: string | boolean | number;
-      }>;
-    }>;
-  };
-  options?: { label: string; value: string }[];
+      }
+    | {
+        operator: "or" | "and";
+        conditions: Array<
+          | {
+              field: string;
+              value?: string | boolean | number;
+              not?: string | boolean | number;
+            }
+          | {
+              operator: "or" | "and";
+              conditions: Array<{
+                field: string;
+                value?: string | boolean | number;
+                not?: string | boolean | number;
+              }>;
+            }
+        >;
+      };
+  options?: { label: string; flag: string; value: string }[];
   dependencies?: Array<{
     fieldId: string;
     value: string | boolean | number;
@@ -157,13 +200,13 @@ export interface VisaApplication {
   userId: string;
   countryCode: string;
   formId: string;
-  status: 'draft' | 'submitted' | 'processing' | 'approved' | 'rejected';
+  status: "draft" | "submitted" | "processing" | "approved" | "rejected";
   formData: Record<string, any>;
   documents: {
     documentId: string;
     fileUrl: string;
     uploadedAt: string;
-    status: 'pending' | 'approved' | 'rejected';
+    status: "pending" | "approved" | "rejected";
   }[];
   createdAt: string;
   updatedAt: string;

@@ -1,19 +1,16 @@
-
-
-
 export interface Sibling {
   id: number;
   name: string;
   dateOfBirth: string;
   address?: string;
   occupation?: string;
-  martialStatus: string;
+  maritalStatus: string;
   comingAlong: boolean;
   relation: string;
   countryOfBirth?: string;
 }
 
-export type RelativeSubclass = 'sibling' | 'parent' | 'relative';
+export type RelativeSubclass = "sibling" | "parent" | "relative";
 
 export interface Relative {
   id: number;

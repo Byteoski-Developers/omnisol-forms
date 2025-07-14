@@ -1,8 +1,8 @@
-'use client';
-import React from 'react';
-import { Label } from '@/components/ui/label';
-import { AlertCircle } from 'lucide-react';
-import MultiCountryDropdown from './MultiCountryDropdown';
+"use client";
+import React from "react";
+import { Label } from "@/components/ui/label";
+import { AlertCircle } from "lucide-react";
+import MultiCountryDropdown from "./MultiCountryDropdown";
 
 interface CountriesInputFieldProps {
   id: string;
@@ -21,7 +21,7 @@ export const CountriesInputField: React.FC<CountriesInputFieldProps> = ({
   onChange,
   error,
   required = false,
-  readonly = false
+  readonly = false,
 }) => {
   const handleChange = (newValue: any, save?: boolean) => {
     onChange(id, newValue);
@@ -31,13 +31,14 @@ export const CountriesInputField: React.FC<CountriesInputFieldProps> = ({
     <div className="space-y-2">
       <Label htmlFor={id}>
         {label}
-        {required && <span className="text-destructive ml-1">*</span>}
+        {required && <span className="text-destructive mb-4 ml-1">*</span>}
       </Label>
       <MultiCountryDropdown
-        value={value || '[]'}
+        value={value || "[]"}
         handleChange={handleChange}
         readonly={readonly}
       />
+
       {error && (
         <div className="flex items-center gap-2 text-destructive mt-2">
           <AlertCircle className="h-4 w-4" />

@@ -1,43 +1,55 @@
 "use client";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { Icon, Plus, Trash2 } from "lucide-react";
 import GenericButton from "../buttons/genericButton";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { COUNTRIES } from "@/lib/countries/constants/countries";
+import Image from "next/image";
+import { log } from "console";
 
 interface IMultiCountryDropdownProps {
   handleChange: (val: string, save?: boolean) => void;
   value: string;
+
   readonly?: boolean;
 }
 
 export default function MultiCountryDropdown(
-  props: IMultiCountryDropdownProps,
+  props: IMultiCountryDropdownProps
 ) {
   const { handleChange, value, readonly } = props;
   const [countries, setCountries] = useState<string[]>([]);
   const updateTimeoutRef = useRef<any>(null);
   const isLocalUpdate = useRef(false);
-  
+
   // Debounced update function to prevent too many form updates
-  const debouncedUpdate = useCallback((newCountries: string[]) => {
-    if (updateTimeoutRef.current) {
-      clearTimeout(updateTimeoutRef.current);
-    }
-    
-    // Set the local update flag to prevent state resets from props
-    isLocalUpdate.current = true;
-    
-    updateTimeoutRef.current = setTimeout(() => {
-      handleChange(JSON.stringify(newCountries), true);
-      updateTimeoutRef.current = null;
-    }, 300); // 300ms debounce
-  }, [handleChange]);
+  const debouncedUpdate = useCallback(
+    (newCountries: string[]) => {
+      if (updateTimeoutRef.current) {
+        clearTimeout(updateTimeoutRef.current);
+      }
+
+      // Set the local update flag to prevent state resets from props
+      isLocalUpdate.current = true;
+
+      updateTimeoutRef.current = setTimeout(() => {
+        handleChange(JSON.stringify(newCountries), true);
+        updateTimeoutRef.current = null;
+      }, 300); // 300ms debounce
+    },
+    [handleChange]
+  );
 
   const handleDropdownChange = (val: string, index: number) => {
     // Set the local update flag
     isLocalUpdate.current = true;
-    
+
     const newCountries = [...countries];
     newCountries[index] = val;
     setCountries(newCountries);
@@ -47,7 +59,7 @@ export default function MultiCountryDropdown(
   const addDropdown = () => {
     // Set the local update flag
     isLocalUpdate.current = true;
-    
+
     const newCountries = [...countries, ""];
     setCountries(newCountries);
     debouncedUpdate(newCountries);
@@ -79,7 +91,7 @@ export default function MultiCountryDropdown(
   const removeDropdown = (index: number) => {
     // Set the local update flag
     isLocalUpdate.current = true;
-    
+
     const newCountries = countries.filter((_, i) => i !== index);
     if (newCountries.length === 0) {
       newCountries.push("");
@@ -87,7 +99,7 @@ export default function MultiCountryDropdown(
     setCountries(newCountries);
     debouncedUpdate(newCountries);
   };
-  
+
   // Clean up timeout on unmount
   useEffect(() => {
     return () => {
@@ -111,10 +123,7 @@ export default function MultiCountryDropdown(
       </div>
       <div className="grid gap-3 py-3 px-3">
         {countries.map((country, index) => (
-          <div
-            key={index}
-            className="flex gap-2 items-center"
-          >
+          <div key={index} className="flex gap-2 items-center">
             <div className="w-full">
               <Select
                 value={country}
@@ -125,9 +134,11 @@ export default function MultiCountryDropdown(
                   <SelectValue placeholder="Select a country" />
                 </SelectTrigger>
                 <SelectContent>
-                  {COUNTRIES.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                  {COUNTRIES.map((country) => (
+                    <SelectItem key={country.value} value={country.value}>
+                      <div className="flex items-center gap-2">
+                        <span>{country.label}</span>
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>

@@ -1,13 +1,19 @@
-'use client';
-import React, { useState, useEffect, useRef } from 'react';
-import { Sibling } from './types';
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import { Sibling } from "./types";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from 'lucide-react';
-import { MARITAL_STATUS_OPTIONS } from '@/lib/countries/constants/form-labels';
-import { COUNTRIES } from '@/lib/countries/constants/countries';
-import { DateOfBirthField } from './DateOfBirthField';
+import { Trash2 } from "lucide-react";
+import { MARITAL_STATUS_OPTIONS } from "@/lib/countries/constants/form-labels";
+import { COUNTRIES } from "@/lib/countries/constants/countries";
+import { DateOfBirthField } from "./DateOfBirthField";
 
 interface FamilyMemberProps {
   sibling: Sibling;
@@ -24,16 +30,16 @@ export default function FamilyMember({
   handleRemove,
   relationOptions,
   countryOfBirthRequired = false,
-  readonly = false
+  readonly = false,
 }: FamilyMemberProps) {
   // Use state for rendering
   const [localSibling, setLocalSibling] = useState<Sibling>(sibling);
-  
+
   // Use a ref to track if we're in the middle of a local update
   const isLocalUpdate = useRef(false);
   // Track the latest local changes
   const latestSiblingRef = useRef<Sibling>(sibling);
-  
+
   // Only update from props when we're not in the middle of a local update
   useEffect(() => {
     if (!isLocalUpdate.current) {
@@ -43,28 +49,28 @@ export default function FamilyMember({
     // Reset the flag after the effect runs
     isLocalUpdate.current = false;
   }, [sibling]);
-  
+
   const handleInputChange = (field: keyof Sibling, value: any) => {
     // Set the local update flag
     isLocalUpdate.current = true;
-    
+
     // Create updated sibling
     const updatedSibling = {
       ...latestSiblingRef.current,
-      [field]: value
+      [field]: value,
     };
-    
+
     // Update refs and state
     latestSiblingRef.current = updatedSibling;
     setLocalSibling(updatedSibling);
-    
+
     // Propagate to parent
     handleChange(updatedSibling);
   };
 
   // Check if address field should be emphasized
-  // For married siblings 
-  const isMarried = localSibling.martialStatus === 'married';
+  // For married siblings
+  const isMarried = localSibling.maritalStatus === "married";
 
   return (
     <div className="space-y-4 p-4">
@@ -73,7 +79,7 @@ export default function FamilyMember({
           <label className="text-sm font-medium">Full Name</label>
           <Input
             value={localSibling.name}
-            onChange={(e) => handleInputChange('name', e.target.value)}
+            onChange={(e) => handleInputChange("name", e.target.value)}
             disabled={readonly}
             placeholder="Full name"
           />
@@ -83,12 +89,12 @@ export default function FamilyMember({
           <label className="text-sm font-medium">Date of Birth</label>
           <DateOfBirthField
             value={localSibling.dateOfBirth}
-            onChange={(date) => handleInputChange('dateOfBirth', date)}
+            onChange={(date) => handleInputChange("dateOfBirth", date)}
             disabled={readonly}
             field={{
               id: `dob-${sibling.id}`,
-              label: 'Date of Birth',
-              required: true
+              label: "Date of Birth",
+              required: true,
             }}
           />
         </div>
@@ -97,7 +103,7 @@ export default function FamilyMember({
           <label className="text-sm font-medium">Relationship</label>
           <Select
             value={localSibling.relation}
-            onValueChange={(value) => handleInputChange('relation', value)}
+            onValueChange={(value) => handleInputChange("relation", value)}
             disabled={readonly}
           >
             <SelectTrigger>
@@ -116,8 +122,8 @@ export default function FamilyMember({
         <div className="space-y-2">
           <label className="text-sm font-medium">Marital Status</label>
           <Select
-            value={localSibling.martialStatus}
-            onValueChange={(value) => handleInputChange('martialStatus', value)}
+            value={localSibling.maritalStatus}
+            onValueChange={(value) => handleInputChange("maritalStatus", value)}
             disabled={readonly}
           >
             <SelectTrigger>
@@ -138,7 +144,9 @@ export default function FamilyMember({
             <label className="text-sm font-medium">Country of Birth</label>
             <Select
               value={localSibling.countryOfBirth}
-              onValueChange={(value) => handleInputChange('countryOfBirth', value)}
+              onValueChange={(value) =>
+                handleInputChange("countryOfBirth", value)
+              }
               disabled={readonly}
             >
               <SelectTrigger>
@@ -158,8 +166,10 @@ export default function FamilyMember({
         <div className="space-y-2">
           <label className="text-sm font-medium">Coming Along?</label>
           <Select
-            value={localSibling.comingAlong ? 'yes' : 'no'}
-            onValueChange={(value) => handleInputChange('comingAlong', value === 'yes')}
+            value={localSibling.comingAlong ? "yes" : "no"}
+            onValueChange={(value) =>
+              handleInputChange("comingAlong", value === "yes")
+            }
             disabled={readonly}
           >
             <SelectTrigger>
@@ -174,26 +184,24 @@ export default function FamilyMember({
 
         {/* Occupation field */}
         {isMarried && (
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Occupation</label>
-          <Input
-            value={localSibling.occupation || ''}
-            onChange={(e) => handleInputChange('occupation', e.target.value)}
-            disabled={readonly}
-            placeholder="Current occupation"
-          />
-        </div>
-         )}
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Occupation</label>
+            <Input
+              value={localSibling.occupation || ""}
+              onChange={(e) => handleInputChange("occupation", e.target.value)}
+              disabled={readonly}
+              placeholder="Current occupation"
+            />
+          </div>
+        )}
 
         {/* Current Address field - only shown for married siblings */}
         {isMarried && (
           <div className="space-y-2 md:col-span-2">
-            <label className="text-sm font-medium">
-              Current Address
-            </label>
+            <label className="text-sm font-medium">Current Address</label>
             <Input
-              value={localSibling.address || ''}
-              onChange={(e) => handleInputChange('address', e.target.value)}
+              value={localSibling.address || ""}
+              onChange={(e) => handleInputChange("address", e.target.value)}
               disabled={readonly}
               placeholder="Current address"
               className="border-primary focus:border-primary"
@@ -204,8 +212,8 @@ export default function FamilyMember({
 
       {!readonly && (
         <div className="flex justify-end">
-          <Button 
-            variant="destructive" 
+          <Button
+            variant="destructive"
             onClick={() => handleRemove(localSibling)}
             type="button"
           >

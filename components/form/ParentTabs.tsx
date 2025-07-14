@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { Fragment, useEffect, useState, useRef } from "react";
 import { UserPlus } from "lucide-react";
 import { Tab } from "@headlessui/react";
@@ -7,11 +7,11 @@ import FamilyMember from "./familyMember";
 import GenericButton from "../buttons/genericButton";
 
 const PARENTS = [
-  { label: 'Father', value: 'father' },
-  { label: 'Mother', value: 'mother' },
-  { label: 'Step-Father', value: 'step-father' },
-  { label: 'Step-Mother', value: 'step-mother' },
-  { label: 'Guardian', value: 'guardian' }
+  { label: "Father", value: "father" },
+  { label: "Mother", value: "mother" },
+  { label: "Step-Father", value: "step-father" },
+  { label: "Step-Mother", value: "step-mother" },
+  { label: "Guardian", value: "guardian" },
 ];
 
 interface IParentProps {
@@ -27,7 +27,7 @@ export default function ParentTabs(props: IParentProps) {
 
   // Track if we're in the middle of a local update
   const isLocalUpdate = useRef(false);
-  
+
   useEffect(() => {
     // Only update from props when we're not in the middle of a local update
     if (!isLocalUpdate.current) {
@@ -56,9 +56,9 @@ export default function ParentTabs(props: IParentProps) {
       id,
       name: "",
       dateOfBirth: "",
-    //   address: "",
-    //   occupation: "",
-      martialStatus: "",
+      //   address: "",
+      //   occupation: "",
+      maritalStatus: "",
       comingAlong: false,
       relation: "",
       countryOfBirth: "",
@@ -68,14 +68,14 @@ export default function ParentTabs(props: IParentProps) {
   function handleChange(updatedParent: Sibling) {
     // Set the local update flag to prevent state resets
     isLocalUpdate.current = true;
-    
+
     const newData = parentsData.map((parent) =>
-      parent.id === updatedParent.id ? updatedParent : parent,
+      parent.id === updatedParent.id ? updatedParent : parent
     );
-    
+
     // Update local state first
     setParentsData(newData);
-    
+
     // Then propagate change to parent
     onChange(JSON.stringify(newData), true);
   }
@@ -83,7 +83,7 @@ export default function ParentTabs(props: IParentProps) {
   function handleRemove(parent: Sibling) {
     // Set the local update flag to prevent state resets
     isLocalUpdate.current = true;
-    
+
     const newData = parentsData.filter((p) => p.id !== parent.id);
     if (newData.length === 0) {
       newData.push(createNewParent(1));
@@ -92,13 +92,13 @@ export default function ParentTabs(props: IParentProps) {
         p.id = index + 1;
       });
     }
-    
+
     // Update local state
     setParentsData(newData);
-    
+
     // Propagate change to parent
     onChange(JSON.stringify(newData), true);
-    
+
     // Update selected index
     const newSelectedIndex = Math.min(selectedIndex, newData.length - 1);
     setSelectedIndex(newSelectedIndex);
@@ -107,21 +107,18 @@ export default function ParentTabs(props: IParentProps) {
   function handleParentAdd() {
     // Set the local update flag to prevent state resets
     isLocalUpdate.current = true;
-    
+
     // Limit to 2 parents maximum
     if (parentsData.length >= 2) {
       return;
     }
-    
-    const newData = [
-      ...parentsData,
-      createNewParent(parentsData.length + 1),
-    ];
-    
+
+    const newData = [...parentsData, createNewParent(parentsData.length + 1)];
+
     // Update local state
     setParentsData(newData);
     setSelectedIndex(parentsData.length);
-    
+
     // Propagate change to parent
     onChange(JSON.stringify(newData), true);
   }

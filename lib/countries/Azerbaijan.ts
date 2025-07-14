@@ -303,7 +303,7 @@ export const AZERBAIJAN: VisaForm = {
     {
       id: 'salary_slip',
       name: 'Salary Slips',
-      description: 'Upload your latest salary slips',
+      description: 'Upload your latest salary slips (Minimum 3 months’ salary slips)',
       type: 'conditional',
       required: true,
       conditions: [{
@@ -3951,7 +3951,7 @@ export const AZERBAIJAN: VisaForm = {
       id: 'personalInfoHeader',
       group: 'personal' as FormGroup,
       type: 'header',
-      label: 'Martial Status'
+      label: 'Marital Status'
     },
     {
       id: 'maritalStatus',

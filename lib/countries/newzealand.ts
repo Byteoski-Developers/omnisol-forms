@@ -303,7 +303,7 @@ export const NEWZEALAND: VisaForm = {
     {
       id: 'salary_slip',
       name: 'Salary Slips',
-      description: 'Upload your latest salary slips',
+      description: 'Upload your latest salary slips (Minimum 3 months’ salary slips)',
       type: 'conditional',
       required: true,
       conditions: [{
@@ -448,545 +448,545 @@ export const NEWZEALAND: VisaForm = {
       ]
     },
     // Partnership Deed documents
-{
-  id: 'partnership_deed',
-  name: 'Partnership Deed',
-  description: 'Upload your partnership deed document',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'businessType',
-    value: 'partnership'
-  }],
-  extractableFields: [
     {
-      fieldId: 'partnershipName',
-      source: 'partnership_deed'
+      id: 'partnership_deed',
+      name: 'Partnership Deed',
+      description: 'Upload your partnership deed document',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'businessType',
+        value: 'partnership'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'partnershipName',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'partnerNames',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'partnershipFormationDate',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'businessAddress',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'profitSharingRatio',
+          source: 'partnership_deed'
+        }
+      ]
     },
+    // Certificate of Incorporation documents
     {
-      fieldId: 'partnerNames',
-      source: 'partnership_deed'
+      id: 'incorporation_certificate',
+      name: 'Certificate of Incorporation',
+      description: 'Upload your company\'s certificate of incorporation',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'businessType',
+        value: 'company'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'companyName',
+          source: 'incorporation_certificate'
+        },
+        {
+          fieldId: 'companyRegistrationNumber',
+          source: 'incorporation_certificate'
+        },
+        {
+          fieldId: 'incorporationDate',
+          source: 'incorporation_certificate'
+        },
+        {
+          fieldId: 'registeredAddress',
+          source: 'incorporation_certificate'
+        }
+      ]
     },
-    {
-      fieldId: 'partnershipFormationDate',
-      source: 'partnership_deed'
-    },
-    {
-      fieldId: 'businessAddress',
-      source: 'partnership_deed'
-    },
-    {
-      fieldId: 'profitSharingRatio',
-      source: 'partnership_deed'
-    }
-  ]
-},
-// Certificate of Incorporation documents
-{
-  id: 'incorporation_certificate',
-  name: 'Certificate of Incorporation',
-  description: 'Upload your company\'s certificate of incorporation',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'businessType',
-    value: 'company'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'companyName',
-      source: 'incorporation_certificate'
-    },
-    {
-      fieldId: 'companyRegistrationNumber',
-      source: 'incorporation_certificate'
-    },
-    {
-      fieldId: 'incorporationDate',
-      source: 'incorporation_certificate'
-    },
-    {
-      fieldId: 'registeredAddress',
-      source: 'incorporation_certificate'
-    }
-  ]
-},
 
-// Director's List documents
-{
-  id: 'directors_list',
-  name: 'Director\'s List',
-  description: 'Upload your company\'s list of directors',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'businessType',
-    value: 'company'
-  }],
-  extractableFields: [
+    // Director's List documents
     {
-      fieldId: 'companyName',
-      source: 'directors_list'
+      id: 'directors_list',
+      name: 'Director\'s List',
+      description: 'Upload your company\'s list of directors',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'businessType',
+        value: 'company'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'companyName',
+          source: 'directors_list'
+        },
+        {
+          fieldId: 'directorNames',
+          source: 'directors_list'
+        },
+        {
+          fieldId: 'directorAddresses',
+          source: 'directors_list'
+        }
+      ]
     },
+    // Fixed Deposit documents
     {
-      fieldId: 'directorNames',
-      source: 'directors_list'
+      id: 'fixed_deposit',
+      name: 'Fixed Deposit',
+      description: 'Upload your fixed deposit certificates',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'fixed_deposits'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'depositorName',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'bankName',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'fdNumber',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'depositAmount',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'interestRate',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'depositDate',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'maturityDate',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'maturityAmount',
+          source: 'fixed_deposit'
+        }
+      ]
     },
+    // Post Office Savings documents
     {
-      fieldId: 'directorAddresses',
-      source: 'directors_list'
-    }
-  ]
-},
-// Fixed Deposit documents
-{
-  id: 'fixed_deposit',
-  name: 'Fixed Deposit',
-  description: 'Upload your fixed deposit certificates',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'fixed_deposits'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'depositorName',
-      source: 'fixed_deposit'
+      id: 'post_office_savings',
+      name: 'Post Office Saving Schemes',
+      description: 'Upload your post office saving scheme documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'postal_savings'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'accountHolderName',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'schemeType',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'accountNumber',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'depositAmount',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'openingDate',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'maturityDate',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'postOfficeName',
+          source: 'post_office_savings'
+        }
+      ]
     },
+    // Mutual Funds documents
     {
-      fieldId: 'bankName',
-      source: 'fixed_deposit'
+      id: 'mutual_funds',
+      name: 'Mutual Funds Statements',
+      description: 'Upload your mutual funds statements',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'mutual_funds'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'investorName',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'folioNumber',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'schemeNames',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'investmentAmount',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'currentValue',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'statementDate',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'assetManagementCompany',
+          source: 'mutual_funds'
+        }
+      ]
     },
+    // Provident Funds documents
     {
-      fieldId: 'fdNumber',
-      source: 'fixed_deposit'
+      id: 'provident_funds',
+      name: 'Provident Funds Statements',
+      description: 'Upload your provident fund statements',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'provident_fund'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'memberName',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'pfAccountNumber',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'employerName',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'employeeContribution',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'employerContribution',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'totalBalance',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'statementPeriod',
+          source: 'provident_funds'
+        }
+      ]
     },
+    // Insurance Policy documents
     {
-      fieldId: 'depositAmount',
-      source: 'fixed_deposit'
+      id: 'insurance_policy',
+      name: 'Insurance Policies',
+      description: 'Upload your insurance policy documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'insurance_policies'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'policyHolderName',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'insuranceCompany',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'premiumAmount',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'issueDate',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'maturityDate',
+          source: 'insurance_policy'
+        }
+      ]
     },
+    // Property Valuation documents
     {
-      fieldId: 'interestRate',
-      source: 'fixed_deposit'
+      id: 'property_valuation',
+      name: 'Property Valuation Reports',
+      description: 'Upload property valuation reports',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'ownerName',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'propertyAddress',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'propertyType',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuationAmount',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuationDate',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuatorName',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuatorQualification',
+          source: 'property_valuation'
+        }
+      ]
     },
-    {
-      fieldId: 'depositDate',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'maturityDate',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'maturityAmount',
-      source: 'fixed_deposit'
-    }
-  ]
-},
-// Post Office Savings documents
-{
-  id: 'post_office_savings',
-  name: 'Post Office Saving Schemes',
-  description: 'Upload your post office saving scheme documents',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'postal_savings'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'accountHolderName',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'schemeType',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'accountNumber',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'depositAmount',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'openingDate',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'maturityDate',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'postOfficeName',
-      source: 'post_office_savings'
-    }
-  ]
-},
-// Mutual Funds documents
-{
-  id: 'mutual_funds',
-  name: 'Mutual Funds Statements',
-  description: 'Upload your mutual funds statements',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'mutual_funds'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'investorName',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'folioNumber',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'schemeNames',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'investmentAmount',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'currentValue',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'statementDate',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'assetManagementCompany',
-      source: 'mutual_funds'
-    }
-  ]
-},
-// Provident Funds documents
-{
-  id: 'provident_funds',
-  name: 'Provident Funds Statements',
-  description: 'Upload your provident fund statements',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'provident_fund'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'memberName',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'pfAccountNumber',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'employerName',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'employeeContribution',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'employerContribution',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'totalBalance',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'statementPeriod',
-      source: 'provident_funds'
-    }
-  ]
-},
-// Insurance Policy documents
-{
-  id: 'insurance_policy',
-  name: 'Insurance Policies',
-  description: 'Upload your insurance policy documents',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'insurance_policies'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'policyHolderName',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'insuranceCompany',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'premiumAmount',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'issueDate',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'maturityDate',
-      source: 'insurance_policy'
-    }
-  ]
-},
-// Property Valuation documents
-{
-  id: 'property_valuation',
-  name: 'Property Valuation Reports',
-  description: 'Upload property valuation reports',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'property'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'ownerName',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'propertyAddress',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'propertyType',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuationAmount',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuationDate',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuatorName',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuatorQualification',
-      source: 'property_valuation'
-    }
-  ]
-},
 
-// Rent Deed documents
-{
-  id: 'rent_deed',
-  name: 'Rent Deeds',
-  description: 'Upload your rent deed documents',
-  type: 'conditional',
-  required: false,
-  conditions: [{
-    questionId: 'residenceType',
-    value: 'rented'
-  }],
-  extractableFields: [
+    // Rent Deed documents
     {
-      fieldId: 'tenantName',
-      source: 'rent_deed'
+      id: 'rent_deed',
+      name: 'Rent Deeds',
+      description: 'Upload your rent deed documents',
+      type: 'conditional',
+      required: false,
+      conditions: [{
+        questionId: 'residenceType',
+        value: 'rented'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'tenantName',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'landlordName',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'propertyAddress',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'rentAmount',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'leaseStartDate',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'leaseEndDate',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'securityDeposit',
+          source: 'rent_deed'
+        }
+      ]
     },
-    {
-      fieldId: 'landlordName',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'propertyAddress',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'rentAmount',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'leaseStartDate',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'leaseEndDate',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'securityDeposit',
-      source: 'rent_deed'
-    }
-  ]
-},
 
-// Revenue Record documents
-{
-  id: 'revenue_record',
-  name: 'Revenue Record of the Land',
-  description: 'Upload revenue record documents for your land',
-  type: 'conditional',
-  required: false,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'property'
-  }],
-  extractableFields: [
+    // Revenue Record documents
     {
-      fieldId: 'ownerName',
-      source: 'revenue_record'
+      id: 'revenue_record',
+      name: 'Revenue Record of the Land',
+      description: 'Upload revenue record documents for your land',
+      type: 'conditional',
+      required: false,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'ownerName',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'landLocation',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'landArea',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'landValue',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'recordNumber',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'recordDate',
+          source: 'revenue_record'
+        }
+      ]
     },
-    {
-      fieldId: 'landLocation',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'landArea',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'landValue',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'recordNumber',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'recordDate',
-      source: 'revenue_record'
-    }
-  ]
-},
 
-// Property Title documents
-{
-  id: 'property_title',
-  name: 'Property Title Deeds',
-  description: 'Upload your property title deed documents',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'property'
-  }],
-  extractableFields: [
+    // Property Title documents
     {
-      fieldId: 'ownerName',
-      source: 'property_title'
+      id: 'property_title',
+      name: 'Property Title Deeds',
+      description: 'Upload your property title deed documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'ownerName',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'propertyAddress',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'propertyDescription',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'registrationNumber',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'purchaseValue',
+          source: 'property_title'
+        }
+      ]
     },
+    // Birth Certificate documents
     {
-      fieldId: 'propertyAddress',
-      source: 'property_title'
+      id: 'birth_certificate',
+      name: 'Birth Certificate',
+      description: 'Upload your birth certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'ageProofRequired',  // You would need this question in your form
+        value: true
+      }],
+      extractableFields: [
+        {
+          fieldId: 'fullName',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'dateOfBirth',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'placeOfBirth',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'fatherName',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'motherName',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'registrationNumber',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'birth_certificate'
+        }
+      ]
     },
+    // Marriage Certificate documents
     {
-      fieldId: 'propertyDescription',
-      source: 'property_title'
+      id: 'marriage_certificate',
+      name: 'Marriage Registration Certificate',
+      description: 'Upload your marriage certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'maritalStatus',
+        value: 'married'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'husbandName',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'wifeName',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'marriageDate',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'marriagePlace',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'registrationNumber',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'marriage_certificate'
+        }
+      ]
     },
-    {
-      fieldId: 'registrationNumber',
-      source: 'property_title'
-    },
-    {
-      fieldId: 'registrationDate',
-      source: 'property_title'
-    },
-    {
-      fieldId: 'purchaseValue',
-      source: 'property_title'
-    }
-  ]
-},
-// Birth Certificate documents
-{
-  id: 'birth_certificate',
-  name: 'Birth Certificate',
-  description: 'Upload your birth certificate',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'ageProofRequired',  // You would need this question in your form
-    value: true
-  }],
-  extractableFields: [
-    {
-      fieldId: 'fullName',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'dateOfBirth',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'placeOfBirth',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'fatherName',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'motherName',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'registrationNumber',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'registrationDate',
-      source: 'birth_certificate'
-    }
-  ]
-},
-// Marriage Certificate documents
-{
-  id: 'marriage_certificate',
-  name: 'Marriage Registration Certificate',
-  description: 'Upload your marriage certificate',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'maritalStatus',
-    value: 'married'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'husbandName',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'wifeName',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'marriageDate',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'marriagePlace',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'registrationNumber',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'registrationDate',
-      source: 'marriage_certificate'
-    }
-  ]
-},
 
     // Hotel booking documents, extractable fields 
     {
@@ -2563,7 +2563,207 @@ export const NEWZEALAND: VisaForm = {
         value: 'other_income'
       }]
     },
+    // Spouse's primary source of income proof documents
+    {
+      id: 'spouse_salary_proof',
+      name: 'Spouse Salary Proof',
+      description: 'Salary slips, employment letter, or other proof of spouse\'s salary income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseIncomeSource',
+        value: 'salary'
+      }]
+    },
+    {
+      id: 'spouse_business_income_proof',
+      name: 'Spouse Business Income Proof',
+      description: 'Business registration, tax returns, or financial statements showing spouse\'s business income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseIncomeSource',
+        value: 'business_income'
+      }]
+    },
+    {
+      id: 'spouse_partnership_share_proof',
+      name: 'Spouse Partnership Share Proof',
+      description: 'Partnership deed, profit sharing agreement, or other proof of spouse\'s partnership income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseIncomeSource',
+        value: 'partnership_share'
+      }]
+    },
+    {
+      id: 'spouse_professional_income_proof',
+      name: 'Spouse Professional Income Proof',
+      description: 'Client invoices, professional registration, or other proof of spouse\'s professional income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseIncomeSource',
+        value: 'professional_income'
+      }]
+    },
+    {
+      id: 'spouse_interest_dividend_proof',
+      name: 'Spouse Interest and Dividend Proof',
+      description: 'Bank statements, investment account statements, or other proof of spouse\'s interest and dividend income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseIncomeSource',
+        value: 'interest_dividend'
+      }]
+    },
+    {
+      id: 'spouse_agriculture_income_proof',
+      name: 'Spouse Agriculture Income Proof',
+      description: 'Land ownership documents, crop sales receipts, or other proof of spouse\'s agricultural income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseIncomeSource',
+        value: 'agriculture_income'
+      }]
+    },
+    {
+      id: 'spouse_rental_income_proof',
+      name: 'Spouse Rental Income Proof',
+      description: 'Lease agreements, rental receipts, or other proof of spouse\'s rental income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseIncomeSource',
+        value: 'rental_income'
+      }]
+    },
+    {
+      id: 'spouse_pension_income_proof',
+      name: 'Spouse Pension Income Proof',
+      description: 'Pension statements, retirement account statements, or other proof of spouse\'s pension income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseIncomeSource',
+        value: 'pension_income'
+      }]
+    },
+    {
+      id: 'spouse_other_income_proof',
+      name: 'Spouse Other Income Proof',
+      description: 'Documents showing spouse\'s other sources of income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseIncomeSource',
+        value: 'other_income'
+      }]
+    },
 
+    // Spouse's additional source of income proof documents
+    {
+      id: 'spouse_additional_salary_proof',
+      name: 'Spouse Additional Salary Proof',
+      description: 'Salary slips, employment letter, or other proof of spouse\'s additional salary income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseAdditionalIncomeSource',
+        value: 'salary'
+      }]
+    },
+    {
+      id: 'spouse_additional_business_income_proof',
+      name: 'Spouse Additional Business Income Proof',
+      description: 'Business registration, tax returns, or financial statements showing spouse\'s additional business income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseAdditionalIncomeSource',
+        value: 'business_income'
+      }]
+    },
+    {
+      id: 'spouse_additional_partnership_share_proof',
+      name: 'Spouse Additional Partnership Share Proof',
+      description: 'Partnership deed, profit sharing agreement, or other proof of spouse\'s additional partnership income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseAdditionalIncomeSource',
+        value: 'partnership_share'
+      }]
+    },
+    {
+      id: 'spouse_additional_professional_income_proof',
+      name: 'Spouse Additional Professional Income Proof',
+      description: 'Client invoices, professional registration, or other proof of spouse\'s additional professional income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseAdditionalIncomeSource',
+        value: 'professional_income'
+      }]
+    },
+    {
+      id: 'spouse_additional_interest_dividend_proof',
+      name: 'Spouse Additional Interest and Dividend Proof',
+      description: 'Bank statements, investment account statements, or other proof of spouse\'s additional interest and dividend income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseAdditionalIncomeSource',
+        value: 'interest_dividend'
+      }]
+    },
+    {
+      id: 'spouse_additional_agriculture_income_proof',
+      name: 'Spouse Additional Agriculture Income Proof',
+      description: 'Land ownership documents, crop sales receipts, or other proof of spouse\'s additional agricultural income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseAdditionalIncomeSource',
+        value: 'agriculture_income'
+      }]
+    },
+    {
+      id: 'spouse_additional_rental_income_proof',
+      name: 'Spouse Additional Rental Income Proof',
+      description: 'Lease agreements, rental receipts, or other proof of spouse\'s additional rental income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseAdditionalIncomeSource',
+        value: 'rental_income'
+      }]
+    },
+    {
+      id: 'spouse_additional_pension_income_proof',
+      name: 'Spouse Additional Pension Income Proof',
+      description: 'Pension statements, retirement account statements, or other proof of spouse\'s additional pension income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseAdditionalIncomeSource',
+        value: 'pension_income'
+      }]
+    },
+    {
+      id: 'spouse_additional_other_income_proof',
+      name: 'Spouse Additional Other Income Proof',
+      description: 'Documents showing spouse\'s other additional sources of income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'spouseAdditionalIncomeSource',
+        value: 'other_income'
+      }]
+    },
     // Income and Funds Documents - Question 5
     {
       id: 'relationship_proof_sponsor',
@@ -3744,12 +3944,12 @@ export const NEWZEALAND: VisaForm = {
       showDocuments: false,
       slug: 'visa-history'
     },
-    {
-      title: 'Education',
-      group: 'education' as FormGroup,
-      showDocuments: false,
-      slug: 'education'
-    },
+    // {
+    //   title: 'Education',
+    //   group: 'education' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'education'
+    // },
     {
       title: 'Travel Plans',
       group: 'travel_plans' as FormGroup,
@@ -3819,6 +4019,7 @@ export const NEWZEALAND: VisaForm = {
       required: true,
       options: COUNTRIES
     },
+
     {
       id: 'livesInCitizenshipCountry',
       group: 'citizenship' as FormGroup,
@@ -3829,6 +4030,14 @@ export const NEWZEALAND: VisaForm = {
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
       ]
+    },
+    {
+      id: 'NationalIdNumber',
+      group: 'citizenship',
+      type: 'text',
+      label: 'National ID Number',
+      required: true,
+      placeholder: 'Enter your national ID number'
     },
     {
       id: 'residenceCountry',
@@ -3952,7 +4161,7 @@ export const NEWZEALAND: VisaForm = {
       id: 'personalInfoHeader',
       group: 'personal' as FormGroup,
       type: 'header',
-      label: 'Martial Status'
+      label: 'Marital Status'
     },
     {
       id: 'maritalStatus',
@@ -4026,18 +4235,6 @@ export const NEWZEALAND: VisaForm = {
       required: true,
       showIf: { field: 'maritalStatus', not: 'single' },
       disableFutureDates: true
-    },
-    {
-      id: 'isFirstMarriage',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Is this your first marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
     },
     {
       id: 'previousRelationshipEnd',
@@ -4486,6 +4683,15 @@ export const NEWZEALAND: VisaForm = {
       required: true,
       showIf: { field: 'visitPurpose', value: 'visitation' },
       options: RELATION_OPTIONS
+    },
+    {
+      id: 'InviterDob',
+      group: 'purpose' as FormGroup,
+      type: 'DateofBirth',
+      label: `What is date of birth of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+      disableFutureDates: true
     },
     {
       id: 'relationToVisitOther',
@@ -6048,6 +6254,33 @@ export const NEWZEALAND: VisaForm = {
       placeholder: 'Enter your work address',
       showIf: { field: 'worksFromHome', value: 'no' }
     },
+    {
+      id: 'workPhone',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: `What is your work phone number? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      showIf: { field: 'worksFromHome', value: 'no' },
+      placeholder: 'Enter your work phone number'
+    },
+    {
+      id: 'workEmail',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: `What is your work email address? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      placeholder: 'Enter your work email address',
+      showIf: { field: 'worksFromHome', value: 'no' }
+    },
+    {
+      id: 'designation',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: `What is your job designation/title? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      placeholder: 'Enter your job designation',
+      showIf: { field: 'worksFromHome', value: 'no' }
+    },
 
     // -------------------- PASSPORT INFORMATION --------------------
     {
@@ -6167,7 +6400,7 @@ export const NEWZEALAND: VisaForm = {
       id: 'hasAppliedForVisa',
       group: 'visa_history' as FormGroup,
       type: 'select',
-      label: `Did you ever file visa application for any country? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      label: `Did you ever file visa application for New Zealand? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       options: [
         { label: 'Yes', value: 'yes' },

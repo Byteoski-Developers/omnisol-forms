@@ -302,7 +302,7 @@ export const CANADA: VisaForm = {
     {
       id: 'salary_slip',
       name: 'Salary Slips',
-      description: 'Upload your latest salary slips',
+      description: 'Upload your latest salary slips (Minimum 3 months’ salary slips)',
       type: 'conditional',
       required: true,
       conditions: [{
@@ -3953,6 +3953,14 @@ export const CANADA: VisaForm = {
       options: COUNTRIES
     },
     {
+      id: 'cityOrTownWhereYouWereBorn',
+      group: 'citizenship' as FormGroup,
+      type: 'text',
+      label: `City or town where you were born? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter city or town where you were born',
+      required: true,
+    },
+    {
       id: 'livesInCitizenshipCountry',
       group: 'citizenship' as FormGroup,
       type: 'select',
@@ -4048,22 +4056,17 @@ export const CANADA: VisaForm = {
         ]
       }
     },
-    // {
-    //   id: 'onshoreServiceTypeOther',
-    //   group: 'citizenship' as FormGroup,
-    //   type: 'text',
-    //   label: 'Please specify the onshore service you need',
-    //   required: true,
-    //   placeholder: 'Enter service details',
-    //   showIf: { 
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'livesInCitizenshipCountry', value: 'no' },
-    //       { field: 'needsOnshoreServices', value: 'yes' },
-    //       { field: 'onshoreServiceType', value: 'other' }
-    //     ]
-    //   }
-    // },
+    {
+      id: 'areYouACitizen',
+      group: 'citizenship' as FormGroup,
+      type: 'select',
+      label: `Are you a citizen of this country or territory since birth? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
     // {
     //   id: 'applicationCountry',
     //   group: 'citizenship' as FormGroup,
@@ -4085,7 +4088,7 @@ export const CANADA: VisaForm = {
       id: 'personalInfoHeader',
       group: 'personal' as FormGroup,
       type: 'header',
-      label: 'Martial Status'
+      label: 'Marital Status'
     },
     {
       id: 'maritalStatus',
@@ -4130,7 +4133,14 @@ export const CANADA: VisaForm = {
       type: 'select',
       label: `Does your spouse live with you? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', not: 'single' },
+          { field: 'maritalStatus', not: 'widowed' },
+          { field: 'maritalStatus', not: 'divorced' }
+        ]
+      },
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
@@ -4151,6 +4161,22 @@ export const CANADA: VisaForm = {
         ]
       }
     },
+    {
+      id: 'spousePresentAddress',
+      group: 'personal' as FormGroup,
+      type: 'textarea',
+      label: `What is the present address of spouse ? ${FIELD_REQUIREMENTS.OPTIONAL}`,
+      required: false,
+      placeholder: 'Enter spouse present address',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', value: 'married' },
+          { field: 'spouseLivesWithYou', value: 'no' }
+        ]
+      }
+    },
+
     {
       id: 'spouseDob',
       group: 'personal' as FormGroup,
@@ -4674,6 +4700,146 @@ export const CANADA: VisaForm = {
     //   placeholder: 'Name, Address, Phone number, Email',
     //   showIf: { field: 'visitPurpose', value: 'visitation' }
     // },
+
+
+     // Sponsor Details Section for visiting family/friend
+
+     {
+      id: 'hasSponsor',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Are you visiting family/friend who will be sponsoring your stay? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'sponsorDetailsHeader',
+      group: 'purpose' as FormGroup,
+      type: 'header',
+      label: 'Sponsor Details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    }, 
+    {
+      id: 'sponsorFullName',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Sponsor's Full Name ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter sponsor\'s full name',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorRelationship',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Relationship to the applicant ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter your relationship to the sponsor',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorAddress',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: `Sponsor's Address ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter sponsor\'s complete address',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorDateOfBirth',
+      group: 'purpose' as FormGroup,
+      type: 'DateofBirth',
+      label: `Date of Birth ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorPhoneNumber',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Phone Number ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter sponsor\'s phone number',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorEmail',
+      group: 'purpose' as FormGroup,
+      type: 'email',
+      label: `Email ID ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter sponsor\'s email address',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorImmigrationStatus',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Immigration status ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Citizen', value: 'citizen' },
+        { label: 'Permanent Resident', value: 'permanent_resident' },
+        { label: 'Student', value: 'student' },
+        { label: 'Worker', value: 'worker' },
+        { label: 'Refugee', value: 'refugee' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
     {
       id: 'addAnotherInviter',
       group: 'purpose' as FormGroup,
@@ -6673,6 +6839,18 @@ export const CANADA: VisaForm = {
     { label: 'No', value: 'no' }
   ]
 },
+{
+  id: 'medicalExam',
+  group: 'criminal' as FormGroup,
+  type: 'select',
+  label: `Have you had a medical exam performed by an IRCC authorized panel physician (doctor) within the last 12 months? ${FIELD_REQUIREMENTS.MANDATORY}`,
+  required: true,
+  options: [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' }
+  ]
+},
+
 {
   id: 'healthDetails',
   group: 'criminal' as FormGroup,

@@ -36,6 +36,8 @@ import DateField from "./datefield";
 import ChildrenInputFieldUSA from './ChildrenInputFieldUsa';
 import EducationHistory from './EducationHistory';
 import EmploymentHistory from './EmploymentHistory';
+import EmploymentHistoryUSA from './EmploymentHistoryUSA';
+import EducationHistoryUSA from './EducationHistoryUSA';
 import MilitaryHistory from './MilitaryHistory'; // Import the MilitaryHistory component
 
 interface DynamicFormProps {
@@ -584,6 +586,43 @@ export function DynamicForm({
                     <div className="space-y-2" key={field.id}>
                         <Label htmlFor={field.id}>{field.label}</Label>
                         <EmploymentHistory
+                            onChange={(value, save) => handleFieldChange(field.id, value, save)}
+                            value={formData[field.id]}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'employmentHistoryUSA':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <EmploymentHistoryUSA
+                            value={formData[field.id] || ''}
+                            onChange={(val, save) => handleFieldChange(field.id, val, save)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            case 'educationHistoryUSA':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <EducationHistoryUSA
                             onChange={(value, save) => handleFieldChange(field.id, value, save)}
                             value={formData[field.id]}
                             readonly={false}

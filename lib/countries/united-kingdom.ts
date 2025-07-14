@@ -302,7 +302,7 @@ export const UNITED_KINGDOM: VisaForm = {
     {
       id: 'salary_slip',
       name: 'Salary Slips',
-      description: 'Upload your latest salary slips',
+      description: 'Upload your latest salary slips (Minimum 3 months’ salary slips)',
       type: 'conditional',
       required: true,
       conditions: [{
@@ -3982,7 +3982,7 @@ export const UNITED_KINGDOM: VisaForm = {
       id: 'personalInfoHeader',
       group: 'personal' as FormGroup,
       type: 'header',
-      label: 'Martial Status'
+      label: 'Marital Status'
     },
     {
       id: 'maritalStatus',
@@ -4033,7 +4033,13 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'DateofBirth',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      showIf: { field: 'maritalStatus', not: 'single' },
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', not: 'single' },
+          { field: 'maritalStatus', not: 'divorced' }
+        ]
+      },
       disableFutureDates: true
     },
     {
@@ -4326,6 +4332,146 @@ export const UNITED_KINGDOM: VisaForm = {
     //   placeholder: 'Name, Address, Phone number, Email',
     //   showIf: { field: 'visitPurpose', value: 'visitation' }
     // },
+
+    
+     // Sponsor Details Section for visiting family/friend
+
+     {
+      id: 'hasSponsor',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Are you visiting family/friend who will be sponsoring your stay? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'sponsorDetailsHeader',
+      group: 'purpose' as FormGroup,
+      type: 'header',
+      label: 'Sponsor Details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    }, 
+    {
+      id: 'sponsorFullName',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Sponsor's Full Name ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter sponsor\'s full name',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorRelationship',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Relationship to the applicant ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter your relationship to the sponsor',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorAddress',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: `Sponsor's Address ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter sponsor\'s complete address',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorDateOfBirth',
+      group: 'purpose' as FormGroup,
+      type: 'DateofBirth',
+      label: `Date of Birth ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorPhoneNumber',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Phone Number ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter sponsor\'s phone number',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorEmail',
+      group: 'purpose' as FormGroup,
+      type: 'email',
+      label: `Email ID ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter sponsor\'s email address',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      }
+    },
+    {
+      id: 'sponsorImmigrationStatus',
+      group: 'purpose' as FormGroup,
+      type: 'select',
+      label: `Immigration status ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'visitPurpose', value: 'visitation' },
+          { field: 'hasSponsor', value: 'yes' }
+        ]
+      },
+      options: [
+        { label: 'Citizen', value: 'citizen' },
+        { label: 'Permanent Resident', value: 'permanent_resident' },
+        { label: 'Student', value: 'student' },
+        { label: 'Worker', value: 'worker' },
+        { label: 'Refugee', value: 'refugee' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
     {
       id: 'isAnyoneTravelingWithYou',
       group: 'purpose' as FormGroup,
@@ -4409,6 +4555,7 @@ export const UNITED_KINGDOM: VisaForm = {
         ]
       }
     },
+    
 
     // For tourism purpose
     {
@@ -6085,6 +6232,7 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'select',
       label: 'Have you ever been given medical treatment in the UK?',
       required: true,
+      showIf: { field: 'hasAppliedForVisa', value: 'yes' },
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
@@ -6096,6 +6244,7 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'select',
       label: 'Do you have a UK National Insurance number?',
       required: true,
+      showIf: { field: 'hasAppliedForVisa', value: 'yes' },
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
@@ -6107,6 +6256,7 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'select',
       label: 'Do you have a UK driving licence?',
       required: true,
+      showIf: { field: 'hasAppliedForVisa', value: 'yes' },
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
@@ -6118,9 +6268,10 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'select',
       label: 'Have you received any public funds (money/benefits) in the UK?',
       required: true,
+      showIf: { field: 'hasAppliedForVisa', value: 'yes' },
       options: [
         { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
+        { label: 'No', value: 'no' } 
       ]
     },
   

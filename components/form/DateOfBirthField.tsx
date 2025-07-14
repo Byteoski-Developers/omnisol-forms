@@ -62,14 +62,15 @@ export function DateOfBirthField({
       // Update the selected date regardless of validation
       setSelectedDate(fixedDate);
       
-      // Only update the form value if it's a valid date
-      onChange(fixedDate.toISOString());
+      // Format the date as YYYY-MM-DD instead of ISO string
+      const formattedDate = format(fixedDate, 'yyyy-MM-dd');
+      console.log("Formatted date:", formattedDate); // Temporary log
+      onChange(formattedDate);
       
       // Close the popover after selection
       setIsOpen(false);
     }
   };
-
   // Generate years from 1900 to current year
   const years = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => 1900 + i).reverse();
   
@@ -101,7 +102,9 @@ export function DateOfBirthField({
       
       updatedDate.setFullYear(newYear);
       setSelectedDate(updatedDate);
-      onChange(updatedDate.toISOString());
+      // Format the date as YYYY-MM-DD
+      const formattedDate = format(updatedDate, 'yyyy-MM-dd');
+      onChange(formattedDate);
     }
   };
 
@@ -121,7 +124,9 @@ export function DateOfBirthField({
       const updatedDate = new Date(selectedDate);
       updatedDate.setMonth(newMonthIndex);
       setSelectedDate(updatedDate);
-      onChange(updatedDate.toISOString());
+      // Format the date as YYYY-MM-DD
+      const formattedDate = format(updatedDate, 'yyyy-MM-dd');
+      onChange(formattedDate);
     }
   };
 

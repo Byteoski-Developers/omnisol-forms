@@ -39,8 +39,10 @@ import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
 import { MultiSelect } from "./MultiSelect";
 import { CheckboxMultiSelect } from "./CheckboxMultiSelect";
 import DateField from "./datefield";
-import ChildrenInputFieldUSA from "./ChildrenInputFieldUsa";
-import Image from "next/image";
+import ChildrenInputFieldUSA from './ChildrenInputFieldUsa';
+import EducationHistory from './EducationHistory';
+import EmploymentHistory from './EmploymentHistory';
+import MilitaryHistory from './MilitaryHistory'; // Import the MilitaryHistory component
 
 interface DynamicFormProps {
   form: VisaForm & { showDocuments?: boolean };
@@ -355,16 +357,726 @@ export function DynamicForm({
             return "Departure date must be after arrival date";
           }
         }
+        // Get the field value from form data
+        const value = formData[id] || '';
+        const error = errors[id];
 
-        if (
-          field.id === "plannedArrivalDate" &&
-          formData["plannedDepartureDate"]
-        ) {
-          const departureDate = new Date(formData["plannedDepartureDate"]);
-          departureDate.setHours(0, 0, 0, 0);
-          if (selectedDate >= departureDate) {
-            return "Arrival date must be before departure date";
-          }
+        // Common props for all field types
+        const commonProps = {
+            id,
+            label,
+            value,
+            error,
+            required,
+            description,
+            handleChange: (val: any, save?: boolean) => handleFieldChange(id, val, save),
+            readonly: false
+        };
+
+        switch (type) {
+            case 'siblingsInput':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <SiblingTabs
+                            value={formData[field.id] ? JSON.stringify(formData[field.id]) : ''}
+                            onChange={(value, save) => handleFieldChange(field.id, value)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'parentsInput':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <ParentTabs
+                            value={formData[field.id] ? JSON.stringify(formData[field.id]) : ''}
+                            onChange={(value, save) => handleFieldChange(field.id, value)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'countriesInput':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <MultiCountryDropdown
+                            value={formData[field.id] ? JSON.stringify(formData[field.id]) : ''}
+                            handleChange={(value, save) => handleFieldChange(field.id, value)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'residence_countries':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <ResidenceCountries
+                            countries={COUNTRIES}
+                            statuses={[
+                                { value: 'citizen', label: 'Citizen' },
+                                { value: 'permanent_resident', label: 'Permanent resident' },
+                                { value: 'temporary_resident', label: 'Temporary resident' },
+                                { value: 'worker', label: 'Worker' },
+                                { value: 'student', label: 'Student' },
+                                { value: 'visitor', label: 'Visitor' }
+                            ]}
+                            value={formData[field.id] || []}
+                            onChange={(countries) => handleFieldChange(field.id, countries)}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'work_experience':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <WorkExperience
+                            onChange={(experiences) => handleFieldChange(field.id, experiences)}
+                            value={formData[field.id]}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'educationHistory':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <EducationHistory
+                            onChange={(value, save) => handleFieldChange(field.id, value, save)}
+                            value={formData[field.id]}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'employmentHistory':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <EmploymentHistory
+                            onChange={(value, save) => handleFieldChange(field.id, value, save)}
+                            value={formData[field.id]}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'accessingBodyAssessment':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <AccessingBodyAssessmentInput
+                            handleChange={(value) => handleFieldChange(field.id, value)}
+                            inputValue={formData[field.id] || ''}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'file':
+                return (
+                    <div className="space-y-2 mb-6" key={field.id}>
+                        <div className="flex items-center justify-between mb-2">
+                            <Label htmlFor={field.id} className="font-medium">
+                                {field.label}
+                                {field.required && <span className="text-destructive ml-1">*</span>}
+                            </Label>
+                            <div className="text-sm text-muted-foreground">
+                                PDF, JPG, PNG (max 4MB)
+                            </div>
+                        </div>
+
+                        {field.description && (
+                            <p className="text-sm text-muted-foreground mb-3">{field.description}</p>
+                        )}
+
+                        {!formData[field.id] ? (
+                            <div className="flex items-center justify-center h-32 bg-muted rounded-md cursor-pointer border border-dashed"
+                                onClick={() => {
+                                    const input = document.createElement('input');
+                                    input.type = 'file';
+                                    input.accept = '.pdf,.jpg,.jpeg,.png';
+                                    input.onchange = (e: any) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) {
+                                            if (file.size > 4 * 1024 * 1024) {
+                                                setErrors(prev => ({
+                                                    ...prev,
+                                                    [field.id]: 'File size exceeds 4MB limit'
+                                                }));
+                                                return;
+                                            }
+
+                                            if (!['application/pdf', 'image/jpeg', 'image/png'].includes(file.type)) {
+                                                setErrors(prev => ({
+                                                    ...prev,
+                                                    [field.id]: 'Invalid file type. Please upload PDF, JPG, or PNG'
+                                                }));
+                                                return;
+                                            }
+
+                                            handleFieldChange(field.id, {
+                                                name: file.name,
+                                                size: file.size,
+                                                type: file.type,
+                                                lastModified: file.lastModified
+                                            });
+
+                                            if (errors[field.id]) {
+                                                setErrors(prev => {
+                                                    const newErrors = { ...prev };
+                                                    delete newErrors[field.id];
+                                                    return newErrors;
+                                                });
+                                            }
+                                        }
+                                    };
+                                    input.click();
+                                }}
+                            >
+                                <div className="text-center">
+                                    <Upload className="h-10 w-10 text-muted-foreground mx-auto mb-2" />
+                                    <p className="text-sm font-medium">Click to upload</p>
+                                    <p className="text-xs text-muted-foreground mt-1">or drag and drop</p>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex items-center justify-between p-3 bg-muted rounded-md">
+                                <div className="flex items-center gap-2">
+                                    <FileText className="h-5 w-5 text-muted-foreground" />
+                                    <span className="text-sm truncate max-w-[200px]">
+                                        {formData[field.id].name}
+                                    </span>
+                                </div>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => {
+                                        handleFieldChange(field.id, null);
+                                    }}
+                                >
+                                    <X className="h-4 w-4" />
+                                </Button>
+                            </div>
+                        )}
+
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'header':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <h2 className="text-xl font-semibold mb-2">{field.label}</h2>
+                        {field.description && (
+                            <p className="text-sm text-muted-foreground">{field.description}</p>
+                        )}
+                    </div>
+                );
+
+            case 'info':
+                return (
+                    <div key={field.id} className="mb-4 p-4 bg-muted rounded-md">
+                        <div className="flex items-start gap-3">
+                            <AlertCircle className="h-5 w-5 text-muted-foreground mt-0.5" />
+                            <div>
+                                {field.label && <h3 className="font-medium mb-1">{field.label}</h3>}
+                                {field.description && <p className="text-sm">{field.description}</p>}
+                                {field.content && Array.isArray(field.content) && (
+                                    <div className="mt-2 space-y-1">
+                                        {field.content.map((item, index) => (
+                                            <p key={index} className="text-sm">{item}</p>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
+
+            case 'text':
+            case 'email':
+            case 'tel':
+            case 'number':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>
+                            {field.label}
+                            {field.required && <span className="text-destructive ml-1">*</span>}
+                        </Label>
+                        <Input
+                            id={field.id}
+                            type={field.type}
+                            placeholder={field.placeholder}
+                            value={formData[field.id] || ''}
+                            onChange={(e) => handleFieldChange(field.id, e.target.value)}
+                            className={cn(
+                                'w-full',
+                                error ? 'border-destructive' : 'border-input'
+                            )}
+                        />
+                        {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
+                        {error && (
+                            <p className="text-sm text-destructive flex items-center mt-1">
+                                <AlertCircle className="h-4 w-4 mr-1" />
+                                {error}
+                            </p>
+                        )}
+                    </div>
+                );
+
+            case 'textarea':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>
+                            {field.label}
+                            {field.required && <span className="text-destructive ml-1">*</span>}
+                        </Label>
+                        <TextArea
+                            id={field.id}
+                            label=""
+                            placeholder={field.placeholder}
+                            defaultValue={formData[field.id] || ''}
+                            onChange={(value) => handleFieldChange(field.id, value)}
+                            required={field.required}
+                            error={error}
+                            helpText={field.description}
+                            setErrorSubmission={(hasError) => {
+                                if (hasError) {
+                                    setErrors(prev => ({ ...prev, [field.id]: 'Character limit exceeded' }));
+                                } else {
+                                    setErrors(prev => {
+                                        const newErrors = { ...prev };
+                                        delete newErrors[field.id];
+                                        return newErrors;
+                                    });
+                                }
+                            }}
+                        />
+                        {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
+                        {error && (
+                            <p className="text-sm text-destructive flex items-center mt-1">
+                                <AlertCircle className="h-4 w-4 mr-1" />
+                                {error}
+                            </p>
+                        )}
+                    </div>
+                );
+
+            case 'select':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>
+                            {field.label}
+                            {field.required && <span className="text-destructive ml-1">*</span>}
+                        </Label>
+                        <Select
+                            value={formData[field.id] || ''}
+                            onValueChange={(value) => handleFieldChange(field.id, value)}
+                        >
+                            <SelectTrigger id={field.id} className={cn(error && 'border-destructive')}>
+                                <SelectValue placeholder={field.placeholder || 'Select an option'} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {field.options?.map((option) => (
+                                    <SelectItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
+                        {error && (
+                            <p className="text-sm text-destructive flex items-center mt-1">
+                                <AlertCircle className="h-4 w-4 mr-1" />
+                                {error}
+                            </p>
+                        )}
+                    </div>
+                );
+
+            case 'multiselect':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <MultiSelect
+                            options={field.options || []}
+                            selectedValues={Array.isArray(formData[field.id]) ? formData[field.id] : (formData[field.id] ? [formData[field.id]] : [])}
+                            onChange={(values) => handleFieldChange(field.id, values, true)}
+                            placeholder={field.placeholder || 'Select options'}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            case 'checkbox-multiselect':
+                return (
+                    <div key={field.id} className="mb-6">
+                        <CheckboxMultiSelect
+                            options={field.options || []}
+                            selectedValues={Array.isArray(formData[field.id]) ? formData[field.id] : (formData[field.id] ? [formData[field.id]] : [])}
+                            onChange={(values) => handleFieldChange(field.id, values, true)}
+                            placeholder={field.placeholder || 'Click to select sources'}
+                            label={field.label}
+                            helpText={field.helpText || "Select all sources that apply to your situation. This helps us determine the exact documents you'll need to provide."}
+                            showCategories={field.showCategories !== false}
+                            maxHeight={field.maxHeight || 300}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-2">{description}</p>}
+                    </div>
+                );
+
+            case 'DateofBirth':
+                return (
+                    <div className="space-y-2" key={field.id}>
+                        <Label htmlFor={field.id}>
+                            {field.label}
+                            {field.required && <span className="text-destructive ml-1">*</span>}
+                        </Label>
+                        <DateOfBirthField
+                            field={{
+                                id: field.id,
+                                label: field.label,
+                                required: field.required,
+                                description: field.description
+                            }}
+                            value={value}
+                            onChange={(val) => {
+                                // Clear any existing error when the date changes
+                                if (errors[field.id]) {
+                                    const newErrors = { ...errors };
+                                    delete newErrors[field.id];
+                                    setErrors(newErrors);
+                                }
+                                handleFieldChange(field.id, val);
+                            }}
+                            error={error}
+                        />
+                        {field.description && (
+                            <p className="text-sm text-muted-foreground mt-1">{field.description}</p>
+                        )}
+                    </div>
+                );
+
+            case 'date':
+                return (
+                    <DateField
+                        field={field}
+                        formData={formData}
+                        handleFieldChange={handleFieldChange}
+                        error={error}
+                        disableFutureDates={field.disableFutureDates || false}
+                    />
+                );
+
+
+            case 'checkbox':
+                return (
+                    <div key={field.id} className="mb-4 flex items-start space-x-2">
+                        <Checkbox
+                            id={field.id}
+                            checked={formData[field.id] === true}
+                            onCheckedChange={(checked) => handleFieldChange(field.id, checked)}
+                            className={error ? 'border-destructive' : ''}
+                        />
+                        <div className="grid gap-1.5 leading-none">
+                            <Label
+                                htmlFor={field.id}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                {field.label}
+                                {field.required && <span className="text-destructive ml-1">*</span>}
+                            </Label>
+                            {field.description && (
+                                <p className="text-sm text-muted-foreground">{field.description}</p>
+                            )}
+                            {error && (
+                                <p className="text-sm text-destructive flex items-center mt-1">
+                                    <AlertCircle className="h-4 w-4 mr-1" />
+                                    {error}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                );
+
+            case 'children':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <ChildrenInput
+                            value={formData[field.id] || []}
+                            onChange={(children) => {
+                                handleFieldChange(field.id, children);
+                            }}
+                            onError={(hasErrors) => setChildrenHasErrors(hasErrors)}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'travel_itinerary':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <TravelItinerary
+                            value={formData[field.id] || []}
+                            onChange={(itinerary) => {
+                                handleFieldChange(field.id, itinerary);
+                            }}
+                            onError={(hasErrors) => setItineraryHasErrors(hasErrors)}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'socialHandles':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <SocialHandles
+                            inputValue={formData[field.id] || {}}
+                            handleChange={(handles) => handleFieldChange(field.id, handles.value)}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'last10YearActivity':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <Last10YearActivity
+                            inputValue={formData[field.id] || []}
+                            handleChange={(activities: any) => handleFieldChange(field.id, activities.value)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                    </div>
+                );
+
+            case 'languageTest':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <LanguageTestInput
+                            inputValue={formData[field.id] || {}}
+                            handleChange={(val: any, save?: boolean) => handleFieldChange(field.id, val, save)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {field.description && <p className="text-sm text-muted-foreground mt-1">{field.description}</p>}
+                    </div>
+                );
+
+            case 'spouseDetails':
+                return (
+                    <div key={id} className="mb-4">
+                        <Label htmlFor={id}>{label}</Label>
+                        <SpouseTabs
+                            value={formData[id] || {}}
+                            onChange={(val) => handleFieldChange(id, val, true)}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            case 'SingleapplicantFamily':
+                return (
+                    <div key={id} className="mb-4">
+                        <Label htmlFor={id}>{label}</Label>
+                        <ParentTabs
+                            value={formData[id] || {}}
+                            onChange={(val) => handleFieldChange(id, val, true)}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            case 'refusalInput':
+                return (
+                    <div key={id} className="mb-4">
+                        <Label htmlFor={id}>{label}</Label>
+                        <RefusalInput
+                            inputValue={value}
+                            handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            case 'childrenInput':
+                return (
+                    <div key={id} className="mb-4">
+                        <Label htmlFor={id}>{label}</Label>
+                        <ChildrenInputField
+                            inputValue={value}
+                            handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            case 'ChildrenInputFieldUSA':
+                return (
+                    <div key={id} className="mb-4">
+                        <Label htmlFor={id}>{label}</Label>
+                        <ChildrenInputFieldUSA
+                            inputValue={value}
+                            handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            case 'militaryHistory':
+                return (
+                    <div key={field.id} className="mb-4">
+                        <Label htmlFor={field.id}>{field.label}</Label>
+                        <MilitaryHistory
+                            value={formData[field.id] || ""}
+                            onChange={(val, save) => handleFieldChange(field.id, val, save)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            default:
+                return <>no valid component found for {field.type}</>;
         }
       }
     }

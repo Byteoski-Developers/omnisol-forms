@@ -1,34 +1,38 @@
-import { Flag } from "lucide-react";
-
-export type DocumentType = "default" | "conditional";
-export type ExtractSource = "passport" | "travel_document";
-export type FormGroup =
-  | "eligibility"
-  | "personal"
-  | "travel"
-  | "accommodation"
-  | "visa"
-  | "contact"
-  | "address"
-  | "documents"
-  | "family"
-  | "host"
-  | "work"
-  | "education"
-  | "history"
-  | "declaration"
-  | "guarantor"
-  | "inviter"
-  | "criminal"
-  | "travel_document"
-  | "description_section"
-  | "citizenship"
-  | "national_id"
-  | "past_names"
-  | "application"
-  | "medical"
-  | "employment"
-  | "education"
+export type DocumentType = 'default' | 'conditional';
+export type ExtractSource = 'passport' | 'travel_document' | 'passport_first_page' | 'passport_last_page' | 'passport_internal_pages' | 'passport_visas' | 'previous_passport' |
+  'invitation_letter' | 'sponsorship_declaration' | 'income_tax_return' | 'salary_slip' | 'gst_registration' | 
+  'msme_registration' | 'leave_letter' | 'partnership_deed' | 'incorporation_certificate' | 'directors_list' | 
+  'balance_sheet' | 'form_j' | 'bank_statement' | 'bank_certificate' | 'fixed_deposit' | 'post_office_savings' | 
+  'dmat_statement' | 'mutual_funds' | 'provident_funds' | 'insurance_policy' | 'ca_report' | 'property_valuation' | 
+  'rent_deed' | 'revenue_record' | 'property_title' | 'hotel_booking' | 'air_ticket' | 'travel_insurance' | 
+  'birth_certificate' | 'marriage_certificate' | 'adhaar_card';
+export type FormGroup = 
+  | 'eligibility' 
+  | 'personal' 
+  | 'travel' 
+  | 'accommodation' 
+  | 'visa' 
+  | 'contact' 
+  | 'address' 
+  | 'documents' 
+  | 'family' 
+  | 'host'
+  | 'work'
+  | 'education'
+  | 'history'
+  | 'declaration'
+  | 'guarantor'
+  | 'inviter'
+  | 'criminal'
+  | 'travel_document'
+  | 'description_section'
+  | 'citizenship'
+  | 'national_id'
+  | 'past_names'
+  | 'application'
+  | 'medical'
+  | 'employment'
+  | 'education'
   // Additional form groups for generic country form
   | "destination"
   | "citizenship"
@@ -95,39 +99,7 @@ export interface Document {
 
 export interface FormField {
   id: string;
-  type:
-    | "text"
-    | "select"
-    | "date"
-    | "number"
-    | "checkbox"
-    | "file"
-    | "header"
-    | "info"
-    | "residence_countries"
-    | "email"
-    | "tel"
-    | "textarea"
-    | "children"
-    | "work_experience"
-    | "travel_itinerary"
-    | "siblingsInput"
-    | "parentsInput"
-    | "countriesInput"
-    | "accessingBodyAssessment"
-    | "socialHandles"
-    | "last10YearActivity"
-    | "languageTest"
-    | "multiselect"
-    | "checkbox-multiselect"
-    | "DateofBirth"
-    | "custom"
-    | "ChildrenInputFieldUSA"
-    | "childrenInput"
-    | "spouseDetails"
-    | "SingleapplicantFamily"
-    | "refusalInput"
-    | "ChildrenInputField";
+  type: 'text' | 'select' | 'date' | 'number' | 'checkbox' | 'file' | 'header' | 'info' | 'residence_countries' | 'email' | 'tel' | 'textarea' | 'children' | 'work_experience' | 'travel_itinerary' | 'siblingsInput' | 'parentsInput' | 'countriesInput' | 'accessingBodyAssessment' | 'socialHandles' | 'last10YearActivity' | 'languageTest' | 'multiselect' | 'checkbox-multiselect' | 'DateofBirth' | 'custom' | 'ChildrenInputFieldUSA' | 'childrenInput' | 'spouseDetails' | 'SingleapplicantFamily' | 'refusalInput' | 'ChildrenInputField' | 'employmentHistory' | 'educationHistory' | 'militaryHistory';
   component?: string; // For custom component types
   content?: string[];
   label: string;

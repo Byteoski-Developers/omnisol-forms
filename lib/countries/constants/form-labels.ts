@@ -57,15 +57,18 @@ export const MARITAL_STATUS_OPTIONS = [
 
 // Relation options
 export const RELATION_OPTIONS = [
-  { label: "Child", value: "child" },
-  { label: "Sibling", value: "sibling" },
-  { label: "Partner", value: "partner" },
-  { label: "Parent", value: "parent" },
-  { label: "Uncle/Aunt", value: "uncle_aunt" },
-  { label: "Cousin", value: "cousin" },
-  { label: "Grandparent", value: "grandparent" },
-  { label: "Friend", value: "friend" },
-  { label: "Other", value: "other" },
+
+  { label: 'Child', value: 'child' },
+  { label: 'Brother', value: 'brother' },
+  { label: 'Sister', value: 'sister' },
+  { label: 'Partner', value: 'partner' },
+  { label: 'Parent', value: 'parent' },
+  { label: 'Uncle/Aunt', value: 'uncle_aunt' },
+  { label: 'Cousin', value: 'cousin' },
+  { label: 'Grandparent', value: 'grandparent' },
+  { label: 'Friend', value: 'friend' },
+  { label: 'Other', value: 'other' }
+
 ];
 
 // Immigration status options

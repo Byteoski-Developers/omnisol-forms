@@ -68,6 +68,10 @@ export default function FamilyMember({
     handleChange(updatedSibling);
   };
 
+  // Check if address field should be emphasized
+  // For married siblings 
+  const isMarried = localSibling.martialStatus === 'married';
+
   return (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -177,6 +181,35 @@ export default function FamilyMember({
             </SelectContent>
           </Select>
         </div>
+
+        {/* Occupation field */}
+        {isMarried && (
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Occupation</label>
+          <Input
+            value={localSibling.occupation || ''}
+            onChange={(e) => handleInputChange('occupation', e.target.value)}
+            disabled={readonly}
+            placeholder="Current occupation"
+          />
+        </div>
+         )}
+
+        {/* Current Address field - only shown for married siblings */}
+        {isMarried && (
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-sm font-medium">
+              Current Address
+            </label>
+            <Input
+              value={localSibling.address || ''}
+              onChange={(e) => handleInputChange('address', e.target.value)}
+              disabled={readonly}
+              placeholder="Current address"
+              className="border-primary focus:border-primary"
+            />
+          </div>
+        )}
       </div>
 
       {!readonly && (

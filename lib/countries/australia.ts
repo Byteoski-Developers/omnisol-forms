@@ -38,49 +38,1086 @@ export const AUSTRALIA: VisaForm = {
       type: "default",
       required: true,
       extractableFields: [
+        // First page extractions
         {
-          fieldId: "passportNumber",
-          source: "passport",
+
+          fieldId: 'passportNumber',
+          source: 'passport_first_page'
         },
         {
-          fieldId: "fullName",
-          source: "passport",
+          fieldId: 'surname',
+          source: 'passport_first_page'
         },
         {
-          fieldId: "dateOfBirth",
-          source: "passport",
+          fieldId: 'givenName',
+          source: 'passport_first_page'
         },
         {
-          fieldId: "nationality",
-          source: "passport",
+          fieldId: 'fullName',
+          source: 'passport_first_page'
         },
         {
-          fieldId: "passportExpiryDate",
-          source: "passport",
+          fieldId: 'dateOfBirth',
+          source: 'passport_first_page'
         },
-      ],
+        {
+          fieldId: 'placeOfBirth',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'issuingAuthority',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'placeOfIssue',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'dateOfIssue',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'passportExpiryDate',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'nationality',
+          source: 'passport_first_page'
+        },
+        // Last page extractions
+        {
+          fieldId: 'fathersName',
+          source: 'passport_last_page'
+        },
+        {
+          fieldId: 'mothersName',
+          source: 'passport_last_page'
+        },
+        {
+          fieldId: 'spouseName',
+          source: 'passport_last_page'
+        },
+        {
+          fieldId: 'address',
+          source: 'passport_last_page'
+        },
+        {
+          fieldId: 'oldPassportDetails',
+          source: 'passport_last_page'
+        },
+        // Internal pages extractions
+        {
+          fieldId: 'annotations',
+          source: 'passport_internal_pages'
+        },
+        {
+          fieldId: 'refusalStamps',
+          source: 'passport_internal_pages'
+        },
+        {
+          fieldId: 'entryExitStamps',
+          source: 'passport_internal_pages'
+        },
+        // Visa pages extractions
+        {
+          fieldId: 'visaIssuingCountry',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'visaCategory',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'visaDurationFrom',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'visaDurationTo',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'cancelledVisas',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'visaNumber',
+          source: 'passport_visas'
+        }
+      ]
     },
     {
-      id: "photo",
-      name: "Recent Photograph",
-      description: "Upload a recent passport-sized photo with white background",
-      type: "default",
+      id: 'previous_passport',
+      name: 'Previous Passport',
+      description: 'Upload scanned copy of all pages of your previous passport(s)',
+      type: 'default',
+      required: false,
+      extractableFields: [
+        // First page extractions
+        {
+          fieldId: 'previousPassportExpiryDate',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportPlaceOfIssue',
+          source: 'previous_passport'
+        },
+        // Last page extractions
+        {
+          fieldId: 'previousPassportOldDetails',
+          source: 'previous_passport'
+        },
+        // Internal pages extractions
+        {
+          fieldId: 'previousPassportAnnotations',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportRefusalStamps',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportEntryExitStamps',
+          source: 'previous_passport'
+        },
+        // Visa pages extractions
+        {
+          fieldId: 'previousPassportVisaIssuingCountry',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportVisaCategory',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportVisaDurationFrom',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportVisaDurationTo',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportCancelledVisas',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportVisaNumber',
+          source: 'previous_passport'
+        }
+      ]
+    },
+    // Photo documents
+    {
+      id: 'photo',
+      name: 'Recent Photograph',
+      description: 'Upload a recent passport-sized photo with white background',
+      type: 'default',
+      required: true
+    },
+    // Adhaar card documents, extractable fields 
+    {
+      id: 'adhaar_card',
+      name: 'Adhaar Card',
+      description: 'Upload your Adhaar Card',
+      type: 'conditional',
       required: true,
+      conditions: [{
+        questionId: 'nationality',
+        value: 'IN'  // Show only for Indian nationality
+      }],
+      extractableFields: [
+        {
+          fieldId: 'adhaarName',
+          source: 'adhaar_card'
+        },
+        {
+          fieldId: 'adhaarNumber',
+          source: 'adhaar_card'
+        },
+        {
+          fieldId: 'adhaarIssueDate',
+          source: 'adhaar_card'
+        }
+      ]
+    },
+    // Travel insurance documents, extractable fields 
+    {
+      id: 'travel_insurance',
+      name: 'Travel Insurance Policy',
+      description: 'Upload your travel insurance policy',
+      type: 'default',
+      required: true,
+      extractableFields: [
+        {
+          fieldId: 'insuredName',
+          source: 'travel_insurance'
+        },
+        {
+          fieldId: 'insurancePeriodFrom',
+          source: 'travel_insurance'
+        },
+        {
+          fieldId: 'insurancePeriodTo',
+          source: 'travel_insurance'
+        },
+        {
+          fieldId: 'insuranceCoverAmount',
+          source: 'travel_insurance'
+        },
+        {
+          fieldId: 'insuranceCompany',
+          source: 'travel_insurance'
+        }
+      ]
+    },
+    // Income tax return documents
+    {
+      id: 'income_tax_return',
+      name: 'Income Tax Return and Computation of Income',
+      description: 'Upload your latest income tax return and computation of income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'employmentStatus',
+        value: 'self_employed'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'assesseeName',
+          source: 'income_tax_return'
+        },
+        {
+          fieldId: 'assessmentYear',
+          source: 'income_tax_return'
+        },
+        {
+          fieldId: 'sourcesOfIncome',
+          source: 'income_tax_return'
+        },
+        {
+          fieldId: 'totalIncome',
+          source: 'income_tax_return'
+        }
+      ]
+    },
+    // Salary slip documents
+    {
+      id: 'salary_slip',
+      name: 'Salary Slips',
+      description: 'Upload your latest salary slips',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'employmentStatus',
+        value: 'employed'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'salaryPeriod',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'grossSalary',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'netSalary',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'employerName',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'employerAddress',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'employeeDesignation',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'dateOfJoining',
+          source: 'salary_slip'
+        }
+      ]
+    },
+    // GST registration documents
+    {
+      id: 'gst_registration',
+      name: 'GST Registration',
+      description: 'Upload your Goods and Service Tax Registration certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'businessName',
+          source: 'gst_registration'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'gst_registration'
+        },
+        {
+          fieldId: 'ownerNames',
+          source: 'gst_registration'
+        },
+        {
+          fieldId: 'businessAddress',
+          source: 'gst_registration'
+        },
+        {
+          fieldId: 'businessContact',
+          source: 'gst_registration'
+        }
+      ]
+    },
+    // MSME Registration documents
+    {
+      id: 'msme_registration',
+      name: 'MSME Registration',
+      description: 'Upload your Micro, Small & Medium Enterprises registration certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'msmeRegistrationNumber',
+          source: 'msme_registration'
+        },
+        {
+          fieldId: 'enterpriseName',
+          source: 'msme_registration'
+        },
+        {
+          fieldId: 'enterpriseType',
+          source: 'msme_registration'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'msme_registration'
+        },
+        {
+          fieldId: 'proprietorName',
+          source: 'msme_registration'
+        }
+      ]
+    },
+    // Leave Letter documents
+    {
+      id: 'leave_letter',
+      name: 'Leave Letter',
+      description: 'Upload your approved leave letter from your employer',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'employmentStatus',
+        value: 'employed'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'employeeName',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'employeeDesignation',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'leaveStartDate',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'leaveEndDate',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'approverName',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'approverDesignation',
+          source: 'leave_letter'
+        }
+      ]
+    },
+    // Partnership Deed documents
+{
+  id: 'partnership_deed',
+  name: 'Partnership Deed',
+  description: 'Upload your partnership deed document',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'businessType',
+    value: 'partnership'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'partnershipName',
+      source: 'partnership_deed'
     },
     {
-      id: "financial_proof",
-      name: "Proof of Financial Means",
-      description:
-        "Bank statements, income tax returns, or other proof of sufficient funds for your visit",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "financialSource",
-          value: "bank_statements",
-        },
-      ],
+      fieldId: 'partnerNames',
+      source: 'partnership_deed'
     },
+    {
+      fieldId: 'partnershipFormationDate',
+      source: 'partnership_deed'
+    },
+    {
+      fieldId: 'businessAddress',
+      source: 'partnership_deed'
+    },
+    {
+      fieldId: 'profitSharingRatio',
+      source: 'partnership_deed'
+    }
+  ]
+},
+// Certificate of Incorporation documents
+{
+  id: 'incorporation_certificate',
+  name: 'Certificate of Incorporation',
+  description: 'Upload your company\'s certificate of incorporation',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'businessType',
+    value: 'company'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'companyName',
+      source: 'incorporation_certificate'
+    },
+    {
+      fieldId: 'companyRegistrationNumber',
+      source: 'incorporation_certificate'
+    },
+    {
+      fieldId: 'incorporationDate',
+      source: 'incorporation_certificate'
+    },
+    {
+      fieldId: 'registeredAddress',
+      source: 'incorporation_certificate'
+    }
+  ]
+},
+
+// Director's List documents
+{
+  id: 'directors_list',
+  name: 'Director\'s List',
+  description: 'Upload your company\'s list of directors',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'businessType',
+    value: 'company'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'companyName',
+      source: 'directors_list'
+    },
+    {
+      fieldId: 'directorNames',
+      source: 'directors_list'
+    },
+    {
+      fieldId: 'directorAddresses',
+      source: 'directors_list'
+    }
+  ]
+},
+// Fixed Deposit documents
+{
+  id: 'fixed_deposit',
+  name: 'Fixed Deposit',
+  description: 'Upload your fixed deposit certificates',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'fixed_deposits'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'depositorName',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'bankName',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'fdNumber',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'depositAmount',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'interestRate',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'depositDate',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'maturityDate',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'maturityAmount',
+      source: 'fixed_deposit'
+    }
+  ]
+},
+// Post Office Savings documents
+{
+  id: 'post_office_savings',
+  name: 'Post Office Saving Schemes',
+  description: 'Upload your post office saving scheme documents',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'postal_savings'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'accountHolderName',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'schemeType',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'accountNumber',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'depositAmount',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'openingDate',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'maturityDate',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'postOfficeName',
+      source: 'post_office_savings'
+    }
+  ]
+},
+// Mutual Funds documents
+{
+  id: 'mutual_funds',
+  name: 'Mutual Funds Statements',
+  description: 'Upload your mutual funds statements',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'mutual_funds'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'investorName',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'folioNumber',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'schemeNames',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'investmentAmount',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'currentValue',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'statementDate',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'assetManagementCompany',
+      source: 'mutual_funds'
+    }
+  ]
+},
+// Provident Funds documents
+{
+  id: 'provident_funds',
+  name: 'Provident Funds Statements',
+  description: 'Upload your provident fund statements',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'provident_fund'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'memberName',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'pfAccountNumber',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'employerName',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'employeeContribution',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'employerContribution',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'totalBalance',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'statementPeriod',
+      source: 'provident_funds'
+    }
+  ]
+},
+// Insurance Policy documents
+{
+  id: 'insurance_policy',
+  name: 'Insurance Policies',
+  description: 'Upload your insurance policy documents',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'insurance_policies'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'policyHolderName',
+      source: 'insurance_policy'
+    },
+    {
+      fieldId: 'insuranceCompany',
+      source: 'insurance_policy'
+    },
+    {
+      fieldId: 'premiumAmount',
+      source: 'insurance_policy'
+    },
+    {
+      fieldId: 'issueDate',
+      source: 'insurance_policy'
+    },
+    {
+      fieldId: 'maturityDate',
+      source: 'insurance_policy'
+    }
+  ]
+},
+// Property Valuation documents
+{
+  id: 'property_valuation',
+  name: 'Property Valuation Reports',
+  description: 'Upload property valuation reports',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'property'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'ownerName',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'propertyAddress',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'propertyType',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'valuationAmount',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'valuationDate',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'valuatorName',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'valuatorQualification',
+      source: 'property_valuation'
+    }
+  ]
+},
+
+// Rent Deed documents
+{
+  id: 'rent_deed',
+  name: 'Rent Deeds',
+  description: 'Upload your rent deed documents',
+  type: 'conditional',
+  required: false,
+  conditions: [{
+    questionId: 'residenceType',
+    value: 'rented'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'tenantName',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'landlordName',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'propertyAddress',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'rentAmount',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'leaseStartDate',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'leaseEndDate',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'securityDeposit',
+      source: 'rent_deed'
+    }
+  ]
+},
+
+// Revenue Record documents
+{
+  id: 'revenue_record',
+  name: 'Revenue Record of the Land',
+  description: 'Upload revenue record documents for your land',
+  type: 'conditional',
+  required: false,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'property'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'ownerName',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'landLocation',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'landArea',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'landValue',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'recordNumber',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'recordDate',
+      source: 'revenue_record'
+    }
+  ]
+},
+
+// Property Title documents
+{
+  id: 'property_title',
+  name: 'Property Title Deeds',
+  description: 'Upload your property title deed documents',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'property'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'ownerName',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'propertyAddress',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'propertyDescription',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'registrationNumber',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'registrationDate',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'purchaseValue',
+      source: 'property_title'
+    }
+  ]
+},
+// Birth Certificate documents
+{
+  id: 'birth_certificate',
+  name: 'Birth Certificate',
+  description: 'Upload your birth certificate',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'ageProofRequired',  // You would need this question in your form
+    value: true
+  }],
+  extractableFields: [
+    {
+      fieldId: 'fullName',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'dateOfBirth',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'placeOfBirth',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'fatherName',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'motherName',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'registrationNumber',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'registrationDate',
+      source: 'birth_certificate'
+    }
+  ]
+},
+// Marriage Certificate documents
+{
+  id: 'marriage_certificate',
+  name: 'Marriage Registration Certificate',
+  description: 'Upload your marriage certificate',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'maritalStatus',
+    value: 'married'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'husbandName',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'wifeName',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'marriageDate',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'marriagePlace',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'registrationNumber',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'registrationDate',
+      source: 'marriage_certificate'
+    }
+  ]
+},
+
+    // Hotel booking documents, extractable fields 
+    {
+      id: 'hotel_booking',
+      name: 'Hotel Bookings',
+      description: 'Upload your hotel booking confirmations',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'accommodationType',
+        value: 'hotel'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'travelerName',
+          source: 'hotel_booking'
+        },
+        {
+          fieldId: 'checkInDate',
+          source: 'hotel_booking'
+        },
+        {
+          fieldId: 'checkOutDate',
+          source: 'hotel_booking'
+        },
+        {
+          fieldId: 'hotelName',
+          source: 'hotel_booking'
+        },
+        {
+          fieldId: 'hotelAddress',
+          source: 'hotel_booking'
+        },
+        {
+          fieldId: 'hotelPhone',
+          source: 'hotel_booking'
+        }
+      ]
+
+    },
+    // Air ticket documents, extractable fields 
+    {
+
+      id: 'air_ticket',
+      name: 'Air Tickets',
+      description: 'Upload your confirmed air tickets',
+      type: 'default',
+      required: true,
+      extractableFields: [
+        {
+          fieldId: 'passengerName',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'departureDate',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'departureLocation',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'arrivalDate',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'arrivalLocation',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'airlineName',
+          source: 'air_ticket'
+        }
+      ]
+
+    },
+
+    // Bank statement documents, extractable fields 
+    {
+
+      id: 'bank_statement',
+      name: 'Bank Account Statements',
+      description: 'Upload bank account statements (business or personal)',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'bank_statements'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'accountHolderName',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'bankName',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'accountNumber',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'statementPeriod',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'accountType',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'balance',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'balanceType',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'totalDeposits',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'totalWithdrawals',
+          source: 'bank_statement'
+        }
+      ]
+
+    },
+    // Demat account documents
     {
       id: "demat_account",
       name: "Demat Account Statement",
@@ -95,6 +1132,7 @@ export const AUSTRALIA: VisaForm = {
         },
       ],
     },
+    // Property documents
     {
       id: "property_documents",
       name: "Property Documents",
@@ -109,6 +1147,7 @@ export const AUSTRALIA: VisaForm = {
         },
       ],
     },
+    // Sponsor documents
     {
       id: "sponsor_letter",
       name: "Sponsor Letter and Bank Statements",
@@ -123,6 +1162,7 @@ export const AUSTRALIA: VisaForm = {
         },
       ],
     },
+
     {
       id: "travel_itinerary",
       name: "Travel Itinerary",
@@ -142,7 +1182,71 @@ export const AUSTRALIA: VisaForm = {
           value: "visitation",
         },
       ],
+
+    // Invitation letter documents
+    {
+      id: 'invitation_letter',
+      name: 'Letter of Invitation / Sponsorship Declaration',
+      description: 'Upload letter of invitation (business or personal) or sponsorship declaration',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'visitation'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'inviterName',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'relationshipWithInviter',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'reasonOfVisit',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterAddress',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'accommodationAddress',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterPhone',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterEmail',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterImmigrationStatus',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'visitDates',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterOccupation',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterPassportNumber',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterDateOfBirth',
+          source: 'invitation_letter'
+        }
+      ]
+
     },
+    // Inviter activity documents
     {
       id: "inviter_activity",
       name: "Inviter activity (if applicable)",
@@ -157,6 +1261,7 @@ export const AUSTRALIA: VisaForm = {
         },
       ],
     },
+    // Inviter income proof documents
     {
       id: "inviter_income_proof",
       name: "Inviter Income proof (if applicable)",
@@ -171,6 +1276,7 @@ export const AUSTRALIA: VisaForm = {
         },
       ],
     },
+    // Inviter funds proof documents
     {
       id: "inviter_funds_proof",
       name: "Inviter Funds proof (if applicable)",
@@ -199,6 +1305,7 @@ export const AUSTRALIA: VisaForm = {
         },
       ],
     },
+    // Documents for self-arranged travel
     {
       id: "flight_tickets",
       name: "Flight Tickets",
@@ -227,18 +1334,6 @@ export const AUSTRALIA: VisaForm = {
         },
       ],
     },
-    // tourism docs
-    // {
-    //   id: 'tourism_itinerary',
-    //   name: 'Tourism Itinerary ',
-    //   description: 'Detailed itinerary of your trip ',
-    //   type: 'conditional',
-    //   required: true,
-    //   conditions: [{
-    //     questionId: 'visitPurpose',
-    //     value: 'tourism'
-    //   }]
-    // },
     {
       id: "tourism_accommodation",
       name: "Tourism Accommodation ",
@@ -1963,23 +3058,10 @@ export const AUSTRALIA: VisaForm = {
       ],
     },
     {
-      id: "salary_slips_employed",
-      name: "Salary Slips",
-      description: "Minimum 3 months' salary slips",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "employed",
-        },
-      ],
-    },
-    {
-      id: "income_tax_returns_employed",
-      name: "Income Tax Returns (2 years)",
-      description: "Income Tax returns along with computation – last 2 years",
-      type: "conditional",
+      id: 'income_tax_returns_employed',
+      name: 'Income Tax Returns (2 years)',
+      description: 'Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -3168,7 +4250,93 @@ export const AUSTRALIA: VisaForm = {
         },
       ],
     },
+
+    
+    // country specific docs 
+
+    
+      // Health & Character
+      {
+        id: 'health_examination',
+        name: 'Health Examination (eMedical)',
+        description: 'eMedical reference for Australian visa health check',
+        type: 'conditional',
+        required: true,
+        conditions: [
+          { questionId: 'visaType', value: 'student' },
+          { questionId: 'visaType', value: 'work' }
+        ]
+      },
+      {
+        id: 'form_80',
+        name: 'Form 80 - Personal Particulars',
+        description: 'Detailed character assessment form',
+        type: 'conditional',
+        required: true,
+        conditions: [
+          { questionId: 'visaType', value: 'permanent_residence' }
+        ]
+      },
+    
+      // Visa History
+      {
+        id: 'previous_au_visas',
+        name: 'Previous Australian Visa Grants',
+        description: 'Copies of all previous Australian visa grants',
+        type: 'default',
+        required: false
+      },
+    
+      // Financial (Australia-specific thresholds)
+      {
+        id: 'proof_of_funds_au',
+        name: 'Proof of Sufficient Funds (AUD)',
+        description: 'Evidence of meeting Australian financial requirements',
+        type: 'default',
+        required: true
+      },
+    
+      // Employment/Superannuation
+      {
+        id: 'au_superannuation',
+        name: 'Australian Superannuation Statement',
+        description: 'For applicants who previously worked in Australia',
+        type: 'conditional',
+        required: false,
+        conditions: [
+          { questionId: 'previouslyWorkedInAustralia', value: 'yes' }
+        ]
+      },
+    
+      // Tax
+      {
+        id: 'au_tax_returns',
+        name: 'Australian Tax Returns',
+        description: 'Required if previously employed in Australia',
+        type: 'conditional',
+        required: false,
+        conditions: [
+          { questionId: 'previouslyWorkedInAustralia', value: 'yes' }
+        ]
+      },
+    
+      // Student Visa Specific
+      {
+        id: 'gte_statement',
+        name: 'GTE Statement',
+        description: 'Genuine Temporary Entrant statement for student visa',
+        type: 'conditional',
+        required: true,
+        conditions: [
+          { questionId: 'visaType', value: 'student' }
+        ]
+      },
+    
+
   ],
+  
+
+   
   steps: [
     // {
     //   title: 'Destination Selection',
@@ -3218,24 +4386,24 @@ export const AUSTRALIA: VisaForm = {
     //   showDocuments: false,
     //   slug: 'family-information'
     // },
-    {
-      title: "Parents Information",
-      group: "parents" as FormGroup,
-      showDocuments: false,
-      slug: "parents-information",
-    },
+
+    // {
+    //   title: 'Parents Information',
+    //   group: 'parents' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'parents-information'
+    // },
     {
       title: "Visa History",
       group: "visa_history" as FormGroup,
       showDocuments: false,
       slug: "visa-history",
-    },
-    {
-      title: "Education",
-      group: "education" as FormGroup,
-      showDocuments: false,
-      slug: "education",
-    },
+    // {
+    //   title: 'Education',
+    //   group: 'education' as FormGroup,
+    //   showDocuments: false,
+    //   slug: 'education'
+    // },
     {
       title: "Travel Plans",
       group: "travel_plans" as FormGroup,
@@ -3398,11 +4566,14 @@ export const AUSTRALIA: VisaForm = {
       showIf: {
         operator: "and",
         conditions: [
-          { field: "livesInCitizenshipCountry", value: "no" },
-          { field: "needsOnshoreServices", value: "yes" },
-          { field: "onshoreServiceType", value: "other" },
-        ],
-      },
+
+
+          { field: 'livesInCitizenshipCountry', value: 'no' },
+          { field: 'needsOnshoreServices', value: 'yes' },
+          { field: 'onshoreServiceType', value: 'other' }
+        ]
+      }
+
     },
     // {
     //   id: 'onshoreServiceTypeOther',
@@ -3411,7 +4582,7 @@ export const AUSTRALIA: VisaForm = {
     //   label: 'Please specify the onshore service you need',
     //   required: true,
     //   placeholder: 'Enter service details',
-    //   showIf: {
+    //   showIf: { 
     //     operator: 'and',
     //     conditions: [
     //       { field: 'livesInCitizenshipCountry', value: 'no' },
@@ -3438,115 +4609,23 @@ export const AUSTRALIA: VisaForm = {
 
     // -------------------- PERSONAL INFORMATION (MARITAL STATUS) --------------------
     {
-      id: "personalInfoHeader",
-      group: "personal" as FormGroup,
-      type: "header",
-      label: "Marital Status",
+
+      id: 'personalInfoHeader',
+      group: 'personal' as FormGroup,
+      type: 'header',
+      label: 'Martial Status'
     },
     {
-      id: "maritalStatus",
-      group: "personal" as FormGroup,
-      type: "select",
+      id: 'maritalStatus',
+      group: 'personal' as FormGroup,
+      type: 'select',
       label: `What is your marital status? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      options: MARITAL_STATUS_OPTIONS,
+      options: MARITAL_STATUS_OPTIONS
+
     },
 
     // For married applicants
-    {
-      id: "spouseNameOnPassport",
-      group: "personal" as FormGroup,
-      type: "select",
-      label: `Is your spouse's name added on your passport? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: "maritalStatus", not: "single" },
-      options: [
-        { label: "Yes", value: "yes" },
-        { label: "No", value: "no" },
-      ],
-    },
-    {
-      id: "spouseName",
-      group: "personal" as FormGroup,
-      type: "textarea",
-      label: `What is name of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: "Enter spouse name",
-      showIf: {
-        operator: "and",
-        conditions: [
-          { field: "maritalStatus", value: "married" },
-          { field: "spouseNameOnPassport", value: "no" },
-        ],
-      },
-    },
-    {
-      id: "spouseLivesWithYou",
-      group: "personal" as FormGroup,
-      type: "select",
-      label: `Does your spouse live with you? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: "maritalStatus", not: "single" },
-      options: [
-        { label: "Yes", value: "yes" },
-        { label: "No", value: "no" },
-      ],
-    },
-    {
-      id: "spouseResidenceLocation",
-      group: "personal" as FormGroup,
-      type: "text",
-      label: `Where does your spouse live? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
-      placeholder: "Enter spouse residence location",
-      showIf: {
-        operator: "and",
-        conditions: [
-          { field: "maritalStatus", value: "married" },
-          { field: "spouseLivesWithYou", value: "no" },
-        ],
-      },
-    },
-    {
-      id: "spouseDob",
-      group: "personal" as FormGroup,
-      type: "DateofBirth",
-      label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: "maritalStatus", not: "single" },
-      disableFutureDates: true,
-    },
-    {
-      id: "isFirstMarriage",
-      group: "personal" as FormGroup,
-      type: "select",
-      label: `Is this your first marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: "maritalStatus", not: "single" },
-      options: [
-        { label: "Yes", value: "yes" },
-        { label: "No", value: "no" },
-      ],
-    },
-    {
-      id: "previousRelationshipEnd",
-      group: "personal" as FormGroup,
-      type: "select",
-      label: `How did your previous relationship end? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: "and",
-        conditions: [
-          { field: "maritalStatus", value: "married" },
-          { field: "isFirstMarriage", value: "no" },
-        ],
-      },
-      options: [
-        { label: "Divorce", value: "divorce" },
-        { label: "Separation", value: "separation" },
-        { label: "Death of partner", value: "death" },
-      ],
-    },
 
     // For divorced applicants
     {
@@ -3583,57 +4662,17 @@ export const AUSTRALIA: VisaForm = {
           {
             operator: "and",
             conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "divorce" },
-            ],
-          },
-        ],
-      },
+
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'divorce' }
+            ]
+          }
+        ]
+      }
     },
-    {
-      id: "exSpouseDob",
-      group: "personal" as FormGroup,
-      type: "DateofBirth",
-      label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: "or",
-        conditions: [
-          { field: "maritalStatus", value: "divorced" },
-          {
-            operator: "and",
-            conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "divorce" },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      id: "exSpouseName",
-      group: "personal" as FormGroup,
-      type: "text",
-      label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: "Enter ex-spouse name",
-      showIf: {
-        operator: "or",
-        conditions: [
-          { field: "maritalStatus", value: "divorced" },
-          {
-            operator: "and",
-            conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "divorce" },
-            ],
-          },
-        ],
-      },
-    },
+   
+
 
     // For widowed applicants
     {
@@ -3671,164 +4710,14 @@ export const AUSTRALIA: VisaForm = {
           {
             operator: "and",
             conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "death" },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      id: "dateOfSpouseDeath",
-      group: "personal" as FormGroup,
-      type: "DateofBirth",
-      label: `What is the date of death of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: "or",
-        conditions: [
-          { field: "maritalStatus", value: "widowed" },
-          {
-            operator: "and",
-            conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "death" },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      id: "deceasedSpouseDob",
-      group: "personal" as FormGroup,
-      type: "DateofBirth",
-      label: `What is date of birth of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: "or",
-        conditions: [
-          { field: "maritalStatus", value: "widowed" },
-          {
-            operator: "and",
-            conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "death" },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      id: "deceasedSpouseName",
-      group: "personal" as FormGroup,
-      type: "text",
-      label: `What is the name of your deceased spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: "Enter deceased spouse name",
-      showIf: {
-        operator: "or",
-        conditions: [
-          { field: "maritalStatus", value: "widowed" },
-          {
-            operator: "and",
-            conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "death" },
-            ],
-          },
-        ],
-      },
-    },
 
-    // For separated applicants
-    {
-      id: "separatedMarriageDate",
-      group: "personal" as FormGroup,
-      type: "DateofBirth",
-      label: `What was your date of marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: "or",
-        conditions: [
-          { field: "maritalStatus", value: "separated" },
-          {
-            operator: "and",
-            conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "separation" },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      id: "dateOfSeparation",
-      group: "personal" as FormGroup,
-      type: "DateofBirth",
-      label: `What is the date of separation with your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: "or",
-        conditions: [
-          { field: "maritalStatus", value: "separated" },
-          {
-            operator: "and",
-            conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "separation" },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      id: "separatedSpouseDob",
-      group: "personal" as FormGroup,
-      type: "DateofBirth",
-      label: `What is date of birth of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: "or",
-        conditions: [
-          { field: "maritalStatus", value: "separated" },
-          {
-            operator: "and",
-            conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "separation" },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      id: "separatedSpouseName",
-      group: "personal" as FormGroup,
-      type: "text",
-      label: `What is the name of your ex-spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: "Enter ex-spouse name",
-      showIf: {
-        operator: "or",
-        conditions: [
-          { field: "maritalStatus", value: "separated" },
-          {
-            operator: "and",
-            conditions: [
-              { field: "maritalStatus", value: "married" },
-              { field: "isFirstMarriage", value: "no" },
-              { field: "previousRelationshipEnd", value: "separation" },
-            ],
-          },
-        ],
-      },
+              { field: 'maritalStatus', value: 'married' },
+              { field: 'isFirstMarriage', value: 'no' },
+              { field: 'previousRelationshipEnd', value: 'death' }
+            ]
+          }
+        ]
+      }
     },
 
     // Children information for all marital statuses (except single)
@@ -4138,6 +5027,50 @@ export const AUSTRALIA: VisaForm = {
           { field: "inviterImmigrationStatus", value: "other" },
         ],
       },
+    },
+    {
+      id: 'inviterFullName',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Full Name of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter full name of the inviter',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterDateOfBirth',
+      group: 'purpose' as FormGroup,
+      type: 'DateofBirth',
+      label: `Date of Birth of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterAddress',
+      group: 'purpose' as FormGroup,
+      type: 'textarea',
+      label: `Complete Address of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter complete address of the inviter',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterPhoneNumber',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Phone Number of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter phone number of the inviter',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
+    },
+    {
+      id: 'inviterEmail',
+      group: 'purpose' as FormGroup,
+      type: 'email',
+      label: `Email ID of the inviter ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter email address of the inviter',
+      showIf: { field: 'visitPurpose', value: 'visitation' }
     },
     // {
     //   id: 'inviterContactDetails',

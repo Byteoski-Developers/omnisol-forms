@@ -37,28 +37,174 @@ export const UNITED_KINGDOM: VisaForm = {
       type: "default",
       required: true,
       extractableFields: [
+        // First page extractions
         {
-          fieldId: "passportNumber",
-          source: "passport",
+          fieldId: 'passportNumber',
+          source: 'passport_first_page'
         },
         {
-          fieldId: "fullName",
-          source: "passport",
+          fieldId: 'surname',
+          source: 'passport_first_page'
         },
         {
-          fieldId: "dateOfBirth",
-          source: "passport",
+          fieldId: 'givenName',
+          source: 'passport_first_page'
         },
         {
-          fieldId: "nationality",
-          source: "passport",
+          fieldId: 'fullName',
+          source: 'passport_first_page'
         },
         {
-          fieldId: "passportExpiryDate",
-          source: "passport",
+          fieldId: 'dateOfBirth',
+          source: 'passport_first_page'
         },
-      ],
+        {
+          fieldId: 'placeOfBirth',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'issuingAuthority',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'placeOfIssue',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'dateOfIssue',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'passportExpiryDate',
+          source: 'passport_first_page'
+        },
+        {
+          fieldId: 'nationality',
+          source: 'passport_first_page'
+        },
+        // Last page extractions
+        {
+          fieldId: 'fathersName',
+          source: 'passport_last_page'
+        },
+        {
+          fieldId: 'mothersName',
+          source: 'passport_last_page'
+        },
+        {
+          fieldId: 'spouseName',
+          source: 'passport_last_page'
+        },
+        {
+          fieldId: 'address',
+          source: 'passport_last_page'
+        },
+        {
+          fieldId: 'oldPassportDetails',
+          source: 'passport_last_page'
+        },
+        // Internal pages extractions
+        {
+          fieldId: 'annotations',
+          source: 'passport_internal_pages'
+        },
+        {
+          fieldId: 'refusalStamps',
+          source: 'passport_internal_pages'
+        },
+        {
+          fieldId: 'entryExitStamps',
+          source: 'passport_internal_pages'
+        },
+        // Visa pages extractions
+        {
+          fieldId: 'visaIssuingCountry',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'visaCategory',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'visaDurationFrom',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'visaDurationTo',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'cancelledVisas',
+          source: 'passport_visas'
+        },
+        {
+          fieldId: 'visaNumber',
+          source: 'passport_visas'
+        }
+      ]
     },
+    {
+      id: 'previous_passport',
+      name: 'Previous Passport',
+      description: 'Upload scanned copy of all pages of your previous passport(s)',
+      type: 'default',
+      required: false,
+      extractableFields: [
+        // First page extractions
+        {
+          fieldId: 'previousPassportExpiryDate',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportPlaceOfIssue',
+          source: 'previous_passport'
+        },
+        // Last page extractions
+        {
+          fieldId: 'previousPassportOldDetails',
+          source: 'previous_passport'
+        },
+        // Internal pages extractions
+        {
+          fieldId: 'previousPassportAnnotations',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportRefusalStamps',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportEntryExitStamps',
+          source: 'previous_passport'
+        },
+        // Visa pages extractions
+        {
+          fieldId: 'previousPassportVisaIssuingCountry',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportVisaCategory',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportVisaDurationFrom',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportVisaDurationTo',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportCancelledVisas',
+          source: 'previous_passport'
+        },
+        {
+          fieldId: 'previousPassportVisaNumber',
+          source: 'previous_passport'
+        }
+      ]
+    },
+    // Photo documents
     {
       id: "photo",
       name: "Recent Photograph",
@@ -66,670 +212,2142 @@ export const UNITED_KINGDOM: VisaForm = {
       type: "default",
       required: true,
     },
+    // Adhaar card documents, extractable fields 
     {
-      id: "financial_proof",
-      name: "Proof of Financial Means",
-      description:
-        "Bank statements, income tax returns, or other proof of sufficient funds for your visit",
-      type: "conditional",
+      id: 'adhaar_card',
+      name: 'Adhaar Card',
+      description: 'Upload your Adhaar Card',
+      type: 'conditional',
       required: true,
-      conditions: [
+      conditions: [{
+        questionId: 'nationality',
+        value: 'IN'  // Show only for Indian nationality
+      }],
+      extractableFields: [
         {
-          questionId: "financialSource",
-          value: "bank_statements",
+          fieldId: 'adhaarName',
+          source: 'adhaar_card'
         },
-      ],
+        {
+          fieldId: 'adhaarNumber',
+          source: 'adhaar_card'
+        },
+        {
+          fieldId: 'adhaarIssueDate',
+          source: 'adhaar_card'
+        }
+      ]
+    },
+    // Travel insurance documents, extractable fields 
+    {
+      id: 'travel_insurance',
+      name: 'Travel Insurance Policy',
+      description: 'Upload your travel insurance policy',
+      type: 'default',
+      required: true,
+      extractableFields: [
+        {
+          fieldId: 'insuredName',
+          source: 'travel_insurance'
+        },
+        {
+          fieldId: 'insurancePeriodFrom',
+          source: 'travel_insurance'
+        },
+        {
+          fieldId: 'insurancePeriodTo',
+          source: 'travel_insurance'
+        },
+        {
+          fieldId: 'insuranceCoverAmount',
+          source: 'travel_insurance'
+        },
+        {
+          fieldId: 'insuranceCompany',
+          source: 'travel_insurance'
+        }
+      ]
+    },
+    // Income tax return documents
+    {
+      id: 'income_tax_return',
+      name: 'Income Tax Return and Computation of Income',
+      description: 'Upload your latest income tax return and computation of income',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'employmentStatus',
+        value: 'self_employed'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'assesseeName',
+          source: 'income_tax_return'
+        },
+        {
+          fieldId: 'assessmentYear',
+          source: 'income_tax_return'
+        },
+        {
+          fieldId: 'sourcesOfIncome',
+          source: 'income_tax_return'
+        },
+        {
+          fieldId: 'totalIncome',
+          source: 'income_tax_return'
+        }
+      ]
+    },
+    // Salary slip documents
+    {
+      id: 'salary_slip',
+      name: 'Salary Slips',
+      description: 'Upload your latest salary slips',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'employmentStatus',
+        value: 'employed'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'salaryPeriod',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'grossSalary',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'netSalary',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'employerName',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'employerAddress',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'employeeDesignation',
+          source: 'salary_slip'
+        },
+        {
+          fieldId: 'dateOfJoining',
+          source: 'salary_slip'
+        }
+      ]
+    },
+    // GST registration documents
+    {
+      id: 'gst_registration',
+      name: 'GST Registration',
+      description: 'Upload your Goods and Service Tax Registration certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'businessName',
+          source: 'gst_registration'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'gst_registration'
+        },
+        {
+          fieldId: 'ownerNames',
+          source: 'gst_registration'
+        },
+        {
+          fieldId: 'businessAddress',
+          source: 'gst_registration'
+        },
+        {
+          fieldId: 'businessContact',
+          source: 'gst_registration'
+        }
+      ]
+    },
+    // MSME Registration documents
+    {
+      id: 'msme_registration',
+      name: 'MSME Registration',
+      description: 'Upload your Micro, Small & Medium Enterprises registration certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'msmeRegistrationNumber',
+          source: 'msme_registration'
+        },
+        {
+          fieldId: 'enterpriseName',
+          source: 'msme_registration'
+        },
+        {
+          fieldId: 'enterpriseType',
+          source: 'msme_registration'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'msme_registration'
+        },
+        {
+          fieldId: 'proprietorName',
+          source: 'msme_registration'
+        }
+      ]
+    },
+    // Leave Letter documents
+    {
+      id: 'leave_letter',
+      name: 'Leave Letter',
+      description: 'Upload your approved leave letter from your employer',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'employmentStatus',
+        value: 'employed'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'employeeName',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'employeeDesignation',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'leaveStartDate',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'leaveEndDate',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'approverName',
+          source: 'leave_letter'
+        },
+        {
+          fieldId: 'approverDesignation',
+          source: 'leave_letter'
+        }
+      ]
+    },
+    // Partnership Deed documents
+{
+  id: 'partnership_deed',
+  name: 'Partnership Deed',
+  description: 'Upload your partnership deed document',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'businessType',
+    value: 'partnership'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'partnershipName',
+      source: 'partnership_deed'
     },
     {
-      id: "demat_account",
-      name: "Demat Account Statement",
-      description:
-        "Recent statement from your demat account showing sufficient funds for your visit",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "financialSource",
-          value: "demat_account",
-        },
-      ],
+      fieldId: 'partnerNames',
+      source: 'partnership_deed'
     },
     {
-      id: "property_documents",
-      name: "Property Documents",
-      description:
-        "Documents showing ownership of property as proof of financial stability",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "financialSource",
-          value: "property",
-        },
-      ],
+      fieldId: 'partnershipFormationDate',
+      source: 'partnership_deed'
     },
     {
-      id: "sponsor_letter",
-      name: "Sponsor Letter and Bank Statements",
-      description:
-        "Letter from sponsor and their bank statements showing sufficient funds",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "financialSource",
-          value: "sponsor",
-        },
-      ],
+      fieldId: 'businessAddress',
+      source: 'partnership_deed'
     },
     {
-      id: "travel_itinerary",
-      name: "Travel Itinerary",
-      description: "Flight bookings, hotel reservations, or travel plans",
-      type: "default",
-      required: true,
+      fieldId: 'profitSharingRatio',
+      source: 'partnership_deed'
+    }
+  ]
+},
+// Certificate of Incorporation documents
+{
+  id: 'incorporation_certificate',
+  name: 'Certificate of Incorporation',
+  description: 'Upload your company\'s certificate of incorporation',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'businessType',
+    value: 'company'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'companyName',
+      source: 'incorporation_certificate'
     },
     {
-      id: "invitation_letter",
-      name: "Invitation Letter",
-      description: "Letter from host or family member inviting you",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "visitation",
-        },
-      ],
+      fieldId: 'companyRegistrationNumber',
+      source: 'incorporation_certificate'
     },
     {
-      id: "inviter_activity",
-      name: "Inviter activity (if applicable)",
-      description:
-        "Proof of inviter’s activities – school letter, job letter, and business documents",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "visitation",
-        },
-      ],
+      fieldId: 'incorporationDate',
+      source: 'incorporation_certificate'
     },
     {
-      id: "inviter_income_proof",
-      name: "Inviter Income proof (if applicable)",
-      description:
-        "Proof of inviter’s income – income tax return, pay slips, accountant letter",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "visitation",
-        },
-      ],
+      fieldId: 'registeredAddress',
+      source: 'incorporation_certificate'
+    }
+  ]
+},
+
+// Director's List documents
+{
+  id: 'directors_list',
+  name: 'Director\'s List',
+  description: 'Upload your company\'s list of directors',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'businessType',
+    value: 'company'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'companyName',
+      source: 'directors_list'
     },
     {
-      id: "inviter_funds_proof",
-      name: "Inviter Funds proof (if applicable)",
-      description: "Proof of inviter’s funds – bank account statements ",
-      type: "conditional",
+      fieldId: 'directorNames',
+      source: 'directors_list'
+    },
+    {
+      fieldId: 'directorAddresses',
+      source: 'directors_list'
+    }
+  ]
+},
+// Fixed Deposit documents
+{
+  id: 'fixed_deposit',
+  name: 'Fixed Deposit',
+  description: 'Upload your fixed deposit certificates',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'fixed_deposits'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'depositorName',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'bankName',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'fdNumber',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'depositAmount',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'interestRate',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'depositDate',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'maturityDate',
+      source: 'fixed_deposit'
+    },
+    {
+      fieldId: 'maturityAmount',
+      source: 'fixed_deposit'
+    }
+  ]
+},
+// Post Office Savings documents
+{
+  id: 'post_office_savings',
+  name: 'Post Office Saving Schemes',
+  description: 'Upload your post office saving scheme documents',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'postal_savings'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'accountHolderName',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'schemeType',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'accountNumber',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'depositAmount',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'openingDate',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'maturityDate',
+      source: 'post_office_savings'
+    },
+    {
+      fieldId: 'postOfficeName',
+      source: 'post_office_savings'
+    }
+  ]
+},
+// Mutual Funds documents
+{
+  id: 'mutual_funds',
+  name: 'Mutual Funds Statements',
+  description: 'Upload your mutual funds statements',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'mutual_funds'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'investorName',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'folioNumber',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'schemeNames',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'investmentAmount',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'currentValue',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'statementDate',
+      source: 'mutual_funds'
+    },
+    {
+      fieldId: 'assetManagementCompany',
+      source: 'mutual_funds'
+    }
+  ]
+},
+// Provident Funds documents
+{
+  id: 'provident_funds',
+  name: 'Provident Funds Statements',
+  description: 'Upload your provident fund statements',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'provident_fund'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'memberName',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'pfAccountNumber',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'employerName',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'employeeContribution',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'employerContribution',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'totalBalance',
+      source: 'provident_funds'
+    },
+    {
+      fieldId: 'statementPeriod',
+      source: 'provident_funds'
+    }
+  ]
+},
+// Insurance Policy documents
+{
+  id: 'insurance_policy',
+  name: 'Insurance Policies',
+  description: 'Upload your insurance policy documents',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'insurance_policies'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'policyHolderName',
+      source: 'insurance_policy'
+    },
+    {
+      fieldId: 'insuranceCompany',
+      source: 'insurance_policy'
+    },
+    {
+      fieldId: 'premiumAmount',
+      source: 'insurance_policy'
+    },
+    {
+      fieldId: 'issueDate',
+      source: 'insurance_policy'
+    },
+    {
+      fieldId: 'maturityDate',
+      source: 'insurance_policy'
+    }
+  ]
+},
+// Property Valuation documents
+{
+  id: 'property_valuation',
+  name: 'Property Valuation Reports',
+  description: 'Upload property valuation reports',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'property'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'ownerName',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'propertyAddress',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'propertyType',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'valuationAmount',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'valuationDate',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'valuatorName',
+      source: 'property_valuation'
+    },
+    {
+      fieldId: 'valuatorQualification',
+      source: 'property_valuation'
+    }
+  ]
+},
+
+// Rent Deed documents
+{
+  id: 'rent_deed',
+  name: 'Rent Deeds',
+  description: 'Upload your rent deed documents',
+  type: 'conditional',
+  required: false,
+  conditions: [{
+    questionId: 'residenceType',
+    value: 'rented'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'tenantName',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'landlordName',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'propertyAddress',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'rentAmount',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'leaseStartDate',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'leaseEndDate',
+      source: 'rent_deed'
+    },
+    {
+      fieldId: 'securityDeposit',
+      source: 'rent_deed'
+    }
+  ]
+},
+
+// Revenue Record documents
+{
+  id: 'revenue_record',
+  name: 'Revenue Record of the Land',
+  description: 'Upload revenue record documents for your land',
+  type: 'conditional',
+  required: false,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'property'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'ownerName',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'landLocation',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'landArea',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'landValue',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'recordNumber',
+      source: 'revenue_record'
+    },
+    {
+      fieldId: 'recordDate',
+      source: 'revenue_record'
+    }
+  ]
+},
+
+// Property Title documents
+{
+  id: 'property_title',
+  name: 'Property Title Deeds',
+  description: 'Upload your property title deed documents',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'financialSource',
+    value: 'property'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'ownerName',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'propertyAddress',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'propertyDescription',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'registrationNumber',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'registrationDate',
+      source: 'property_title'
+    },
+    {
+      fieldId: 'purchaseValue',
+      source: 'property_title'
+    }
+  ]
+},
+// Birth Certificate documents
+{
+  id: 'birth_certificate',
+  name: 'Birth Certificate',
+  description: 'Upload your birth certificate',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'ageProofRequired',  // You would need this question in your form
+    value: true
+  }],
+  extractableFields: [
+    {
+      fieldId: 'fullName',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'dateOfBirth',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'placeOfBirth',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'fatherName',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'motherName',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'registrationNumber',
+      source: 'birth_certificate'
+    },
+    {
+      fieldId: 'registrationDate',
+      source: 'birth_certificate'
+    }
+  ]
+},
+// Marriage Certificate documents
+{
+  id: 'marriage_certificate',
+  name: 'Marriage Registration Certificate',
+  description: 'Upload your marriage certificate',
+  type: 'conditional',
+  required: true,
+  conditions: [{
+    questionId: 'maritalStatus',
+    value: 'married'
+  }],
+  extractableFields: [
+    {
+      fieldId: 'husbandName',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'wifeName',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'marriageDate',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'marriagePlace',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'registrationNumber',
+      source: 'marriage_certificate'
+    },
+    {
+      fieldId: 'registrationDate',
+      source: 'marriage_certificate'
+    }
+  ]
+},
+
+    // Hotel booking documents, extractable fields 
+    {
+      id: 'hotel_booking',
+      name: 'Hotel Bookings',
+      description: 'Upload your hotel booking confirmations',
+      type: 'conditional',
       required: true,
-      conditions: [
+      conditions: [{
+        questionId: 'accommodationType',
+        value: 'hotel'
+      }],
+      extractableFields: [
         {
-          questionId: "visitPurpose",
-          value: "visitation",
+          fieldId: 'travelerName',
+          source: 'hotel_booking'
         },
-      ],
+        {
+          fieldId: 'checkInDate',
+          source: 'hotel_booking'
+        },
+        {
+          fieldId: 'checkOutDate',
+          source: 'hotel_booking'
+        },
+        {
+          fieldId: 'hotelName',
+          source: 'hotel_booking'
+        },
+        {
+          fieldId: 'hotelAddress',
+          source: 'hotel_booking'
+        },
+        {
+          fieldId: 'hotelPhone',
+          source: 'hotel_booking'
+        }
+      ]
+    },
+    // Air ticket documents, extractable fields 
+    {
+      id: 'air_ticket',
+      name: 'Air Tickets',
+      description: 'Upload your confirmed air tickets',
+      type: 'default',
+      required: true,
+      extractableFields: [
+        {
+          fieldId: 'passengerName',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'departureDate',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'departureLocation',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'arrivalDate',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'arrivalLocation',
+          source: 'air_ticket'
+        },
+        {
+          fieldId: 'airlineName',
+          source: 'air_ticket'
+        }
+      ]
     },
 
+    // Bank statement documents, extractable fields 
+    {
+      id: 'bank_statement',
+      name: 'Bank Account Statements',
+      description: 'Upload bank account statements (business or personal)',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'bank_statements'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'accountHolderName',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'bankName',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'accountNumber',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'statementPeriod',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'accountType',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'balance',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'balanceType',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'totalDeposits',
+          source: 'bank_statement'
+        },
+        {
+          fieldId: 'totalWithdrawals',
+          source: 'bank_statement'
+        }
+      ]
+    },
+    // Demat account documents
+    {
+      id: 'demat_account',
+      name: 'Demat Account Statement',
+      description: 'Recent statement from your demat account showing sufficient funds for your visit',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'demat_account'
+      }]
+    },
+    // Property documents
+    {
+      id: 'property_documents',
+      name: 'Property Documents',
+      description: 'Documents showing ownership of property as proof of financial stability',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }]
+    },
+    // Sponsor documents
+    {
+      id: 'sponsor_letter',
+      name: 'Sponsor Letter and Bank Statements',
+      description: 'Letter from sponsor and their bank statements showing sufficient funds',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'sponsor'
+      }]
+    },
+    // Invitation letter documents
+    {
+      id: 'invitation_letter',
+      name: 'Letter of Invitation / Sponsorship Declaration',
+      description: 'Upload letter of invitation (business or personal) or sponsorship declaration',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'visitation'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'inviterName',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'relationshipWithInviter',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'reasonOfVisit',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterAddress',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'accommodationAddress',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterPhone',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterEmail',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterImmigrationStatus',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'visitDates',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterOccupation',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterPassportNumber',
+          source: 'invitation_letter'
+        },
+        {
+          fieldId: 'inviterDateOfBirth',
+          source: 'invitation_letter'
+        }
+      ]
+    },
+    // Inviter activity documents
+    {
+      id: 'inviter_activity',
+      name: 'Inviter activity (if applicable)',
+      description: 'Proof of inviter’s activities – school letter, job letter, and business documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'visitation'
+      }]
+    },
+    // Inviter income proof documents
+    {
+      id: 'inviter_income_proof',
+      name: 'Inviter Income proof (if applicable)',
+      description: 'Proof of inviter’s income – income tax return, pay slips, accountant letter',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'visitation'
+      }]
+    },
+    // Inviter funds proof documents
+    {
+      id: 'inviter_funds_proof',
+      name: 'Inviter Funds proof (if applicable)',
+      description: 'Proof of inviter’s funds – bank account statements ',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'visitation'
+      }]
+    },
     // Documents for self-arranged travel
     {
-      id: "hotel_booking_confirmation",
-      name: "Hotel Booking Confirmation",
-      description:
-        "We will arrange your hotel booking and provide a confirmation or voucher showing your accommodation details for the entire duration of your stay.",
-      type: "conditional",
+      id: 'hotel_booking_confirmation',
+      name: 'Hotel Booking Confirmation',
+      description: 'We will arrange your hotel booking and provide a confirmation or voucher showing your accommodation details for the entire duration of your stay.',
+      type: 'conditional',
       required: true,
-      conditions: [
-        {
-          questionId: "assistanceType",
-          value: "hotel",
-        },
-      ],
+      conditions: [{
+        questionId: 'assistanceType',
+        value: 'hotel'
+      }]
+    },
+    // Documents for self-arranged travel
+    {
+      id: 'flight_tickets',
+      name: 'Flight Tickets',
+      description: 'We will take care of booking your round-trip flights and provide confirmed tickets showing your travel dates and itinerary.',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'assistanceType',
+        value: 'flight'
+      }]
     },
     {
-      id: "flight_tickets",
-      name: "Flight Tickets",
-      description:
-        "We will take care of booking your round-trip flights and provide confirmed tickets showing your travel dates and itinerary.",
-      type: "conditional",
+      id: 'travel_insurance_certificate',
+      name: 'Travel Insurance Certificate',
+      description: 'We will arrange travel insurance for your trip and provide a certificate covering the entire duration of your stay.',
+      type: 'conditional',
       required: true,
-      conditions: [
-        {
-          questionId: "assistanceType",
-          value: "flight",
-        },
-      ],
+      conditions: [{
+        questionId: 'assistanceType',
+        value: 'insurance'
+      }]
     },
     {
-      id: "travel_insurance_certificate",
-      name: "Travel Insurance Certificate",
-      description:
-        "We will arrange travel insurance for your trip and provide a certificate covering the entire duration of your stay.",
-      type: "conditional",
+      id: 'tourism_accommodation',
+      name: 'Tourism Accommodation ',
+      description: 'Confirmed booking of accommodation (hotel, AirBnB etc.) ',
+      type: 'conditional',
       required: true,
-      conditions: [
-        {
-          questionId: "assistanceType",
-          value: "insurance",
-        },
-      ],
-    },
-    // tourism docs
-    // {
-    //   id: 'tourism_itinerary',
-    //   name: 'Tourism Itinerary ',
-    //   description: 'Detailed itinerary of your trip ',
-    //   type: 'conditional',
-    //   required: true,
-    //   conditions: [{
-    //     questionId: 'visitPurpose',
-    //     value: 'tourism'
-    //   }]
-    // },
-    {
-      id: "tourism_accommodation",
-      name: "Tourism Accommodation ",
-      description: "Confirmed booking of accommodation (hotel, AirBnB etc.) ",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "tourism",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'tourism'
+      }]
     },
     {
-      id: "tourism_air_tickets",
-      name: "Tourism Air Tickets ",
-      description: "Confirmed return air tickets",
-      type: "conditional",
+      id: 'tourism_air_tickets',
+      name: 'Tourism Air Tickets ',
+      description: 'Confirmed return air tickets',
+      type: 'conditional',
       required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "tourism",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'tourism'
+      }]
     },
     {
-      id: "tourism_insurance",
-      name: "Tourism Insurance (if applicable) ",
-      description: "Travel insurance policy",
-      type: "conditional",
+      id: 'tourism_insurance',
+      name: 'Tourism Insurance (if applicable) ',
+      description: 'Travel insurance policy',
+      type: 'conditional',
       required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "tourism",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'tourism'
+      }]
     },
     // business docs
     {
-      id: "business_documents",
-      name: "Business Documents",
-      description:
-        "Business registration, invitations to meetings or conferences",
-      type: "conditional",
+      id: 'business_documents',
+      name: 'Business Documents',
+      description: 'Business registration, invitations to meetings or conferences',
+      type: 'conditional',
       required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "business",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }]
     },
     {
-      id: "business_invitation",
-      name: "Business Invitation (if applicable) ",
-      description: "Official correspondence for visit",
-      type: "conditional",
+      id: 'business_invitation',
+      name: 'Business Invitation (if applicable) ',
+      description: 'Official correspondence for visit',
+      type: 'conditional',
       required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "business",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }]
     },
     {
-      id: "business_accommodation",
-      name: "Business Accommodation (if applicable) ",
-      description: "Accommodation letter for stay",
-      type: "conditional",
+      id: 'business_accommodation',
+      name: 'Business Accommodation (if applicable) ',
+      description: 'Accommodation letter for stay',
+      type: 'conditional',
       required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "business",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }]
     },
 
     {
-      id: "employment_letter",
-      name: "Employment Letter",
-      description:
-        "Letter from current employer stating position, salary and duration of employment",
-      type: "default",
-      required: true,
+      id: 'employment_letter',
+      name: 'Employment Letter',
+      description: 'Letter from current employer stating position, salary and duration of employment',
+      type: 'default',
+      required: true
     },
     //study docs
     {
-      id: "study_acceptance",
-      name: "Letter of Acceptance",
-      description: "Acceptance letter from educational institution",
-      type: "conditional",
+      id: 'study_acceptance',
+      name: 'Letter of Acceptance',
+      description: 'Acceptance letter from educational institution',
+      type: 'conditional',
       required: true,
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "academic_transcripts",
-      name: "Academic Transcripts",
-      description: "Academic transcripts along with degree or diploma",
-      type: "conditional",
+      id: 'academic_transcripts',
+      name: 'Academic Transcripts',
+      description: 'Academic transcripts along with degree or diploma',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "language_proficiency",
-      name: "Language Proficiency Test Result (if applicable)",
-      description:
-        "Language proficiency test result (IELTS, PTE or TOEFL etc.)",
-      type: "conditional",
+      id: 'language_proficiency',
+      name: 'Language Proficiency Test Result (if applicable)',
+      description: 'Language proficiency test result (IELTS, PTE or TOEFL etc.)',
+      type: 'conditional',
       required: true, // R - Recommended
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "work_experience_letter_study",
-      name: "Work Experience Letter (if applicable)",
-      description: "Work experience letter if applicable",
-      type: "conditional",
+      id: 'work_experience_letter_study',
+      name: 'Work Experience Letter (if applicable)',
+      description: 'Work experience letter if applicable',
+      type: 'conditional',
       required: true, // O - Optional
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "scholastic_activities",
-      name: "Scholastic and Extra Activities (if applicable)",
-      description:
-        "Documentation of scholastic and extra-curricular activities",
-      type: "conditional",
+      id: 'scholastic_activities',
+      name: 'Scholastic and Extra Activities (if applicable)',
+      description: 'Documentation of scholastic and extra-curricular activities',
+      type: 'conditional',
       required: true, // O - Optional
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "provincial_attestation",
-      name: "Provincial Attestation Letter or CAQ - Canada (if applicable)",
-      description:
-        "Letter of Acceptance and Provincial Attestation Letter or CAQ – Canada",
-      type: "conditional",
+      id: 'provincial_attestation',
+      name: 'Provincial Attestation Letter or CAQ - Canada (if applicable)',
+      description: 'Letter of Acceptance and Provincial Attestation Letter or CAQ – Canada',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "confirmation_enrollment",
-      name: "Confirmation of Enrollment (CoE) - Australia (if applicable)",
-      description: "Conformation of Enrolment (CoE) – Australia",
-      type: "conditional",
+      id: 'confirmation_enrollment',
+      name: 'Confirmation of Enrollment (CoE) - Australia (if applicable)',
+      description: 'Conformation of Enrolment (CoE) – Australia',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "confirmation_acceptance",
-      name: "Confirmation of Acceptance to Studies (CAS) - UK (if applicable)",
-      description:
-        "Confirmation of Acceptance to Studies (CAS) – the United Kingdom",
-      type: "conditional",
+      id: 'confirmation_acceptance',
+      name: 'Confirmation of Acceptance to Studies (CAS) - UK (if applicable)',
+      description: 'Confirmation of Acceptance to Studies (CAS) – the United Kingdom',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "i20_form",
-      name: "I-20 Form - USA (if applicable)",
-      description: "I-20 – USA",
-      type: "conditional",
+      id: 'i20_form',
+      name: 'I-20 Form - USA (if applicable)',
+      description: 'I-20 – USA',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "admission_offer",
-      name: "Admission Offer (if applicable)",
-      description: "Admission offer from educational institution",
-      type: "conditional",
+      id: 'admission_offer',
+      name: 'Admission Offer (if applicable)',
+      description: 'Admission offer from educational institution',
+      type: 'conditional',
       required: true, // O - Optional
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "tuition_deposit",
-      name: "Tuition Deposit Receipts (if applicable)",
-      description: "Tuition deposit official receipts",
-      type: "conditional",
+      id: 'tuition_deposit',
+      name: 'Tuition Deposit Receipts (if applicable)',
+      description: 'Tuition deposit official receipts',
+      type: 'conditional',
       required: true, // R - Recommended
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "sevis_fee",
-      name: "SEVIS Fee Receipt - USA (if applicable)",
-      description: "SEVIS fee receipt – USA",
-      type: "conditional",
+      id: 'sevis_fee',
+      name: 'SEVIS Fee Receipt - USA (if applicable)',
+      description: 'SEVIS fee receipt – USA',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "sat_gre",
-      name: "SAT or GRE - USA (if applicable)",
-      description: "SAT or GRE test results – USA",
-      type: "conditional",
+      id: 'sat_gre',
+      name: 'SAT or GRE - USA (if applicable)',
+      description: 'SAT or GRE test results – USA',
+      type: 'conditional',
       required: true, // O - Optional
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "police_clearance",
-      name: "Police Clearance Certificate - New Zealand (if applicable)",
-      description: "Police Clearance Certificate – New Zealand",
-      type: "conditional",
+      id: 'police_clearance',
+      name: 'Police Clearance Certificate - New Zealand (if applicable)',
+      description: 'Police Clearance Certificate – New Zealand',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "academic_assessment",
-      name: "Assessment of Academic Documents - Europe (if applicable)",
-      description: "Assessment of academic documents – Europe",
-      type: "conditional",
+      id: 'academic_assessment',
+      name: 'Assessment of Academic Documents - Europe (if applicable)',
+      description: 'Assessment of academic documents – Europe',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "living_expenses",
-      name: "Advance Arrangement of Living Expenses (if applicable)",
-      description:
-        "Advance arrangement of living expenses (GIC – Canada, FTS – New Zealand, bank deposits – the UK / Europe)",
-      type: "conditional",
+      id: 'living_expenses',
+      name: 'Advance Arrangement of Living Expenses (if applicable)',
+      description: 'Advance arrangement of living expenses (GIC – Canada, FTS – New Zealand, bank deposits – the UK / Europe)',
+      type: 'conditional',
       required: true, // R - Recommended
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "supporting_income",
-      name: "Supporting Person's Income Documents (if applicable)",
-      description: "Supporting person's income documents",
-      type: "conditional",
+      id: 'supporting_income',
+      name: 'Supporting Person\'s Income Documents (if applicable)',
+      description: 'Supporting person\'s income documents',
+      type: 'conditional',
       required: true, // O - Optional
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "education_loan",
-      name: "Education Loan Sanction Letter (if applicable)",
-      description: "Education loan sanction letter",
-      type: "conditional",
+      id: 'education_loan',
+      name: 'Education Loan Sanction Letter (if applicable)',
+      description: 'Education loan sanction letter',
+      type: 'conditional',
       required: true, // O - Optional
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "reference_letters",
-      name: "Academic or Professional Reference Letters (if applicable)",
-      description: "Academic or professional reference letters",
-      type: "conditional",
+      id: 'reference_letters',
+      name: 'Academic or Professional Reference Letters (if applicable)',
+      description: 'Academic or professional reference letters',
+      type: 'conditional',
       required: true, // O - Optional
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "statement_purpose",
-      name: "Statement of Purpose (SOP) (if applicable)",
-      description:
-        "Statement of purpose (SOP), covering letter, letter of explanation",
-      type: "conditional",
+      id: 'statement_purpose',
+      name: 'Statement of Purpose (SOP) (if applicable)',
+      description: 'Statement of purpose (SOP), covering letter, letter of explanation',
+      type: 'conditional',
       required: true, // R - Recommended
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     {
-      id: "medical_examination",
-      name: "Medical Examination (if applicable)",
-      description: "Medical examination results",
-      type: "conditional",
+      id: 'medical_examination',
+      name: 'Medical Examination (if applicable)',
+      description: 'Medical examination results',
+      type: 'conditional',
       required: true, // R - Recommended
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "study",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'study'
+      }]
     },
     // Work-related documents
     {
-      id: "detailed_biodata",
-      name: "Detailed Biodata / Resume (if applicable)",
-      description: "Detailed biodata or resume",
-      type: "conditional",
+      id: 'detailed_biodata',
+      name: 'Detailed Biodata / Resume (if applicable)',
+      description: 'Detailed biodata or resume',
+      type: 'conditional',
       required: true, // R - Recommended (setting as true with "if applicable" in name)
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "work",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
     },
     {
-      id: "academic_achievements",
-      name: "Academic Achievements (if applicable)",
-      description: "Documentation of academic achievements",
-      type: "conditional",
+      id: 'academic_achievements',
+      name: 'Academic Achievements (if applicable)',
+      description: 'Documentation of academic achievements',
+      type: 'conditional',
       required: true, // R - Recommended (setting as true with "if applicable" in name)
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "work",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
     },
     {
-      id: "work_experience_proof",
-      name: "Work Experience Proof",
-      description:
-        "Work Experience letter, pay slips, bank account statement with pay credits",
-      type: "conditional",
+      id: 'work_experience_proof',
+      name: 'Work Experience Proof',
+      description: 'Work Experience letter, pay slips, bank account statement with pay credits',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "work",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
     },
     {
-      id: "professional_licensing",
-      name: "Professional Licensing or Registration (if applicable)",
-      description: "Licensing or registration from or with professional body",
-      type: "conditional",
+      id: 'professional_licensing',
+      name: 'Professional Licensing or Registration (if applicable)',
+      description: 'Licensing or registration from or with professional body',
+      type: 'conditional',
       required: true, // O - Optional (setting as true with "if applicable" in name)
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "work",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
     },
     {
-      id: "employment_contract",
-      name: "Employer Employee Contract",
-      description: "Contract between employer and employee",
-      type: "conditional",
+      id: 'employment_contract',
+      name: 'Employer Employee Contract',
+      description: 'Contract between employer and employee',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "work",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
     },
     {
-      id: "lmia_approval",
-      name: "Labor Market Impact Assessment (LMIA) - Canada ",
-      description:
-        "Government approvals – Labor Marker Impact Assessment (LMIA) – Canada",
-      type: "conditional",
+      id: 'lmia_approval',
+      name: 'Labor Market Impact Assessment (LMIA) - Canada ',
+      description: 'Government approvals – Labor Marker Impact Assessment (LMIA) – Canada',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "work",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
     },
     {
-      id: "h1b_approval",
-      name: "H1B Petition Approval - USA",
-      description: "Approval of H1B petition – USA",
-      type: "conditional",
+      id: 'h1b_approval',
+      name: 'H1B Petition Approval - USA',
+      description: 'Approval of H1B petition – USA',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "work",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
     },
     {
-      id: "cos_approval",
-      name: "Confirmation of Sponsorship (CoS) - UK",
-      description: "Confirmation of Sponsorship (CoS) – the UK",
-      type: "conditional",
+      id: 'cos_approval',
+      name: 'Confirmation of Sponsorship (CoS) - UK',
+      description: 'Confirmation of Sponsorship (CoS) – the UK',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "work",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
     },
     {
-      id: "nulla_osta",
-      name: "Nulla Osta - Italy",
-      description:
-        "Nulla Osta – Italy and as applicable in the destination country",
-      type: "conditional",
+      id: 'nulla_osta',
+      name: 'Nulla Osta - Italy',
+      description: 'Nulla Osta – Italy and as applicable in the destination country',
+      type: 'conditional',
       required: true, // M - Mandatory
-      conditions: [
-        {
-          questionId: "visitPurpose",
-          value: "work",
-        },
-      ],
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
     },
     // Long Term Family Visit documents
+    {
+      id: 'language_proficiency_family',
+      name: 'Language Proficiency Test Result (if applicable)',
+      description: 'Language proficiency test result',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+    },
+    // Child and Parent relationship documents
+    {
+      id: 'relationship_proof_child_parent',
+      name: 'Proof of Relationship - Birth Certificate',
+      description: 'Birth certificate proving relationship between child and parent',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+    },
+    // Partner relationship documents
+    {
+      id: 'marriage_certificate_partner',
+      name: 'Marriage Registration Certificate',
+      description: 'Marriage registration certificate for partners',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+    },
+    {
+      id: 'contact_proof_partner',
+      name: 'Proof of Contact (if applicable)',
+      description: 'Proof of contact – chat screenshots, call logs, pre wedding, wedding and post wedding photographs and any other document',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+
+    },
+    // Sponsor immigration status documents - Citizen
+    {
+      id: 'citizen_proof_sponsor',
+      name: 'Citizenship Proof of Sponsor',
+      description: 'Citizenship certificate or passport of the sponsor',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+
+    },
+    // Sponsor immigration status documents - Permanent Resident
+    {
+      id: 'pr_proof_sponsor',
+      name: 'Permanent Resident Proof of Sponsor',
+      description: 'Passport, PR card (front and back), BRP (UK), visa authorization etc. of the sponsor',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+    },
+    // Sponsor immigration status documents - Student
+    {
+      id: 'student_proof_sponsor',
+      name: 'Student Status Proof of Sponsor',
+      description: 'School enrollment letter, passport, visa/permit/BRP, transcripts, job letter and pay slips for part time work, bank statement, accommodation proof of the sponsor',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+    },
+    // Sponsor immigration status documents - Worker
+    {
+      id: 'worker_proof_sponsor',
+      name: 'Worker Status Proof of Sponsor',
+      description: 'Passport, visa/permit/BRP, job letter (with detailed duties) and pay slips for work, bank statement, accommodation proof, income tax return/assessment of the sponsor',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+    },
+    // Sponsor immigration status documents - Refugee
+    {
+      id: 'refugee_proof_sponsor',
+      name: 'Refugee Status Proof of Sponsor',
+      description: 'Passport, court order/visa/permit/BRP, job letter and pay slips for work, bank statement, accommodation proof, income tax return/assessment of the sponsor',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+    },
+    // Study documents for sponsor
+    {
+      id: 'study_admission_sponsor',
+      name: 'Admission Letter of Sponsor (if applicable)',
+      description: 'Admission letter from a school for the sponsor, and the documents as needed for study visa applicant',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'long_family_visit'
+      }]
+
+    },
+    // Join Family Permanently documents
+    // Partner documents (option iii)
+    {
+      id: 'birth_certificate_permanent',
+      name: 'Birth Certificate',
+      description: 'Applicant\'s birth certificate',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'police_clearance_permanent',
+      name: 'Police Clearance Certificate',
+      description: 'Police Clearance Certificate from Passport Office for all countries lived in for more than 6 months',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    // Partner's documents
+    {
+      id: 'partner_passport_permanent',
+      name: 'Partner\'s Passport',
+      description: 'Partner\'s passport all pages with travel stamps, air tickets, boarding passes',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'partner_pr_citizenship_permanent',
+      name: 'Partner\'s PR Card/Citizenship',
+      description: 'Partner\'s PR card / Landing documents / CoPR / BRP / visa authorisation or Citizenship',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'partner_job_letter_permanent',
+      name: 'Partner\'s Job Letter',
+      description: 'Partner\'s job letter',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'partner_pay_stubs_permanent',
+      name: 'Partner\'s Pay Stubs (if applicable)',
+      description: 'Partner\'s pay stubs',
+      type: 'conditional',
+      required: true, // O - Optional (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'partner_assessment_permanent',
+      name: 'Partner\'s Notice of Assessment',
+      description: 'Partner\'s notice of assessment',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'partner_bank_statement_permanent',
+      name: 'Partner\'s Bank Account Statement (if applicable)',
+      description: 'Partner\'s bank account statement',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    // Joint Documents
+    {
+      id: 'wedding_invitation_permanent',
+      name: 'Wedding Invitation Cards (if applicable)',
+      description: 'Wedding invitation cards',
+      type: 'conditional',
+      required: true, // O - Optional (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'wedding_photos_permanent',
+      name: 'Wedding Photographs (if applicable)',
+      description: 'Pre wedding, wedding and post wedding photographs',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'ceremonies_permanent',
+      name: 'Ceremony Documentation (if applicable)',
+      description: 'Series of ceremonies and celebrations organized individually or jointly',
+      type: 'conditional',
+      required: true, // O - Optional (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'relationship_proof_permanent',
+      name: 'Relationship Development Documentation (if applicable)',
+      description: 'Documents supporting the description of development of this relationship such as social media handles, call logs, messages, chats, matrimonial ads, exchange of gifts, transfer of monies',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'joint_accounts_permanent',
+      name: 'Joint Financial Documents (if applicable)',
+      description: 'Joint bank account statements, mortgages, investments, insurance, ID\'s or any correspondence by third party on same address',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'cohabitation_proof_permanent',
+      name: 'Cohabitation Proof (if applicable)',
+      description: 'Proofs of cohabitations (living or lived together)',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'vendor_invoices_permanent',
+      name: 'Vendor Invoices (if applicable)',
+      description: 'Any invoices from vendors',
+      type: 'conditional',
+      required: true, // O - Optional (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    // Child and Parent relationship documents
+    {
+      id: 'birth_certificate_child_parent_permanent',
+      name: 'Proof of Relationship - Birth Certificate',
+      description: 'Birth certificate proving relationship between child and parent',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'police_clearance_above18_permanent',
+      name: 'Police Clearance Certificate (if above age 18)',
+      description: 'Police Clearance Certificate from Passport Office for all countries lived in for more than 6 months (for applicants above age 18)',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'resume_above18_permanent',
+      name: 'Detailed Resume (if above age 18) (if applicable)',
+      description: 'Detailed resume for applicants above age 18',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    // Sponsor's documents
+    {
+      id: 'sponsor_passport_permanent',
+      name: 'Sponsor\'s Passport',
+      description: 'Sponsor\'s passport all pages with travel stamps',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'sponsor_pr_citizenship_permanent',
+      name: 'Sponsor\'s PR Card/Citizenship',
+      description: 'Sponsor\'s PR card / Landing documents / CoPR / BRP / visa authorisation or Citizenship',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'sponsor_job_letter_permanent',
+      name: 'Sponsor\'s Job Letter',
+      description: 'Sponsor\'s job letter',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'sponsor_pay_stubs_permanent',
+      name: 'Sponsor\'s Pay Stubs (if applicable)',
+      description: 'Sponsor\'s pay stubs',
+      type: 'conditional',
+      required: true, // O - Optional (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'sponsor_assessment_permanent',
+      name: 'Sponsor\'s Notice of Assessment',
+      description: 'Sponsor\'s notice of assessment',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    {
+      id: 'sponsor_bank_statement_permanent',
+      name: 'Sponsor\'s Bank Account Statement (if applicable)',
+      description: 'Sponsor\'s bank account statement',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'join_family_permanent'
+      }]
+    },
+    // Skill-based Immigration documents
+    {
+
+      id: 'academic_degrees',
+      name: 'Academic/Professional Degrees and Transcripts',
+      description: 'Academic or professional degrees and transcripts',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'education_assessment',
+      name: 'Education Credential Assessment (ECA)',
+      description: 'Education Credential Assessment (ECA)',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'language_proficiency_skill',
+      name: 'Language Proficiency Test Result',
+      description: 'Language proficiency test result (IELTS, CELPIP, PTE, TOEFL, TEF, TCF)',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'work_experience_letter_skill',
+      name: 'Work Experience Letter',
+      description: 'Work experience letter describing the duration of job, duties, and compensation',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'bank_statement_skill',
+      name: 'Bank Account Statement',
+      description: 'Bank account statement',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'income_tax_returns',
+      name: 'Income Tax Returns',
+      description: 'Income tax returns',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'pay_slips_skill',
+      name: 'Pay Slips',
+      description: 'Pay slips',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'licenses_regulatory',
+      name: 'Licenses or Registrations (if applicable)',
+      description: 'Licenses or registrations with regulatory body',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'family_immigration_status',
+      name: 'Proof of Family Immigration Status (if applicable)',
+      description: 'Proof of immigration status family in country of destination',
+      type: 'conditional',
+      required: true, // O - Optional (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'job_offer_letter',
+      name: 'Job Offer Letter (if applicable)',
+      description: 'Job offer letter from country of application',
+      type: 'conditional',
+      required: true, // O - Optional (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'nomination_letter',
+      name: 'Nomination or Support Letter (if applicable)',
+      description: 'Nomination or support letter from province',
+      type: 'conditional',
+      required: true, // O - Optional (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'birth_certificate_skill',
+      name: 'Birth Certificate',
+      description: 'Birth certificate',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'police_clearance_skill',
+      name: 'Police Clearance Certificate',
+      description: 'Police Clearance Certificate from Passport Office for all countries lived in for more than 6 months',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'marriage_certificate_skill',
+      name: 'Marriage Registration Certificate (if applicable)',
+      description: 'Marriage registration certificate for partner',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    {
+      id: 'invitation_letter_skill',
+      name: 'Invitation Letter/Contract Copy (if applicable)',
+      description: 'Invitation letter, contract copy, or participation registration',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'skill_immigration'
+      }]
+    },
+    // Performance in Sports/Religious Events/Public Speaker documents
+    {
+      id: 'event_details',
+      name: 'Event Details',
+      description: 'Hall booking / ticket sales / event details',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'performance'
+      }]
+    },
+    {
+      id: 'awards_certifications',
+      name: 'Awards and Certifications (if applicable)',
+      description: 'Awards and certifications',
+      type: 'conditional',
+      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'performance'
+      }]
+    },
+    {
+      id: 'accommodation_during_stay',
+      name: 'Accommodation During Stay',
+      description: 'Arranged accommodation during stay',
+      type: 'conditional',
+      required: true, // M - Mandatory
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'performance'
+      }]
+    },
+    {
+      id: 'marriage_certificate',
+      name: 'Marriage Certificate',
+      description: 'If married, please provide a copy of your marriage certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'maritalStatus',
+        value: 'married'
+      }]
+    },
+    {
+      id: 'divorce_certificate',
+      name: 'Divorce Certificate',
+      description: 'If divorced, please provide a copy of your divorce certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'maritalStatus',
+        value: 'divorced'
+      }]
+    },
+    {
+      id: 'death_certificate',
+      name: 'Death Certificate',
+      description: 'If widowed, please provide a copy of the death certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'maritalStatus',
+        value: 'widowed'
+      }]
+    },
+    {
+      id: 'medical_insurance',
+      name: 'Medical Insurance',
+      description: 'Proof of medical insurance coverage for the duration of your stay',
+      type: 'default',
+      required: true
+    },
+    {
+      id: 'language_test',
+      name: 'Language Test Results',
+      description: 'IELTS, TOEFL, or other language proficiency test results',
+      type: 'conditional',
+      required: true,
+      conditions: [
+        {
+          questionId: 'languageTest',
+          value: 'IELTS'
+        },
+        {
+          questionId: 'languageTest',
+          value: 'CELPIP'
+        },
+        {
+          questionId: 'languageTest',
+          value: 'PTE'
+        },
+        {
+          questionId: 'languageTest',
+          value: 'TOEFL'
+        },
+        {
+          questionId: 'languageTest',
+          value: 'others - specify'
+        }
+      ]
+    },
     {
       id: "language_proficiency_family",
       name: "Language Proficiency Test Result (if applicable)",
@@ -1963,23 +3581,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "salary_slips_employed",
-      name: "Salary Slips",
-      description: "Minimum 3 months' salary slips",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "employed",
-        },
-      ],
-    },
-    {
-      id: "income_tax_returns_employed",
-      name: "Income Tax Returns (2 years)",
-      description: "Income Tax returns along with computation – last 2 years",
-      type: "conditional",
+      id: 'income_tax_returns_employed',
+      name: 'Income Tax Returns (2 years)',
+      description: 'Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -2318,19 +3923,19 @@ export const UNITED_KINGDOM: VisaForm = {
         },
       ],
     },
-    {
-      id: "partner_documents_partner",
-      name: "Partner Documents (if applicable)",
-      description: "Add the documents of your partner as applicable",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "business_partner",
-        },
-      ],
-    },
+    // {
+    //   id: 'partner_documents_partner',
+    //   name: 'Partner Documents (if applicable)',
+    //   description: 'Add the documents of your partner as applicable',
+    //   type: 'conditional',
+    //   required: true,
+    //   conditions: [
+    //     {
+    //     questionId: 'expensePayerOccupation',
+    //     value: 'business_partner',
+    //   }
+    //   ]
+    // },
     {
       id: "additional_documents_partner",
       name: "Additional Documents (if applicable)",
@@ -2415,23 +4020,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "partner_documents_professional",
-      name: "Partner Documents (if applicable)",
-      description: "Add the documents of your partner as applicable",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "professional",
-        },
-      ],
-    },
-    {
-      id: "additional_documents_professional",
-      name: "Additional Documents (if applicable)",
-      description: "Any additional documents",
-      type: "conditional",
+      id: 'additional_documents_professional',
+      name: 'Additional Documents (if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -2511,23 +4103,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "partner_documents_contractor",
-      name: "Partner Documents (if applicable)",
-      description: "Add the documents of your partner as applicable",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "independent_contractor",
-        },
-      ],
-    },
-    {
-      id: "additional_documents_contractor",
-      name: "Additional Documents (if applicable)",
-      description: "Any additional documents",
-      type: "conditional",
+      id: 'additional_documents_contractor',
+      name: 'Additional Documents (if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -2606,19 +4185,7 @@ export const UNITED_KINGDOM: VisaForm = {
         },
       ],
     },
-    {
-      id: "partner_documents_freelancer",
-      name: "Partner Documents (if applicable)",
-      description: "Add the documents of your partner as applicable",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "freelancer",
-        },
-      ],
-    },
+
     {
       id: "additional_documents_freelancer",
       name: "Additional Documents (if applicable)",
@@ -2703,23 +4270,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "partner_documents_selfemployed",
-      name: "Partner Documents",
-      description: "Add the documents of your partner as applicable",
-      type: "conditional",
-      required: false,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "self_employed",
-        },
-      ],
-    },
-    {
-      id: "additional_documents_selfemployed",
-      name: "Additional Documents",
-      description: "Any additional documents",
-      type: "conditional",
+      id: 'additional_documents_selfemployed',
+      name: 'Additional Documents',
+      description: 'Any additional documents',
+      type: 'conditional',
       required: false,
       conditions: [
         {
@@ -2853,23 +4407,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "partner_documents_farmer",
-      name: "Partner Documents(if applicable)",
-      description: "Add the documents of your partner as applicable",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "farmer",
-        },
-      ],
-    },
-    {
-      id: "additional_documents_farmer",
-      name: "Additional Documents(if applicable)",
-      description: "Any additional documents",
-      type: "conditional",
+      id: 'additional_documents_farmer',
+      name: 'Additional Documents(if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -2975,23 +4516,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "partner_documents_realtor",
-      name: "Partner Documents(if applicable)",
-      description: "Add the documents of your partner as applicable",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "realtor",
-        },
-      ],
-    },
-    {
-      id: "additional_documents_realtor",
-      name: "Additional Documents(if applicable)",
-      description: "Any additional documents",
-      type: "conditional",
+      id: 'additional_documents_realtor',
+      name: 'Additional Documents(if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -3084,23 +4612,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "partner_documents_investor",
-      name: "Partner Documents(if applicable)",
-      description: "Add the documents of your partner as applicable",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "investor",
-        },
-      ],
-    },
-    {
-      id: "additional_documents_investor",
-      name: "Additional Documents(if applicable)",
-      description: "Any additional documents",
-      type: "conditional",
+      id: 'additional_documents_investor',
+      name: 'Additional Documents(if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -3193,23 +4708,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "partner_documents_retired",
-      name: "Partner Documents(if applicable)",
-      description: "Add the documents of your partner as applicable",
-      type: "conditional",
-      required: true,
-      conditions: [
-        {
-          questionId: "expensePayerOccupation",
-          value: "retired",
-        },
-      ],
-    },
-    {
-      id: "additional_documents_retired",
-      name: "Additional Documents(if applicable)",
-      description: "Any additional documents",
-      type: "conditional",
+      id: 'additional_documents_retired',
+      name: 'Additional Documents(if applicable)',
+      description: 'Any additional documents',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -3271,6 +4773,9 @@ export const UNITED_KINGDOM: VisaForm = {
         },
       ],
     },
+
+    // country specific documents 
+   
     {
       id: "uk_medical_documents",
       name: "UK Medical Treatment Documents",
@@ -3285,11 +4790,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "ni_number_proof",
-      name: "National Insurance Number Proof",
-      description:
-        "Document showing your National Insurance number (e.g., NI card, letter from HMRC)",
-      type: "conditional",
+      id: 'ni_number_proof',
+      name: 'National Insurance Number Proof',
+      description: 'Document showing your National Insurance number',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -3312,11 +4816,10 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "public_funds_documents",
-      name: "Public Funds Documentation",
-      description:
-        "Letters or statements showing public funds received in the UK",
-      type: "conditional",
+      id: 'public_funds_documents',
+      name: 'Public Funds Documentation',
+      description: 'Letters showing public funds received in the UK',
+      type: 'conditional',
       required: true,
       conditions: [
         {
@@ -3325,6 +4828,29 @@ export const UNITED_KINGDOM: VisaForm = {
         },
       ],
     },
+    {
+      id: 'cos_approval',
+      name: 'Certificate of Sponsorship',
+      description: 'UK employer-issued work visa sponsorship certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'work'
+      }]
+    },
+    {
+      id: 'brp_card',
+      name: 'Biometric Residence Permit',
+      description: 'Copy of both sides of your UK BRP card',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'hasBRP',
+        value: 'yes'
+      }]
+    },
+
   ],
   steps: [
     // {
@@ -3555,37 +5081,7 @@ export const UNITED_KINGDOM: VisaForm = {
         ],
       },
     },
-    // {
-    //   id: 'onshoreServiceTypeOther',
-    //   group: 'citizenship' as FormGroup,
-    //   type: 'text',
-    //   label: 'Please specify the onshore service you need',
-    //   required: true,
-    //   placeholder: 'Enter service details',
-    //   showIf: {
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'livesInCitizenshipCountry', value: 'no' },
-    //       { field: 'needsOnshoreServices', value: 'yes' },
-    //       { field: 'onshoreServiceType', value: 'other' }
-    //     ]
-    //   }
-    // },
-    // {
-    //   id: 'applicationCountry',
-    //   group: 'citizenship' as FormGroup,
-    //   type: 'select',
-    //   label: 'Which country you want to apply for?',
-    //   required: true,
-    //   showIf: {
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'livesInCitizenshipCountry', value: 'no' },
-    //       { field: 'needsOnshoreServices', value: 'no' }
-    //     ]
-    //   },
-    //   options: COUNTRIES
-    // },
+
 
     // -------------------- PERSONAL INFORMATION (MARITAL STATUS) --------------------
     {
@@ -3604,33 +5100,6 @@ export const UNITED_KINGDOM: VisaForm = {
     },
 
     // For married applicants
-    // {
-    //   id: 'spouseNameOnPassport',
-    //   group: 'personal' as FormGroup,
-    //   type: 'select',
-    //   label: `Is your spouse's name added on your passport? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: { field: 'maritalStatus', not: 'single' },
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-    // {
-    //   id: 'spouseName',
-    //   group: 'personal' as FormGroup,
-    //   type: 'textarea',
-    //   label: `What is name of your spouse? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   placeholder: 'Enter spouse name',
-    //   showIf: {
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'maritalStatus', value: 'married' },
-    //       { field: 'spouseNameOnPassport', value: 'no' }
-    //     ]
-    //   }
-    // },
     {
       id: "spouseLivesWithYou",
       group: "personal" as FormGroup,
@@ -3673,26 +5142,6 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: { field: "maritalStatus", not: "single" },
       disableFutureDates: true,
     },
-    // {
-    //   id: 'marriageDate',
-    //   group: 'personal' as FormGroup,
-    //   type: 'date',
-    //   label: `What is date of marriage? ${FIELD_REQUIREMENTS.MANDATORY}`,
-    //   required: true,
-    //   showIf: { field: 'maritalStatus', not: 'single' }
-    // },
-    // {
-    //   id: 'isFirstMarriage',
-    //   group: 'personal' as FormGroup,
-    //   type: 'select',
-    //   label: `Is this your first marriage? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: { field: 'maritalStatus', not: 'single' },
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
     {
       id: "previousRelationshipEnd",
       group: "personal" as FormGroup,
@@ -3741,38 +5190,14 @@ export const UNITED_KINGDOM: VisaForm = {
       showIf: { field: "residenceStatus", value: "student" },
     },
     {
-      id: "familyDetailsHeader",
-      group: "personal" as FormGroup,
-      type: "header",
-      label: "Family details",
+
+      id: 'familyDetailsHeader',
+      group: 'personal' as FormGroup,
+      type: 'header',
+      showIf: { field: 'maritalStatus', not: 'single' },
+      label: 'Family details'
+
     },
-    // {
-    //   id: 'hasChildren',
-    //   group: 'personal' as FormGroup,
-    //   type: 'select',
-    //   label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: { field: 'maritalStatus', not: 'single' },
-    //   options: [
-    //     { label: 'Yes', value: 'yes' },
-    //     { label: 'No', value: 'no' }
-    //   ]
-    // },
-    // {
-    //   id: 'childrenDetails',
-    //   group: 'personal' as FormGroup,
-    //   type: 'custom',
-    //   component: 'ChildrenInputField',
-    //   label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   showIf: {
-    //     operator: 'and',
-    //     conditions: [
-    //       { field: 'maritalStatus', not: 'single' },
-    //       { field: 'hasChildren', value: 'yes' }
-    //     ]
-    //   }
-    // },
     {
       id: "hasFinancialDependents",
       group: "personal" as FormGroup,
@@ -3798,10 +5223,12 @@ export const UNITED_KINGDOM: VisaForm = {
       ],
     },
     {
-      id: "dependentChildrenDetails1",
-      group: "personal" as FormGroup,
-      type: "custom",
-      component: "ChildrenInputField",
+
+      id: 'dependentChildrenDetails1',
+      group: 'personal' as FormGroup,
+      type: 'childrenInput',
+      component: 'ChildrenInputField',
+
       label: `Provide details of your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       showIf: {
@@ -5580,7 +7007,6 @@ export const UNITED_KINGDOM: VisaForm = {
       type: "text",
       label: `For how long you have been living at this address? (Months) and (Years) ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
-      placeholder: "Enter number of months",
     },
     {
       id: "propertyOwnership",

@@ -3727,52 +3727,16 @@ export const TURKEY: VisaForm = {
       slug: 'passport-information'
     },
     {
-      title: 'Family Information',
-      group: 'family' as FormGroup,
-      showDocuments: false,
-      slug: 'family-information'
-    },
-    {
-      title: 'Parents Information',
-      group: 'parents' as FormGroup,
-      showDocuments: false,
-      slug: 'parents-information'
-    },
-    {
       title: 'Visa History',
       group: 'visa_history' as FormGroup,
       showDocuments: false,
       slug: 'visa-history'
     },
     {
-      title: 'Education',
-      group: 'education' as FormGroup,
-      showDocuments: false,
-      slug: 'education'
-    },
-    {
       title: 'Travel Plans',
       group: 'travel_plans' as FormGroup,
       showDocuments: false,
       slug: 'travel-plans'
-    },
-    // {
-    //   title: 'Relatives Information',
-    //   group: 'relatives' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'relatives-information'
-    // },
-    // {
-    //   title: 'Social Media Handles',
-    //   group: 'social' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'social-media-handles'
-    // },
-    {
-      title: 'Health, Legal & Security Details',
-      group: 'criminal' as FormGroup,
-      showDocuments: false,
-      slug: 'health-legal-security-details'
     },
     {
       title: 'Contact Preferences',
@@ -3971,8 +3935,36 @@ export const TURKEY: VisaForm = {
       type: 'DateofBirth',
       label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      disableFutureDates: true
+      showIf: {
+      operator: 'and',
+      conditions:[
+        { field: 'maritalStatus', not: 'single' },
+        { field: 'maritalStatus', not: 'divorced' },
+        { field: 'maritalStatus', not: 'separated' },
+        { field: 'maritalStatus', not: 'widowed' },
+      ]
+    }
+  },
+
+    
+    {
+      id: 'spousePlaceOfBirth',
+      group: 'personal' as FormGroup,
+      type: 'text',
+      label: `What is place of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter place of birth of your spouse',
+      required: true,
+      showIf: { field: 'maritalStatus', value: 'married' },
+    },
+    
+    {
+      id: 'spouseNationality',
+      group: 'personal' as FormGroup,
+      type: 'text',
+      label: `What is nationality of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter nationality of your spouse',
+      required: true,
+      showIf: { field: 'maritalStatus', value: 'married' },
     },
     
     
@@ -4028,7 +4020,7 @@ export const TURKEY: VisaForm = {
     {
       id: 'childrenDetails',
       group: 'personal' as FormGroup,
-      type: 'childrenInput',
+      type: 'TurkeyChildrenInputField',
       component: 'ChildrenInputField',
       label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
@@ -4123,62 +4115,41 @@ export const TURKEY: VisaForm = {
 
     // For visitation purpose
     {
-      id: 'relationToVisit',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `What is your relation to person you will visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'visitPurpose', value: 'visitation' },
-      options: RELATION_OPTIONS
-    },
-    {
-      id: 'relationToVisitOther',
+      id: 'hostName',
       group: 'purpose' as FormGroup,
       type: 'text',
-      label: 'Please specify your relation',
-      required: true,
-      placeholder: 'Specify your relation',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'visitPurpose', value: 'visitation' },
-          { field: 'relationToVisit', value: 'other' }
-        ]
-      }
-    },
-    {
-      id: 'inviterImmigrationStatus',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      label: `What is name of Host? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter name of Host',
       required: true,
       showIf: { field: 'visitPurpose', value: 'visitation' },
-      options: IMMIGRATION_STATUS_OPTIONS
     },
     {
-      id: 'inviterImmigrationStatusOther',
+      id: 'hostAddress',
       group: 'purpose' as FormGroup,
       type: 'text',
-      label: 'Please specify their immigration status',
+      label: `What is address of host? ${FIELD_REQUIREMENTS.MANDATORY} `,
+      placeholder: 'Enter address of host',
       required: true,
-      placeholder: 'Specify immigration status',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'visitPurpose', value: 'visitation' },
-          { field: 'inviterImmigrationStatus', value: 'other' }
-        ]
-      }
+      showIf: { field: 'visitPurpose', value: 'visitation' },
     },
-    // {
-    //   id: 'inviterContactDetails',
-    //   group: 'purpose' as FormGroup,
-    //   type: 'text',
-    //   label: `What are the contact details of the person you will visit? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-    //   required: false,
-    //   placeholder: 'Name, Address, Phone number, Email',
-    //   showIf: { field: 'visitPurpose', value: 'visitation' }
-    // },
+    {
+      id: 'hostPhone',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `What is Telephone number of host? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter Telephone number of host',
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+    },
+    {
+      id: 'hostEmail',
+      group: 'purpose' as FormGroup,
+      type: 'email',
+      label: `What is Email ID of host? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter Email ID of host',
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'visitation' },
+    },
     {
       id: 'addAnotherInviter',
       group: 'purpose' as FormGroup,
@@ -4357,6 +4328,53 @@ export const TURKEY: VisaForm = {
         ]
       }
     },
+
+    {
+      id: 'hostCompanyName',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Name of Host Company in Turkey ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'business' },
+      placeholder: 'Enter name of host company'
+    },
+    {
+      id: 'hostContactPerson',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Name of Contact Person in Host Company ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'business' },
+      placeholder: 'Enter contact person name'
+    },
+    {
+      id: 'hostCompanyAddress',
+      group: 'purpose' as FormGroup,
+      type: 'text',
+      label: `Company Address ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'business' },
+      placeholder: 'Enter company address'
+    },
+    {
+      id: 'hostCompanyEmail',
+      group: 'purpose' as FormGroup,
+      type: 'email',
+      label: `Company Email ID ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'business' },
+      placeholder: 'Enter company email ID'
+    },
+    {
+      id: 'hostCompanyPhone',
+      group: 'purpose' as FormGroup,
+      type: 'tel',
+      label: `Company Telephone Number ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'visitPurpose', value: 'business' },
+      placeholder: 'Enter company telephone number'
+    },
+
     {
       id: 'businessTravelAssistance',
       group: 'purpose' as FormGroup,

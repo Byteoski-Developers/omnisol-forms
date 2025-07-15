@@ -28,6 +28,7 @@ import SocialHandles from "@/components/form/SocialHandles";
 import Last10YearActivity from "./Last10YearActivity";
 import RefusalInput from "./RefusalInput";
 import ChildrenInputField from "./ChildrenInputField";
+import TurkeyChildrenInputField from "./TurkeyChildrenInputField"; // Import the TurkeyChildrenInputField component
 import LanguageTestInput from "./LanguageTestInput";
 import DocumentPreviewPanel from "@/components/form/DocumentPreviewPanel";
 import { MultiSelect } from "./MultiSelect";
@@ -1171,6 +1172,25 @@ export function DynamicForm({
                     <div key={id} className="mb-4">
                         <Label htmlFor={id}>{label}</Label>
                         <ChildrenInputFieldUSA
+                            inputValue={value}
+                            handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)}
+                            readonly={false}
+                        />
+                        {error && (
+                            <div className="flex items-center gap-2 text-destructive mt-2">
+                                <AlertCircle className="h-4 w-4" />
+                                <p className="text-sm">{error}</p>
+                            </div>
+                        )}
+                        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+                    </div>
+                );
+
+            case 'TurkeyChildrenInputField':
+                return (
+                    <div key={id} className="mb-4">
+                        <Label htmlFor={id}>{label}</Label>
+                        <TurkeyChildrenInputField
                             inputValue={value}
                             handleChange={(val: any, save?: boolean) => handleFieldChange(id, val, save)}
                             readonly={false}

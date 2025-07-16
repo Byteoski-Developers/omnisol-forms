@@ -449,545 +449,545 @@ export const SINGAPORE: VisaForm = {
       ]
     },
     // Partnership Deed documents
-{
-  id: 'partnership_deed',
-  name: 'Partnership Deed',
-  description: 'Upload your partnership deed document',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'businessType',
-    value: 'partnership'
-  }],
-  extractableFields: [
     {
-      fieldId: 'partnershipName',
-      source: 'partnership_deed'
+      id: 'partnership_deed',
+      name: 'Partnership Deed',
+      description: 'Upload your partnership deed document',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'businessType',
+        value: 'partnership'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'partnershipName',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'partnerNames',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'partnershipFormationDate',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'businessAddress',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'profitSharingRatio',
+          source: 'partnership_deed'
+        }
+      ]
     },
+    // Certificate of Incorporation documents
     {
-      fieldId: 'partnerNames',
-      source: 'partnership_deed'
+      id: 'incorporation_certificate',
+      name: 'Certificate of Incorporation',
+      description: 'Upload your company\'s certificate of incorporation',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'businessType',
+        value: 'company'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'companyName',
+          source: 'incorporation_certificate'
+        },
+        {
+          fieldId: 'companyRegistrationNumber',
+          source: 'incorporation_certificate'
+        },
+        {
+          fieldId: 'incorporationDate',
+          source: 'incorporation_certificate'
+        },
+        {
+          fieldId: 'registeredAddress',
+          source: 'incorporation_certificate'
+        }
+      ]
     },
-    {
-      fieldId: 'partnershipFormationDate',
-      source: 'partnership_deed'
-    },
-    {
-      fieldId: 'businessAddress',
-      source: 'partnership_deed'
-    },
-    {
-      fieldId: 'profitSharingRatio',
-      source: 'partnership_deed'
-    }
-  ]
-},
-// Certificate of Incorporation documents
-{
-  id: 'incorporation_certificate',
-  name: 'Certificate of Incorporation',
-  description: 'Upload your company\'s certificate of incorporation',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'businessType',
-    value: 'company'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'companyName',
-      source: 'incorporation_certificate'
-    },
-    {
-      fieldId: 'companyRegistrationNumber',
-      source: 'incorporation_certificate'
-    },
-    {
-      fieldId: 'incorporationDate',
-      source: 'incorporation_certificate'
-    },
-    {
-      fieldId: 'registeredAddress',
-      source: 'incorporation_certificate'
-    }
-  ]
-},
 
-// Director's List documents
-{
-  id: 'directors_list',
-  name: 'Director\'s List',
-  description: 'Upload your company\'s list of directors',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'businessType',
-    value: 'company'
-  }],
-  extractableFields: [
+    // Director's List documents
     {
-      fieldId: 'companyName',
-      source: 'directors_list'
+      id: 'directors_list',
+      name: 'Director\'s List',
+      description: 'Upload your company\'s list of directors',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'businessType',
+        value: 'company'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'companyName',
+          source: 'directors_list'
+        },
+        {
+          fieldId: 'directorNames',
+          source: 'directors_list'
+        },
+        {
+          fieldId: 'directorAddresses',
+          source: 'directors_list'
+        }
+      ]
     },
+    // Fixed Deposit documents
     {
-      fieldId: 'directorNames',
-      source: 'directors_list'
+      id: 'fixed_deposit',
+      name: 'Fixed Deposit',
+      description: 'Upload your fixed deposit certificates',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'fixed_deposits'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'depositorName',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'bankName',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'fdNumber',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'depositAmount',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'interestRate',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'depositDate',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'maturityDate',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'maturityAmount',
+          source: 'fixed_deposit'
+        }
+      ]
     },
+    // Post Office Savings documents
     {
-      fieldId: 'directorAddresses',
-      source: 'directors_list'
-    }
-  ]
-},
-// Fixed Deposit documents
-{
-  id: 'fixed_deposit',
-  name: 'Fixed Deposit',
-  description: 'Upload your fixed deposit certificates',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'fixed_deposits'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'depositorName',
-      source: 'fixed_deposit'
+      id: 'post_office_savings',
+      name: 'Post Office Saving Schemes',
+      description: 'Upload your post office saving scheme documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'postal_savings'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'accountHolderName',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'schemeType',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'accountNumber',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'depositAmount',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'openingDate',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'maturityDate',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'postOfficeName',
+          source: 'post_office_savings'
+        }
+      ]
     },
+    // Mutual Funds documents
     {
-      fieldId: 'bankName',
-      source: 'fixed_deposit'
+      id: 'mutual_funds',
+      name: 'Mutual Funds Statements',
+      description: 'Upload your mutual funds statements',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'mutual_funds'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'investorName',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'folioNumber',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'schemeNames',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'investmentAmount',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'currentValue',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'statementDate',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'assetManagementCompany',
+          source: 'mutual_funds'
+        }
+      ]
     },
+    // Provident Funds documents
     {
-      fieldId: 'fdNumber',
-      source: 'fixed_deposit'
+      id: 'provident_funds',
+      name: 'Provident Funds Statements',
+      description: 'Upload your provident fund statements',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'provident_fund'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'memberName',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'pfAccountNumber',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'employerName',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'employeeContribution',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'employerContribution',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'totalBalance',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'statementPeriod',
+          source: 'provident_funds'
+        }
+      ]
     },
+    // Insurance Policy documents
     {
-      fieldId: 'depositAmount',
-      source: 'fixed_deposit'
+      id: 'insurance_policy',
+      name: 'Insurance Policies',
+      description: 'Upload your insurance policy documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'insurance_policies'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'policyHolderName',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'insuranceCompany',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'premiumAmount',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'issueDate',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'maturityDate',
+          source: 'insurance_policy'
+        }
+      ]
     },
+    // Property Valuation documents
     {
-      fieldId: 'interestRate',
-      source: 'fixed_deposit'
+      id: 'property_valuation',
+      name: 'Property Valuation Reports',
+      description: 'Upload property valuation reports',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'ownerName',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'propertyAddress',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'propertyType',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuationAmount',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuationDate',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuatorName',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuatorQualification',
+          source: 'property_valuation'
+        }
+      ]
     },
-    {
-      fieldId: 'depositDate',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'maturityDate',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'maturityAmount',
-      source: 'fixed_deposit'
-    }
-  ]
-},
-// Post Office Savings documents
-{
-  id: 'post_office_savings',
-  name: 'Post Office Saving Schemes',
-  description: 'Upload your post office saving scheme documents',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'postal_savings'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'accountHolderName',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'schemeType',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'accountNumber',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'depositAmount',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'openingDate',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'maturityDate',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'postOfficeName',
-      source: 'post_office_savings'
-    }
-  ]
-},
-// Mutual Funds documents
-{
-  id: 'mutual_funds',
-  name: 'Mutual Funds Statements',
-  description: 'Upload your mutual funds statements',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'mutual_funds'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'investorName',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'folioNumber',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'schemeNames',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'investmentAmount',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'currentValue',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'statementDate',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'assetManagementCompany',
-      source: 'mutual_funds'
-    }
-  ]
-},
-// Provident Funds documents
-{
-  id: 'provident_funds',
-  name: 'Provident Funds Statements',
-  description: 'Upload your provident fund statements',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'provident_fund'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'memberName',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'pfAccountNumber',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'employerName',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'employeeContribution',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'employerContribution',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'totalBalance',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'statementPeriod',
-      source: 'provident_funds'
-    }
-  ]
-},
-// Insurance Policy documents
-{
-  id: 'insurance_policy',
-  name: 'Insurance Policies',
-  description: 'Upload your insurance policy documents',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'insurance_policies'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'policyHolderName',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'insuranceCompany',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'premiumAmount',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'issueDate',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'maturityDate',
-      source: 'insurance_policy'
-    }
-  ]
-},
-// Property Valuation documents
-{
-  id: 'property_valuation',
-  name: 'Property Valuation Reports',
-  description: 'Upload property valuation reports',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'property'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'ownerName',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'propertyAddress',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'propertyType',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuationAmount',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuationDate',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuatorName',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuatorQualification',
-      source: 'property_valuation'
-    }
-  ]
-},
 
-// Rent Deed documents
-{
-  id: 'rent_deed',
-  name: 'Rent Deeds',
-  description: 'Upload your rent deed documents',
-  type: 'conditional',
-  required: false,
-  conditions: [{
-    questionId: 'residenceType',
-    value: 'rented'
-  }],
-  extractableFields: [
+    // Rent Deed documents
     {
-      fieldId: 'tenantName',
-      source: 'rent_deed'
+      id: 'rent_deed',
+      name: 'Rent Deeds',
+      description: 'Upload your rent deed documents',
+      type: 'conditional',
+      required: false,
+      conditions: [{
+        questionId: 'residenceType',
+        value: 'rented'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'tenantName',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'landlordName',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'propertyAddress',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'rentAmount',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'leaseStartDate',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'leaseEndDate',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'securityDeposit',
+          source: 'rent_deed'
+        }
+      ]
     },
-    {
-      fieldId: 'landlordName',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'propertyAddress',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'rentAmount',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'leaseStartDate',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'leaseEndDate',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'securityDeposit',
-      source: 'rent_deed'
-    }
-  ]
-},
 
-// Revenue Record documents
-{
-  id: 'revenue_record',
-  name: 'Revenue Record of the Land',
-  description: 'Upload revenue record documents for your land',
-  type: 'conditional',
-  required: false,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'property'
-  }],
-  extractableFields: [
+    // Revenue Record documents
     {
-      fieldId: 'ownerName',
-      source: 'revenue_record'
+      id: 'revenue_record',
+      name: 'Revenue Record of the Land',
+      description: 'Upload revenue record documents for your land',
+      type: 'conditional',
+      required: false,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'ownerName',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'landLocation',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'landArea',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'landValue',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'recordNumber',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'recordDate',
+          source: 'revenue_record'
+        }
+      ]
     },
-    {
-      fieldId: 'landLocation',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'landArea',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'landValue',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'recordNumber',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'recordDate',
-      source: 'revenue_record'
-    }
-  ]
-},
 
-// Property Title documents
-{
-  id: 'property_title',
-  name: 'Property Title Deeds',
-  description: 'Upload your property title deed documents',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'property'
-  }],
-  extractableFields: [
+    // Property Title documents
     {
-      fieldId: 'ownerName',
-      source: 'property_title'
+      id: 'property_title',
+      name: 'Property Title Deeds',
+      description: 'Upload your property title deed documents',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'ownerName',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'propertyAddress',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'propertyDescription',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'registrationNumber',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'purchaseValue',
+          source: 'property_title'
+        }
+      ]
     },
+    // Birth Certificate documents
     {
-      fieldId: 'propertyAddress',
-      source: 'property_title'
+      id: 'birth_certificate',
+      name: 'Birth Certificate',
+      description: 'Upload your birth certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'ageProofRequired',  // You would need this question in your form
+        value: true
+      }],
+      extractableFields: [
+        {
+          fieldId: 'fullName',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'dateOfBirth',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'placeOfBirth',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'fatherName',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'motherName',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'registrationNumber',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'birth_certificate'
+        }
+      ]
     },
+    // Marriage Certificate documents
     {
-      fieldId: 'propertyDescription',
-      source: 'property_title'
+      id: 'marriage_certificate',
+      name: 'Marriage Registration Certificate',
+      description: 'Upload your marriage certificate',
+      type: 'conditional',
+      required: true,
+      conditions: [{
+        questionId: 'maritalStatus',
+        value: 'married'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'husbandName',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'wifeName',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'marriageDate',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'marriagePlace',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'registrationNumber',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'marriage_certificate'
+        }
+      ]
     },
-    {
-      fieldId: 'registrationNumber',
-      source: 'property_title'
-    },
-    {
-      fieldId: 'registrationDate',
-      source: 'property_title'
-    },
-    {
-      fieldId: 'purchaseValue',
-      source: 'property_title'
-    }
-  ]
-},
-// Birth Certificate documents
-{
-  id: 'birth_certificate',
-  name: 'Birth Certificate',
-  description: 'Upload your birth certificate',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'ageProofRequired',  // You would need this question in your form
-    value: true
-  }],
-  extractableFields: [
-    {
-      fieldId: 'fullName',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'dateOfBirth',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'placeOfBirth',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'fatherName',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'motherName',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'registrationNumber',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'registrationDate',
-      source: 'birth_certificate'
-    }
-  ]
-},
-// Marriage Certificate documents
-{
-  id: 'marriage_certificate',
-  name: 'Marriage Registration Certificate',
-  description: 'Upload your marriage certificate',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'maritalStatus',
-    value: 'married'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'husbandName',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'wifeName',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'marriageDate',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'marriagePlace',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'registrationNumber',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'registrationDate',
-      source: 'marriage_certificate'
-    }
-  ]
-},
 
     // Hotel booking documents, extractable fields 
     {
@@ -2988,9 +2988,9 @@ export const SINGAPORE: VisaForm = {
       required: true,
       conditions: [
         {
-        questionId: 'expensePayerOccupation',
-        value: 'business_partner',
-      }
+          questionId: 'expensePayerOccupation',
+          value: 'business_partner',
+        }
       ]
     },
     {
@@ -3727,18 +3727,6 @@ export const SINGAPORE: VisaForm = {
       slug: 'passport-information'
     },
     {
-      title: 'Family Information',
-      group: 'family' as FormGroup,
-      showDocuments: false,
-      slug: 'family-information'
-    },
-    {
-      title: 'Parents Information',
-      group: 'parents' as FormGroup,
-      showDocuments: false,
-      slug: 'parents-information'
-    },
-    {
       title: 'Visa History',
       group: 'visa_history' as FormGroup,
       showDocuments: false,
@@ -3756,23 +3744,11 @@ export const SINGAPORE: VisaForm = {
       showDocuments: false,
       slug: 'travel-plans'
     },
-    // {
-    //   title: 'Relatives Information',
-    //   group: 'relatives' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'relatives-information'
-    // },
-    // {
-    //   title: 'Social Media Handles',
-    //   group: 'social' as FormGroup,
-    //   showDocuments: false,
-    //   slug: 'social-media-handles'
-    // },
     {
-      title: 'Health, Legal & Security Details',
-      group: 'criminal' as FormGroup,
+      title: 'Travel Companion',
+      group: 'travel_companion' as FormGroup,
       showDocuments: false,
-      slug: 'health-legal-security-details'
+      slug: 'travel-companion'
     },
     {
       title: 'Contact Preferences',
@@ -3963,28 +3939,47 @@ export const SINGAPORE: VisaForm = {
       options: MARITAL_STATUS_OPTIONS
     },
 
-    // For married applicants
-    
+    //  {
+    //       id: 'spousePlaceOfBirth',
+    //       group: 'personal' as FormGroup,
+    //       type: 'text',
+    //       label: `What is place of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //       placeholder: 'Enter place of birth of your spouse',
+    //       required: true,
+    //       showIf: { field: 'maritalStatus', value: 'married' },
+    //     },
+
     {
-      id: 'spouseDob',
+      id: 'spouseNationality',
       group: 'personal' as FormGroup,
-      type: 'DateofBirth',
-      label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      type: 'text',
+      label: `What is nationality of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter nationality of your spouse',
       required: true,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      disableFutureDates: true
+      showIf: { field: 'maritalStatus', value: 'married' },
     },
-    
-    
+    // For married applicants
+
+    // {
+    //   id: 'spouseDob',
+    //   group: 'personal' as FormGroup,
+    //   type: 'DateofBirth',
+    //   label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'maritalStatus', not: 'single' },
+    //   disableFutureDates: true
+    // },
+
+
 
     // For divorced applicants
-    
+
     // For widowed applicants
-    
-    
+
+
 
     // For separated applicants
-   
+
 
     // Children information for all marital statuses (except single)
     {
@@ -4013,33 +4008,33 @@ export const SINGAPORE: VisaForm = {
       description: 'Please provide details of your language test results.',
       showIf: { field: 'residenceStatus', value: 'student' },
     },
-    {
-      id: 'hasChildren',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'childrenDetails',
-      group: 'personal' as FormGroup,
-      type: 'childrenInput',
-      component: 'ChildrenInputField',
-      label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', not: 'single' },
-          { field: 'hasChildren', value: 'yes' }
-        ]
-      }
-    },
+    // {
+    //   id: 'hasChildren',
+    //   group: 'personal' as FormGroup,
+    //   type: 'select',
+    //   label: `Do you have any children or step children? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', not: 'single' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'childrenDetails',
+    //   group: 'personal' as FormGroup,
+    //   type: 'childrenInput',
+    //   component: 'ChildrenInputField',
+    //   label: `Give details of all your children ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', not: 'single' },
+    //       { field: 'hasChildren', value: 'yes' }
+    //     ]
+    //   }
+    // },
 
     // -------------------- PURPOSE OF VISIT --------------------
     {
@@ -5369,248 +5364,271 @@ export const SINGAPORE: VisaForm = {
         value: 'other_assets'
       }
     },
-    {
-      id: 'selfPayingExpenses',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Will you be paying for your expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'expensePayer',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Who will pay for your expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'selfPayingExpenses', value: 'no' },
-      options: EXPENSES_PAYER_OPTIONS
-    },
-    {
-      id: 'expensePayerOther',
-      group: 'finances' as FormGroup,
-      type: 'text',
-      label: 'Please specify who will pay for your expenses',
-      required: true,
-      placeholder: 'Enter payer details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'selfPayingExpenses', value: 'no' },
-          { field: 'expensePayer', value: 'other' }
-        ]
-      }
-    },
-    {
-      id: 'expensePayerOccupation',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is the primary occupation of the person paying for expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: {
-        operator: 'or',
-        conditions: [
-          { field: 'selfPayingExpenses', value: 'yes' },
-          { field: 'expensePayer', value: 'self' }
-        ]
-      },
-      options: OCCUPATION_SOURCE_OPTIONS || []
-    },
-    {
-      id: 'expensePayerOccupationExplanation',
-      group: 'finances' as FormGroup,
-      type: 'textarea',
-      label: 'Please Explain the occupation in brief',
-      required: false,
-      placeholder: 'Enter occupation details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'selfPayingExpenses', value: 'yes' },
-          { field: 'expensePayerOccupation', value: 'other' }
-        ]
-      }
-    },
-    {
-      id: 'expensePayerOccupationOther',
-      group: 'finances' as FormGroup,
-      type: 'textarea',
-      label: 'Please specify the occupation',
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'incomeSource', value: 'property' },
-          { field: 'incomeSource', value: 'business' },
-
-
-
-        ]
-      },
-    },
-
     // {
-    //   id: 'expensePayerOccupationOther',
+    //   id: 'selfPayingExpenses',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Will you be paying for your expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'expensePayer',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Who will pay for your expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'selfPayingExpenses', value: 'no' },
+    //   options: EXPENSES_PAYER_OPTIONS
+    // },
+    // {
+    //   id: 'expensePayerOther',
     //   group: 'finances' as FormGroup,
     //   type: 'text',
-    //   label: 'Please specify the occupation',
+    //   label: 'Please specify who will pay for your expenses',
     //   required: true,
-    //   placeholder: 'Enter occupation details',
+    //   placeholder: 'Enter payer details',
     //   showIf: {
     //     operator: 'and',
     //     conditions: [
     //       { field: 'selfPayingExpenses', value: 'no' },
-    //       { field: 'expensePayerOccupation', value: 'other' }
+    //       { field: 'expensePayer', value: 'other' }
     //     ]
     //   }
     // },
     {
-      id: 'expensePayerIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is the source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'selfPayingExpenses', value: 'no' },
-      options: INCOME_SOURCE_OPTIONS
-    },
-    {
-      id: 'expensePayerIncomeSourceOther',
+      id: 'expensePayerOccupation',
       group: 'finances' as FormGroup,
       type: 'text',
-      label: 'Please specify the source of income',
+      label: `What is your occupation? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter your occupation',
       required: true,
-      placeholder: 'Enter income source details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'selfPayingExpenses', value: 'no' },
-          { field: 'expensePayerIncomeSource', value: 'other' }
-        ]
-      }
+
     },
     {
-      id: 'expensePayerHasAdditionalIncome',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Do you have additional source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'selfPayingExpenses', value: 'no' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'expensePayerAdditionalIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is the additional source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'selfPayingExpenses', value: 'no' },
-          { field: 'expensePayerHasAdditionalIncome', value: 'yes' }
-        ]
-      },
-      options: INCOME_SOURCE_OPTIONS
-    },
-    {
-      id: 'expensePayerAdditionalIncomeSourceOther',
+      id: 'expensePayerAnnualIncome',
       group: 'finances' as FormGroup,
       type: 'text',
-      label: 'Please specify the additional source of income',
+      label: `What is your Annual Income? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter your annual income',
       required: true,
-      placeholder: 'Enter additional income source details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'selfPayingExpenses', value: 'no' },
-          { field: 'expensePayerHasAdditionalIncome', value: 'yes' },
-          { field: 'expensePayerAdditionalIncomeSource', value: 'other' }
-        ]
-      }
+
     },
-    {
-      id: 'spouseHasIndependentIncome',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Does your spouse have his/her independent income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: { field: 'maritalStatus', value: 'married' },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' }
-        ]
-      },
-      options: INCOME_SOURCE_OPTIONS
-    },
-    {
-      id: 'spouseIncomeSourceOther',
-      group: 'finances' as FormGroup,
-      type: 'text',
-      label: "Please specify your spouse's source of income",
-      required: false,
-      placeholder: 'Enter income source details',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' },
-          { field: 'spouseIncomeSource', value: 'other' }
-        ]
-      }
-    },
-    {
-      id: 'spouseHasAdditionalIncome',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `Does your spouse have additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' }
-        ]
-      },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseAdditionalIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'checkbox-multiselect',
-      label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' },
-          { field: 'spouseHasAdditionalIncome', value: 'yes' }
-        ]
-      },
-      options: INCOME_SOURCE_OPTIONS
-    },
+
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
+    // {
+    //   id: 'expensePayerOccupation',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is the primary occupation of the person paying for expenses? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: {
+    //     operator: 'or',
+    //     conditions: [
+    //       { field: 'selfPayingExpenses', value: 'yes' },
+    //       { field: 'expensePayer', value: 'self' }
+    //     ]
+    //   },
+    //   options: OCCUPATION_SOURCE_OPTIONS || []
+    // },
+    // {
+    //   id: 'expensePayerOccupationExplanation',
+    //   group: 'finances' as FormGroup,
+    //   type: 'textarea',
+    //   label: 'Please Explain the occupation in brief',
+    //   required: false,
+    //   placeholder: 'Enter occupation details',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'selfPayingExpenses', value: 'yes' },
+    //       { field: 'expensePayerOccupation', value: 'other' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'expensePayerOccupationOther',
+    //   group: 'finances' as FormGroup,
+    //   type: 'textarea',
+    //   label: 'Please specify the occupation',
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'incomeSource', value: 'property' },
+    //       { field: 'incomeSource', value: 'business' },
+
+
+
+    //     ]
+    //   },
+    // },
+
+    // // {
+    // //   id: 'expensePayerOccupationOther',
+    // //   group: 'finances' as FormGroup,
+    // //   type: 'text',
+    // //   label: 'Please specify the occupation',
+    // //   required: true,
+    // //   placeholder: 'Enter occupation details',
+    // //   showIf: {
+    // //     operator: 'and',
+    // //     conditions: [
+    // //       { field: 'selfPayingExpenses', value: 'no' },
+    // //       { field: 'expensePayerOccupation', value: 'other' }
+    // //     ]
+    // //   }
+    // // },
+    // {
+    //   id: 'expensePayerIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is the source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'selfPayingExpenses', value: 'no' },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
+    // {
+    //   id: 'expensePayerIncomeSourceOther',
+    //   group: 'finances' as FormGroup,
+    //   type: 'text',
+    //   label: 'Please specify the source of income',
+    //   required: true,
+    //   placeholder: 'Enter income source details',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'selfPayingExpenses', value: 'no' },
+    //       { field: 'expensePayerIncomeSource', value: 'other' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'expensePayerHasAdditionalIncome',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Do you have additional source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'selfPayingExpenses', value: 'no' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'expensePayerAdditionalIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is the additional source of income? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'selfPayingExpenses', value: 'no' },
+    //       { field: 'expensePayerHasAdditionalIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
+    // {
+    //   id: 'expensePayerAdditionalIncomeSourceOther',
+    //   group: 'finances' as FormGroup,
+    //   type: 'text',
+    //   label: 'Please specify the additional source of income',
+    //   required: true,
+    //   placeholder: 'Enter additional income source details',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'selfPayingExpenses', value: 'no' },
+    //       { field: 'expensePayerHasAdditionalIncome', value: 'yes' },
+    //       { field: 'expensePayerAdditionalIncomeSource', value: 'other' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'spouseHasIndependentIncome',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse have his/her independent income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: { field: 'maritalStatus', value: 'married' },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
+    // {
+    //   id: 'spouseIncomeSourceOther',
+    //   group: 'finances' as FormGroup,
+    //   type: 'text',
+    //   label: "Please specify your spouse's source of income",
+    //   required: false,
+    //   placeholder: 'Enter income source details',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' },
+    //       { field: 'spouseIncomeSource', value: 'other' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'spouseHasAdditionalIncome',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse have additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
+    // {
+    //   id: 'spouseAdditionalIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'checkbox-multiselect',
+    //   label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' },
+    //       { field: 'spouseHasAdditionalIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },  
+
+    // ---------------------------------------------------------------------------------------------------------------------------
 
     // -------------------- RESIDENCE INFORMATION --------------------
     {
@@ -5639,8 +5657,8 @@ export const SINGAPORE: VisaForm = {
       placeholder: 'Enter your current address',
       showIf: { field: 'hasAlternateAddress', value: 'yes' }
     },
-   
-    
+
+
     {
       id: 'propertyOwnershipOther',
       group: 'residence' as FormGroup,
@@ -5651,11 +5669,11 @@ export const SINGAPORE: VisaForm = {
       showIf: { field: 'propertyOwnership', value: 'other' }
     },
     {
-      id: 'worksFromHome',
+      id: 'residenceOther',
       group: 'residence' as FormGroup,
       type: 'select',
-      label: `Do you work from home? ${FIELD_REQUIREMENTS.OPTIONAL}`,
-      required: false,
+      label: `Did you reside in other countries/places, other than your country/place of origin, for one year or more during the last 5 years? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
@@ -5665,10 +5683,46 @@ export const SINGAPORE: VisaForm = {
       id: 'workAddress',
       group: 'residence' as FormGroup,
       type: 'text',
-      label: `What is your work address? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      placeholder: 'Enter your work address',
-      showIf: { field: 'worksFromHome', value: 'no' }
+      label: `Country/Place of residence ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter country/place of residence',
+      showIf: { field: 'residenceOther', value: 'yes' }
+    },
+    {
+      id: 'address',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: `Address ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter address',
+      showIf: { field: 'residenceOther', value: 'yes' }
+    },
+    {
+      id: 'periodOfStay',
+      group: 'residence' as FormGroup,
+      type: 'text',
+      label: `Period of stay ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter period of stay',
+      showIf: { field: 'residenceOther', value: 'yes' }
+    },
+    {
+      id: 'periodOfStay',
+      group: 'residence' as FormGroup,
+      type: 'date',
+      label: `From ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter from date',
+      showIf: { field: 'residenceOther', value: 'yes' }
+    },
+    {
+      id: 'periodOfStay',
+      group: 'residence' as FormGroup,
+      type: 'date',
+      label: `To ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      placeholder: 'Enter to date',
+      showIf: { field: 'residenceOther', value: 'yes' }
     },
 
     // -------------------- PASSPORT INFORMATION --------------------
@@ -6144,47 +6198,17 @@ export const SINGAPORE: VisaForm = {
       id: 'highestEducation',
       group: 'education' as FormGroup,
       type: 'select',
-      label: 'Highest level of education completed',
+      label: `Highest level of education completed ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       options: EDUCATION_QUALIFICATION_OPTIONS
     },
-    // {
-    //   id: 'accessingBodyAssessment',
-    //   group: 'education' as FormGroup,
-    //   type: 'textarea',
-    //   label: 'Accessing Body Assessment',
-    //   required: false,
-    //   description: 'If you have had your qualifications assessed by an accessing body, please provide the details below.'
-    // },
     {
       id: 'fieldOfStudy',
       group: 'education' as FormGroup,
       type: 'select',
-      label: 'Field of study',
+      label: `Field of study ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: false,
       options: EDUCATION_FIELD_OPTIONS
-    },
-    {
-      id: 'last10YearActivityHeader',
-      group: 'education' as FormGroup,
-      type: 'header',
-      label: 'Last 10 Years Activity'
-    },
-    {
-      id: 'last10YearActivityDescription',
-      group: 'education' as FormGroup,
-      type: 'info',
-      label: 'Last 10 Years Activity Information',
-      content: [
-        'Please provide information about your activities over the last 10 years. Include education, employment, and other significant activities.'
-      ]
-    },
-    {
-      id: 'last10YearActivity',
-      group: 'education' as FormGroup,
-      type: 'textarea',
-      label: 'Description',
-      required: true,
     },
 
     // Health, Legal, and Security Details
@@ -6231,6 +6255,110 @@ export const SINGAPORE: VisaForm = {
       label: `If yes, please provide relevant details: ${FIELD_REQUIREMENTS.MANDATORY}`,
       required: true,
       showIf: { field: 'criminalSecurityHistory', value: 'yes' }
-    }
+    },
+
+    // -------------------- TRAVEL COMPANION --------------------
+    {
+      id: 'travelCompanionHeader',
+      group: 'travel_companion' as FormGroup,
+      type: 'header',
+      label: 'Travel Companion Information'
+    },
+    {
+      id: 'hasTravelCompanion',
+      group: 'travel_companion' as FormGroup,
+      type: 'select',
+      label: `Will you be traveling with a companion? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'travelCompanionName',
+      group: 'travel_companion' as FormGroup,
+      type: 'text',
+      label: `Full Name of Travel Companion ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter full name of travel companion',
+      required: true,
+      showIf: { field: 'hasTravelCompanion', value: 'yes' }
+    },
+    {
+      id: 'travelCompanionNationality',
+      group: 'travel_companion' as FormGroup,
+      type: 'text',
+      label: `Nationality/Citizenship ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter nationality/citizenship of travel companion',
+      required: true,
+      showIf: { field: 'hasTravelCompanion', value: 'yes' }
+    },
+    {
+      id: 'travelCompanionRelationship',
+      group: 'travel_companion' as FormGroup,
+      type: 'select',
+      label: `Relationship with Travel Companion ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'hasTravelCompanion', value: 'yes' },
+      options: [
+        { label: 'Spouse', value: 'spouse' },
+        { label: 'Child', value: 'child' },
+        { label: 'Parent', value: 'parent' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    {
+      id: 'travelCompanionRelationshipOther',
+      group: 'travel_companion' as FormGroup,
+      type: 'text',
+      label: 'Please specify the relationship',
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'hasTravelCompanion', value: 'yes' },
+          { field: 'travelCompanionRelationship', value: 'other' }
+        ]
+      }
+    },
+    {
+      id: 'travelCompanionPassportNumber',
+      group: 'travel_companion' as FormGroup,
+      type: 'text',
+      label: `Passport Number ${FIELD_REQUIREMENTS.MANDATORY}`,
+      placeholder: 'Enter passport number of travel companion',
+      required: true,
+      showIf: { field: 'hasTravelCompanion', value: 'yes' }
+    },
+    {
+      id: 'travelCompanionVisaType',
+      group: 'travel_companion' as FormGroup,
+      type: 'select',
+      label: `Visa Type ${FIELD_REQUIREMENTS.MANDATORY}`, 
+      required: true,
+      showIf: { field: 'hasTravelCompanion', value: 'yes' },
+      options: [
+        { label: 'Tourist', value: 'tourist' },
+        { label: 'Business', value: 'business' },
+        { label: 'Student', value: 'student' },
+        { label: 'Work', value: 'work' },
+        { label: 'Other', value: 'other' }
+      ]
+    },
+    {
+      id: 'travelCompanionVisaTypeOther',
+      group: 'travel_companion' as FormGroup,
+      type: 'text',
+      label: 'Please specify the visa type',
+      required: true,
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'hasTravelCompanion', value: 'yes' },
+          { field: 'travelCompanionVisaType', value: 'other' }
+        ]
+      }
+    },
+
   ]
 };

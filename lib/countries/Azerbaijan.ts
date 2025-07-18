@@ -121,14 +121,6 @@ export const AZERBAIJAN: VisaForm = {
           fieldId: 'visaStamps',
           source: 'passport_internal_pages'
         },
-        {
-          fieldId: 'customsStamps',
-          source: 'passport_internal_pages'
-        },
-        {
-          fieldId: 'medicalStamps',
-          source: 'passport_internal_pages'
-        },
         // Visa pages extractions
         {
           fieldId: 'visaIssuingCountry',

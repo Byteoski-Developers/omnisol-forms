@@ -118,6 +118,10 @@ export const VIETNAM: VisaForm = {
           fieldId: 'entryExitStamps',
           source: 'passport_internal_pages'
         },
+        {
+          fieldId: 'visaStamps',
+          source: 'passport_internal_pages'
+        },
         // Visa pages extractions
         {
           fieldId: 'visaIssuingCountry',

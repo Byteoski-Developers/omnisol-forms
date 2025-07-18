@@ -118,6 +118,11 @@ export const SINGAPORE: VisaForm = {
           fieldId: 'entryExitStamps',
           source: 'passport_internal_pages'
         },
+        {
+          fieldId: 'visaStamps',
+          source: 'passport_internal_pages'
+        },
+
         // Visa pages extractions
         {
           fieldId: 'visaIssuingCountry',
@@ -5707,7 +5712,7 @@ export const SINGAPORE: VisaForm = {
       showIf: { field: 'residenceOther', value: 'yes' }
     },
     {
-      id: 'periodOfStay',
+      id: 'periodOfStayFrom',
       group: 'residence' as FormGroup,
       type: 'date',
       label: `From ${FIELD_REQUIREMENTS.MANDATORY}`,
@@ -5716,7 +5721,7 @@ export const SINGAPORE: VisaForm = {
       showIf: { field: 'residenceOther', value: 'yes' }
     },
     {
-      id: 'periodOfStay',
+      id: 'periodOfStayTo',
       group: 'residence' as FormGroup,
       type: 'date',
       label: `To ${FIELD_REQUIREMENTS.MANDATORY}`,
@@ -6207,7 +6212,7 @@ export const SINGAPORE: VisaForm = {
       group: 'education' as FormGroup,
       type: 'select',
       label: `Field of study ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: false,
+      required: true,
       options: EDUCATION_FIELD_OPTIONS
     },
 

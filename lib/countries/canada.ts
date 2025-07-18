@@ -116,6 +116,18 @@ export const CANADA: VisaForm = {
           fieldId: 'entryExitStamps',
           source: 'passport_internal_pages'
         },
+        {
+          fieldId: 'visaStamps',
+          source: 'passport_internal_pages'
+        },
+        {
+          fieldId: 'customsStamps',
+          source: 'passport_internal_pages'
+        },
+        {
+          fieldId: 'medicalStamps',
+          source: 'passport_internal_pages'
+        },
         // Visa pages extractions
         {
           fieldId: 'visaIssuingCountry',

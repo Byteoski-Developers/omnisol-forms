@@ -38,6 +38,7 @@ export const VIETNAM: VisaForm = {
       description: 'Upload scanned copy of all pages of your current passport',
       type: 'default',
       required: true,
+      category: 'Basic Information',
       extractableFields: [
         // First page extractions
         {
@@ -155,6 +156,7 @@ export const VIETNAM: VisaForm = {
       description: 'Upload scanned copy of all pages of your previous passport(s)',
       type: 'default',
       required: false,
+      category: 'Passports and Immigration History',
       extractableFields: [
         // First page extractions
         {
@@ -210,24 +212,24 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // Photo documents
     {
       id: 'photo',
       name: 'Recent Photograph',
       description: 'Upload a recent passport-sized photo with white background',
       type: 'default',
-      required: true
+      required: true,
+      category: 'Basic Information'
     },
-    // Adhaar card documents, extractable fields 
     {
       id: 'adhaar_card',
       name: 'Adhaar Card',
       description: 'Upload your Adhaar Card',
       type: 'conditional',
       required: true,
+      category: 'Basic Information',
       conditions: [{
         questionId: 'nationality',
-        value: 'IN'  // Show only for Indian nationality
+        value: 'IN'
       }],
       extractableFields: [
         {
@@ -244,13 +246,13 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // Travel insurance documents, extractable fields 
     {
       id: 'travel_insurance',
       name: 'Travel Insurance Policy',
       description: 'Upload your travel insurance policy',
       type: 'default',
       required: true,
+      category: 'Basic Information',
       extractableFields: [
         {
           fieldId: 'insuredName',
@@ -274,13 +276,13 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // Income tax return documents
     {
       id: 'income_tax_return',
       name: 'Income Tax Return and Computation of Income',
       description: 'Upload your latest income tax return and computation of income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'employmentStatus',
         value: 'self_employed'
@@ -304,13 +306,13 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // Salary slip documents
     {
       id: 'salary_slip',
       name: 'Salary Slips',
-      description: 'Upload your latest salary slips (Minimum 3 months’ salary slips)',
+      description: 'Upload your latest salary slips (Minimum 3 months salary slips)',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'employmentStatus',
         value: 'employed'
@@ -346,13 +348,13 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // GST registration documents
     {
       id: 'gst_registration',
       name: 'GST Registration',
       description: 'Upload your Goods and Service Tax Registration certificate',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'business'
@@ -380,13 +382,13 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // MSME Registration documents
     {
       id: 'msme_registration',
       name: 'MSME Registration',
       description: 'Upload your Micro, Small & Medium Enterprises registration certificate',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'business'
@@ -414,18 +416,19 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // Leave Letter documents
     {
       id: 'leave_letter',
       name: 'Leave Letter',
       description: 'Upload your approved leave letter from your employer',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'employmentStatus',
         value: 'employed'
       }],
       extractableFields: [
+        
         {
           fieldId: 'employeeName',
           source: 'leave_letter'
@@ -452,554 +455,549 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // Partnership Deed documents
-{
-  id: 'partnership_deed',
-  name: 'Partnership Deed',
-  description: 'Upload your partnership deed document',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'businessType',
-    value: 'partnership'
-  }],
-  extractableFields: [
     {
-      fieldId: 'partnershipName',
-      source: 'partnership_deed'
+      id: 'partnership_deed',
+      name: 'Partnership Deed',
+      description: 'Upload your partnership deed document',
+      type: 'conditional',
+      required: true,
+      category: 'Gainful Activities',
+      conditions: [{
+        questionId: 'businessType',
+        value: 'partnership'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'partnershipName',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'partnerNames',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'partnershipFormationDate',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'businessAddress',
+          source: 'partnership_deed'
+        },
+        {
+          fieldId: 'profitSharingRatio',
+          source: 'partnership_deed'
+        }    
+      ]
+    },
+    {
+      id: 'incorporation_certificate',
+      name: 'Certificate of Incorporation',
+      description: 'Upload your company\'s certificate of incorporation',
+      type: 'conditional',
+      required: true,
+      category: 'Gainful Activities',
+      conditions: [{
+        questionId: 'businessType',
+        value: 'company'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'companyName',
+          source: 'incorporation_certificate'
+        },
+        {
+          fieldId: 'companyRegistrationNumber',
+          source: 'incorporation_certificate'
+        },
+        {
+          fieldId: 'incorporationDate',
+          source: 'incorporation_certificate'
+        },
+        {
+          fieldId: 'registeredAddress',
+          source: 'incorporation_certificate'
+        }    
+      ]
+    },
+    {
+      id: 'directors_list',
+      name: 'Director\'s List',
+      description: 'Upload your company\'s list of directors',
+      type: 'conditional',
+      required: true,
+      category: 'Gainful Activities',
+      conditions: [{
+        questionId: 'businessType',
+        value: 'company'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'companyName',
+          source: 'directors_list'
+        },
+        {
+          fieldId: 'directorNames',
+          source: 'directors_list'
+        },
+        {
+          fieldId: 'directorAddresses',
+          source: 'directors_list'
+        }    
+      ]
+    },
+    {
+      id: 'fixed_deposit',
+      name: 'Fixed Deposit',
+      description: 'Upload your fixed deposit certificates',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'fixed_deposits'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'depositorName',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'bankName',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'fdNumber',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'depositAmount',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'interestRate',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'depositDate',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'maturityDate',
+          source: 'fixed_deposit'
+        },
+        {
+          fieldId: 'maturityAmount',
+          source: 'fixed_deposit'
+        }    
+      ]
+    },
+    {
+      id: 'post_office_savings',
+      name: 'Post Office Saving Schemes',
+      description: 'Upload your post office saving scheme documents',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'postal_savings'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'accountHolderName',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'schemeType',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'accountNumber',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'depositAmount',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'openingDate',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'maturityDate',
+          source: 'post_office_savings'
+        },
+        {
+          fieldId: 'postOfficeName',
+          source: 'post_office_savings'
+        }    
+      ]
+    },
+    {
+      id: 'mutual_funds',
+      name: 'Mutual Funds Statements',
+      description: 'Upload your mutual funds statements',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'mutual_funds'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'investorName',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'folioNumber',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'schemeNames',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'investmentAmount',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'currentValue',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'statementDate',
+          source: 'mutual_funds'
+        },
+        {
+          fieldId: 'assetManagementCompany',
+          source: 'mutual_funds'
+        }
+      ]
+    },
+    {
+      id: 'provident_funds',
+      name: 'Provident Funds Statements',
+      description: 'Upload your provident fund statements',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'provident_fund'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'memberName',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'pfAccountNumber',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'employerName',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'employeeContribution',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'employerContribution',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'totalBalance',
+          source: 'provident_funds'
+        },
+        {
+          fieldId: 'statementPeriod',
+          source: 'provident_funds'
+        }
+      ]
+    },
+    {
+      id: 'insurance_policy',
+      name: 'Insurance Policies',
+      description: 'Upload your insurance policy documents',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'insurance_policies'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'policyHolderName',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'insuranceCompany',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'premiumAmount',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'issueDate',
+          source: 'insurance_policy'
+        },
+        {
+          fieldId: 'maturityDate',
+          source: 'insurance_policy'
+        }
+      ]
+    },
+    {
+      id: 'property_valuation',
+      name: 'Property Valuation Reports',
+      description: 'Upload property valuation reports',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'ownerName',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'propertyAddress',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'propertyType',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuationAmount',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuationDate',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuatorName',
+          source: 'property_valuation'
+        },
+        {
+          fieldId: 'valuatorQualification',
+          source: 'property_valuation'
+        }
+      ]
+    },
+    {
+      id: 'rent_deed',
+      name: 'Rent Deeds',
+      description: 'Upload your rent deed documents',
+      type: 'conditional',
+      required: false,
+      category: 'Civil Status',
+      conditions: [{
+        questionId: 'residenceType',
+        value: 'rented'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'tenantName',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'landlordName',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'propertyAddress',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'rentAmount',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'leaseStartDate',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'leaseEndDate',
+          source: 'rent_deed'
+        },
+        {
+          fieldId: 'securityDeposit',
+          source: 'rent_deed'
+        }
+      ]
+    },
+    {
+      id: 'revenue_record',
+      name: 'Revenue Record of the Land',
+      description: 'Upload revenue record documents for your land',
+      type: 'conditional',
+      required: false,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'ownerName',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'landLocation',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'landArea',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'landValue',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'recordNumber',
+          source: 'revenue_record'
+        },
+        {
+          fieldId: 'recordDate',
+          source: 'revenue_record'
+        }
+      ]
+    },
+    {
+      id: 'property_title',
+      name: 'Property Title Deeds',
+      description: 'Upload your property title deed documents',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'financialSource',
+        value: 'property'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'ownerName',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'propertyAddress',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'propertyDescription',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'registrationNumber',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'property_title'
+        },
+        {
+          fieldId: 'purchaseValue',
+          source: 'property_title'
+        }
+      ]
+    },
+    {
+      id: 'birth_certificate',
+      name: 'Birth Certificate',
+      description: 'Upload your birth certificate',
+      type: 'conditional',
+      required: true,
+      category: 'Civil Status',
+      conditions: [{
+        questionId: 'ageProofRequired',
+        value: true
+      }],
+      extractableFields: [
+        {
+          fieldId: 'fullName',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'dateOfBirth',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'placeOfBirth',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'fatherName',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'motherName',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'registrationNumber',
+          source: 'birth_certificate'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'birth_certificate'
+        }
+      ]
+    },
+    {
+      id: 'marriage_certificate',
+      name: 'Marriage Registration Certificate',
+      description: 'Upload your marriage certificate',
+      type: 'conditional',
+      required: true,
+      category: 'Civil Status',
+      conditions: [{
+        questionId: 'maritalStatus',
+        value: 'married'
+      }],
+      extractableFields: [
+        {
+          fieldId: 'husbandName',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'wifeName',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'marriageDate',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'marriagePlace',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'registrationNumber',
+          source: 'marriage_certificate'
+        },
+        {
+          fieldId: 'registrationDate',
+          source: 'marriage_certificate'
+        }
+      ]
     },
-    {
-      fieldId: 'partnerNames',
-      source: 'partnership_deed'
-    },
-    {
-      fieldId: 'partnershipFormationDate',
-      source: 'partnership_deed'
-    },
-    {
-      fieldId: 'businessAddress',
-      source: 'partnership_deed'
-    },
-    {
-      fieldId: 'profitSharingRatio',
-      source: 'partnership_deed'
-    }
-  ]
-},
-// Certificate of Incorporation documents
-{
-  id: 'incorporation_certificate',
-  name: 'Certificate of Incorporation',
-  description: 'Upload your company\'s certificate of incorporation',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'businessType',
-    value: 'company'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'companyName',
-      source: 'incorporation_certificate'
-    },
-    {
-      fieldId: 'companyRegistrationNumber',
-      source: 'incorporation_certificate'
-    },
-    {
-      fieldId: 'incorporationDate',
-      source: 'incorporation_certificate'
-    },
-    {
-      fieldId: 'registeredAddress',
-      source: 'incorporation_certificate'
-    }
-  ]
-},
-
-// Director's List documents
-{
-  id: 'directors_list',
-  name: 'Director\'s List',
-  description: 'Upload your company\'s list of directors',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'businessType',
-    value: 'company'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'companyName',
-      source: 'directors_list'
-    },
-    {
-      fieldId: 'directorNames',
-      source: 'directors_list'
-    },
-    {
-      fieldId: 'directorAddresses',
-      source: 'directors_list'
-    }
-  ]
-},
-// Fixed Deposit documents
-{
-  id: 'fixed_deposit',
-  name: 'Fixed Deposit',
-  description: 'Upload your fixed deposit certificates',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'fixed_deposits'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'depositorName',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'bankName',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'fdNumber',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'depositAmount',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'interestRate',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'depositDate',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'maturityDate',
-      source: 'fixed_deposit'
-    },
-    {
-      fieldId: 'maturityAmount',
-      source: 'fixed_deposit'
-    }
-  ]
-},
-// Post Office Savings documents
-{
-  id: 'post_office_savings',
-  name: 'Post Office Saving Schemes',
-  description: 'Upload your post office saving scheme documents',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'postal_savings'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'accountHolderName',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'schemeType',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'accountNumber',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'depositAmount',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'openingDate',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'maturityDate',
-      source: 'post_office_savings'
-    },
-    {
-      fieldId: 'postOfficeName',
-      source: 'post_office_savings'
-    }
-  ]
-},
-// Mutual Funds documents
-{
-  id: 'mutual_funds',
-  name: 'Mutual Funds Statements',
-  description: 'Upload your mutual funds statements',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'mutual_funds'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'investorName',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'folioNumber',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'schemeNames',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'investmentAmount',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'currentValue',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'statementDate',
-      source: 'mutual_funds'
-    },
-    {
-      fieldId: 'assetManagementCompany',
-      source: 'mutual_funds'
-    }
-  ]
-},
-// Provident Funds documents
-{
-  id: 'provident_funds',
-  name: 'Provident Funds Statements',
-  description: 'Upload your provident fund statements',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'provident_fund'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'memberName',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'pfAccountNumber',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'employerName',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'employeeContribution',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'employerContribution',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'totalBalance',
-      source: 'provident_funds'
-    },
-    {
-      fieldId: 'statementPeriod',
-      source: 'provident_funds'
-    }
-  ]
-},
-// Insurance Policy documents
-{
-  id: 'insurance_policy',
-  name: 'Insurance Policies',
-  description: 'Upload your insurance policy documents',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'insurance_policies'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'policyHolderName',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'insuranceCompany',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'premiumAmount',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'issueDate',
-      source: 'insurance_policy'
-    },
-    {
-      fieldId: 'maturityDate',
-      source: 'insurance_policy'
-    }
-  ]
-},
-// Property Valuation documents
-{
-  id: 'property_valuation',
-  name: 'Property Valuation Reports',
-  description: 'Upload property valuation reports',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'property'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'ownerName',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'propertyAddress',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'propertyType',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuationAmount',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuationDate',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuatorName',
-      source: 'property_valuation'
-    },
-    {
-      fieldId: 'valuatorQualification',
-      source: 'property_valuation'
-    }
-  ]
-},
-
-// Rent Deed documents
-{
-  id: 'rent_deed',
-  name: 'Rent Deeds',
-  description: 'Upload your rent deed documents',
-  type: 'conditional',
-  required: false,
-  conditions: [{
-    questionId: 'residenceType',
-    value: 'rented'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'tenantName',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'landlordName',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'propertyAddress',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'rentAmount',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'leaseStartDate',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'leaseEndDate',
-      source: 'rent_deed'
-    },
-    {
-      fieldId: 'securityDeposit',
-      source: 'rent_deed'
-    }
-  ]
-},
-
-// Revenue Record documents
-{
-  id: 'revenue_record',
-  name: 'Revenue Record of the Land',
-  description: 'Upload revenue record documents for your land',
-  type: 'conditional',
-  required: false,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'property'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'ownerName',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'landLocation',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'landArea',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'landValue',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'recordNumber',
-      source: 'revenue_record'
-    },
-    {
-      fieldId: 'recordDate',
-      source: 'revenue_record'
-    }
-  ]
-},
-
-// Property Title documents
-{
-  id: 'property_title',
-  name: 'Property Title Deeds',
-  description: 'Upload your property title deed documents',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'financialSource',
-    value: 'property'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'ownerName',
-      source: 'property_title'
-    },
-    {
-      fieldId: 'propertyAddress',
-      source: 'property_title'
-    },
-    {
-      fieldId: 'propertyDescription',
-      source: 'property_title'
-    },
-    {
-      fieldId: 'registrationNumber',
-      source: 'property_title'
-    },
-    {
-      fieldId: 'registrationDate',
-      source: 'property_title'
-    },
-    {
-      fieldId: 'purchaseValue',
-      source: 'property_title'
-    }
-  ]
-},
-// Birth Certificate documents
-{
-  id: 'birth_certificate',
-  name: 'Birth Certificate',
-  description: 'Upload your birth certificate',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'ageProofRequired',  // You would need this question in your form
-    value: true
-  }],
-  extractableFields: [
-    {
-      fieldId: 'fullName',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'dateOfBirth',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'placeOfBirth',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'fatherName',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'motherName',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'registrationNumber',
-      source: 'birth_certificate'
-    },
-    {
-      fieldId: 'registrationDate',
-      source: 'birth_certificate'
-    }
-  ]
-},
-// Marriage Certificate documents
-{
-  id: 'marriage_certificate',
-  name: 'Marriage Registration Certificate',
-  description: 'Upload your marriage certificate',
-  type: 'conditional',
-  required: true,
-  conditions: [{
-    questionId: 'maritalStatus',
-    value: 'married'
-  }],
-  extractableFields: [
-    {
-      fieldId: 'husbandName',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'wifeName',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'marriageDate',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'marriagePlace',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'registrationNumber',
-      source: 'marriage_certificate'
-    },
-    {
-      fieldId: 'registrationDate',
-      source: 'marriage_certificate'
-    }
-  ]
-},
-
-    // Hotel booking documents, extractable fields 
     {
       id: 'hotel_booking',
       name: 'Hotel Bookings',
       description: 'Upload your hotel booking confirmations',
       type: 'conditional',
       required: true,
+      category: 'Tourism',
       conditions: [{
         questionId: 'accommodationType',
         value: 'hotel'
@@ -1031,13 +1029,13 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // Air ticket documents, extractable fields 
     {
       id: 'air_ticket',
       name: 'Air Tickets',
       description: 'Upload your confirmed air tickets',
       type: 'default',
       required: true,
+      category: 'Tourism',
       extractableFields: [
         {
           fieldId: 'passengerName',
@@ -1065,14 +1063,13 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-
-    // Bank statement documents, extractable fields 
     {
       id: 'bank_statement',
       name: 'Bank Account Statements',
       description: 'Upload bank account statements (business or personal)',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'financialSource',
         value: 'bank_statements'
@@ -1116,49 +1113,49 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // Demat account documents
     {
       id: 'demat_account',
       name: 'Demat Account Statement',
       description: 'Recent statement from your demat account showing sufficient funds for your visit',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'financialSource',
         value: 'demat_account'
       }]
     },
-    // Property documents
     {
       id: 'property_documents',
       name: 'Property Documents',
       description: 'Documents showing ownership of property as proof of financial stability',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'financialSource',
         value: 'property'
       }]
     },
-    // Sponsor documents
     {
       id: 'sponsor_letter',
       name: 'Sponsor Letter and Bank Statements',
       description: 'Letter from sponsor and their bank statements showing sufficient funds',
       type: 'conditional',
       required: true,
+      category: 'Sponsor/Host Details',
       conditions: [{
         questionId: 'financialSource',
         value: 'sponsor'
       }]
     },
-    // Invitation letter documents
     {
       id: 'invitation_letter',
       name: 'Letter of Invitation / Sponsorship Declaration',
       description: 'Upload letter of invitation (business or personal) or sponsorship declaration',
       type: 'conditional',
       required: true,
+      category: 'Sponsor/Host Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'visitation'
@@ -1214,61 +1211,61 @@ export const VIETNAM: VisaForm = {
         }
       ]
     },
-    // Inviter activity documents
     {
       id: 'inviter_activity',
       name: 'Inviter activity (if applicable)',
-      description: 'Proof of inviter’s activities – school letter, job letter, and business documents',
+      description: 'Proof of inviter\'s activities – school letter, job letter, and business documents',
       type: 'conditional',
       required: true,
+      category: 'Sponsor/Host Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'visitation'
       }]
     },
-    // Inviter income proof documents
     {
       id: 'inviter_income_proof',
       name: 'Inviter Income proof (if applicable)',
-      description: 'Proof of inviter’s income – income tax return, pay slips, accountant letter',
+      description: 'Proof of inviter\'s income – income tax return, pay slips, accountant letter',
       type: 'conditional',
       required: true,
+      category: 'Sponsor/Host Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'visitation'
       }]
     },
-    // Inviter funds proof documents
     {
       id: 'inviter_funds_proof',
       name: 'Inviter Funds proof (if applicable)',
-      description: 'Proof of inviter’s funds – bank account statements ',
+      description: 'Proof of inviter\'s funds – bank account statements',
       type: 'conditional',
       required: true,
+      category: 'Sponsor/Host Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'visitation'
       }]
     },
-    // Documents for self-arranged travel
     {
       id: 'hotel_booking_confirmation',
       name: 'Hotel Booking Confirmation',
       description: 'We will arrange your hotel booking and provide a confirmation or voucher showing your accommodation details for the entire duration of your stay.',
       type: 'conditional',
       required: true,
+      category: 'Tourism',
       conditions: [{
         questionId: 'assistanceType',
         value: 'hotel'
       }]
     },
-    // Documents for self-arranged travel
     {
       id: 'flight_tickets',
       name: 'Flight Tickets',
       description: 'We will take care of booking your round-trip flights and provide confirmed tickets showing your travel dates and itinerary.',
       type: 'conditional',
       required: true,
+      category: 'Tourism',
       conditions: [{
         questionId: 'assistanceType',
         value: 'flight'
@@ -1280,6 +1277,7 @@ export const VIETNAM: VisaForm = {
       description: 'We will arrange travel insurance for your trip and provide a certificate covering the entire duration of your stay.',
       type: 'conditional',
       required: true,
+      category: 'Basic Information',
       conditions: [{
         questionId: 'assistanceType',
         value: 'insurance'
@@ -1287,10 +1285,11 @@ export const VIETNAM: VisaForm = {
     },
     {
       id: 'tourism_accommodation',
-      name: 'Tourism Accommodation ',
-      description: 'Confirmed booking of accommodation (hotel, AirBnB etc.) ',
+      name: 'Tourism Accommodation',
+      description: 'Confirmed booking of accommodation (hotel, AirBnB etc.)',
       type: 'conditional',
       required: true,
+      category: 'Tourism',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'tourism'
@@ -1298,10 +1297,11 @@ export const VIETNAM: VisaForm = {
     },
     {
       id: 'tourism_air_tickets',
-      name: 'Tourism Air Tickets ',
+      name: 'Tourism Air Tickets',
       description: 'Confirmed return air tickets',
       type: 'conditional',
       required: true,
+      category: 'Tourism',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'tourism'
@@ -1309,22 +1309,23 @@ export const VIETNAM: VisaForm = {
     },
     {
       id: 'tourism_insurance',
-      name: 'Tourism Insurance (if applicable) ',
+      name: 'Tourism Insurance (if applicable)',
       description: 'Travel insurance policy',
       type: 'conditional',
       required: true,
+      category: 'Basic Information',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'tourism'
       }]
     },
-    // business docs
     {
       id: 'business_documents',
       name: 'Business Documents',
       description: 'Business registration, invitations to meetings or conferences',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'business'
@@ -1332,10 +1333,11 @@ export const VIETNAM: VisaForm = {
     },
     {
       id: 'business_invitation',
-      name: 'Business Invitation (if applicable) ',
+      name: 'Business Invitation (if applicable)',
       description: 'Official correspondence for visit',
       type: 'conditional',
       required: true,
+      category: 'Event / Invitation Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'business'
@@ -1343,30 +1345,31 @@ export const VIETNAM: VisaForm = {
     },
     {
       id: 'business_accommodation',
-      name: 'Business Accommodation (if applicable) ',
+      name: 'Business Accommodation (if applicable)',
       description: 'Accommodation letter for stay',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'business'
       }]
     },
-
     {
       id: 'employment_letter',
       name: 'Employment Letter',
       description: 'Letter from current employer stating position, salary and duration of employment',
       type: 'default',
-      required: true
+      required: true,
+      category: 'Gainful Activities'
     },
-    //study docs
     {
       id: 'study_acceptance',
       name: 'Letter of Acceptance',
       description: 'Acceptance letter from educational institution',
       type: 'conditional',
       required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1377,7 +1380,8 @@ export const VIETNAM: VisaForm = {
       name: 'Academic Transcripts',
       description: 'Academic transcripts along with degree or diploma',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1388,7 +1392,8 @@ export const VIETNAM: VisaForm = {
       name: 'Language Proficiency Test Result (if applicable)',
       description: 'Language proficiency test result (IELTS, PTE or TOEFL etc.)',
       type: 'conditional',
-      required: true, // R - Recommended
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1399,7 +1404,8 @@ export const VIETNAM: VisaForm = {
       name: 'Work Experience Letter (if applicable)',
       description: 'Work experience letter if applicable',
       type: 'conditional',
-      required: true, // O - Optional
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1410,7 +1416,8 @@ export const VIETNAM: VisaForm = {
       name: 'Scholastic and Extra Activities (if applicable)',
       description: 'Documentation of scholastic and extra-curricular activities',
       type: 'conditional',
-      required: true, // O - Optional
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1421,7 +1428,8 @@ export const VIETNAM: VisaForm = {
       name: 'Provincial Attestation Letter or CAQ - Canada (if applicable)',
       description: 'Letter of Acceptance and Provincial Attestation Letter or CAQ – Canada',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1432,7 +1440,8 @@ export const VIETNAM: VisaForm = {
       name: 'Confirmation of Enrollment (CoE) - Australia (if applicable)',
       description: 'Conformation of Enrolment (CoE) – Australia',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1443,7 +1452,8 @@ export const VIETNAM: VisaForm = {
       name: 'Confirmation of Acceptance to Studies (CAS) - UK (if applicable)',
       description: 'Confirmation of Acceptance to Studies (CAS) – the United Kingdom',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1454,7 +1464,8 @@ export const VIETNAM: VisaForm = {
       name: 'I-20 Form - USA (if applicable)',
       description: 'I-20 – USA',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1465,7 +1476,8 @@ export const VIETNAM: VisaForm = {
       name: 'Admission Offer (if applicable)',
       description: 'Admission offer from educational institution',
       type: 'conditional',
-      required: true, // O - Optional
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1476,7 +1488,8 @@ export const VIETNAM: VisaForm = {
       name: 'Tuition Deposit Receipts (if applicable)',
       description: 'Tuition deposit official receipts',
       type: 'conditional',
-      required: true, // R - Recommended
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1487,7 +1500,8 @@ export const VIETNAM: VisaForm = {
       name: 'SEVIS Fee Receipt - USA (if applicable)',
       description: 'SEVIS fee receipt – USA',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1498,7 +1512,8 @@ export const VIETNAM: VisaForm = {
       name: 'SAT or GRE - USA (if applicable)',
       description: 'SAT or GRE test results – USA',
       type: 'conditional',
-      required: true, // O - Optional
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1509,7 +1524,8 @@ export const VIETNAM: VisaForm = {
       name: 'Police Clearance Certificate - New Zealand (if applicable)',
       description: 'Police Clearance Certificate – New Zealand',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1520,7 +1536,8 @@ export const VIETNAM: VisaForm = {
       name: 'Assessment of Academic Documents - Europe (if applicable)',
       description: 'Assessment of academic documents – Europe',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1531,7 +1548,8 @@ export const VIETNAM: VisaForm = {
       name: 'Advance Arrangement of Living Expenses (if applicable)',
       description: 'Advance arrangement of living expenses (GIC – Canada, FTS – New Zealand, bank deposits – the UK / Europe)',
       type: 'conditional',
-      required: true, // R - Recommended
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1542,7 +1560,8 @@ export const VIETNAM: VisaForm = {
       name: 'Supporting Person\'s Income Documents (if applicable)',
       description: 'Supporting person\'s income documents',
       type: 'conditional',
-      required: true, // O - Optional
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1553,7 +1572,8 @@ export const VIETNAM: VisaForm = {
       name: 'Education Loan Sanction Letter (if applicable)',
       description: 'Education loan sanction letter',
       type: 'conditional',
-      required: true, // O - Optional
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1564,7 +1584,8 @@ export const VIETNAM: VisaForm = {
       name: 'Academic or Professional Reference Letters (if applicable)',
       description: 'Academic or professional reference letters',
       type: 'conditional',
-      required: true, // O - Optional
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1575,7 +1596,8 @@ export const VIETNAM: VisaForm = {
       name: 'Statement of Purpose (SOP) (if applicable)',
       description: 'Statement of purpose (SOP), covering letter, letter of explanation',
       type: 'conditional',
-      required: true, // R - Recommended
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -1586,19 +1608,20 @@ export const VIETNAM: VisaForm = {
       name: 'Medical Examination (if applicable)',
       description: 'Medical examination results',
       type: 'conditional',
-      required: true, // R - Recommended
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
       }]
     },
-    // Work-related documents
     {
       id: 'detailed_biodata',
       name: 'Detailed Biodata / Resume (if applicable)',
       description: 'Detailed biodata or resume',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'work'
@@ -1609,7 +1632,8 @@ export const VIETNAM: VisaForm = {
       name: 'Academic Achievements (if applicable)',
       description: 'Documentation of academic achievements',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'work'
@@ -1620,7 +1644,8 @@ export const VIETNAM: VisaForm = {
       name: 'Work Experience Proof',
       description: 'Work Experience letter, pay slips, bank account statement with pay credits',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'work'
@@ -1631,7 +1656,8 @@ export const VIETNAM: VisaForm = {
       name: 'Professional Licensing or Registration (if applicable)',
       description: 'Licensing or registration from or with professional body',
       type: 'conditional',
-      required: true, // O - Optional (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'work'
@@ -1642,7 +1668,8 @@ export const VIETNAM: VisaForm = {
       name: 'Employer Employee Contract',
       description: 'Contract between employer and employee',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'work'
@@ -1650,10 +1677,11 @@ export const VIETNAM: VisaForm = {
     },
     {
       id: 'lmia_approval',
-      name: 'Labor Market Impact Assessment (LMIA) - Canada ',
+      name: 'Labor Market Impact Assessment (LMIA) - Canada',
       description: 'Government approvals – Labor Marker Impact Assessment (LMIA) – Canada',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'work'
@@ -1664,7 +1692,8 @@ export const VIETNAM: VisaForm = {
       name: 'H1B Petition Approval - USA',
       description: 'Approval of H1B petition – USA',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'work'
@@ -1675,7 +1704,8 @@ export const VIETNAM: VisaForm = {
       name: 'Confirmation of Sponsorship (CoS) - UK',
       description: 'Confirmation of Sponsorship (CoS) – the UK',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'work'
@@ -1686,43 +1716,44 @@ export const VIETNAM: VisaForm = {
       name: 'Nulla Osta - Italy',
       description: 'Nulla Osta – Italy and as applicable in the destination country',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'work'
       }]
     },
-    // Long Term Family Visit documents
     {
       id: 'language_proficiency_family',
       name: 'Language Proficiency Test Result (if applicable)',
       description: 'Language proficiency test result',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
       }]
     },
-    // Child and Parent relationship documents
     {
       id: 'relationship_proof_child_parent',
       name: 'Proof of Relationship - Birth Certificate',
       description: 'Birth certificate proving relationship between child and parent',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
       }]
     },
-    // Partner relationship documents
     {
       id: 'marriage_certificate_partner',
       name: 'Marriage Registration Certificate',
       description: 'Marriage registration certificate for partners',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
@@ -1733,92 +1764,92 @@ export const VIETNAM: VisaForm = {
       name: 'Proof of Contact (if applicable)',
       description: 'Proof of contact – chat screenshots, call logs, pre wedding, wedding and post wedding photographs and any other document',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
       }]
     },
-    // Sponsor immigration status documents - Citizen
     {
       id: 'citizen_proof_sponsor',
       name: 'Citizenship Proof of Sponsor',
       description: 'Citizenship certificate or passport of the sponsor',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
       }]
     },
-    // Sponsor immigration status documents - Permanent Resident
     {
       id: 'pr_proof_sponsor',
       name: 'Permanent Resident Proof of Sponsor',
       description: 'Passport, PR card (front and back), BRP (UK), visa authorization etc. of the sponsor',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
       }]
     },
-    // Sponsor immigration status documents - Student
     {
       id: 'student_proof_sponsor',
       name: 'Student Status Proof of Sponsor',
       description: 'School enrollment letter, passport, visa/permit/BRP, transcripts, job letter and pay slips for part time work, bank statement, accommodation proof of the sponsor',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
       }]
     },
-    // Sponsor immigration status documents - Worker
     {
       id: 'worker_proof_sponsor',
       name: 'Worker Status Proof of Sponsor',
       description: 'Passport, visa/permit/BRP, job letter (with detailed duties) and pay slips for work, bank statement, accommodation proof, income tax return/assessment of the sponsor',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
       }]
     },
-    // Sponsor immigration status documents - Refugee
     {
       id: 'refugee_proof_sponsor',
       name: 'Refugee Status Proof of Sponsor',
       description: 'Passport, court order/visa/permit/BRP, job letter and pay slips for work, bank statement, accommodation proof, income tax return/assessment of the sponsor',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
       }]
     },
-    // Study documents for sponsor
     {
       id: 'study_admission_sponsor',
       name: 'Admission Letter of Sponsor (if applicable)',
       description: 'Admission letter from a school for the sponsor, and the documents as needed for study visa applicant',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'long_family_visit'
       }]
     },
-    // Join Family Permanently documents
-    // Partner documents (option iii)
     {
       id: 'birth_certificate_permanent',
       name: 'Birth Certificate',
       description: 'Applicant\'s birth certificate',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Civil Status',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1829,19 +1860,20 @@ export const VIETNAM: VisaForm = {
       name: 'Police Clearance Certificate',
       description: 'Police Clearance Certificate from Passport Office for all countries lived in for more than 6 months',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Civil Status',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
       }]
     },
-    // Partner's documents
     {
       id: 'partner_passport_permanent',
       name: 'Partner\'s Passport',
       description: 'Partner\'s passport all pages with travel stamps, air tickets, boarding passes',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1852,7 +1884,8 @@ export const VIETNAM: VisaForm = {
       name: 'Partner\'s PR Card/Citizenship',
       description: 'Partner\'s PR card / Landing documents / CoPR / BRP / visa authorisation or Citizenship',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1863,7 +1896,8 @@ export const VIETNAM: VisaForm = {
       name: 'Partner\'s Job Letter',
       description: 'Partner\'s job letter',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1874,7 +1908,8 @@ export const VIETNAM: VisaForm = {
       name: 'Partner\'s Pay Stubs (if applicable)',
       description: 'Partner\'s pay stubs',
       type: 'conditional',
-      required: true, // O - Optional (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1885,7 +1920,8 @@ export const VIETNAM: VisaForm = {
       name: 'Partner\'s Notice of Assessment',
       description: 'Partner\'s notice of assessment',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1896,19 +1932,20 @@ export const VIETNAM: VisaForm = {
       name: 'Partner\'s Bank Account Statement (if applicable)',
       description: 'Partner\'s bank account statement',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
       }]
     },
-    // Joint Documents
     {
       id: 'wedding_invitation_permanent',
       name: 'Wedding Invitation Cards (if applicable)',
       description: 'Wedding invitation cards',
       type: 'conditional',
-      required: true, // O - Optional (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1919,7 +1956,8 @@ export const VIETNAM: VisaForm = {
       name: 'Wedding Photographs (if applicable)',
       description: 'Pre wedding, wedding and post wedding photographs',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1930,29 +1968,33 @@ export const VIETNAM: VisaForm = {
       name: 'Ceremony Documentation (if applicable)',
       description: 'Series of ceremonies and celebrations organized individually or jointly',
       type: 'conditional',
-      required: true, // O - Optional (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
       }]
     },
-    {
+   {
       id: 'relationship_proof_permanent',
       name: 'Relationship Development Documentation (if applicable)',
       description: 'Documents supporting the description of development of this relationship such as social media handles, call logs, messages, chats, matrimonial ads, exchange of gifts, transfer of monies',
       type: 'conditional',
       required: true, // R - Recommended (setting as true with "if applicable" in name)
+      category: 'Partner Relationship Proof ',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
       }]
     },
-    {
+
+{
       id: 'joint_accounts_permanent',
       name: 'Joint Financial Documents (if applicable)',
       description: 'Joint bank account statements, mortgages, investments, insurance, ID\'s or any correspondence by third party on same address',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1963,7 +2005,8 @@ export const VIETNAM: VisaForm = {
       name: 'Cohabitation Proof (if applicable)',
       description: 'Proofs of cohabitations (living or lived together)',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1974,19 +2017,20 @@ export const VIETNAM: VisaForm = {
       name: 'Vendor Invoices (if applicable)',
       description: 'Any invoices from vendors',
       type: 'conditional',
-      required: true, // O - Optional (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
       }]
     },
-    // Child and Parent relationship documents
     {
       id: 'birth_certificate_child_parent_permanent',
       name: 'Proof of Relationship - Birth Certificate',
       description: 'Birth certificate proving relationship between child and parent',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Relationship Proof',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -1997,7 +2041,8 @@ export const VIETNAM: VisaForm = {
       name: 'Police Clearance Certificate (if above age 18)',
       description: 'Police Clearance Certificate from Passport Office for all countries lived in for more than 6 months (for applicants above age 18)',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Civil Status',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -2008,19 +2053,20 @@ export const VIETNAM: VisaForm = {
       name: 'Detailed Resume (if above age 18) (if applicable)',
       description: 'Detailed resume for applicants above age 18',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
       }]
     },
-    // Sponsor's documents
     {
       id: 'sponsor_passport_permanent',
       name: 'Sponsor\'s Passport',
       description: 'Sponsor\'s passport all pages with travel stamps',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -2031,7 +2077,8 @@ export const VIETNAM: VisaForm = {
       name: 'Sponsor\'s PR Card/Citizenship',
       description: 'Sponsor\'s PR card / Landing documents / CoPR / BRP / visa authorisation or Citizenship',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -2042,7 +2089,8 @@ export const VIETNAM: VisaForm = {
       name: 'Sponsor\'s Job Letter',
       description: 'Sponsor\'s job letter',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -2053,7 +2101,8 @@ export const VIETNAM: VisaForm = {
       name: 'Sponsor\'s Pay Stubs (if applicable)',
       description: 'Sponsor\'s pay stubs',
       type: 'conditional',
-      required: true, // O - Optional (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -2064,7 +2113,8 @@ export const VIETNAM: VisaForm = {
       name: 'Sponsor\'s Notice of Assessment',
       description: 'Sponsor\'s notice of assessment',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
@@ -2075,19 +2125,20 @@ export const VIETNAM: VisaForm = {
       name: 'Sponsor\'s Bank Account Statement (if applicable)',
       description: 'Sponsor\'s bank account statement',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'join_family_permanent'
       }]
     },
-    // Skill-based Immigration documents
     {
       id: 'academic_degrees',
       name: 'Academic/Professional Degrees and Transcripts',
       description: 'Academic or professional degrees and transcripts',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2098,7 +2149,8 @@ export const VIETNAM: VisaForm = {
       name: 'Education Credential Assessment (ECA)',
       description: 'Education Credential Assessment (ECA)',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2109,7 +2161,8 @@ export const VIETNAM: VisaForm = {
       name: 'Language Proficiency Test Result',
       description: 'Language proficiency test result (IELTS, CELPIP, PTE, TOEFL, TEF, TCF)',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2120,7 +2173,8 @@ export const VIETNAM: VisaForm = {
       name: 'Work Experience Letter',
       description: 'Work experience letter describing the duration of job, duties, and compensation',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2131,7 +2185,8 @@ export const VIETNAM: VisaForm = {
       name: 'Bank Account Statement',
       description: 'Bank account statement',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2142,7 +2197,8 @@ export const VIETNAM: VisaForm = {
       name: 'Income Tax Returns',
       description: 'Income tax returns',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2153,7 +2209,8 @@ export const VIETNAM: VisaForm = {
       name: 'Pay Slips',
       description: 'Pay slips',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2164,7 +2221,8 @@ export const VIETNAM: VisaForm = {
       name: 'Licenses or Registrations (if applicable)',
       description: 'Licenses or registrations with regulatory body',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2175,7 +2233,8 @@ export const VIETNAM: VisaForm = {
       name: 'Proof of Family Immigration Status (if applicable)',
       description: 'Proof of immigration status family in country of destination',
       type: 'conditional',
-      required: true, // O - Optional (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Partner Abroad',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2186,7 +2245,8 @@ export const VIETNAM: VisaForm = {
       name: 'Job Offer Letter (if applicable)',
       description: 'Job offer letter from country of application',
       type: 'conditional',
-      required: true, // O - Optional (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2197,7 +2257,8 @@ export const VIETNAM: VisaForm = {
       name: 'Nomination or Support Letter (if applicable)',
       description: 'Nomination or support letter from province',
       type: 'conditional',
-      required: true, // O - Optional (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2208,7 +2269,8 @@ export const VIETNAM: VisaForm = {
       name: 'Birth Certificate',
       description: 'Birth certificate',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Civil Status',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2219,7 +2281,8 @@ export const VIETNAM: VisaForm = {
       name: 'Police Clearance Certificate',
       description: 'Police Clearance Certificate from Passport Office for all countries lived in for more than 6 months',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Civil Status',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2230,7 +2293,8 @@ export const VIETNAM: VisaForm = {
       name: 'Marriage Registration Certificate (if applicable)',
       description: 'Marriage registration certificate for partner',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Civil Status',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
@@ -2241,19 +2305,20 @@ export const VIETNAM: VisaForm = {
       name: 'Invitation Letter/Contract Copy (if applicable)',
       description: 'Invitation letter, contract copy, or participation registration',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Event / Invitation Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'skill_immigration'
       }]
     },
-    // Performance in Sports/Religious Events/Public Speaker documents
     {
       id: 'event_details',
       name: 'Event Details',
       description: 'Hall booking / ticket sales / event details',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Event / Invitation Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'performance'
@@ -2264,7 +2329,8 @@ export const VIETNAM: VisaForm = {
       name: 'Awards and Certifications (if applicable)',
       description: 'Awards and certifications',
       type: 'conditional',
-      required: true, // R - Recommended (setting as true with "if applicable" in name)
+      required: true,
+      category: 'Event / Invitation Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'performance'
@@ -2275,21 +2341,11 @@ export const VIETNAM: VisaForm = {
       name: 'Accommodation During Stay',
       description: 'Arranged accommodation during stay',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Tourism',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'performance'
-      }]
-    },
-    {
-      id: 'marriage_certificate',
-      name: 'Marriage Certificate',
-      description: 'If married, please provide a copy of your marriage certificate',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'maritalStatus',
-        value: 'married'
       }]
     },
     {
@@ -2298,6 +2354,7 @@ export const VIETNAM: VisaForm = {
       description: 'If divorced, please provide a copy of your divorce certificate',
       type: 'conditional',
       required: true,
+      category: 'Civil Status',
       conditions: [{
         questionId: 'maritalStatus',
         value: 'divorced'
@@ -2309,6 +2366,7 @@ export const VIETNAM: VisaForm = {
       description: 'If widowed, please provide a copy of the death certificate',
       type: 'conditional',
       required: true,
+      category: 'Civil Status',
       conditions: [{
         questionId: 'maritalStatus',
         value: 'widowed'
@@ -2319,7 +2377,8 @@ export const VIETNAM: VisaForm = {
       name: 'Medical Insurance',
       description: 'Proof of medical insurance coverage for the duration of your stay',
       type: 'default',
-      required: true
+      required: true,
+      category: 'Basic Information'
     },
     {
       id: 'language_test',
@@ -2327,6 +2386,7 @@ export const VIETNAM: VisaForm = {
       description: 'IELTS, TOEFL, or other language proficiency test results',
       type: 'conditional',
       required: true,
+      category: 'Study Details',
       conditions: [
         {
           questionId: 'languageTest',
@@ -2356,6 +2416,7 @@ export const VIETNAM: VisaForm = {
       description: 'Diplomas, degrees, and academic transcripts',
       type: 'conditional',
       required: true,
+      category: 'Study Details',
       conditions: [{
         questionId: 'visitPurpose',
         value: 'study'
@@ -2366,15 +2427,16 @@ export const VIETNAM: VisaForm = {
       name: 'Previous Visa Copies',
       description: 'Copies of previous visas to any country',
       type: 'default',
-      required: false
+      required: false,
+      category: 'Passports and Immigration History'
     },
-    // what is source of income of 
     {
       id: 'salary_proof',
       name: 'Salary Proof',
       description: 'Salary slips, employment letter, or other proof of salary income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerIncomeSource',
         value: 'salary'
@@ -2386,6 +2448,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business registration, tax returns, or financial statements showing business income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerIncomeSource',
         value: 'business_income'
@@ -2397,6 +2460,7 @@ export const VIETNAM: VisaForm = {
       description: 'Partnership deed, profit sharing agreement, or other proof of partnership income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerIncomeSource',
         value: 'partnership_share'
@@ -2408,6 +2472,7 @@ export const VIETNAM: VisaForm = {
       description: 'Client invoices, professional registration, or other proof of professional income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerIncomeSource',
         value: 'professional_income'
@@ -2419,6 +2484,7 @@ export const VIETNAM: VisaForm = {
       description: 'Bank statements, investment account statements, or other proof of interest and dividend income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerIncomeSource',
         value: 'interest_dividend'
@@ -2430,6 +2496,7 @@ export const VIETNAM: VisaForm = {
       description: 'Land ownership documents, crop sales receipts, or other proof of agricultural income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerIncomeSource',
         value: 'agriculture_income'
@@ -2441,6 +2508,7 @@ export const VIETNAM: VisaForm = {
       description: 'Lease agreements, rental receipts, or other proof of rental income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerIncomeSource',
         value: 'rental_income'
@@ -2452,6 +2520,7 @@ export const VIETNAM: VisaForm = {
       description: 'Pension statements, retirement account statements, or other proof of pension income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerIncomeSource',
         value: 'pension_income'
@@ -2463,18 +2532,19 @@ export const VIETNAM: VisaForm = {
       description: 'Documents showing other sources of income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerIncomeSource',
         value: 'other_income'
       }]
     },
-    // what is additional source of income
     {
       id: 'additional_salary_proof',
       name: 'Additional Salary Proof',
       description: 'Salary slips, employment letter, or other proof of additional salary income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerAdditionalIncomeSource',
         value: 'salary'
@@ -2486,6 +2556,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business registration, tax returns, or financial statements showing additional business income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerAdditionalIncomeSource',
         value: 'business_income'
@@ -2497,6 +2568,7 @@ export const VIETNAM: VisaForm = {
       description: 'Partnership deed, profit sharing agreement, or other proof of additional partnership income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerAdditionalIncomeSource',
         value: 'partnership_share'
@@ -2508,6 +2580,7 @@ export const VIETNAM: VisaForm = {
       description: 'Client invoices, professional registration, or other proof of additional professional income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerAdditionalIncomeSource',
         value: 'professional_income'
@@ -2519,6 +2592,7 @@ export const VIETNAM: VisaForm = {
       description: 'Bank statements, investment account statements, or other proof of additional interest and dividend income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerAdditionalIncomeSource',
         value: 'interest_dividend'
@@ -2530,6 +2604,7 @@ export const VIETNAM: VisaForm = {
       description: 'Land ownership documents, crop sales receipts, or other proof of additional agricultural income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerAdditionalIncomeSource',
         value: 'agriculture_income'
@@ -2541,6 +2616,7 @@ export const VIETNAM: VisaForm = {
       description: 'Lease agreements, rental receipts, or other proof of additional rental income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerAdditionalIncomeSource',
         value: 'rental_income'
@@ -2552,6 +2628,7 @@ export const VIETNAM: VisaForm = {
       description: 'Pension statements, retirement account statements, or other proof of additional pension income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerAdditionalIncomeSource',
         value: 'pension_income'
@@ -2563,22 +2640,10 @@ export const VIETNAM: VisaForm = {
       description: 'Documents showing other additional sources of income',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerAdditionalIncomeSource',
         value: 'other_income'
-      }]
-    },
-
-    // Income and Funds Documents - Question 5
-    {
-      id: 'relationship_proof_sponsor',
-      name: 'Proof of Relationship',
-      description: 'Documents proving your relationship to the financial sponsor',
-      type: 'conditional',
-      required: true,
-      conditions: [{
-        questionId: 'selfPayingExpenses',
-        value: 'no'
       }]
     },
     {
@@ -2587,19 +2652,19 @@ export const VIETNAM: VisaForm = {
       description: 'Letter from the person who will financially support your trip',
       type: 'conditional',
       required: true,
+      category: 'Sponsor/Host Details',
       conditions: [{
         questionId: 'selfPayingExpenses',
         value: 'no'
       }]
     },
-
-    // Proprietor Documents
     {
       id: 'business_registration',
       name: 'Business Registration',
       description: 'Business registration (GST, Udhyam, Import Export Code etc. as applicable)',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'proprietor'
@@ -2611,6 +2676,7 @@ export const VIETNAM: VisaForm = {
       description: 'Balance sheets for the last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'proprietor'
@@ -2622,6 +2688,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business bank account statements (CC/CA accounts) not issued 15 days prior to submission, with 3 to 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'proprietor'
@@ -2633,6 +2700,7 @@ export const VIETNAM: VisaForm = {
       description: 'Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'proprietor'
@@ -2644,6 +2712,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'proprietor'
@@ -2655,6 +2724,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'proprietor'
@@ -2666,6 +2736,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'proprietor'
@@ -2677,19 +2748,19 @@ export const VIETNAM: VisaForm = {
       description: 'Additional documents of your partner as applicable',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'proprietor'
       }]
     },
-
-    // Employed (Salaried) Documents
     {
       id: 'job_letter_employed',
       name: 'Job Letter (if applicable)',
       description: 'Letter from current employer stating position, salary and duration of employment',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'employed'
@@ -2701,6 +2772,7 @@ export const VIETNAM: VisaForm = {
       description: 'Letter from employer approving leave for your trip',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'employed'
@@ -2712,6 +2784,7 @@ export const VIETNAM: VisaForm = {
       description: 'Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'employed'
@@ -2723,6 +2796,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'employed'
@@ -2734,6 +2808,7 @@ export const VIETNAM: VisaForm = {
       description: 'Provident Fund Statements showing contributions',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'employed'
@@ -2745,6 +2820,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'employed'
@@ -2756,6 +2832,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'employed'
@@ -2767,6 +2844,247 @@ export const VIETNAM: VisaForm = {
       description: 'Additional documents of your partner as applicable',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'employed'
+      }]
+    },
+    {
+      id: 'certificate_of_incorporation',
+      name: 'Certificate of Incorporation',
+      description: 'Certificate of incorporation, Memorandum and Articles of Association, ROC Form 32 as applicable',
+      type: 'conditional',
+      required: true,
+      category: 'Gainful Activities',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'business_registration_director',
+      name: 'Business Registration (if applicable)',
+      description: 'Business registration (GST, Import Export Code etc. as applicable)',
+      type: 'conditional',
+      required: true,
+      category: 'Gainful Activities',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'balance_sheets_director',
+      name: 'Balance Sheets (2 years)',
+      description: 'Balance sheets for the last 2 years',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'business_tax_returns_director',
+      name: 'Business Income Tax Returns (2 years)',
+      description: 'Business Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'business_bank_statements_director',
+      name: 'Business Bank Account Statements',
+      description: 'Business bank account statements (CC/CA accounts) not issued 15 days prior to submission, with 3 to 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_director',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_director',
+      name: 'Personal Bank Account Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'other_investments_director',
+      name: 'Documentary Evidence of Other Investments',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'property_title_deeds_director',
+      name: 'Title Deeds of Properties Owned (if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'partner_documents_director',
+      name: 'Partner Documents (if applicable)',
+      description: 'Additional documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      category: 'Partner Documents',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'company_director'
+      }]
+    },
+    {
+      id: 'partnership_deed',
+      name: 'Partnership Deed',
+      description: 'Partnership deed',
+      type: 'conditional',
+      required: true,
+      category: 'Gainful Activities',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'business_registration_partner',
+      name: 'Business Registration (if applicable)',
+      description: 'Business registration (GST, Import Export Code etc. as applicable)',
+      type: 'conditional',
+      required: true,
+      category: 'Gainful Activities',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'balance_sheets_partner',
+      name: 'Balance Sheets (2 years) (if applicable)',
+      description: 'Balance sheets for the last 2 years',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'business_tax_returns_partner',
+      name: 'Business Income Tax Returns (2 years) (if applicable)',
+      description: 'Business Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'business_bank_statements_partner',
+      name: 'Business Bank Statements (if applicable)',
+      description: 'Business bank account statements (CC/ CA accounts) not issued 15 days prior to submission, with 3 to 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'personal_tax_returns_partner',
+      name: 'Personal Income Tax Returns (2 years)',
+      description: 'Personal Income Tax returns along with computation – last 2 years',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'personal_bank_statements_partner',
+      name: 'Personal Bank Statements',
+      description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'investment_evidence_partner',
+      name: 'Investment Evidence (if applicable)',
+      description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+    {
+      id: 'property_title_deeds_partner',
+      name: 'Property Title Deeds (if applicable)',
+      description: 'Title deeds of the properties owned',
+      type: 'conditional',
+      required: true,
+      category: 'Income and Funds of sponsor',
+      conditions: [{
+        questionId: 'expensePayerOccupation',
+        value: 'business_partner'
+      }]
+    },
+   {
+      id: 'partner_documents_employed',
+      name: 'Partner Documents (if applicable)',
+      description: 'Additional documents of your partner as applicable',
+      type: 'conditional',
+      required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'employed'
@@ -2780,6 +3098,7 @@ export const VIETNAM: VisaForm = {
       description: 'Certificate of incorporation, Memorandum and Articles of Association, ROC Form 32 as applicable',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
@@ -2791,6 +3110,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business registration (GST, Import Export Code etc. as applicable)',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
@@ -2802,6 +3122,7 @@ export const VIETNAM: VisaForm = {
       description: 'Balance sheets for the last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
@@ -2813,6 +3134,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
@@ -2824,6 +3146,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business bank account statements (CC/CA accounts) not issued 15 days prior to submission, with 3 to 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
@@ -2835,6 +3158,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
@@ -2846,6 +3170,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
@@ -2857,6 +3182,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
@@ -2868,6 +3194,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
@@ -2879,11 +3206,13 @@ export const VIETNAM: VisaForm = {
       description: 'Additional documents of your partner as applicable',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'company_director'
       }]
     },
+
     // Business Partner Documents
     {
       id: 'partnership_deed',
@@ -2891,6 +3220,7 @@ export const VIETNAM: VisaForm = {
       description: 'Partnership deed',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
@@ -2902,6 +3232,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business registration (GST, Import Export Code etc. as applicable)',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
@@ -2913,6 +3244,7 @@ export const VIETNAM: VisaForm = {
       description: 'Balance sheets for the last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
@@ -2924,6 +3256,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
@@ -2935,6 +3268,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business bank account statements (CC/ CA accounts) not issued 15 days prior to submission, with 3 to 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
@@ -2946,6 +3280,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
@@ -2957,6 +3292,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
@@ -2968,6 +3304,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
@@ -2979,23 +3316,23 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
       }]
     },
-    {
+   {
       id: 'partner_documents_partner',
       name: 'Partner Documents (if applicable)',
       description: 'Add the documents of your partner as applicable',
       type: 'conditional',
       required: true,
-      conditions: [
-        {
+      category: 'Partner Documents',
+      conditions: [{
         questionId: 'expensePayerOccupation',
-        value: 'business_partner',
-      }
-      ]
+        value: 'business_partner'
+      }]
     },
     {
       id: 'additional_documents_partner',
@@ -3003,18 +3340,21 @@ export const VIETNAM: VisaForm = {
       description: 'Any additional documents',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'business_partner'
       }]
     },
-    // Professional, Independent Contractor, Freelancer, and Self-employed Documents
+
+    // Professional Documents
     {
       id: 'business_registration_professional',
       name: 'Business Registration/License (if applicable)',
       description: 'Business registration / License (such as medical association, Dental Councils registrations, Certificate of Practice, Bar Association etc.) / Any contracts',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'professional'
@@ -3026,6 +3366,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'professional'
@@ -3037,6 +3378,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'professional'
@@ -3048,6 +3390,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'professional'
@@ -3059,6 +3402,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'professional'
@@ -3070,6 +3414,7 @@ export const VIETNAM: VisaForm = {
       description: 'Any additional documents',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'professional'
@@ -3083,6 +3428,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business registration / License / Any contracts',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'independent_contractor'
@@ -3094,6 +3440,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'independent_contractor'
@@ -3105,6 +3452,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'independent_contractor'
@@ -3116,6 +3464,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'independent_contractor'
@@ -3127,6 +3476,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'independent_contractor'
@@ -3138,6 +3488,7 @@ export const VIETNAM: VisaForm = {
       description: 'Any additional documents',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'independent_contractor'
@@ -3151,6 +3502,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business registration / License / Any contracts',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'freelancer'
@@ -3162,6 +3514,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'freelancer'
@@ -3173,6 +3526,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'freelancer'
@@ -3184,6 +3538,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'freelancer'
@@ -3195,18 +3550,19 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'freelancer'
       }]
     },
-
     {
       id: 'additional_documents_freelancer',
       name: 'Additional Documents (if applicable)',
       description: 'Any additional documents',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'freelancer'
@@ -3220,6 +3576,7 @@ export const VIETNAM: VisaForm = {
       description: 'Business registration / License / Any contracts',
       type: 'conditional',
       required: true,
+      category: 'Gainful Activities',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'self_employed'
@@ -3231,6 +3588,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'self_employed'
@@ -3242,6 +3600,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'self_employed'
@@ -3253,6 +3612,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'self_employed'
@@ -3264,6 +3624,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'self_employed'
@@ -3275,6 +3636,7 @@ export const VIETNAM: VisaForm = {
       description: 'Any additional documents',
       type: 'conditional',
       required: false,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'self_employed'
@@ -3288,6 +3650,7 @@ export const VIETNAM: VisaForm = {
       description: 'Revenue record of the land owned (Jamabandi/Fard)',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3299,6 +3662,7 @@ export const VIETNAM: VisaForm = {
       description: 'Any land lease record',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3310,6 +3674,7 @@ export const VIETNAM: VisaForm = {
       description: 'Form J (for last 2 crops)',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3321,6 +3686,7 @@ export const VIETNAM: VisaForm = {
       description: 'Any other form of revenue – fodder /timber/ seeds/ fruits / vegetable sale records',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3332,6 +3698,7 @@ export const VIETNAM: VisaForm = {
       description: 'Registration of agricultural implement owned – Tractor / Harvester etc.',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3343,6 +3710,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3354,6 +3722,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3365,6 +3734,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3376,6 +3746,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3387,6 +3758,7 @@ export const VIETNAM: VisaForm = {
       description: 'Any additional documents',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'farmer'
@@ -3400,6 +3772,7 @@ export const VIETNAM: VisaForm = {
       description: 'Rent Deeds',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'realtor'
@@ -3411,6 +3784,7 @@ export const VIETNAM: VisaForm = {
       description: 'Proof of the ownership of properties rented out',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'realtor'
@@ -3422,6 +3796,7 @@ export const VIETNAM: VisaForm = {
       description: 'Bank account transaction history of rental receipts',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'realtor'
@@ -3433,6 +3808,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'realtor'
@@ -3444,6 +3820,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'realtor'
@@ -3455,6 +3832,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'realtor'
@@ -3466,6 +3844,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'realtor'
@@ -3477,6 +3856,7 @@ export const VIETNAM: VisaForm = {
       description: 'Any additional documents',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'realtor'
@@ -3490,6 +3870,7 @@ export const VIETNAM: VisaForm = {
       description: 'Interest certificate',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'investor'
@@ -3501,6 +3882,7 @@ export const VIETNAM: VisaForm = {
       description: 'Details of interest-bearing investments',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'investor'
@@ -3512,6 +3894,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'investor'
@@ -3523,6 +3906,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'investor'
@@ -3534,6 +3918,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'investor'
@@ -3545,6 +3930,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'investor'
@@ -3556,6 +3942,7 @@ export const VIETNAM: VisaForm = {
       description: 'Any additional documents',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'investor'
@@ -3569,6 +3956,7 @@ export const VIETNAM: VisaForm = {
       description: 'Pension payment order',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'retired'
@@ -3580,6 +3968,7 @@ export const VIETNAM: VisaForm = {
       description: 'Bank account transaction history of pension receipts',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'retired'
@@ -3591,6 +3980,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal Income Tax returns along with computation – last 2 years',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'retired'
@@ -3602,6 +3992,7 @@ export const VIETNAM: VisaForm = {
       description: 'Personal bank account statements all banks not issued 15 days prior to submission, with 6 months transaction history',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'retired'
@@ -3613,6 +4004,7 @@ export const VIETNAM: VisaForm = {
       description: 'Documentary evidence of other investments, fixed deposits, mutual funds, post office, stocks, and shares, surrender value of insurance policies',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'retired'
@@ -3624,6 +4016,7 @@ export const VIETNAM: VisaForm = {
       description: 'Title deeds of the properties owned',
       type: 'conditional',
       required: true,
+      category: 'Income and Funds of sponsor',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'retired'
@@ -3635,6 +4028,7 @@ export const VIETNAM: VisaForm = {
       description: 'Any additional documents',
       type: 'conditional',
       required: true,
+      category: 'Partner Documents',
       conditions: [{
         questionId: 'expensePayerOccupation',
         value: 'retired'
@@ -3646,7 +4040,8 @@ export const VIETNAM: VisaForm = {
       name: 'Previous Passports',
       description: 'All previous passports',
       type: 'conditional',
-      required: true, // M - Mandatory
+      required: true,
+      category: 'Passports and Immigration History',
       conditions: [{
         questionId: 'hasVisaRefusal',
         value: 'yes'
@@ -3657,7 +4052,8 @@ export const VIETNAM: VisaForm = {
       name: 'Visa and Travel Stamps(if applicable)',
       description: 'All pages bearing visas or travel stamps',
       type: 'conditional',
-      required: true, // R - Recommended
+      required: true,
+      category: 'Passports and Immigration History',
       conditions: [{
         questionId: 'hasVisaRefusal',
         value: 'yes'
@@ -3668,7 +4064,8 @@ export const VIETNAM: VisaForm = {
       name: 'E-Visas(if applicable)',
       description: 'E-visas ever issued',
       type: 'conditional',
-      required: true, // R - Recommended
+      required: true,
+      category: 'Passports and Immigration History',
       conditions: [{
         questionId: 'hasVisaRefusal',
         value: 'yes'
@@ -3679,7 +4076,8 @@ export const VIETNAM: VisaForm = {
       name: 'Refusal Letter(if applicable)',
       description: 'Visa refusal letter from the embassy or consulate',
       type: 'conditional',
-      required: true, // O - Optional
+      required: true,
+      category: 'Passports and Immigration History',
       conditions: [{
         questionId: 'hasVisaRefusal',
         value: 'yes'

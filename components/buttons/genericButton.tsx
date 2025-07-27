@@ -11,6 +11,7 @@ interface GenericButtonProps {
 export default function GenericButton({
   onClick,
   children,
+  
   disabled = false,
   className = '',
   type = 'button'

@@ -83,6 +83,7 @@ export interface Document {
   description: string;
   type: DocumentType;
   required: boolean;
+  category?: string;
   extractableFields?: Array<{
     fieldId: string;
     source: ExtractSource;

@@ -64,57 +64,39 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
   const [activeChild, setActiveChild] = useState<number | null>(null);
 
   useEffect(() => {
-    if (inputValue) {
+    // Only run this effect when inputValue changes
+    if (children.length === 0) {
       try {
-        const parsedValue = typeof inputValue === 'string'
-          ? JSON.parse(inputValue)
-          : inputValue;
-
-        if (Array.isArray(parsedValue?.value)) {
-          if (parsedValue.value.length === 0) {
-            const initialChild = createEmptyChild(1);
-            setChildren([initialChild]);
-            setActiveChild(1);
-          } else {
-            setChildren(parsedValue.value);
-            if (activeChild === null || !parsedValue.value.some((child: IChild) => child.id === activeChild)) {
-              setActiveChild(parsedValue.value[0].id);
-            }
-          }
-        } else if (parsedValue && typeof parsedValue === 'object') {
-          if (Array.isArray(parsedValue)) {
-            if (parsedValue.length === 0) {
-              const initialChild = createEmptyChild(1);
-              setChildren([initialChild]);
-              setActiveChild(1);
-            } else {
-              setChildren(parsedValue);
-              if (activeChild === null || !parsedValue.some((child: IChild) => child.id === activeChild)) {
-                setActiveChild(parsedValue[0].id);
-              }
-            }
-          } else {
-            const initialChild = createEmptyChild(1);
-            setChildren([initialChild]);
-            setActiveChild(1);
-          }
-        } else {
+        let parsedChildren: IChild[] = [];
+        
+        if (inputValue) {
+          const parsedValue = typeof inputValue === 'string' 
+            ? JSON.parse(inputValue) 
+            : inputValue;
+          
+          parsedChildren = Array.isArray(parsedValue?.value) 
+            ? parsedValue.value 
+            : Array.isArray(parsedValue) 
+              ? parsedValue 
+              : [];
+        }
+        
+        if (parsedChildren.length === 0) {
           const initialChild = createEmptyChild(1);
           setChildren([initialChild]);
           setActiveChild(1);
+        } else {
+          setChildren(parsedChildren);
+          setActiveChild(parsedChildren[0].id);
         }
       } catch (e) {
-        console.error("Failed to parse inputValue", e);
+        console.error("Error parsing inputValue:", e);
         const initialChild = createEmptyChild(1);
         setChildren([initialChild]);
         setActiveChild(1);
       }
-    } else {
-      const initialChild = createEmptyChild(1);
-      setChildren([initialChild]);
-      setActiveChild(1);
     }
-  }, [inputValue, activeChild]);
+  }, [inputValue]); // Removed activeChild from dependencies
 
   const handleAddChild = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -127,11 +109,12 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
     setChildren(newChildren);
     setActiveChild(newId);
 
-    if (typeof inputValue === 'object' && inputValue !== null && 'value' in inputValue) {
-      handleChange({ value: newChildren }, true);
-    } else {
-      handleChange(newChildren, true);
-    }
+    // Always send the same structure that the parent expects
+    const outputValue = Array.isArray(inputValue) || (inputValue && Array.isArray(inputValue.value))
+      ? { value: newChildren }
+      : newChildren;
+      
+    handleChange(outputValue, true);
   };
 
   const handleRemoveChild = (id: number) => {
@@ -140,15 +123,26 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
       const initialChild = createEmptyChild(1);
       setChildren([initialChild]);
       setActiveChild(1);
-      handleChange({ value: [initialChild] }, true);
+      
+      const outputValue = Array.isArray(inputValue) || (inputValue && Array.isArray(inputValue.value))
+        ? { value: [initialChild] }
+        : [initialChild];
+        
+      handleChange(outputValue, true);
     } else {
       const renumberedChildren = newChildren.map((child, index) => ({
         ...child,
         id: index + 1
       }));
+      
       setChildren(renumberedChildren);
       setActiveChild(renumberedChildren[0].id);
-      handleChange({ value: renumberedChildren }, true);
+      
+      const outputValue = Array.isArray(inputValue) || (inputValue && Array.isArray(inputValue.value))
+        ? { value: renumberedChildren }
+        : renumberedChildren;
+        
+      handleChange(outputValue, true);
     }
   };
 
@@ -159,15 +153,29 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
   ) => {
     const newChildren = children.map(child => {
       if (child.id === id) {
-        return {
+        const updatedChild = {
           ...child,
           [field]: value
         };
+        
+        // If comingAlong is set to 'no', clear the visaStatus
+        if (field === 'comingAlong' && value === 'no') {
+          updatedChild.visaStatus = '';
+        }
+        
+        return updatedChild;
       }
       return child;
     });
+    
     setChildren(newChildren);
-    handleChange({ value: newChildren });
+    
+    // Always send the same structure that the parent expects
+    const outputValue = Array.isArray(inputValue) || (inputValue && Array.isArray(inputValue.value))
+      ? { value: newChildren }
+      : newChildren;
+      
+    handleChange(outputValue, true);
   };
 
   const activeChildData = children.find(child => child.id === activeChild) || children[0];

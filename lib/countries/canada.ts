@@ -4508,6 +4508,15 @@ export const CANADA: VisaForm = {
 
     // For married applicants
     {
+      id: 'spouseMarriageDate',
+      group: 'personal' as FormGroup,
+      type: 'DateofBirth',
+      label: `What is date of marriage? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'maritalStatus', value: 'married' },
+      disableFutureDates: true
+    },
+    {
       id: 'spouseNameOnPassport',
       group: 'personal' as FormGroup,
       type: 'select',
@@ -4939,7 +4948,9 @@ export const CANADA: VisaForm = {
       id: 'familyDetailsHeader',
       group: 'personal' as FormGroup,
       type: 'header',
-      label: 'Family details'
+      label: 'Family details',
+      showIf: { field: 'maritalStatus', not: 'single' },
+      
     },
     {
       id: 'hasChildren',
@@ -5334,7 +5345,7 @@ export const CANADA: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'no' },
+          { field: 'needsTravelAssistance', value: 'yes' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
@@ -5353,7 +5364,7 @@ export const CANADA: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'no' },
+          { field: 'needsTravelAssistance', value: 'yes' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
@@ -5367,7 +5378,7 @@ export const CANADA: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'needsTravelAssistance', value: 'no' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
@@ -5381,7 +5392,7 @@ export const CANADA: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'needsTravelAssistance', value: 'no' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
@@ -5395,7 +5406,7 @@ export const CANADA: VisaForm = {
       showIf: {
         operator: 'and',
         conditions: [
-          { field: 'needsTravelAssistance', value: 'yes' },
+          { field: 'needsTravelAssistance', value: 'no' },
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
@@ -6640,27 +6651,24 @@ export const CANADA: VisaForm = {
           { field: 'spouseHasIndependentIncome', value: 'yes' }
         ]
       },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
-    {
-      id: 'spouseAdditionalIncomeSource',
-      group: 'finances' as FormGroup,
-      type: 'select',
-      label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', value: 'married' },
-          { field: 'spouseHasIndependentIncome', value: 'yes' },
-          { field: 'spouseHasAdditionalIncome', value: 'yes' }
-        ]
-      },
       options: INCOME_SOURCE_OPTIONS
     },
+    // {
+    //   id: 'spouseAdditionalIncomeSource',
+    //   group: 'finances' as FormGroup,
+    //   type: 'select',
+    //   label: `What is your spouse's additional source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', value: 'married' },
+    //       { field: 'spouseHasIndependentIncome', value: 'yes' },
+    //       { field: 'spouseHasAdditionalIncome', value: 'yes' }
+    //     ]
+    //   },
+    //   options: INCOME_SOURCE_OPTIONS
+    // },
 
     // -------------------- RESIDENCE INFORMATION --------------------
     {

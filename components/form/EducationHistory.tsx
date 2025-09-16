@@ -196,8 +196,26 @@ export default function EducationHistory(props: IEducationHistoryProps) {
                   disableFutureDates={false}
                 />
               </div>
-
-              <div className="space-y-2">
+              <div>
+                <label className="text-sm font-medium">Is your have completed your Higher Education</label>
+                <Select
+                  value={edu.completed ? "yes" : "no"}
+                  onValueChange={(value) => handleFieldChange(index, 'completed', value === "yes")}
+                  disabled={readonly}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select country" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="yes">Yes</SelectItem>
+                    <SelectItem value="no">No</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+  
+              {edu.completed && (
+              <div className="space-y-6">
+                
                 <label className="text-sm font-medium">Qualification</label>
                 <Select
                   value={edu.qualification}
@@ -215,7 +233,13 @@ export default function EducationHistory(props: IEducationHistoryProps) {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+                
+                  <div>
+                    {/* Add any content you want to show when completed is "yes" */}
+                  </div>
+                
+                </div>
+                )}
 
               {edu.qualification && edu.qualification !== '' && (
                 <div className="space-y-2">
@@ -229,7 +253,7 @@ export default function EducationHistory(props: IEducationHistoryProps) {
                 </div>
               )}
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <label className="text-sm font-medium">Completed</label>
                 <Select
                   value={edu.completed ? "yes" : "no"}
@@ -244,7 +268,7 @@ export default function EducationHistory(props: IEducationHistoryProps) {
                     <SelectItem value="no">No</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
             </div>
           </div>
         ))}

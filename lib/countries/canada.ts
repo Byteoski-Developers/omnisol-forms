@@ -4543,25 +4543,25 @@ export const CANADA: VisaForm = {
         ]
       }
     },
-    {
-      id: 'spouseLivesWithYou',
-      group: 'personal' as FormGroup,
-      type: 'select',
-      label: `Does your spouse live with you? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-      required: false,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', not: 'single' },
-          { field: 'maritalStatus', not: 'widowed' },
-          { field: 'maritalStatus', not: 'divorced' }
-        ]
-      },
-      options: [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' }
-      ]
-    },
+    // {
+    //   id: 'spouseLivesWithYou',
+    //   group: 'personal' as FormGroup,
+    //   type: 'select',
+    //   label: `Does your spouse live with you? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+    //   required: false,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', not: 'single' },
+    //       { field: 'maritalStatus', not: 'widowed' },
+    //       { field: 'maritalStatus', not: 'divorced' }
+    //     ]
+    //   },
+    //   options: [
+    //     { label: 'Yes', value: 'yes' },
+    //     { label: 'No', value: 'no' }
+    //   ]
+    // },
     {
       id: 'spouseResidenceLocation',
       group: 'personal' as FormGroup,
@@ -5061,54 +5061,54 @@ export const CANADA: VisaForm = {
     // },
 
     // For visitation purpose
-    {
-      id: 'relationToVisit',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `What is your relation to person you will visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'visitPurpose', value: 'visitation' },
-      options: RELATION_OPTIONS
-    },
-    {
-      id: 'relationToVisitOther',
-      group: 'purpose' as FormGroup,
-      type: 'text',
-      label: 'Please specify your relation',
-      required: true,
-      placeholder: 'Specify your relation',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'visitPurpose', value: 'visitation' },
-          { field: 'relationToVisit', value: 'other' }
-        ]
-      }
-    },
-    {
-      id: 'inviterImmigrationStatus',
-      group: 'purpose' as FormGroup,
-      type: 'select',
-      label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: { field: 'visitPurpose', value: 'visitation' },
-      options: IMMIGRATION_STATUS_OPTIONS
-    },
-    {
-      id: 'inviterImmigrationStatusOther',
-      group: 'purpose' as FormGroup,
-      type: 'text',
-      label: 'Please specify their immigration status',
-      required: true,
-      placeholder: 'Specify immigration status',
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'visitPurpose', value: 'visitation' },
-          { field: 'inviterImmigrationStatus', value: 'other' }
-        ]
-      }
-    },
+    // {
+    //   id: 'relationToVisit',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'select',
+    //   label: `What is your relation to person you will visit? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'visitPurpose', value: 'visitation' },
+    //   options: RELATION_OPTIONS
+    // },
+    // {
+    //   id: 'relationToVisitOther',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'text',
+    //   label: 'Please specify your relation',
+    //   required: true,
+    //   placeholder: 'Specify your relation',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'visitPurpose', value: 'visitation' },
+    //       { field: 'relationToVisit', value: 'other' }
+    //     ]
+    //   }
+    // },
+    // {
+    //   id: 'inviterImmigrationStatus',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'select',
+    //   label: `What is the immigration status of your inviter? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: { field: 'visitPurpose', value: 'visitation' },
+    //   options: IMMIGRATION_STATUS_OPTIONS
+    // },
+    // {
+    //   id: 'inviterImmigrationStatusOther',
+    //   group: 'purpose' as FormGroup,
+    //   type: 'text',
+    //   label: 'Please specify their immigration status',
+    //   required: true,
+    //   placeholder: 'Specify immigration status',
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'visitPurpose', value: 'visitation' },
+    //       { field: 'inviterImmigrationStatus', value: 'other' }
+    //     ]
+    //   }
+    // },
     // {
     //   id: 'inviterContactDetails',
     //   group: 'purpose' as FormGroup,

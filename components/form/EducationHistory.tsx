@@ -38,6 +38,7 @@ const emptyEducation: IEducation = {
 export default function EducationHistory(props: IEducationHistoryProps) {
   const { value, onChange, readonly } = props;
   const [educationList, setEducationList] = useState<IEducation[]>([]);
+  const [hasHigherEducation, setHasHigherEducation] = useState<boolean | null>(null);
   
   // Use a ref to track if we're in the middle of a local update
   const [isInitialized, setIsInitialized] = useState(false);
@@ -110,20 +111,68 @@ export default function EducationHistory(props: IEducationHistoryProps) {
     }
   };
 
+  // Handle the higher education radio button change
+  const handleHigherEducationChange = (value: boolean) => {
+    setHasHigherEducation(value);
+    if (!value) {
+      // If no higher education, clear the education list
+      const resetList = [{ ...emptyEducation, id: 1 }];
+      setEducationList(resetList);
+      onChange(JSON.stringify(resetList), true);
+    } else if (educationList.length === 0) {
+      // If saying yes for the first time, add an empty education entry
+      const newList = [{ ...emptyEducation, id: 1 }];
+      setEducationList(newList);
+      onChange(JSON.stringify(newList), true);
+    }
+  };
+
   return (
     <div className="dark:text-gray-100 bg-white relative">
-      <div className="flex justify-between items-center border-b p-2">
-        <h4 className="font-bold text-sm">Post-secondary Education History</h4>
-        {!readonly && (
-          <div>
-            <Button onClick={addEducation} variant="outline" size="sm" type="button">
-              <Plus className="w-4 h-4 mr-2" /> Add Education
-            </Button>
+      <div className="space-y-4 p-4">
+        <div className="flex flex-col space-y-2">
+          <label className="text-sm font-medium">Have you completed any higher education?</label>
+          <div className="flex space-x-4">
+            <label className="flex items-center space-x-2">
+              <input
+                type="radio"
+                name="hasHigherEducation"
+                checked={hasHigherEducation === true}
+                onChange={() => handleHigherEducationChange(true)}
+                className="h-4 w-4 text-primary focus:ring-primary"
+                disabled={readonly}
+              />
+              <span>Yes</span>
+            </label>
+            <label className="flex items-center space-x-2">
+              <input
+                type="radio"
+                name="hasHigherEducation"
+                checked={hasHigherEducation === false}
+                onChange={() => handleHigherEducationChange(false)}
+                className="h-4 w-4 text-primary focus:ring-primary"
+                disabled={readonly}
+              />
+              <span>No</span>
+            </label>
           </div>
-        )}
+        </div>
       </div>
 
-      <div className="space-y-4 p-2">
+      {hasHigherEducation === true && (
+        <>
+          <div className="flex justify-between items-center border-b p-2">
+            <h4 className="font-bold text-sm">Post-secondary Education History</h4>
+            {!readonly && hasHigherEducation && (
+              <div>
+                <Button onClick={addEducation} variant="outline" size="sm" type="button">
+                  <Plus className="w-4 h-4 mr-2" /> Add Education
+                </Button>
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-4 p-2">
         {educationList.map((edu, index) => (
           <div key={edu.id} className="border rounded-lg p-4 space-y-4">
             <div className="flex justify-between items-center">
@@ -196,7 +245,7 @@ export default function EducationHistory(props: IEducationHistoryProps) {
                   disableFutureDates={false}
                 />
               </div>
-              <div>
+              {/* <div>
                 <label className="text-sm font-medium">Is your have completed your Higher Education</label>
                 <Select
                   value={edu.completed ? "yes" : "no"}
@@ -211,10 +260,10 @@ export default function EducationHistory(props: IEducationHistoryProps) {
                     <SelectItem value="no">No</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
   
-              {edu.completed && (
-              <div className="space-y-6">
+              {/* {edu.completed && ( */}
+              <div className="space-y-2">
                 
                 <label className="text-sm font-medium">Qualification</label>
                 <Select
@@ -239,7 +288,7 @@ export default function EducationHistory(props: IEducationHistoryProps) {
                   </div>
                 
                 </div>
-                )}
+                {/* )} */}
 
               {edu.qualification && edu.qualification !== '' && (
                 <div className="space-y-2">
@@ -272,7 +321,15 @@ export default function EducationHistory(props: IEducationHistoryProps) {
             </div>
           </div>
         ))}
-      </div>
+          </div>
+        </>
+      )}
+
+      {hasHigherEducation === false && (
+        <div className="px-4 pb-4 text-sm text-gray-600">
+          No higher education history to display.
+        </div>
+      )}
     </div>
   );
 }

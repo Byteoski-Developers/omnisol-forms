@@ -63,119 +63,129 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
   const [children, setChildren] = useState<IChild[]>([]);
   const [activeChild, setActiveChild] = useState<number | null>(null);
 
+  // Log state changes
   useEffect(() => {
-    // Only run this effect when inputValue changes
-    if (children.length === 0) {
-      try {
-        let parsedChildren: IChild[] = [];
-        
-        if (inputValue) {
-          const parsedValue = typeof inputValue === 'string' 
-            ? JSON.parse(inputValue) 
-            : inputValue;
-          
-          parsedChildren = Array.isArray(parsedValue?.value) 
-            ? parsedValue.value 
-            : Array.isArray(parsedValue) 
-              ? parsedValue 
-              : [];
+    console.log('Children updated:', children);
+    console.log('Active child:', activeChild);
+  }, [children, activeChild]);
+
+  useEffect(() => {
+    try {
+      console.log('Initial inputValue:', inputValue);
+      let parsedChildren: IChild[] = [];
+
+      // Handle different input value formats
+      if (inputValue) {
+        if (typeof inputValue === 'string') {
+          // Handle string input (JSON)
+          try {
+            const parsed = JSON.parse(inputValue);
+            parsedChildren = Array.isArray(parsed) ? parsed : parsed?.value || [];
+          } catch (e) {
+            console.error("Error parsing inputValue as JSON:", e);
+          }
+        } else if (Array.isArray(inputValue)) {
+          // Handle direct array input
+          parsedChildren = inputValue;
+        } else if (inputValue && typeof inputValue === 'object' && 'value' in inputValue) {
+          // Handle { value: [...] } format
+          parsedChildren = Array.isArray(inputValue.value) ? inputValue.value : [];
         }
-        
-        if (parsedChildren.length === 0) {
-          const initialChild = createEmptyChild(1);
-          setChildren([initialChild]);
-          setActiveChild(1);
-        } else {
-          setChildren(parsedChildren);
-          setActiveChild(parsedChildren[0].id);
-        }
-      } catch (e) {
-        console.error("Error parsing inputValue:", e);
-        const initialChild = createEmptyChild(1);
-        setChildren([initialChild]);
-        setActiveChild(1);
       }
+
+      // Ensure we have at least one child
+      if (parsedChildren.length === 0) {
+        const initialChild = createEmptyChild(Date.now());
+        console.log('No children found, creating initial child:', initialChild);
+        setChildren([initialChild]);
+        setActiveChild(initialChild.id);
+        handleChange({ value: [initialChild] }, false);
+      } else {
+        // Ensure all children have required fields and proper IDs
+        const validatedChildren = parsedChildren.map((child, index) => {
+          const newId = child.id || Date.now() + index;
+          console.log(`Validating child ${index}:`, { original: child, newId });
+          return {
+            ...createEmptyChild(newId),
+            ...child,
+            id: newId // Ensure ID exists
+          };
+        });
+
+        console.log('Validated children:', validatedChildren);
+        setChildren(validatedChildren);
+        const newActiveChild = validatedChildren[0]?.id || Date.now();
+        console.log('Setting active child:', newActiveChild);
+        setActiveChild(newActiveChild);
+
+        // Only update parent if the value has changed
+        if (JSON.stringify(validatedChildren) !== JSON.stringify(children)) {
+          handleChange({ value: validatedChildren }, false);
+        }
+      }
+    } catch (e) {
+      console.error("Error processing children data:", e);
+      const initialChild = createEmptyChild(Date.now());
+      setChildren([initialChild]);
+      setActiveChild(initialChild.id);
+      handleChange({ value: [initialChild] }, false);
     }
-  }, [inputValue]); // Removed activeChild from dependencies
+  }, [inputValue]);
 
   const handleAddChild = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const newId = children.length > 0 ? Math.max(...children.map(c => c.id)) + 1 : 1;
+    const newId = Date.now();
     const newChild = createEmptyChild(newId);
     const newChildren = [...children, newChild];
 
+    console.log('Adding new child:', newChild);
+    console.log('All children after add:', newChildren);
+    
     setChildren(newChildren);
     setActiveChild(newId);
 
-    // Always send the same structure that the parent expects
-    const outputValue = Array.isArray(inputValue) || (inputValue && Array.isArray(inputValue.value))
-      ? { value: newChildren }
-      : newChildren;
-      
-    handleChange(outputValue, true);
+    // Always use the same structure for consistency
+    handleChange({ value: newChildren }, true);
   };
 
   const handleRemoveChild = (id: number) => {
+    console.log('Removing child with ID:', id);
     const newChildren = children.filter(child => child.id !== id);
+    console.log('Remaining children after removal:', newChildren);
+    
     if (newChildren.length === 0) {
-      const initialChild = createEmptyChild(1);
+      const initialChild = createEmptyChild(Date.now());
+      console.log('No children left, creating initial child');
       setChildren([initialChild]);
-      setActiveChild(1);
-      
-      const outputValue = Array.isArray(inputValue) || (inputValue && Array.isArray(inputValue.value))
-        ? { value: [initialChild] }
-        : [initialChild];
-        
-      handleChange(outputValue, true);
+      setActiveChild(initialChild.id);
+      handleChange({ value: [initialChild] }, true);
     } else {
       const renumberedChildren = newChildren.map((child, index) => ({
         ...child,
         id: index + 1
       }));
-      
+
       setChildren(renumberedChildren);
       setActiveChild(renumberedChildren[0].id);
-      
-      const outputValue = Array.isArray(inputValue) || (inputValue && Array.isArray(inputValue.value))
-        ? { value: renumberedChildren }
-        : renumberedChildren;
-        
-      handleChange(outputValue, true);
+
+      handleChange({ value: renumberedChildren }, true);
     }
   };
 
-  const handleFieldChange = (
-    id: number,
-    field: keyof IChild,
-    value: string
-  ) => {
-    const newChildren = children.map(child => {
-      if (child.id === id) {
-        const updatedChild = {
-          ...child,
-          [field]: value
-        };
-        
-        // If comingAlong is set to 'no', clear the visaStatus
-        if (field === 'comingAlong' && value === 'no') {
-          updatedChild.visaStatus = '';
-        }
-        
-        return updatedChild;
-      }
-      return child;
-    });
+  const handleChildChange = (id: number, field: keyof IChild, value: any) => {
+    console.log(`Field ${field} changed to:`, value);
     
-    setChildren(newChildren);
-    
-    // Always send the same structure that the parent expects
-    const outputValue = Array.isArray(inputValue) || (inputValue && Array.isArray(inputValue.value))
-      ? { value: newChildren }
-      : newChildren;
-      
-    handleChange(outputValue, true);
+    const updatedChildren = children.map(child =>
+      child.id === id ? { ...child, [field]: value } : child
+    );
+
+    console.log('Updated child data:', updatedChildren);
+    setChildren(updatedChildren);
+
+    // Always use the same structure for consistency
+    handleChange({ value: updatedChildren }, true);
   };
 
   const activeChildData = children.find(child => child.id === activeChild) || children[0];
@@ -224,7 +234,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             <label className="text-sm font-medium">Full Name</label>
             <Input
               value={activeChildData.name}
-              onChange={(e) => handleFieldChange(activeChildData.id, "name", e.target.value)}
+              onChange={(e) => handleChildChange(activeChildData.id, "name", e.target.value)}
               placeholder="Full name"
               disabled={readonly}
             />
@@ -234,7 +244,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             <label className="text-sm font-medium">Date of Birth</label>
             <DatePicker
               value={activeChildData.dateOfBirth ? new Date(activeChildData.dateOfBirth) : undefined}
-              onChange={(date) => handleFieldChange(activeChildData.id, "dateOfBirth", date ? date.toISOString().split('T')[0] : '')}
+              onChange={(date) => handleChildChange(activeChildData.id, "dateOfBirth", date ? date.toISOString().split('T')[0] : '')}
               disabled={readonly}
               disableFutureDates={true}
             />
@@ -244,7 +254,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             <label className="text-sm font-medium">Relationship</label>
             <Select
               value={activeChildData.relationship}
-              onValueChange={(value) => handleFieldChange(activeChildData.id, "relationship", value)}
+              onValueChange={(value) => handleChildChange(activeChildData.id, "relationship", value)}
               disabled={readonly}
             >
               <SelectTrigger>
@@ -264,7 +274,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             <label className="text-sm font-medium">Activities</label>
             <Select
               value={activeChildData.activity}
-              onValueChange={(value) => handleFieldChange(activeChildData.id, "activity", value)}
+              onValueChange={(value) => handleChildChange(activeChildData.id, "activity", value)}
               disabled={readonly}
             >
               <SelectTrigger>
@@ -284,7 +294,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             <label className="text-sm font-medium">Current Address</label>
             <Input
               value={activeChildData.address}
-              onChange={(e) => handleFieldChange(activeChildData.id, "address", e.target.value)}
+              onChange={(e) => handleChildChange(activeChildData.id, "address", e.target.value)}
               placeholder="Current address"
               disabled={readonly}
             />
@@ -294,7 +304,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             <label className="text-sm font-medium">Country of Birth</label>
             <Select
               value={activeChildData.countryOfBirth}
-              onValueChange={(value) => handleFieldChange(activeChildData.id, "countryOfBirth", value)}
+              onValueChange={(value) => handleChildChange(activeChildData.id, "countryOfBirth", value)}
               disabled={readonly}
             >
               <SelectTrigger>
@@ -314,7 +324,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             <label className="text-sm font-medium">Coming Along?</label>
             <Select
               value={activeChildData.comingAlong}
-              onValueChange={(value) => handleFieldChange(activeChildData.id, "comingAlong", value)}
+              onValueChange={(value) => handleChildChange(activeChildData.id, "comingAlong", value)}
               disabled={readonly}
             >
               <SelectTrigger>
@@ -338,7 +348,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
               <Select
                 value={activeChildData.visaStatus || ""}
                 onValueChange={(value) =>
-                  handleFieldChange(activeChildData.id, "visaStatus", value)
+                  handleChildChange(activeChildData.id, "visaStatus", value)
                 }
                 disabled={readonly}
               >

@@ -20,8 +20,12 @@ interface IChild {
   activity: string;
   address: string;
   countryOfBirth: string;
-  comingAlong: string;
-  visaStatus?: string;
+  // comingAlong: string;
+  isDeceased: string;
+  dateOfDeath?: string;
+  placeOfDeath?: string;
+  maritalStatus: string;
+  [key: string]: any;
 }
 
 const RELATIONSHIP_OPTIONS = [
@@ -41,6 +45,14 @@ const CHILD_ACTIVITY_OPTIONS = [
   { value: "doctor", label: "Doctor" }
 ];
 
+const MARITAL_STATUS_OPTIONS = [
+  { value: "single", label: "Single" },
+  { value: "married", label: "Married" },
+  { value: "divorced", label: "Divorced" },
+  { value: "widowed", label: "Widowed" },
+  { value: "separated", label: "Separated" }
+];
+
 const COMING_ALONG_OPTIONS = [
   { value: "yes", label: "Yes" },
   { value: "no", label: "No" }
@@ -54,8 +66,11 @@ const createEmptyChild = (id: number): IChild => ({
   activity: "",
   address: "",
   countryOfBirth: "",
-  comingAlong: "no",
-  visaStatus: ""
+  // comingAlong: "no",
+  isDeceased: "no",
+  dateOfDeath: "",
+  placeOfDeath: "",
+  maritalStatus: ""
 });
 
 const ChildrenInputField = (props: IChildrenInputProps) => {
@@ -320,7 +335,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             </Select>
           </div>
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <label className="text-sm font-medium">Coming Along?</label>
             <Select
               value={activeChildData.comingAlong}
@@ -338,9 +353,72 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
                 ))}
               </SelectContent>
             </Select>
+          </div> */}
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Is child deceased?</label>
+            <Select
+              value={activeChildData.isDeceased}
+              onValueChange={(value) => handleChildChange(activeChildData.id, "isDeceased", value)}
+              disabled={readonly}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="No" />
+              </SelectTrigger>
+              <SelectContent>
+                {COMING_ALONG_OPTIONS.map((option) => (
+                  <SelectItem key={`deceased-${option.value}`} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
-          {activeChildData.comingAlong === "yes" && (
+          {activeChildData.isDeceased === "yes" && (
+            <>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Date of Death</label>
+                <DatePicker
+                  value={activeChildData.dateOfDeath ? new Date(activeChildData.dateOfDeath) : undefined}
+                  onChange={(date) => handleChildChange(activeChildData.id, "dateOfDeath", date ? date.toISOString().split('T')[0] : '')}
+                  disabled={readonly}
+                  disableFutureDates={true}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Place of Death</label>
+                <Input
+                  value={activeChildData.placeOfDeath || ""}
+                  onChange={(e) => handleChildChange(activeChildData.id, "placeOfDeath", e.target.value)}
+                  placeholder="City, Country"
+                  disabled={readonly}
+                />
+              </div>
+            </>
+          )}
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Marital Status</label>
+            <Select
+              value={activeChildData.maritalStatus}
+              onValueChange={(value) => handleChildChange(activeChildData.id, "maritalStatus", value)}
+              disabled={readonly}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                {MARITAL_STATUS_OPTIONS.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* {activeChildData.comingAlong === "yes" && (
             <div className="space-y-2">
               <label className="text-sm font-medium">
                 Is the child applying along or already possesses a valid visa?
@@ -361,7 +439,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
                 </SelectContent>
               </Select>
             </div>
-          )}
+          )} */}
         </div>
       )}
 

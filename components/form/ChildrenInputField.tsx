@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { COUNTRIES } from "@/lib/countries/constants/countries";
-import { DatePicker } from "@/components/ui/date-picker";
+import { DateOfBirthField } from "./DateOfBirthField";
 
 interface IChildrenInputProps {
   handleChange: (val: any, save?: boolean) => void;
@@ -20,7 +20,7 @@ interface IChild {
   activity: string;
   address: string;
   countryOfBirth: string;
-  // comingAlong: string;
+  comingAlong: string;
   isDeceased: string;
   dateOfDeath?: string;
   placeOfDeath?: string;
@@ -66,7 +66,7 @@ const createEmptyChild = (id: number): IChild => ({
   activity: "",
   address: "",
   countryOfBirth: "",
-  // comingAlong: "no",
+  comingAlong: "no",
   isDeceased: "no",
   dateOfDeath: "",
   placeOfDeath: "",
@@ -157,7 +157,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
 
     console.log('Adding new child:', newChild);
     console.log('All children after add:', newChildren);
-    
+
     setChildren(newChildren);
     setActiveChild(newId);
 
@@ -169,7 +169,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
     console.log('Removing child with ID:', id);
     const newChildren = children.filter(child => child.id !== id);
     console.log('Remaining children after removal:', newChildren);
-    
+
     if (newChildren.length === 0) {
       const initialChild = createEmptyChild(Date.now());
       console.log('No children left, creating initial child');
@@ -191,7 +191,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
 
   const handleChildChange = (id: number, field: keyof IChild, value: any) => {
     console.log(`Field ${field} changed to:`, value);
-    
+
     const updatedChildren = children.map(child =>
       child.id === id ? { ...child, [field]: value } : child
     );
@@ -227,11 +227,10 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
           <button
             key={child.id}
             type="button"
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
-              activeChild === child.id
+            className={`px-4 py-2 rounded-md text-sm font-medium ${activeChild === child.id
                 ? "bg-teal-50 text-teal-700 border border-teal-200"
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-            }`}
+              }`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -257,11 +256,15 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Date of Birth</label>
-            <DatePicker
-              value={activeChildData.dateOfBirth ? new Date(activeChildData.dateOfBirth) : undefined}
-              onChange={(date) => handleChildChange(activeChildData.id, "dateOfBirth", date ? date.toISOString().split('T')[0] : '')}
+            <DateOfBirthField
+              field={{
+                id: `dob-${activeChildData.id}`,
+                label: 'Date of Birth',
+                required: true
+              }}
+              value={activeChildData.dateOfBirth || ''}
+              onChange={(date) => handleChildChange(activeChildData.id, "dateOfBirth", date)}
               disabled={readonly}
-              disableFutureDates={true}
             />
           </div>
 
@@ -335,7 +338,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             </Select>
           </div>
 
-          {/* <div className="space-y-2">
+          <div className="space-y-2">
             <label className="text-sm font-medium">Coming Along?</label>
             <Select
               value={activeChildData.comingAlong}
@@ -353,7 +356,7 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
                 ))}
               </SelectContent>
             </Select>
-          </div> */}
+          </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Is child deceased?</label>
@@ -379,11 +382,15 @@ const ChildrenInputField = (props: IChildrenInputProps) => {
             <>
               <div className="space-y-2">
                 <label className="text-sm font-medium">Date of Death</label>
-                <DatePicker
-                  value={activeChildData.dateOfDeath ? new Date(activeChildData.dateOfDeath) : undefined}
-                  onChange={(date) => handleChildChange(activeChildData.id, "dateOfDeath", date ? date.toISOString().split('T')[0] : '')}
+                <DateOfBirthField
+                  field={{
+                    id: `dateOfDeath-${activeChildData.id}`,
+                    label: 'Date of Death',
+                    required: false
+                  }}
+                  value={activeChildData.dateOfDeath || ''}
+                  onChange={(date) => handleChildChange(activeChildData.id, "dateOfDeath", date)}
                   disabled={readonly}
-                  disableFutureDates={true}
                 />
               </div>
               <div className="space-y-2">

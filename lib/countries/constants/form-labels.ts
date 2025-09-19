@@ -196,11 +196,11 @@ export const INCOME_SOURCE_OPTIONS = [
 // Property ownership options
 export const PROPERTY_OWNERSHIP_OPTIONS = [
   { label: 'Self Owned', value: 'self_owned' },
-  { label: 'Family Owned', value: 'family_owned' },
-  { label: 'Owned by Parents', value: 'parents_owned' },
-  { label: 'Co-owned', value: 'co_owned' },
-  { label: 'Owned by Spouse', value: 'spouse_owned' },
-  { label: 'Employer Provided', value: 'employer_provided' },
+  // { label: 'Family Owned', value: 'family_owned' },
+  // { label: 'Owned by Parents', value: 'parents_owned' },
+  // { label: 'Co-owned', value: 'co_owned' },
+  // { label: 'Owned by Spouse', value: 'spouse_owned' },
+  // { label: 'Employer Provided', value: 'employer_provided' },
   { label: 'Rented', value: 'rented' },
   { label: 'Other', value: 'other' }
 ];

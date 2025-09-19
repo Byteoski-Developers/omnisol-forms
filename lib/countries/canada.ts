@@ -3646,7 +3646,7 @@ export const CANADA: VisaForm = {
     },
     {
       id: 'additional_documents_selfemployed',
-      name: 'Additional Documents',
+      name: 'Additional Documents (self-employed)',
       description: 'Any additional documents',
       type: 'conditional',
       required: false,

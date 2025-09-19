@@ -4441,21 +4441,21 @@ export const UNITED_KINGDOM: VisaForm = {
         ]
       }
     },
-    {
-      id: 'spouseDob',
-      group: 'personal' as FormGroup,
-      type: 'DateofBirth',
-      label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
-      required: true,
-      showIf: {
-        operator: 'and',
-        conditions: [
-          { field: 'maritalStatus', not: 'single' },
-          { field: 'maritalStatus', not: 'divorced' }
-        ]
-      },
-      disableFutureDates: true
-    },
+    // {
+    //   id: 'spouseDob',
+    //   group: 'personal' as FormGroup,
+    //   type: 'DateofBirth',
+    //   label: `What is date of birth of your spouse? ${FIELD_REQUIREMENTS.MANDATORY}`,
+    //   required: true,
+    //   showIf: {
+    //     operator: 'and',
+    //     conditions: [
+    //       { field: 'maritalStatus', not: 'single' },
+    //       { field: 'maritalStatus', not: 'divorced' }
+    //     ]
+    //   },
+    //   disableFutureDates: true
+    // },
     {
       id: 'previousRelationshipEnd',
       group: 'personal' as FormGroup,
@@ -4580,7 +4580,13 @@ export const UNITED_KINGDOM: VisaForm = {
       type: 'select',
       label: `Do you have any other financially dependent relatives? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
-      showIf: { field: 'maritalStatus', not: 'single' },
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'maritalStatus', not: 'single' },
+          { field: 'hasFinancialDependents', value: 'yes' }
+        ]
+      },
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' }
@@ -6443,7 +6449,7 @@ export const UNITED_KINGDOM: VisaForm = {
       id: 'currentAddress',
       group: 'residence' as FormGroup,
       type: 'text',
-      label: `What is your address? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      label: `What is your Current Address? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       required: false,
       placeholder: 'Enter your current address',
       showIf: { field: 'hasAlternateAddress', value: 'yes' }

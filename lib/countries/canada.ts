@@ -1034,6 +1034,10 @@ export const CANADA: VisaForm = {
       type: 'default',
       required: true,
       category: 'Tourism',
+      conditions: [{
+        questionId: 'Visitation',
+        value: 'Tourism'
+      }],
       extractableFields: [
         {
           fieldId: 'passengerName',
@@ -1359,6 +1363,10 @@ export const CANADA: VisaForm = {
       description: 'Letter from current employer stating position, salary and duration of employment',
       type: 'default',
       required: true,
+      conditions: [{
+        questionId: 'visitPurpose',
+        value: 'business'
+      }],
       category: 'Gainful Activities'
     },
     {
@@ -4162,6 +4170,7 @@ export const CANADA: VisaForm = {
     description: 'Funds as per IRCC requirements (bank statements, investments, etc.)',
     type: 'default',
     required: true,
+    conditions: [{ questionId: 'visitPurpose', value: 'business' }],
     category: 'Income and Funds of sponsor'
   },
 
@@ -4181,6 +4190,7 @@ export const CANADA: VisaForm = {
     description: 'Details of family members',
     type: 'default',
     required: true,
+    conditions: [{ questionId: 'visitPurpose', value: 'family' }],
     category: 'Family Documents'
   },
 
@@ -4214,6 +4224,7 @@ export const CANADA: VisaForm = {
     description: 'Additional supporting documents checklist',
     type: 'default',
     required: true,
+    conditions: [{ questionId: 'additionalDocuments', value: 'yes' }],
     category: 'Additional Documents'
   },
   ],

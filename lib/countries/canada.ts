@@ -426,7 +426,7 @@ export const CANADA: VisaForm = {
         value: 'employed'
       }],
       extractableFields: [
-        
+
         {
           fieldId: 'employeeName',
           source: 'leave_letter'
@@ -484,7 +484,7 @@ export const CANADA: VisaForm = {
         {
           fieldId: 'profitSharingRatio',
           source: 'partnership_deed'
-        }    
+        }
       ]
     },
     {
@@ -514,7 +514,7 @@ export const CANADA: VisaForm = {
         {
           fieldId: 'registeredAddress',
           source: 'incorporation_certificate'
-        }    
+        }
       ]
     },
     {
@@ -540,7 +540,7 @@ export const CANADA: VisaForm = {
         {
           fieldId: 'directorAddresses',
           source: 'directors_list'
-        }    
+        }
       ]
     },
     {
@@ -586,7 +586,7 @@ export const CANADA: VisaForm = {
         {
           fieldId: 'maturityAmount',
           source: 'fixed_deposit'
-        }    
+        }
       ]
     },
     {
@@ -628,7 +628,7 @@ export const CANADA: VisaForm = {
         {
           fieldId: 'postOfficeName',
           source: 'post_office_savings'
-        }    
+        }
       ]
     },
     {
@@ -999,6 +999,10 @@ export const CANADA: VisaForm = {
       conditions: [{
         questionId: 'accommodationType',
         value: 'hotel'
+      },
+      {
+        questionId: 'needsTravelAssistance',
+        value: 'no'
       }],
       extractableFields: [
         {
@@ -1271,6 +1275,10 @@ export const CANADA: VisaForm = {
       conditions: [{
         questionId: 'assistanceType',
         value: 'flight'
+      },
+      {
+        questionId: 'needsTravelAssistance',
+        value: 'no'
       }]
     },
     {
@@ -1293,8 +1301,8 @@ export const CANADA: VisaForm = {
       required: true,
       category: 'Tourism',
       conditions: [{
-        questionId: 'visitPurpose',
-        value: 'tourism'
+        questionId: 'needsTravelAssistance',
+        value: 'no'
       }]
     },
     {
@@ -1305,8 +1313,8 @@ export const CANADA: VisaForm = {
       required: true,
       category: 'Tourism',
       conditions: [{
-        questionId: 'visitPurpose',
-        value: 'tourism'
+        questionId: 'needsTravelAssistance',
+        value: 'no'
       }]
     },
     {
@@ -1981,7 +1989,7 @@ export const CANADA: VisaForm = {
         value: 'join_family_permanent'
       }]
     },
-   {
+    {
       id: 'relationship_proof_permanent',
       name: 'Relationship Development Documentation (if applicable)',
       description: 'Documents supporting the description of development of this relationship such as social media handles, call logs, messages, chats, matrimonial ads, exchange of gifts, transfer of monies',
@@ -1994,7 +2002,7 @@ export const CANADA: VisaForm = {
       }]
     },
 
-{
+    {
       id: 'joint_accounts_permanent',
       name: 'Joint Financial Documents (if applicable)',
       description: 'Joint bank account statements, mortgages, investments, insurance, ID\'s or any correspondence by third party on same address',
@@ -3084,7 +3092,7 @@ export const CANADA: VisaForm = {
         value: 'business_partner'
       }]
     },
-   {
+    {
       id: 'partner_documents_employed',
       name: 'Partner Documents (if applicable)',
       description: 'Additional documents of your partner as applicable',
@@ -3328,7 +3336,7 @@ export const CANADA: VisaForm = {
         value: 'business_partner'
       }]
     },
-   {
+    {
       id: 'partner_documents_partner',
       name: 'Partner Documents (if applicable)',
       description: 'Add the documents of your partner as applicable',
@@ -4088,145 +4096,145 @@ export const CANADA: VisaForm = {
         questionId: 'hasVisaRefusal',
         value: 'yes'
       }]
-    }, 
+    },
     // canada specific documents ---------------------------------------------------------------------------------------------//
 
-     // Study Documents
-  {
-    id: 'quebec_acceptance_certificate',
-    name: 'CAQ (Quebec Acceptance Certificate)',
-    description: 'Required for study in Quebec',
-    type: 'conditional',
-    required: true,
-    category: 'Study Details',
-    conditions: [
-      { questionId: 'visitPurpose', value: 'study' },
-      { questionId: 'studyProvince', value: 'quebec' }
-    ]
-  },
-  {
-    id: 'proof_of_tuition_payment',
-    name: 'Proof of Tuition Payment',
-    description: 'Receipts showing payment of tuition fees',
-    type: 'conditional',
-    required: true,
-    category: 'Study Details',
-    conditions: [{ questionId: 'visitPurpose', value: 'study' }]
-  },
-  {
-    id: 'gic_certificate',
-    name: 'GIC Certificate (Student)',
-    description: 'Guaranteed Investment Certificate for students',
-    type: 'conditional',
-    required: true,
-    category: 'Study Details',
-    conditions: [{ questionId: 'visitPurpose', value: 'study' }]
-  },
+    // Study Documents
+    {
+      id: 'quebec_acceptance_certificate',
+      name: 'CAQ (Quebec Acceptance Certificate)',
+      description: 'Required for study in Quebec',
+      type: 'conditional',
+      required: true,
+      category: 'Study Details',
+      conditions: [
+        { questionId: 'visitPurpose', value: 'study' },
+        { questionId: 'studyProvince', value: 'quebec' }
+      ]
+    },
+    {
+      id: 'proof_of_tuition_payment',
+      name: 'Proof of Tuition Payment',
+      description: 'Receipts showing payment of tuition fees',
+      type: 'conditional',
+      required: true,
+      category: 'Study Details',
+      conditions: [{ questionId: 'visitPurpose', value: 'study' }]
+    },
+    {
+      id: 'gic_certificate',
+      name: 'GIC Certificate (Student)',
+      description: 'Guaranteed Investment Certificate for students',
+      type: 'conditional',
+      required: true,
+      category: 'Study Details',
+      conditions: [{ questionId: 'visitPurpose', value: 'study' }]
+    },
 
-  // Work Documents
-  {
-    id: 'lmia_approval',
-    name: 'LMIA Approval',
-    description: 'Labour Market Impact Assessment approval (if required)',
-    type: 'conditional',
-    required: true,
-    category: 'Gainful Activities',
-    conditions: [{ questionId: 'workPermitType', value: 'lmia_required' }]
-  },
-  {
-    id: 'job_offer_letter_canada',
-    name: 'Canadian Job Offer Letter',
-    description: 'Detailed job offer from Canadian employer',
-    type: 'conditional',
-    required: true,
-    category: 'Gainful Activities',
-    conditions: [{ questionId: 'visitPurpose', value: 'work' }]
-  },
+    // Work Documents
+    {
+      id: 'lmia_approval',
+      name: 'LMIA Approval',
+      description: 'Labour Market Impact Assessment approval (if required)',
+      type: 'conditional',
+      required: true,
+      category: 'Gainful Activities',
+      conditions: [{ questionId: 'workPermitType', value: 'lmia_required' }]
+    },
+    {
+      id: 'job_offer_letter_canada',
+      name: 'Canadian Job Offer Letter',
+      description: 'Detailed job offer from Canadian employer',
+      type: 'conditional',
+      required: true,
+      category: 'Gainful Activities',
+      conditions: [{ questionId: 'visitPurpose', value: 'work' }]
+    },
 
-  // Immigration Documents
-  {
-    id: 'express_entry_profile',
-    name: 'Express Entry Profile',
-    description: 'Proof of Express Entry submission',
-    type: 'conditional',
-    required: true,
-    category: 'Immigration Documents',
-    conditions: [{ questionId: 'immigrationPathway', value: 'express_entry' }]
-  },
-  {
-    id: 'provincial_nomination',
-    name: 'Provincial Nomination Certificate',
-    description: 'PNP nomination certificate',
-    type: 'conditional',
-    required: true,
-    category: 'Immigration Documents',
-    conditions: [{ questionId: 'immigrationPathway', value: 'pnp' }]
-  },
+    // Immigration Documents
+    {
+      id: 'express_entry_profile',
+      name: 'Express Entry Profile',
+      description: 'Proof of Express Entry submission',
+      type: 'conditional',
+      required: true,
+      category: 'Immigration Documents',
+      conditions: [{ questionId: 'immigrationPathway', value: 'express_entry' }]
+    },
+    {
+      id: 'provincial_nomination',
+      name: 'Provincial Nomination Certificate',
+      description: 'PNP nomination certificate',
+      type: 'conditional',
+      required: true,
+      category: 'Immigration Documents',
+      conditions: [{ questionId: 'immigrationPathway', value: 'pnp' }]
+    },
 
-  // Financial Documents
-  {
-    id: 'proof_of_funds_canada',
-    name: 'Proof of Funds (Canadian Requirements)',
-    description: 'Funds as per IRCC requirements (bank statements, investments, etc.)',
-    type: 'default',
-    required: true,
-    conditions: [{ questionId: 'visitPurpose', value: 'business' }],
-    category: 'Income and Funds of sponsor'
-  },
+    // Financial Documents
+    {
+      id: 'proof_of_funds_canada',
+      name: 'Proof of Funds (Canadian Requirements)',
+      description: 'Funds as per IRCC requirements (bank statements, investments, etc.)',
+      type: 'default',
+      required: true,
+      conditions: [{ questionId: 'visitPurpose', value: 'business' }],
+      category: 'Income and Funds of sponsor'
+    },
 
-  // Family Documents
-  {
-    id: 'use_of_representative',
-    name: 'Use of Representative Form (IMM 5476)',
-    description: 'If using an immigration representative',
-    type: 'conditional',
-    required: false,
-    category: 'Additional Documents',
-    conditions: [{ questionId: 'hasRepresentative', value: 'yes' }]
-  },
-  {
-    id: 'family_information_form',
-    name: 'Family Information Form (IMM 5707)',
-    description: 'Details of family members',
-    type: 'default',
-    required: true,
-    conditions: [{ questionId: 'visitPurpose', value: 'family' }],
-    category: 'Family Documents'
-  },
+    // Family Documents
+    {
+      id: 'use_of_representative',
+      name: 'Use of Representative Form (IMM 5476)',
+      description: 'If using an immigration representative',
+      type: 'conditional',
+      required: false,
+      category: 'Additional Documents',
+      conditions: [{ questionId: 'hasRepresentative', value: 'yes' }]
+    },
+    {
+      id: 'family_information_form',
+      name: 'Family Information Form (IMM 5707)',
+      description: 'Details of family members',
+      type: 'default',
+      required: true,
+      conditions: [{ questionId: 'visitPurpose', value: 'family' }],
+      category: 'Family Documents'
+    },
 
-  // Medical Documents
-  {
-    id: 'medical_exam_canada',
-    name: 'Canadian Medical Exam',
-    description: 'IME from panel physician approved by IRCC',
-    type: 'conditional',
-    required: true,
-    category: 'Medical Documents',
-    conditions: [
-      { questionId: 'visitPurpose', value: 'study' },
-      { questionId: 'visitPurpose', value: 'work' },
-      { questionId: 'visitPurpose', value: 'immigration' }
-    ]
-  },
+    // Medical Documents
+    {
+      id: 'medical_exam_canada',
+      name: 'Canadian Medical Exam',
+      description: 'IME from panel physician approved by IRCC',
+      type: 'conditional',
+      required: true,
+      category: 'Medical Documents',
+      conditions: [
+        { questionId: 'visitPurpose', value: 'study' },
+        { questionId: 'visitPurpose', value: 'work' },
+        { questionId: 'visitPurpose', value: 'immigration' }
+      ]
+    },
 
-  // Additional Canada-specific
-  {
-    id: 'digital_photo_specs',
-    name: 'Digital Photo (Canada Specifications)',
-    description: 'Photo meeting IRCC specifications',
-    type: 'default',
-    required: true,
-    category: 'Basic Information'
-  },
-  {
-    id: 'client_info_form',
-    name: 'Client Information Form',
-    description: 'Additional supporting documents checklist',
-    type: 'default',
-    required: true,
-    conditions: [{ questionId: 'additionalDocuments', value: 'yes' }],
-    category: 'Additional Documents'
-  },
+    // Additional Canada-specific
+    {
+      id: 'digital_photo_specs',
+      name: 'Digital Photo (Canada Specifications)',
+      description: 'Photo meeting IRCC specifications',
+      type: 'default',
+      required: true,
+      category: 'Basic Information'
+    },
+    {
+      id: 'client_info_form',
+      name: 'Client Information Form',
+      description: 'Additional supporting documents checklist',
+      type: 'default',
+      required: true,
+      conditions: [{ questionId: 'additionalDocuments', value: 'yes' }],
+      category: 'Additional Documents'
+    },
   ],
   steps: [
     // {
@@ -4961,7 +4969,7 @@ export const CANADA: VisaForm = {
       type: 'header',
       label: 'Family details',
       showIf: { field: 'maritalStatus', not: 'single' },
-      
+
     },
     {
       id: 'hasChildren',
@@ -5131,9 +5139,9 @@ export const CANADA: VisaForm = {
     // },
 
 
-     // Sponsor Details Section for visiting family/friend
+    // Sponsor Details Section for visiting family/friend
 
-     {
+    {
       id: 'hasSponsor',
       group: 'purpose' as FormGroup,
       type: 'select',
@@ -5157,7 +5165,7 @@ export const CANADA: VisaForm = {
           { field: 'hasSponsor', value: 'yes' }
         ]
       }
-    }, 
+    },
     {
       id: 'sponsorFullName',
       group: 'purpose' as FormGroup,
@@ -5288,7 +5296,7 @@ export const CANADA: VisaForm = {
       label: `Details of the person? ${FIELD_REQUIREMENTS.OPTIONAL}`,
       required: true,
       showIf: { field: 'addAnotherInviter', value: 'yes' },
-      
+
     },
     {
       id: 'hasSpecificReasons',
@@ -5421,7 +5429,7 @@ export const CANADA: VisaForm = {
           { field: 'visitPurpose', value: 'tourism' }
         ]
       },
-    }, 
+    },
     // For business purpose
     {
       id: 'businessActivity',
@@ -5622,7 +5630,7 @@ export const CANADA: VisaForm = {
     {
       id: 'institutionName',
       group: 'purpose' as FormGroup,
-      type: 'textarea', 
+      type: 'textarea',
       label: `Details of the institution ${FIELD_REQUIREMENTS.RECOMMENDED}`,
       showIf: { field: 'longVisitSponsorStatus', value: 'student' },
       required: false,
@@ -6422,7 +6430,7 @@ export const CANADA: VisaForm = {
       type: 'info',
       label: 'Important Information',
       description: 'You may need to contact us to understand your requirements.',
-      content: [],  
+      content: [],
       required: false,
       showIf: { field: 'visitPurpose', value: 'other' }
     },
@@ -6509,21 +6517,21 @@ export const CANADA: VisaForm = {
       },
       options: OCCUPATION_SOURCE_OPTIONS || []
     },
-     {
-          id: 'expensePayerOccupationExplanation',
-          group: 'finances' as FormGroup,
-          type: 'textarea',
-          label: 'Please Explain the occupation in brief',
-          required: false,
-          placeholder: 'Enter occupation details',
-          showIf: {
-            operator: 'and',
-            conditions: [
-              { field: 'selfPayingExpenses', value: 'yes' },
-              { field: 'expensePayerOccupation', value: 'other' }
-            ]
-          }
-        }, 
+    {
+      id: 'expensePayerOccupationExplanation',
+      group: 'finances' as FormGroup,
+      type: 'textarea',
+      label: 'Please Explain the occupation in brief',
+      required: false,
+      placeholder: 'Enter occupation details',
+      showIf: {
+        operator: 'and',
+        conditions: [
+          { field: 'selfPayingExpenses', value: 'yes' },
+          { field: 'expensePayerOccupation', value: 'other' }
+        ]
+      }
+    },
     // {
     //   id: 'expensePayerOccupationOther',
     //   group: 'finances' as FormGroup,
@@ -6619,7 +6627,7 @@ export const CANADA: VisaForm = {
       ]
     },
     {
-      id: 'spouseIncomeSource', 
+      id: 'spouseIncomeSource',
       group: 'finances' as FormGroup,
       type: 'checkbox-multiselect',
       label: `What is your spouse's source of income? ${FIELD_REQUIREMENTS.RECOMMENDED}`,
@@ -7055,24 +7063,24 @@ export const CANADA: VisaForm = {
       ]
     },
     {
-          id: 'destinationHeader',
-          group: 'additional' as FormGroup,
-          type: 'select',
-          label: 'Do you want to add any countries?',
-          required: false,
-          options: [
-            { label: 'Yes', value: 'yes' },
-            { label: 'No', value: 'no' }
-          ]
-        },
-        {
-          id: 'destinationCountries',
-          group: 'additional' as FormGroup,
-          type: 'countriesInput',
-          label: `Which country/ies you want to visit?`,
-          required: false,
-          showIf: { field: 'destinationHeader', value: 'yes' }
-        },
+      id: 'destinationHeader',
+      group: 'additional' as FormGroup,
+      type: 'select',
+      label: 'Do you want to add any countries?',
+      required: false,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'destinationCountries',
+      group: 'additional' as FormGroup,
+      type: 'countriesInput',
+      label: `Which country/ies you want to visit?`,
+      required: false,
+      showIf: { field: 'destinationHeader', value: 'yes' }
+    },
     {
       id: 'explanationText',
       group: 'additional' as FormGroup,
@@ -7247,97 +7255,97 @@ export const CANADA: VisaForm = {
       label: 'Employment History',
       required: true,
     },
- // Health, Legal, and Security Details
-{
-  id: 'healthLegalSecurityHeader',
-  group: 'criminal' as FormGroup,
-  type: 'header',
-  label: 'Health, Legal, and Security Details'
-},
-{
-  id: 'healthStatusSummary',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Do you have any communicable diseases, mental health history, or require ongoing medical support? ${FIELD_REQUIREMENTS.MANDATORY}`,
-  required: true,
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
-{
-  id: 'medicalExam',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Have you had a medical exam performed by an IRCC authorized panel physician (doctor) within the last 12 months? ${FIELD_REQUIREMENTS.MANDATORY}`,
-  required: true,
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
+    // Health, Legal, and Security Details
+    {
+      id: 'healthLegalSecurityHeader',
+      group: 'criminal' as FormGroup,
+      type: 'header',
+      label: 'Health, Legal, and Security Details'
+    },
+    {
+      id: 'healthStatusSummary',
+      group: 'criminal' as FormGroup,
+      type: 'select',
+      label: `Do you have any communicable diseases, mental health history, or require ongoing medical support? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'medicalExam',
+      group: 'criminal' as FormGroup,
+      type: 'select',
+      label: `Have you had a medical exam performed by an IRCC authorized panel physician (doctor) within the last 12 months? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
 
-{
-  id: 'healthDetails',
-  group: 'criminal' as FormGroup,
-  type: 'textarea',
-  label: `If yes, please provide brief health-related details: ${FIELD_REQUIREMENTS.RECOMMENDED}`,
-  required: false,
-  showIf: { field: 'healthStatusSummary', value: 'yes' }
-},
-{
-  id: 'criminalSecurityHistory',
-  group: 'criminal' as FormGroup,
-  type: 'select',
-  label: `Have you ever had any criminal record, been under investigation, involved in terrorism, or served in the military/security services? ${FIELD_REQUIREMENTS.MANDATORY}`,
-  required: true,
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
-{
-  id: 'criminalSecurityDetails',
-  group: 'criminal' as FormGroup,
-  type: 'textarea',
-  label: `If yes, please provide relevant details: ${FIELD_REQUIREMENTS.MANDATORY}`,
-  required: true,
-  showIf: { field: 'criminalSecurityHistory', value: 'yes' }
-},
-// Military/Police History
-{
-  id: 'militaryPoliceHeader',
-  group: 'military' as FormGroup,
-  type: 'header',
-  label: 'Military/Police History'
-},
-{
-  id: 'militaryPoliceDescription',
-  group: 'military' as FormGroup,
-  type: 'info',
-  label: 'Military/Police Service Information',
-  content: [
-    'Please provide information about any military, militia, civil defence unit, security organization or police force service (including non-obligatory service, reserve or voluntary units).'
-  ]
-},
-{
-  id: 'militaryPoliceQuestion',
-  group: 'military' as FormGroup,
-  type: 'select',
-  label: 'Did you serve in any military, militia, civil defence unit, security organization or police force (including non-obligatory service, reserve or voluntary units)?',
-  required: true,
-  options: [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
-  ]
-},
-{
-  id: 'militaryServiceHistory',
-  group: 'military' as FormGroup,
-  type: 'militaryHistory',
-  label: 'Military/Police Service Details',
-  required: true,
-  showIf: { field: 'militaryPoliceQuestion', value: 'yes' }
-},
+    {
+      id: 'healthDetails',
+      group: 'criminal' as FormGroup,
+      type: 'textarea',
+      label: `If yes, please provide brief health-related details: ${FIELD_REQUIREMENTS.RECOMMENDED}`,
+      required: false,
+      showIf: { field: 'healthStatusSummary', value: 'yes' }
+    },
+    {
+      id: 'criminalSecurityHistory',
+      group: 'criminal' as FormGroup,
+      type: 'select',
+      label: `Have you ever had any criminal record, been under investigation, involved in terrorism, or served in the military/security services? ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'criminalSecurityDetails',
+      group: 'criminal' as FormGroup,
+      type: 'textarea',
+      label: `If yes, please provide relevant details: ${FIELD_REQUIREMENTS.MANDATORY}`,
+      required: true,
+      showIf: { field: 'criminalSecurityHistory', value: 'yes' }
+    },
+    // Military/Police History
+    {
+      id: 'militaryPoliceHeader',
+      group: 'military' as FormGroup,
+      type: 'header',
+      label: 'Military/Police History'
+    },
+    {
+      id: 'militaryPoliceDescription',
+      group: 'military' as FormGroup,
+      type: 'info',
+      label: 'Military/Police Service Information',
+      content: [
+        'Please provide information about any military, militia, civil defence unit, security organization or police force service (including non-obligatory service, reserve or voluntary units).'
+      ]
+    },
+    {
+      id: 'militaryPoliceQuestion',
+      group: 'military' as FormGroup,
+      type: 'select',
+      label: 'Did you serve in any military, militia, civil defence unit, security organization or police force (including non-obligatory service, reserve or voluntary units)?',
+      required: true,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    },
+    {
+      id: 'militaryServiceHistory',
+      group: 'military' as FormGroup,
+      type: 'militaryHistory',
+      label: 'Military/Police Service Details',
+      required: true,
+      showIf: { field: 'militaryPoliceQuestion', value: 'yes' }
+    },
   ]
 };
